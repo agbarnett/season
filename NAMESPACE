@@ -1,0 +1,25 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("grDevices", "gray")
+importFrom("graphics", "axis", "box", "hist", "lines", "par", "plot",
+             "points", "polygon", "rug", "text")
+importFrom("stats", "acf", "as.formula", "cpgram", "fft", "fitted",
+             "gaussian", "glm", "median", "model.frame", "na.omit",
+             "pchisq", "qchisq", "qnorm", "quantile", "relevel", "resid",
+             "residuals", "rgamma", "rnorm", "runif", "sd", "time")
+import('MASS','coda','ggplot2','mgcv','survival')
+S3method(plot, Cosinor)
+S3method(print, Cosinor)
+S3method(summary, Cosinor)
+S3method(plot, Monthmean)
+S3method(print, Monthmean)
+S3method(plot, monthglm)
+S3method(print, monthglm)
+S3method(summary, monthglm)
+S3method(plot, nonlintest)
+S3method(print, nonlintest)
+S3method(plot, nsCosinor)
+S3method(print, nsCosinor)
+S3method(summary, nsCosinor)
+S3method(print, casecross)
+S3method(summary, casecross)
+
