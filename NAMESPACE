@@ -22,4 +22,6 @@ S3method(print, nsCosinor)
 S3method(summary, nsCosinor)
 S3method(print, casecross)
 S3method(summary, casecross)
-
+S3method(print, summary.Cosinor)
+S3method(print, summary.nsCosinor)
+S3method(print, summary.monthglm)
