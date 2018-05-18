@@ -1,6 +1,6 @@
 \name{monthmean}
 \alias{monthmean}
-\title{Monthly means}
+\title{Monthly Means}
 \description{Calculate the monthly mean or adjusted monthly mean for count data.}
 \usage{monthmean(data, resp, offsetpop=NULL, adjmonth=FALSE)}
 \arguments{
@@ -20,8 +20,7 @@ Returns an object of class \dQuote{Monthmean} with the following parts:
     Health Data}. Springer.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
 \seealso{\code{plot.Monthmean}}
-\examples{
-\donttest{
+\examples{\donttest{
 # cardiovascular disease data
 data(CVD)
 mmean = monthmean(data=CVD, resp='cvd', offsetpop=expression(pop/100000), adjmonth='average')

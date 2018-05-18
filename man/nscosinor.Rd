@@ -8,7 +8,7 @@
 %%\method{print}{nsCosinor}(x, ...)
 %%\method{summary}{nsCosinor}(x, ...)
 %%\method{plot}{nsCosinor}(x, ...)
-\title{Non-stationary cosinor}
+\title{Non-stationary Cosinor}
 \description{Decompose a time series using a non-stationary cosinor for the seasonal pattern.}
 \usage{nscosinor(data, response, cycles, niters=1000, burnin=500, tau,
                  lambda=1/12, div=50, monthly=TRUE, alpha=0.05)}
@@ -18,16 +18,14 @@
   \item{cycles}{vector of cycles in units of time, e.g., for a six and twelve month pattern \code{cycles=c(6,12)}.}
   \item{niters}{total number of MCMC samples (default=1000).}
   \item{burnin}{number of MCMC samples discarded as a burn-in (default=500).}
-  \item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st seasonal parameter, tau[3] for 2nd seasonal parameter, etc. Larger values of tau allow more change between observations and hence a
-greater potential flexibility in the trend and season.}
+  \item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st seasonal parameter, tau[3] for 2nd seasonal parameter, etc. Larger values of tau allow more change between observations and hence a greater potential flexibility in the trend and season.}
   \item{lambda}{distance between observations (lambda=1/12 for monthly data, default).}
   \item{div}{divisor at which MCMC sample progress is reported (default=50).}
   \item{monthly}{TRUE for monthly data.}
   \item{alpha}{Statistical significance level used by the confidence intervals.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
-\details{This model is designed to decompose an equally spaced time series into a trend, season(s) and noise.
-A seasonal estimate is estimated as \eqn{s_t=A_t\cos(\omega_t-P_t)},
+\details{This model is designed to decompose an equally spaced time series into a trend, season(s) and noise. A seasonal estimate is estimated as \eqn{s_t=A_t\cos(\omega_t-P_t)},
 where \emph{t} is time, \eqn{A_t} is the non-stationary amplitude,
 \eqn{P_t} is the non-stationary phase and \eqn{\omega_t} is the
 frequency.
@@ -43,7 +41,7 @@ Specifying \code{cycles=} \code{c(182.6,365.25)} will fit two seasonal patterns,
 
 The estimates are made using a forward and backward sweep of the Kalman filter.
 Repeated estimates are made using Markov chain Monte Carlo (MCMC).
-For this reason the model can take a long time to run (we aim to improve this in the next version).
+For this reason the model can take a long time to run.
 To give stable estimates a reasonably long sample should be used (\code{niters}), and the possibly poor initial estimates should be discarded (\code{burnin}).
 }
 \value{
@@ -64,8 +62,7 @@ Returns an object of class \dQuote{nsCosinor} with the following parts:
 Barnett, A.G., Dobson, A.J. (2004) Estimating trends and seasonality in coronary heart disease \emph{Statistics in Medicine}. 23(22) 3505--23.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
 \seealso{\code{plot.nsCosinor}, \code{summary.nsCosinor}}
-\examples{
-\donttest{
+\examples{\donttest{
 data(CVD)
 # model to fit an annual pattern to the monthly cardiovascular disease data
 f = c(12)

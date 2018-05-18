@@ -1,6 +1,6 @@
 \name{plotMonth}
 \alias{plotMonth}
-\title{Plot results by month}
+\title{Plot Results by Month}
 \description{Plots results by month.}
 \usage{
 plotMonth(data, resp, panels=12, \dots)
@@ -14,8 +14,7 @@ plotMonth(data, resp, panels=12, \dots)
 \details{Assumes the data frame contains variables called year and month.}
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{
-\donttest{
+\examples{\donttest{
 data(CVD)
 plotMonth(data=CVD, resp='cvd', panels=12)
 }

@@ -1,7 +1,7 @@
 \name{print.casecross}
 %%\alias{casecross}
 \alias{print.casecross}
-\title{Print the results of a case-crossover model}
+\title{Print the Results of a Case-Crossover Model}
 \description{The default print method for a \code{casecross} object produced by \code{casecross}.}
 \usage{
 \method{print}{casecross}(x, ...)

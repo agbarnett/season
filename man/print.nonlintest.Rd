@@ -1,6 +1,6 @@
 \name{print.nonlintest}
 \alias{print.nonlintest}
-\title{Print the results of the non-linear test}
+\title{Print the Results of the Non-linear Test}
 \description{The default print method for a \code{nonlintest} object
   produced by \code{nonlintest}.}
 \usage{
@@ -12,4 +12,3 @@
 }
 \seealso{\code{nonlintest}, \code{plot.nonlintest}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-

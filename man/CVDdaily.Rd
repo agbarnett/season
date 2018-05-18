@@ -1,7 +1,7 @@
 \name{CVDdaily}
 \alias{CVDdaily}
 \docType{data}
-\title{Daily cardiovascular deaths in Los Angeles, 1987--2000}
+\title{Daily Cardiovascular Deaths in Los Angeles, 1987--2000}
 \description{
   Daily number of deaths from cardiovascular disease in people aged 75 and over in Los Angeles for the years 1987 to 2000.
 }
@@ -29,11 +29,10 @@
   }
 }
 \source{
-  From the NMMAPS study (\url{http://www.ihapss.jhsph.edu/}), also available via the NMMAPSlite \R library.
+  From the NMMAPS study.
 }
 \references{Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000). \emph{The National Morbidity, Mortality, and Air Pollution Study, Part I: Methods and Methodologic Issues}. Research Report 94, Health Effects Institute, Cambridge MA.}
-\examples{
-\donttest{
+\examples{\donttest{
 data(CVDdaily)
 plot(CVDdaily$date, CVDdaily$cvd, type='p', xlab='Date',
      ylab='Number of CVD deaths')

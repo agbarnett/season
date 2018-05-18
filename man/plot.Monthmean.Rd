@@ -1,7 +1,7 @@
 \name{plot.Monthmean}
 %%\alias{Monthmean}
 \alias{plot.Monthmean}
-\title{Plot of monthly mean estimates}
+\title{Plot of Monthly Mean Estimates}
 \description{Plots estimated monthly means.}
 \usage{
 \method{plot}{Monthmean}(x, ...)

@@ -1,6 +1,6 @@
 \name{cosinor}
 \alias{cosinor}
-\title{Cosinor regression model for detecting seasonality in yearly data or circadian patterns in hourly data}
+\title{Cosinor Regression Model for Detecting Seasonality in Yearly Data or Circadian Patterns in Hourly Data}
 \description{Fits a cosinor model as part of a generalized linear model.}
 \usage{cosinor(formula, date, data, family=gaussian() ,alpha=0.05, cycles=1,
                rescheck=FALSE, type='daily', offsetmonth=FALSE, offsetpop=NULL, text=TRUE)}
@@ -54,8 +54,7 @@ Returns an object of class \dQuote{Cosinor} with the following parts:
     Health Data}. Springer.}
 \seealso{\code{summary.Cosinor}, \code{plot.Cosinor}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{
-\donttest{
+\examples{\donttest{
 ## cardiovascular disease data (offset based on number of days in...
 ## ...the month scaled to an average month length)
 data(CVD)

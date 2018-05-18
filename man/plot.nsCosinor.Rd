@@ -1,7 +1,7 @@
 \name{plot.nsCosinor}
 %%\alias{nscosinor}
 \alias{plot.nsCosinor}
-\title{Plot the results of a Non-stationary cosinor}
+\title{Plot the Results of a Non-stationary Cosinor}
 \description{Plots the trend and season(s) from a \code{nsCosinor} object produced by \code{nscosinor}.}
 \usage{
 \method{plot}{nsCosinor}(x, ...)

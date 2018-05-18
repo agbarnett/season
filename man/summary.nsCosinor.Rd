@@ -2,7 +2,7 @@
 %%\alias{nscosinor}
 \alias{summary.nsCosinor}
 \alias{print.summary.nsCosinor}
-\title{Summary for a Non-stationary cosinor}
+\title{Summary for a Non-stationary Cosinor}
 \description{The default summary method for a \code{nsCosinor} object produced by \code{nscosinor}.}
 \usage{
 \method{summary}{nsCosinor}(object, ...)
@@ -30,12 +30,10 @@
   for the phase are given in radians (0 to 2\eqn{\pi}), they can be
   transformed to the time scale using the \code{invyrfraction} making
   sure to first divide by 2\eqn{\pi}.
-  
-  
+
 The larger the standard deviation for the seasonal cycles, the greater
 the non-stationarity. This is because a larger standard deviation means
 more change over time.
 }
 \seealso{\code{nscosinor}, \code{plot.nsCosinor}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-

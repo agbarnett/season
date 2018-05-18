@@ -1,7 +1,7 @@
 \name{schz}
 \alias{schz}
 \docType{data}
-\title{Schizophrenia births in Australia, 1930--1971}
+\title{Schizophrenia Births in Australia, 1930--1971}
 \description{
   Monthly number of babies born with schizophrenia in Australia from 1930 to 1971. The national number of births and number of cases are missing for January 1960 are missing.}
 \usage{data(schz)}
@@ -19,12 +19,10 @@
 \source{
   From Prof John McGrath and colleagues, The University of Queensland, Brisbane.
 }
-\examples{
-\donttest{
+\examples{\donttest{
 data(schz)
 plot(schz$yrmon, schz$SczBroad, type='o', xlab='Date',
      ylab='Number of schizophrenia births')
 }
 }
 \keyword{datasets}
-

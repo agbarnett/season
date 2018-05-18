@@ -1,6 +1,6 @@
 \name{kalfil-internal}
 \alias{kalfil}
-\title{Forward and backward sweep of the Kalman filter}
+\title{Forward and Backward Sweep of the Kalman Filter}
 \description{Internal function to do a forward and backward sweep of the Kalman filter, used by \code{nscosinor}. For internal use only.}
 \usage{kalfil(data, f, vartheta, w, tau, lambda, cmean)}
 \arguments{
@@ -13,4 +13,3 @@
   \item{cmean}{used to give a vague prior for the starting values.}
 }
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-

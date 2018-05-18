@@ -1,6 +1,6 @@
 \name{print.Monthmean}
 \alias{print.Monthmean}
-\title{Print the results from monthmean}
+\title{Print the Results from Monthmean}
 \description{Print the monthly means from a \code{Monthmean} object produced by \code{monthmean}.}
 \usage{
 \method{print}{Monthmean}(x, digits=1, ...)

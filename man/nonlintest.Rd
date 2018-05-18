@@ -1,6 +1,6 @@
 \name{nonlintest}
 \alias{nonlintest}
-\title{Test of non-linearity of a time series}
+\title{Test of Non-linearity of a Time Series}
 \description{A bootstrap test of non-linearity in a time series using the third-order moment.}
 \usage{nonlintest(data, n.lag, n.boot, alpha=0.05)}
 \arguments{
@@ -9,7 +9,7 @@
   \item{n.boot}{the number of bootstrap replications (suggested minimum of 100; 1000 or more would be better).}
   \item{alpha}{statistical significance level of test (default=0.05).}
 }
-\details{The test uses \code{aaft} to create linear surrogates with the same second-order properties, but no (third-order) non-linearity. 
+\details{The test uses \code{aaft} to create linear surrogates with the same second-order properties, but no (third-order) non-linearity.
 The third-order moments (\code{third}) of these linear surrogates and the actual series are then compared from lags 0 up to \code{n.lag} (excluding the skew at the co-ordinates (0,0)).
 The bootstrap test works on the overall area outside the limits, and gives an indication of the overall non-linearity.
 The plot using \code{region} shows those co-ordinates of the third order moment that exceed the null hypothesis limits, and can be a useful clue for guessing the type of non-linearity.
@@ -29,9 +29,8 @@ Returns an object of class \dQuote{nonlintest} with the following parts:
 \seealso{\code{print.nonlintest}, \code{plot.nonlintest}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
 \references{Barnett AG \& Wolff RC (2005) A Time-Domain Test for Some Types of Nonlinearity, \emph{IEEE Transactions on Signal Processing}, vol 53, pages 26--33}
-\examples{
-\donttest{
+\examples{\donttest{
 data(CVD)
-\dontrun{test.res=nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
+\dontrun{test.res = nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
 }
 }

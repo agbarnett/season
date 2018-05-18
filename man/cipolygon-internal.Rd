@@ -1,6 +1,6 @@
 \name{cipolygon-internal}
 \alias{cipolygon}
-\title{Function to draw CI polygon}
+\title{Function to Draw CI Polygon}
 \description{Internal function to draw a confidence interval for multiple times as a grey area. For internal use only.}
 \usage{cipolygon(time, lower, upper)}
 \arguments{

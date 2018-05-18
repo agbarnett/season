@@ -1,7 +1,7 @@
 \name{AFL}
 \alias{AFL}
 \docType{data}
-\title{Australian Football League (AFL) players' birthdays for the 2009 season}
+\title{Australian Football League (AFL) Players' Birthdays for the 2009 Season}
 \description{
   The data are: a) the monthly frequencies of birthdays and an expected number based on monthly birth statistics for 1975 to 1991. b) all 617 players' initials and birthdays (excluding non-Australian born players).}
 \usage{data(AFL)}
@@ -18,9 +18,7 @@
 \source{
   Dates of birth from Wikipedia (\url{http://en.wikipedia.org/wiki/Australian_Football_League}).
 }
-\examples{
-\donttest{
-data(AFL)
+\examples{\donttest{data(AFL)
 barplot(AFL$players, names.arg=month.abb)
 }
 }

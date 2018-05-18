@@ -1,7 +1,7 @@
 \name{exercise}
 \alias{exercise}
 \docType{data}
-\title{Exercise data from Queensland, 2005--2007}
+\title{Exercise Data from Queensland, 2005--2007}
 \description{
   Exercise data in longitudinal format from a physical activity intervention study in Logan, Queensland. Some subjects were lost to follow-up, so all three visits are not available for all subjects.}
 \usage{data(exercise)}
@@ -21,8 +21,7 @@
   From Prof Elizabeth Eakin and colleagues, The University of Queensland, Brisbane.
 }
 \references{Eakin E, et al (2009) Telephone counselling for physical activity and diet in type 2 diabetes and hypertension, \emph{Am J of Prev Med}, vol 36, pages 142--9}
-\examples{
-\donttest{
+\examples{\donttest{
 data(exercise)
 boxplot(exercise$walking ~ exercise$month)
 }

@@ -1,6 +1,6 @@
 \name{flagleap}
 \alias{flagleap}
-\title{Count the number of days in the month}
+\title{Count the Number of Days in the Month}
 \description{Counts the number of days per month given a range of dates. Used to adjust monthly count data for the at-risk time period. For internal use only.}
 \usage{flagleap(data, report=TRUE, matchin=FALSE)}
 \arguments{

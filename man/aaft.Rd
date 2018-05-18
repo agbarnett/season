@@ -7,7 +7,7 @@
   \item{data}{a vector of equally spaced numeric observations (time series).}
   \item{nsur}{the number of surrogates to generate (1 or more).}
 }
-\details{The AAFT uses phase-scrambling to create a surrogate of the time series that has a similar spectrum (and hence similar second-order statistics). 
+\details{The AAFT uses phase-scrambling to create a surrogate of the time series that has a similar spectrum (and hence similar second-order statistics).
 The AAFT is useful for testing for non-linearity in a time series, and is used by \code{nonlintest}.}
 \value{
   \item{surrogates}{a matrix of the \code{nsur} surrogates.}
@@ -17,7 +17,7 @@ The AAFT is useful for testing for non-linearity in a time series, and is used b
 \examples{
 \donttest{
 data(CVD)
-surr=aaft(CVD$cvd, nsur=1)
+surr = aaft(CVD$cvd, nsur=1)
 plot(CVD$cvd, type='l')
 lines(surr[,1], col='red')
 }

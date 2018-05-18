@@ -1,7 +1,7 @@
 \name{summary.casecross}
 %%\alias{casecross}
 \alias{summary.casecross}
-\title{Summary of the results of a case-crossover model}
+\title{Summary of the Results of a Case-crossover Model}
 \description{The default summary method for a \code{casecross} object produced by \code{casecross}.}
 \usage{
 \method{summary}{casecross}(object, ...)
@@ -10,7 +10,7 @@
   \item{object}{a \code{casecross} object produced by \code{casecross}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
-\details{Show the number of control days, the average number of control days per case days and the parameter estimates.}
+\details{Shows the number of control days, the average number of control days per case days, and the parameter estimates.}
 \seealso{\code{casecross}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
 

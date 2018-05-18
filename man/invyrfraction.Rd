@@ -1,6 +1,6 @@
 \name{invyrfraction}
 \alias{invyrfraction}
-\title{Inverse fraction of the year}
+\title{Inverse Fraction of the Year}
 \description{Inverts a fraction of the year to a date variable or month fraction.}
 \usage{invyrfraction(frac, type="daily", text=TRUE)}
 \arguments{
@@ -13,8 +13,7 @@
   \item{daym}{date (day and month for \code{daily}) or fractional month (for \code{monthly}).}
 }
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{
-\donttest{
+\examples{\donttest{
 invyrfraction(c(0,0.5,0.99), type='daily')
 invyrfraction(c(0,0.5,0.99), type='monthly')
 }

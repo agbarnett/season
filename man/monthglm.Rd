@@ -1,7 +1,7 @@
 \name{monthglm}
 \alias{monthglm}
 \alias{print.monthglm}
-\title{Fit a GLM with month}
+\title{Fit a GLM with Month}
 \description{Fit a generalized linear model with a categorical
   variable of month.}
 \usage{
@@ -20,7 +20,7 @@ monthglm(formula, data, family=gaussian(), refmonth=1,
   \item{refmonth}{reference month, must be between 1 and 12 (default=1
     for January).}
   \item{monthvar}{name of the month variable which is either
-    an interger (1 to 12) or a character or factor (`Jan' to
+    an integer (1 to 12) or a character or factor (`Jan' to
     `Dec' or `January' to `December') (default='month').}
   \item{offsetmonth}{include an offset to account for the uneven number
     of days in the month (TRUE/FALSE). Should be used for monthly counts
@@ -50,8 +50,7 @@ monthglm(formula, data, family=gaussian(), refmonth=1,
 \seealso{\code{summary.monthglm}, \code{plot.monthglm}}
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{
-\donttest{
+\examples{\donttest{
 data(CVD)
 mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
                   offsetpop=expression(pop/100000), offsetmonth=TRUE)

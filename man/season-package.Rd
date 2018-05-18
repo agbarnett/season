@@ -2,12 +2,12 @@
 \alias{season-package}
 \alias{season}
 \docType{package}
-\title{Tools for uncovering and estimating seasonal patterns.
+\title{Tools for Uncovering and Estimating Seasonal Patterns.
 }
 \description{
   The package contains graphical methods for displaying seasonal data
   and regression models for detecting and estimating seasonal patterns.
-  
+
   The regression models can be applied to normal, Poisson or binomial
   dependent data distributions. Tools are available for both time series
   data (equally spaced in time) and survey data (unequally spaced in
@@ -24,13 +24,6 @@ time).
   are based on health data, but the functions are equally applicable to
   any data with a seasonal pattern.
 
-  \tabular{ll}{
-    Package: \tab season\cr
-    Type: \tab Package\cr
-    Version: \tab 0.3-3\cr
-    Date: \tab 2014-01-07\cr
-    License: \tab GPL (>= 3)\cr
-  }
 }
 \author{Adrian Barnett <a.barnett<at>qut.edu.au>\cr
   Peter Baker <p.baker1<at>uq.edu.au>
