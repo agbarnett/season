@@ -7,7 +7,7 @@
 }
 \arguments{
   \item{x}{a \code{nonlintest} object produced by \code{nonlintest}.}
-  \item{\plot}{display plot (TRUE) or return plot (FALSE)}
+  \item{plot}{display plot (TRUE) or return plot (FALSE)}
   \item{\dots}{additional arguments to \code{plot}}
 }
 \seealso{\code{nonlintest}}
