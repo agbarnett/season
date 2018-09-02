@@ -1,14 +1,14 @@
 ### Plot the results of the non-linear test
 
-plot.nonlintest<-function(x, ...){
+plot.nonlintest<-function(x, plot=TRUE, ...){
 
   z <- NULL # Setting some variables to NULL first (for R CMD check)
-    
+
   ## Check
   if (class(x) != "nonlintest"){
     stop("Object must be of class 'nonlintest'")
-  } 
-  
+  }
+
 if(max(abs(x$region))==0){cat('No points of the third-order moment exceed the test limits\n')}
 
   # Plot (only points that exceed limits)
@@ -25,7 +25,8 @@ if(max(abs(x$region))!=0){
      gplot=ggplot(for.plot, aes(r, s, z = z))+
            stat_contour()+
            geom_tile(aes(fill = z))
-     print(gplot)
+     if(plot==FALSE){return(gplot)}
+     if(plot==TRUE){print(gplot)}
  #zlab='Area outside the test limits', ...)
  #  mtext(side=3,'Points of 3rd order moment that exceed limits');
 } # end of if
