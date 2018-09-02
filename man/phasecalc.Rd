@@ -15,7 +15,6 @@
 }
 \references{Fisher, N.I. (1993) \emph{Statistical Analysis of Circular Data}. Cambridge University Press, Cambridge. Page 31.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{
+\examples{
 phasecalc(cosine=0, sine=1) # pi/2
-}
 }

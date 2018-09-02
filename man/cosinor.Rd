@@ -54,7 +54,7 @@ Returns an object of class \dQuote{Cosinor} with the following parts:
     Health Data}. Springer.}
 \seealso{\code{summary.Cosinor}, \code{plot.Cosinor}}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{
+\examples{
 ## cardiovascular disease data (offset based on number of days in...
 ## ...the month scaled to an average month length)
 data(CVD)
@@ -71,5 +71,4 @@ plot(res)
 # hourly indoor temperature data
 res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
 summary(res)
-}
 }

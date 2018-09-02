@@ -18,8 +18,7 @@ The third-order moment is useful for testing for non-linearity in a time series,
   \item{third}{The estimated third order moment in the range --n.lag to n.lag, including the symmetries.}
 }
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{
+\examples{
 data(CVD)
 third(CVD$cvd, n.lag=12)
-}
 }

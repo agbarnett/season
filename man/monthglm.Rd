@@ -50,10 +50,9 @@ monthglm(formula, data, family=gaussian(), refmonth=1,
 \seealso{\code{summary.monthglm}, \code{plot.monthglm}}
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{
+\examples{
 data(CVD)
 mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
                   offsetpop=expression(pop/100000), offsetmonth=TRUE)
 summary(mmodel)
-}
 }

@@ -31,10 +31,9 @@
   (2000). \emph{The National Morbidity, Mortality, and Air
     Pollution Study, Part I: Methods and Methodologic Issues}.
   Research Report 94, Health Effects Institute, Cambridge MA.}
-\examples{\donttest{
+\examples{
 data(CVD)
 plot(CVD$yrmon, CVD$cvd, type='o', xlab='Date',
      ylab='Number of CVD deaths per month')
-}
 }
 \keyword{datasets}

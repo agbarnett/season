@@ -31,12 +31,6 @@ time).
   Maintainer: Adrian Barnett <a.barnett<at>qut.edu.au>
 }
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
-\keyword{ package
+\keyword{package
   ts
   models}
-\examples{
-\donttest{
-## see examples for \code{\link{cosinor}}, \code{\link{monthglm}},
-##                  \code{\link{nscosinor}} and \code{\link{casecross}}
-}
-}

@@ -12,5 +12,5 @@
 \details{Sinusoidal curves are useful for modelling seasonal data. A sinusoid is plotted using the equation: \eqn{A\cos(ft-P), t=0,\ldots,2 \pi}, where \eqn{A} is the amplitude, \eqn{f} is the frequency, \eqn{t} is time and \eqn{P} is the phase.}
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{sinusoid(amplitude=1, frequency=1, phase=1)}
+\examples{sinusoid(amplitude=1, frequency=1, phase=1)
 }

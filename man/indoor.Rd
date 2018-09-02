@@ -18,10 +18,8 @@
   Adrian G Barnett.
 }
 \examples{
-\donttest{
 data(indoor)
 res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
 summary(res)
-}
 }
 \keyword{datasets}

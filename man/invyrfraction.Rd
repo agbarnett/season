@@ -13,8 +13,7 @@
   \item{daym}{date (day and month for \code{daily}) or fractional month (for \code{monthly}).}
 }
 \author{Adrian Barnett \email{a.barnett<at>qut.edu.au}}
-\examples{\donttest{
+\examples{
 invyrfraction(c(0,0.5,0.99), type='daily')
 invyrfraction(c(0,0.5,0.99), type='monthly')
-}
 }
