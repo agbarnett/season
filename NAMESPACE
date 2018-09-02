@@ -6,7 +6,7 @@ importFrom("stats", "acf", "as.formula", "cpgram", "fft", "fitted",
              "gaussian", "glm", "median", "model.frame", "na.omit",
              "pchisq", "qchisq", "qnorm", "quantile", "relevel", "resid",
              "residuals", "rgamma", "rnorm", "runif", "sd", "time")
-import('MASS','coda','ggplot2','mgcv','survival')
+import('MASS','ggplot2','survival')
 S3method(plot, Cosinor)
 S3method(print, Cosinor)
 S3method(summary, Cosinor)
