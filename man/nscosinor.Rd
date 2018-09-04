@@ -66,7 +66,7 @@ Barnett, A.G., Dobson, A.J. (2004) Estimating trends and seasonality in coronary
 data(CVD)
 # model to fit an annual pattern to the monthly cardiovascular disease data
 f = c(12)
-tau = c(130,10)
+tau = c(10,50)
 \dontrun{res12 = nscosinor(data=CVD, response='adj', cycles=f, niters=5000,
          burnin=1000, tau=tau)
 summary(res12)
