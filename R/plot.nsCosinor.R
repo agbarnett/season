@@ -6,7 +6,7 @@ plot.nsCosinor<-function(x, ...){
   cycles<-x$cycles;
   k<-length(cycles);
   month<-(12*(x$time-floor(x$time)))+1
-  
+
   # season
   smat<-as.matrix(x$season)
   # loop through seasons
@@ -22,17 +22,17 @@ plot.nsCosinor<-function(x, ...){
   # trend
   trend.frame=data.frame(time=x$time,mean=x$trend$mean,lower=x$trend$lower,upper=x$trend$upper,type='Trend')
   plot.frame=rbind(trend.frame,season.frame)
-  
+
   # plot with ribbon
   gplot = ggplot(plot.frame, aes(time, mean)) +
-    geom_ribbon(aes(ymin=lower, ymax=upper, alpha=5),show_guide = FALSE)+
+    geom_ribbon(aes(ymin=lower, ymax=upper, alpha=5), show.legend = FALSE)+
     geom_line()+
     theme_bw()+
-    xlab('Time') +        
-    ylab(' ') +        
+    xlab('Time') +
+    ylab(' ') +
     facet_grid(type~.,scales='free_y')
-  print(gplot)
-  
+#  print(gplot)
+
   # return
   return(gplot)
 }
