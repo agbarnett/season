@@ -31,6 +31,6 @@ time).
   Maintainer: Adrian Barnett <a.barnett<at>qut.edu.au>
 }
 \references{Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}. Springer.}
-\keyword{package
-  ts
-  models}
+\keyword{package}
+\keyword{ts}
+\keyword{models}
