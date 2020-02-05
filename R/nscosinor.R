@@ -68,7 +68,7 @@
       phasechain[iter+1,]<-result$phase
       cmean<-result$cmean
       ## Output iteration progress 
-      if (iter%%div==0){cat("Iteration number",iter,"of",niters,"\n",sep=" ")}
+      if (iter%%div==0){cat("Iteration number",iter,"of",niters,"\r",sep=" ")}
     }
     ## Get mean and percentiles of alpha (trend and season), and overall fitted values
     trend<-as.data.frame(matrix(0,n,3))
