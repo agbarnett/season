@@ -10,7 +10,7 @@ print.summary.Cosinor <- function(x, ...){
     x$lphase=round(x$lphase,x$digits)
  }
 
-  cat('Cosinor test\n')
+  cat('Cosinor test:\n')
   cat('Number of observations =',x$n,'\n')
   cat('Amplitude =',round(x$amp,x$digits),x$amp.scale,'\n')
   cat('Phase:',x$phase,'\n')
@@ -23,4 +23,8 @@ print.summary.Cosinor <- function(x, ...){
     cat('Significant seasonality based on adjusted significance level of',
         x$alpha/2,' = ',x$significant,'\n', ...)
   }
+  
+  # Added March 2020
+  cat('\nRegression coefficients:\n')
+  print(data.frame(x$ctable))
 }
