@@ -40,7 +40,8 @@ summary.Cosinor = function(object, digits = 2, ...){
  lphase = invyrfraction(frac = lphaser/(2*pi),type = object$call$type,text = object$call$text)
 # statistical signficance
  toreport = rbind(s$coefficients[cindex,],s$coefficients[sindex,])
- significant = as.logical(sum(toreport[,4]<(object$call$alpha/2)))
+ adjusted = eval(object$call$alpha)/2
+ significant = as.logical(sum(toreport[,4]<adjusted))
 # returns
  ret = list()
  ret$n = length(object$residuals)
@@ -53,7 +54,7 @@ summary.Cosinor = function(object, digits = 2, ...){
  ret$digits = digits
  ret$text = object$call$text # display phase as text (TRUE/FALSE)
  ret$type = type
- ret$ctable = summary(res$glm)$coefficients # regression table (march 2020)
+ ret$ctable = s$coefficients # regression table (march 2020)
  class(ret) = "summary.Cosinor"
  ret # uses print.summary.Cosinor
 }

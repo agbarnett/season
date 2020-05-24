@@ -17,11 +17,11 @@ print.summary.Cosinor <- function(x, ...){
   cat('Low point:',x$lphase,'\n')
   if(x$type=='hourly'){
     cat('Significant circadian pattern based on adjusted significance level of',
-        x$alpha/2,' = ',x$significant,'\n', ...)
+        eval(x$alpha)/2,' = ',x$significant,'\n', ...)
   }
   if(x$type!='hourly'){
     cat('Significant seasonality based on adjusted significance level of',
-        x$alpha/2,' = ',x$significant,'\n', ...)
+        eval(x$alpha)/2,' = ',x$significant,'\n', ...)
   }
   
   # Added March 2020
