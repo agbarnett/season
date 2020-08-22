@@ -12,7 +12,7 @@
 # cardiovascular disease data
 # (use an offset of the scaled number of days in a month)
 data(CVD)
-model = cosinor(cvd~1, date=month, data=CVD, type='monthly',
+model = cosinor(cvd~1, date='month', data=CVD, type='monthly',
                 family=poisson(), offsetmonth=TRUE)
 seasrescheck(resid(model))
 }
