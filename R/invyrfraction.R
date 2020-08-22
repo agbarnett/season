@@ -2,7 +2,7 @@
 # convert fraction of the year into a date (day and month)
 # month on a scale of [1,13)
 # type =  monthly/weekly/daily
-# Jan 2014
+# Jan 2014 (minor update Aug 2020)
 
 invyrfraction<-function(frac,type='daily',text=TRUE){
   n<-length(frac)
@@ -33,7 +33,7 @@ invyrfraction<-function(frac,type='daily',text=TRUE){
      if (text==FALSE){daym<-month}
   }
   if (type=='hourly'){
-    month<-(frac*24)+1;
+    month<-(frac*24); # do not add one for hour, start at 00:00
     if (text==TRUE){daym<-paste('Hour =',round(month,1))}
     if (text==FALSE){daym<-month}
   }
