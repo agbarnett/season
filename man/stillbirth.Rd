@@ -19,7 +19,7 @@
   }
 }
 \source{
-  From Queensland Health (\url{http://www.health.qld.gov.au/}).
+  From Queensland Health (\url{https://www.health.qld.gov.au/).
 }
 \examples{
 data(stillbirth)
