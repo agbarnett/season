@@ -23,7 +23,6 @@
   \item{div}{divisor at which MCMC sample progress is reported (default=50).}
   \item{monthly}{TRUE for monthly data.}
   \item{alpha}{Statistical significance level used by the confidence intervals.}
-  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{This model is designed to decompose an equally spaced time series into a trend, season(s) and noise. A seasonal estimate is estimated as \eqn{s_t=A_t\cos(\omega_t-P_t)},
 where \emph{t} is time, \eqn{A_t} is the non-stationary amplitude,
