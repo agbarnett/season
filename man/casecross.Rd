@@ -7,7 +7,7 @@
 \arguments{
   \item{formula}{formula. The dependent variable should be an integer count (e.g., daily number of deaths).}
   \item{data}{data set as a data frame.}
-  \item{exclusion}{exclusion period (in days) around cases, set to 2 (default). Must be positive and smaller than \code{stratalength}.}
+  \item{exclusion}{exclusion period (in days) around cases, set to 2 (default). Must be greater than or equal to zero and smaller than \code{stratalength}.}
   \item{stratalength}{length of stratum in days, set to 28 (default).}
   \item{matchdow}{match case and control days using day of the week (TRUE/default=FALSE). This matching is in addition to the strata matching.}
   \item{usefinalwindow}{use the last stratum in the time series, which is likely to contain less days than all the other strata (TRUE/default=FALSE).}
