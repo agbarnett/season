@@ -1,4 +1,5 @@
 ## print.summary.nsCosinor.R
+#' @method print summary.nscosinor
 print.summary.nsCosinor <- function(x, ...){
 
   if (class(x)!="summary.nsCosinor"){

@@ -1,3 +1,5 @@
+
+#' @method print summary.monthglm
 print.summary.monthglm <- function(x, ...){
   ## report results
   cat('Number of observations =',x$n,'\n')

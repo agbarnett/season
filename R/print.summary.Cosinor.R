@@ -1,4 +1,6 @@
 # Oct 2011
+
+#' @method print summary.Cosinor 
 print.summary.Cosinor <- function(x, ...){
   ## report results
   if (class(x)!="summary.Cosinor"){

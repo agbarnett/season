@@ -1,5 +1,18 @@
 ## print.nonlintest.R
 ## Prints basic results from nonlintest
+
+
+#' Print the Results of the Non-linear Test
+#' 
+#' The default print method for a \code{nonlintest} object produced by
+#' \code{nonlintest}.
+#' 
+#' 
+#' @param x a \code{nonlintest} object produced by \code{nonlintest}.
+#' @param \dots additional arguments to \code{plot}
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @seealso \code{nonlintest}, \code{plot.nonlintest}
+#' @export
 print.nonlintest<-function(x, ...){
   ## Check
   if (class(x) != "nonlintest"){
