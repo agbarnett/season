@@ -41,22 +41,21 @@ NULL
 #' based on monthly birth statistics for 1975 to 1991. b) all 617 players'
 #' initials and birthdays (excluding non-Australian born players).
 #' 
-#' @name AFL
-#' @docType data
-#' @format A list with the following 5 variables.  \describe{
-#' \item{list("month")}{integer month (1 to 12)} \item{list("players")}{number
+#' @format A list with the following 5 variables. 
+#'  \describe{
+#' \item{month}{integer month (1 to 12)} \item{players}{number
 #' of players born in each month (12 observations)}
-#' \item{list("expected")}{expected number of players born in each month (12
-#' observations)} \item{list("initials")}{player initials (617 observations)}
-#' \item{list("dob")}{date of birth in date format (617 observations;
+#' \item{expected}{expected number of players born in each month (12
+#' observations)} \item{initials}{player initials (617 observations)}
+#' \item{dob}{date of birth in date format (617 observations;
 #' year-month-day format)} }
 #' @source Dates of birth from Wikipedia.
-#' @keywords datasets
 #' @examples
 #' \donttest{data(AFL)
 #' barplot(AFL$players, names.arg=month.abb)
 #' }
 #' 
+ "AFL"
 NULL
 
 
@@ -66,18 +65,16 @@ NULL
 #' over in Los Angeles for the years 1987 to 2000.
 #' 
 #' 
-#' @name CVD
-#' @docType data
 #' @format A data frame with 168 observations on the following 8 variables.
-#' \describe{ \item{list("year")}{year of death} \item{list("month")}{month of
-#' death} \item{list("yrmon")}{a combination of year and month:
-#' \eqn{year+(month-1)/12}} \item{list("cvd")}{monthly number of CVD deaths}
-#' \item{list("tmpd")}{mean monthly temperature (degrees Fahrenheit)}
-#' \item{list("pop")}{Los Angeles population aged 75+ in the year 2000 (this
+#' \describe{ \item{year}{year of death} \item{month}{month of
+#' death} \item{yrmon}{a combination of year and month:
+#' \eqn{year+(month-1)/12}} \item{cvd}{monthly number of CVD deaths}
+#' \item{tmpd}{mean monthly temperature (degrees Fahrenheit)}
+#' \item{pop}{Los Angeles population aged 75+ in the year 2000 (this
 #' value is constant as only one year was available, but in general the
 #' population will (of course) change over time)}
-#' \item{list("ndaysmonth")}{number of days in each month (used as an offset)}
-#' \item{list("adj")}{adjusted number of CVD deaths per month using a
+#' \item{ndaysmonth}{number of days in each month (used as an offset)}
+#' \item{adj}{adjusted number of CVD deaths per month using a
 #' standardised month length. Monthly number of CVD deaths multiplied by
 #' (365.25/12)/ndaysmonth. So the standard month length is 30.4 days.} }
 #' @references Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000).
@@ -92,6 +89,7 @@ NULL
 #' plot(CVD$yrmon, CVD$cvd, type='o', xlab='Date',
 #'      ylab='Number of CVD deaths per month')
 #' 
+ "CVD"
 NULL
 
 
@@ -104,25 +102,25 @@ NULL
 #' over in Los Angeles for the years 1987 to 2000.
 #' 
 #' 
-#' @name CVDdaily
-#' @docType data
+#' 
+#' 
 #' @format A data frame with 5114 observations on the following 16 variables.
-#' \describe{ \item{list("date")}{date of death in date format
-#' (year-month-day)} \item{list("cvd")}{daily number of CVD deaths}
-#' \item{list("dow")}{day of the week (character)} \item{list("tmpd")}{daily
-#' mean temperature (degrees Fahrenheit)} \item{list("o3mean")}{daily mean
-#' ozone (parts per billion)} \item{list("o3tmean")}{daily trimmed mean ozone
-#' (parts per billion)} \item{list("Mon")}{indicator variable for Monday}
-#' \item{list("Tue")}{indicator variable for Tuesday}
-#' \item{list("Wed")}{indicator variable for Wednesday}
-#' \item{list("Thu")}{indicator variable for Thursday}
-#' \item{list("Fri")}{indicator variable for Friday}
-#' \item{list("Sat")}{indicator variable for Saturday}
-#' \item{list("month")}{month (integer from 1 to 12)}
-#' \item{list("winter")}{indicator variable for winter}
-#' \item{list("spring")}{indicator variable for spring}
-#' \item{list("summer")}{indicator variable for summer}
-#' \item{list("autumn")}{indicator variable for autumn} }
+#' \describe{ \item{date}{date of death in date format
+#' (year-month-day)} \item{cvd}{daily number of CVD deaths}
+#' \item{dow}{day of the week (character)} \item{tmpd}{daily
+#' mean temperature (degrees Fahrenheit)} \item{o3mean}{daily mean
+#' ozone (parts per billion)} \item{o3tmean}{daily trimmed mean ozone
+#' (parts per billion)} \item{Mon}{indicator variable for Monday}
+#' \item{Tue}{indicator variable for Tuesday}
+#' \item{Wed}{indicator variable for Wednesday}
+#' \item{Thu}{indicator variable for Thursday}
+#' \item{Fri}{indicator variable for Friday}
+#' \item{Sat}{indicator variable for Saturday}
+#' \item{month}{month (integer from 1 to 12)}
+#' \item{winter}{indicator variable for winter}
+#' \item{spring}{indicator variable for spring}
+#' \item{summer}{indicator variable for summer}
+#' \item{autumn}{indicator variable for autumn} }
 #' @references Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000).
 #' \emph{The National Morbidity, Mortality, and Air Pollution Study, Part I:
 #' Methods and Methodologic Issues}. Research Report 94, Health Effects
@@ -135,7 +133,7 @@ NULL
 #' plot(CVDdaily$date, CVDdaily$cvd, type='p', xlab='Date',
 #'      ylab='Number of CVD deaths')
 #' }
-#' 
+ "CVDdaily"
 NULL
 
 
@@ -149,14 +147,12 @@ NULL
 #' three visits are not available for all subjects.
 #' 
 #' 
-#' @name exercise
-#' @docType data
 #' @format A data frame with 1302 observations on the following 7 variables.
-#' \describe{ \item{list("id")}{subject number} \item{list("visit")}{visit
-#' number (1, 2 or 3)} \item{list("date")}{date of interview (year-month-day)}
-#' \item{list("year")}{year of interview} \item{list("month")}{month of
-#' interview} \item{list("bmi")}{body mass index at visit 1 (kg/m\eqn{^2})}
-#' \item{list("walking")}{walking time per week (in minutes) at each visit} }
+#' \describe{ \item{id}{subject number} \item{visit}{visit
+#' number (1, 2 or 3)} \item{date}{date of interview (year-month-day)}
+#' \item{year}{year of interview} \item{month}{month of
+#' interview} \item{bmi}{body mass index at visit 1 (kg/m\eqn{^2})}
+#' \item{walking}{walking time per week (in minutes) at each visit} }
 #' @references Eakin E, et al (2009) Telephone counselling for physical
 #' activity and diet in type 2 diabetes and hypertension, \emph{Am J of Prev
 #' Med}, vol 36, pages 142--9
@@ -168,6 +164,7 @@ NULL
 #' data(exercise)
 #' boxplot(exercise$walking ~ exercise$month)
 #' 
+ "exercise"
 NULL
 
 
@@ -185,9 +182,9 @@ NULL
 #' @name indoor
 #' @docType data
 #' @format A \code{data.frame} with the following 3 variables.  \describe{
-#' \item{list("datetime")}{date and time in \code{POSIXlt} format}
-#' \item{list("living")}{the living room temperature}
-#' \item{list("bedroom")}{the bedroom temperature} }
+#' \item{datetime}{date and time in \code{POSIXlt} format}
+#' \item{living}{the living room temperature}
+#' \item{bedroom}{the bedroom temperature} }
 #' @source Adrian G Barnett.
 #' @keywords datasets
 #' @examples
@@ -261,15 +258,14 @@ NULL
 #' January 1960 are missing.
 #' 
 #' 
-#' @name schz
-#' @docType data
+#' 
 #' @format A data frame with 504 observations on the following 6 variables.
-#' \describe{ \item{list("year")}{year of birth} \item{list("month")}{month of
-#' birth} \item{list("yrmon")}{a combination of year and month:
-#' \eqn{year+(month-1)/12}} \item{list("NBirths")}{monthly number of births in
-#' Australia, used as an offset} \item{list("SczBroad")}{monthly number of
+#' \describe{ \item{year}{year of birth} \item{month}{month of
+#' birth} \item{yrmon}{a combination of year and month:
+#' \eqn{year+(month-1)/12}} \item{NBirths}{monthly number of births in
+#' Australia, used as an offset} \item{SczBroad}{monthly number of
 #' schizophrenia births using the broad diagnostic criteria}
-#' \item{list("SOI")}{southern oscillation index} }
+#' \item{SOI}{southern oscillation index} }
 #' @source From Prof John McGrath and colleagues, The University of Queensland,
 #' Brisbane.
 #' @keywords datasets
@@ -279,6 +275,7 @@ NULL
 #' plot(schz$yrmon, schz$SczBroad, type='o', xlab='Date',
 #'      ylab='Number of schizophrenia births')
 #' 
+ "schz"
 NULL
 
 #' Stillbirths in Queensland, 1998--2000
@@ -288,20 +285,21 @@ NULL
 #' confidentiality the day of birth has been randomly re-ordered.
 #' 
 #' 
-#' @name stillbirth
-#' @docType data
+#' 
+#' 
 #' @format A data frame with 60,110 observations on the following 7 variables.
-#' \describe{ \item{list("dob")}{date of birth (year-month-day)}
-#' \item{list("year")}{year of birth} \item{list("month")}{month of birth}
-#' \item{list("yrmon")}{a combination of year and month:
-#' \eqn{year+(month-1)/12}} \item{list("seifa")}{SEIFA score, an area level
+#' \describe{ \item{dob}{date of birth (year-month-day)}
+#' \item{year}{year of birth} \item{month}{month of birth}
+#' \item{yrmon}{a combination of year and month:
+#' \eqn{year+(month-1)/12}} \item{seifa}{SEIFA score, an area level
 #' measure of socioeconomic status in quintiles}
-#' \item{list("gestation")}{gestation in weeks}
-#' \item{list("stillborn")}{stillborn (yes/no); 1=Yes, 0=No} }
+#' \item{gestation}{gestation in weeks}
+#' \item{stillborn}{stillborn (yes/no); 1=Yes, 0=No} }
 #' @source From Queensland Health.
 #' @examples
 #' 
 #' data(stillbirth)
 #' table(stillbirth$month, stillbirth$stillborn)
 #' 
+"stillbirth"
 NULL

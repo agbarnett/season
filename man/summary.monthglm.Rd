@@ -2,7 +2,6 @@
 % Please edit documentation in R/summary.monthglm.R
 \name{summary.monthglm}
 \alias{summary.monthglm}
-\alias{print.summary.monthglm}
 \title{Summary for a Monthglm}
 \usage{
 \method{summary}{monthglm}(object, ...)
@@ -11,9 +10,6 @@
 \item{object}{a \code{monthglm} object produced by \code{nscosinor}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
-
-\item{x}{a \code{summary.monthglm} object produced by
-\code{summary.monthglm}.}
 }
 \value{
 \item{n}{sample size.} \item{month.ests}{parameter estimates for the

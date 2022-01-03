@@ -6,16 +6,19 @@
 \title{Schizophrenia Births in Australia, 1930--1971}
 \format{
 A data frame with 504 observations on the following 6 variables.
-\describe{ \item{list("year")}{year of birth} \item{list("month")}{month of
-birth} \item{list("yrmon")}{a combination of year and month:
-\eqn{year+(month-1)/12}} \item{list("NBirths")}{monthly number of births in
-Australia, used as an offset} \item{list("SczBroad")}{monthly number of
+\describe{ \item{year}{year of birth} \item{month}{month of
+birth} \item{yrmon}{a combination of year and month:
+\eqn{year+(month-1)/12}} \item{NBirths}{monthly number of births in
+Australia, used as an offset} \item{SczBroad}{monthly number of
 schizophrenia births using the broad diagnostic criteria}
-\item{list("SOI")}{southern oscillation index} }
+\item{SOI}{southern oscillation index} }
 }
 \source{
 From Prof John McGrath and colleagues, The University of Queensland,
 Brisbane.
+}
+\usage{
+schz
 }
 \description{
 Monthly number of babies born with schizophrenia in Australia from 1930 to

@@ -6,16 +6,19 @@
 \title{Stillbirths in Queensland, 1998--2000}
 \format{
 A data frame with 60,110 observations on the following 7 variables.
-\describe{ \item{list("dob")}{date of birth (year-month-day)}
-\item{list("year")}{year of birth} \item{list("month")}{month of birth}
-\item{list("yrmon")}{a combination of year and month:
-\eqn{year+(month-1)/12}} \item{list("seifa")}{SEIFA score, an area level
+\describe{ \item{dob}{date of birth (year-month-day)}
+\item{year}{year of birth} \item{month}{month of birth}
+\item{yrmon}{a combination of year and month:
+\eqn{year+(month-1)/12}} \item{seifa}{SEIFA score, an area level
 measure of socioeconomic status in quintiles}
-\item{list("gestation")}{gestation in weeks}
-\item{list("stillborn")}{stillborn (yes/no); 1=Yes, 0=No} }
+\item{gestation}{gestation in weeks}
+\item{stillborn}{stillborn (yes/no); 1=Yes, 0=No} }
 }
 \source{
 From Queensland Health.
+}
+\usage{
+stillbirth
 }
 \description{
 Monthly number of stillbirths in Australia from 1998 to 2000. It is a rare
@@ -28,3 +31,4 @@ data(stillbirth)
 table(stillbirth$month, stillbirth$stillborn)
 
 }
+\keyword{datasets}

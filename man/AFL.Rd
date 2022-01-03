@@ -5,16 +5,20 @@
 \alias{AFL}
 \title{Australian Football League (AFL) Players' Birthdays for the 2009 Season}
 \format{
-A list with the following 5 variables.  \describe{
-\item{list("month")}{integer month (1 to 12)} \item{list("players")}{number
+A list with the following 5 variables. 
+ \describe{
+\item{month}{integer month (1 to 12)} \item{players}{number
 of players born in each month (12 observations)}
-\item{list("expected")}{expected number of players born in each month (12
-observations)} \item{list("initials")}{player initials (617 observations)}
-\item{list("dob")}{date of birth in date format (617 observations;
+\item{expected}{expected number of players born in each month (12
+observations)} \item{initials}{player initials (617 observations)}
+\item{dob}{date of birth in date format (617 observations;
 year-month-day format)} }
 }
 \source{
 Dates of birth from Wikipedia.
+}
+\usage{
+AFL
 }
 \description{
 The data are: a) the monthly frequencies of birthdays and an expected number

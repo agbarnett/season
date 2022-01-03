@@ -17,10 +17,8 @@
 #' non-stationarity. This is because a larger standard deviation means more
 #' change over time.
 #' 
-#' @aliases summary.nsCosinor print.summary.nsCosinor
+#' @aliases summary.nsCosinor 
 #' @param object a \code{nsCosinor} object produced by \code{nscosinor}.
-#' @param x a \code{summary.nsCosinor} object produced by
-#' \code{summary.nsCosinor}.
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{cycles}{vector of cycles in units of time, e.g., for a six and
 #' twelve month pattern \code{cycles=c(6,12)}.} \item{niters}{total number of

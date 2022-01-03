@@ -8,10 +8,8 @@
 #' was used then the estimates are shown as rate ratios. If logistic regression
 #' was used then the estimates are shown as odds ratios.
 #' 
-#' @aliases summary.monthglm print.summary.monthglm
+#' @aliases summary.monthglm 
 #' @param object a \code{monthglm} object produced by \code{nscosinor}.
-#' @param x a \code{summary.monthglm} object produced by
-#' \code{summary.monthglm}.
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{n}{sample size.} \item{month.ests}{parameter estimates for the
 #' intercept and months.} \item{month.effect}{scale of the monthly effects.

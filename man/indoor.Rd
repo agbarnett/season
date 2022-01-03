@@ -6,9 +6,9 @@
 \title{Indoor Temperature Data}
 \format{
 A \code{data.frame} with the following 3 variables.  \describe{
-\item{list("datetime")}{date and time in \code{POSIXlt} format}
-\item{list("living")}{the living room temperature}
-\item{list("bedroom")}{the bedroom temperature} }
+\item{datetime}{date and time in \code{POSIXlt} format}
+\item{living}{the living room temperature}
+\item{bedroom}{the bedroom temperature} }
 }
 \source{
 Adrian G Barnett.

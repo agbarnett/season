@@ -6,15 +6,18 @@
 \title{Exercise Data from Queensland, 2005--2007}
 \format{
 A data frame with 1302 observations on the following 7 variables.
-\describe{ \item{list("id")}{subject number} \item{list("visit")}{visit
-number (1, 2 or 3)} \item{list("date")}{date of interview (year-month-day)}
-\item{list("year")}{year of interview} \item{list("month")}{month of
-interview} \item{list("bmi")}{body mass index at visit 1 (kg/m\eqn{^2})}
-\item{list("walking")}{walking time per week (in minutes) at each visit} }
+\describe{ \item{id}{subject number} \item{visit}{visit
+number (1, 2 or 3)} \item{date}{date of interview (year-month-day)}
+\item{year}{year of interview} \item{month}{month of
+interview} \item{bmi}{body mass index at visit 1 (kg/m\eqn{^2})}
+\item{walking}{walking time per week (in minutes) at each visit} }
 }
 \source{
 From Prof Elizabeth Eakin and colleagues, The University of
 Queensland, Brisbane.
+}
+\usage{
+exercise
 }
 \description{
 Exercise data in longitudinal format from a physical activity intervention

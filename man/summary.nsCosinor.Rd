@@ -2,7 +2,6 @@
 % Please edit documentation in R/summary.nsCosinor.R
 \name{summary.nsCosinor}
 \alias{summary.nsCosinor}
-\alias{print.summary.nsCosinor}
 \title{Summary for a Non-stationary Cosinor}
 \usage{
 \method{summary}{nsCosinor}(object, ...)
@@ -11,9 +10,6 @@
 \item{object}{a \code{nsCosinor} object produced by \code{nscosinor}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
-
-\item{x}{a \code{summary.nsCosinor} object produced by
-\code{summary.nsCosinor}.}
 }
 \value{
 \item{cycles}{vector of cycles in units of time, e.g., for a six and

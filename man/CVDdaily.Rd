@@ -6,25 +6,28 @@
 \title{Daily Cardiovascular Deaths in Los Angeles, 1987--2000}
 \format{
 A data frame with 5114 observations on the following 16 variables.
-\describe{ \item{list("date")}{date of death in date format
-(year-month-day)} \item{list("cvd")}{daily number of CVD deaths}
-\item{list("dow")}{day of the week (character)} \item{list("tmpd")}{daily
-mean temperature (degrees Fahrenheit)} \item{list("o3mean")}{daily mean
-ozone (parts per billion)} \item{list("o3tmean")}{daily trimmed mean ozone
-(parts per billion)} \item{list("Mon")}{indicator variable for Monday}
-\item{list("Tue")}{indicator variable for Tuesday}
-\item{list("Wed")}{indicator variable for Wednesday}
-\item{list("Thu")}{indicator variable for Thursday}
-\item{list("Fri")}{indicator variable for Friday}
-\item{list("Sat")}{indicator variable for Saturday}
-\item{list("month")}{month (integer from 1 to 12)}
-\item{list("winter")}{indicator variable for winter}
-\item{list("spring")}{indicator variable for spring}
-\item{list("summer")}{indicator variable for summer}
-\item{list("autumn")}{indicator variable for autumn} }
+\describe{ \item{date}{date of death in date format
+(year-month-day)} \item{cvd}{daily number of CVD deaths}
+\item{dow}{day of the week (character)} \item{tmpd}{daily
+mean temperature (degrees Fahrenheit)} \item{o3mean}{daily mean
+ozone (parts per billion)} \item{o3tmean}{daily trimmed mean ozone
+(parts per billion)} \item{Mon}{indicator variable for Monday}
+\item{Tue}{indicator variable for Tuesday}
+\item{Wed}{indicator variable for Wednesday}
+\item{Thu}{indicator variable for Thursday}
+\item{Fri}{indicator variable for Friday}
+\item{Sat}{indicator variable for Saturday}
+\item{month}{month (integer from 1 to 12)}
+\item{winter}{indicator variable for winter}
+\item{spring}{indicator variable for spring}
+\item{summer}{indicator variable for summer}
+\item{autumn}{indicator variable for autumn} }
 }
 \source{
 From the NMMAPS study.
+}
+\usage{
+CVDdaily
 }
 \description{
 Daily number of deaths from cardiovascular disease in people aged 75 and
@@ -36,7 +39,6 @@ data(CVDdaily)
 plot(CVDdaily$date, CVDdaily$cvd, type='p', xlab='Date',
      ylab='Number of CVD deaths')
 }
-
 }
 \references{
 Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000).

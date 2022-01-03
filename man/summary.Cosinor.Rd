@@ -2,7 +2,6 @@
 % Please edit documentation in R/summary.Cosinor.R
 \name{summary.Cosinor}
 \alias{summary.Cosinor}
-\alias{print.summary.Cosinor}
 \title{Summary for a Cosinor}
 \usage{
 \method{summary}{Cosinor}(object, digits = 2, ...)
@@ -13,8 +12,6 @@
 \item{digits}{minimal number of significant digits, see \code{print.default}}
 
 \item{\dots}{further arguments passed to or from other methods.}
-
-\item{x}{a \code{summary.Cosinor} object produced by \code{summary.Cosinor}.}
 }
 \value{
 \item{n}{sample size.} \item{amp}{estimated amplitude.}

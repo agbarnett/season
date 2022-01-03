@@ -16,9 +16,8 @@
 #' amplitude is given on a probability scale. For Poisson regression the
 #' amplitude is given on an absolute scale.
 #' 
-#' @aliases summary.Cosinor print.summary.Cosinor
+#' 
 #' @param object a \code{Cosinor} object produced by \code{cosinor}.
-#' @param x a \code{summary.Cosinor} object produced by \code{summary.Cosinor}.
 #' @param digits minimal number of significant digits, see \code{print.default}
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{n}{sample size.} \item{amp}{estimated amplitude.}

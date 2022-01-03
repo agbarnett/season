@@ -6,20 +6,23 @@
 \title{Cardiovascular Deaths in Los Angeles, 1987--2000}
 \format{
 A data frame with 168 observations on the following 8 variables.
-\describe{ \item{list("year")}{year of death} \item{list("month")}{month of
-death} \item{list("yrmon")}{a combination of year and month:
-\eqn{year+(month-1)/12}} \item{list("cvd")}{monthly number of CVD deaths}
-\item{list("tmpd")}{mean monthly temperature (degrees Fahrenheit)}
-\item{list("pop")}{Los Angeles population aged 75+ in the year 2000 (this
+\describe{ \item{year}{year of death} \item{month}{month of
+death} \item{yrmon}{a combination of year and month:
+\eqn{year+(month-1)/12}} \item{cvd}{monthly number of CVD deaths}
+\item{tmpd}{mean monthly temperature (degrees Fahrenheit)}
+\item{pop}{Los Angeles population aged 75+ in the year 2000 (this
 value is constant as only one year was available, but in general the
 population will (of course) change over time)}
-\item{list("ndaysmonth")}{number of days in each month (used as an offset)}
-\item{list("adj")}{adjusted number of CVD deaths per month using a
+\item{ndaysmonth}{number of days in each month (used as an offset)}
+\item{adj}{adjusted number of CVD deaths per month using a
 standardised month length. Monthly number of CVD deaths multiplied by
 (365.25/12)/ndaysmonth. So the standard month length is 30.4 days.} }
 }
 \source{
 From the NMMAPS study.
+}
+\usage{
+CVD
 }
 \description{
 Monthly number of deaths from cardiovascular disease in people aged 75 and
