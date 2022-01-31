@@ -1,4 +1,27 @@
 # Calculates the periodogram
+
+
+#' Periodogram
+#' 
+#' Estimated periodogram using the fast Fourier transform (\code{fft}).
+#' 
+#' 
+#' @param data a data frame.
+#' @param adjmean subtract the mean from the series before calculating the
+#' periodogram (default=TRUE).
+#' @param plot plot the estimated periodogram (default=TRUE).
+#' @return \item{peri}{periodogram, I(\eqn{\omega}).} \item{f}{frequencies in
+#' radians, \eqn{\omega}.} \item{c}{frequencies in cycles of time,
+#' \eqn{2\pi/\omega}.} \item{amp}{amplitude periodogram.} \item{phase}{phase
+#' periodogram.}
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @examples
+#' \donttest{
+#' data(CVD)
+#' p = peri(CVD$cvd)
+#' }
+#' 
+#' @export peri
 'peri'<-function(data,adjmean=TRUE,plot=TRUE){
   
   xaxis <- yaxis <- NULL # Setting some variables to NULL first (for R CMD check)

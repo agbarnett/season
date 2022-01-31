@@ -1,6 +1,16 @@
 # cipolygon.R
 # function to draw CI polygon
 
+#' Function to Draw CI Polygon
+#' 
+#' Internal function to draw a confidence interval for multiple times as a grey
+#' area. For internal use only.
+#' 
+#' @name cipolygon
+#' @param time x-axis.
+#' @param lower lower limit of the confidence level.
+#' @param upper upper limit of the confidence level.
+#' @author Adrian Barnett \email{a.barnett@@qut.edu.au}
 cipolygon<-function(time,lower,upper){
  n<-length(time)
  points<-matrix(nrow=n*2,ncol=2)

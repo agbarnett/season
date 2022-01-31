@@ -2,6 +2,29 @@
 # seasonal residual checks
 # April 2009
 
+
+
+#' Seasonal Residual Checks
+#' 
+#' Tests the residuals for any remaining seasonality.
+#' 
+#' Plots: i) histogram of the residuals, ii) a scatter plot against residual
+#' order, iii) the autocovariance, iv) the cumulative periodogram (see
+#' \code{\link{cpgram}})
+#' 
+#' @param res residuals from some time series regression model.
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @examples
+#' \donttest{
+#' # cardiovascular disease data
+#' # (use an offset of the scaled number of days in a month)
+#' data(CVD)
+#' model = cosinor(cvd~1, date='month', data=CVD, type='monthly',
+#'                 family=poisson(), offsetmonth=TRUE)
+#' seasrescheck(resid(model))
+#' }
+#' 
+#' @export seasrescheck
 seasrescheck<-function(res){
 op <- par(no.readonly = TRUE) # the whole list of settable par's.
 par(mfrow=c(2,2),lwd=1)

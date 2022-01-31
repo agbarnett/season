@@ -1,6 +1,21 @@
 # Forward and backward sweep of the Kalman filter
-`kalfil` <-
-function(data,f,vartheta,w,tau,lambda,cmean){
+
+#' Forward and Backward Sweep of the Kalman Filter
+#' 
+#' Internal function to do a forward and backward sweep of the Kalman filter,
+#' used by \code{nscosinor}. For internal use only.
+#' 
+#' 
+#' @name kalfil
+#' @param data a data frame.
+#' @param f vector of cycles in units of time.
+#' @param vartheta variance for noise.
+#' @param w variance of seasonal component.
+#' @param tau controls flexibility of trend and season.
+#' @param lambda distance between observations.
+#' @param cmean used to give a vague prior for the starting values.
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+kalfil <- function(data,f,vartheta,w,tau,lambda,cmean){
 # Setting up matrices
   k<-length(f); # Number of frequencies
   kk<-2*(k+1);

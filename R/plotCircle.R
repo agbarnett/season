@@ -3,6 +3,27 @@
 # Assumes estimates are in numerical order, 1=Jan, 2=Feb, etc
 # April 2009
 
+
+
+#' Circular Plot
+#' 
+#' Circular plot of a monthly variable.
+#' 
+#' This circular plot can be useful for estimates of an annual seasonal
+#' pattern. Darker shades of grey correspond to larger numbers.
+#' 
+#' @param months monthly variable to plot, the shades of grey of the 12
+#' segments are proportional to this variable. The first result is assumed to
+#' be January, the second February, and so on.
+#' @param dp decimal places for statistics, default=1.
+#' @param \dots additional arguments to \code{plot}
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @examples
+#' \donttest{
+#' plotCircle(months=seq(1,12,1),dp=0)
+#' }
+#' 
+#' @export 
 plotCircle<-function(months,dp=1, ...){
 if ((length(months)==12)==FALSE) {stop('Length of monthly estimates must be 12')}
 op <- par(no.readonly = TRUE) # the whole list of settable par's.
