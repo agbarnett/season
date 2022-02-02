@@ -9,3 +9,5 @@ d<-third(c(1:5),n.lag=5,centre=FALSE)
 test_that("Moment estimation matrix is correct", {
   expect_equal(d$third[6:10,6:10], c)
 })
+## test if third works for a simple vector for numbers 1-5, 
+## expected matrix assembled within test but constructed elsewhere due to lengthy code

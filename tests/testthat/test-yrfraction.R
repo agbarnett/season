@@ -8,3 +8,5 @@ test_that("yrfraction works", {
   expect_equal(yrfraction(c(1,2,3),type="weekly"), c(0,1/(365.25/7),2/(365.25/7)))
   expect_equal(yrfraction(c(1,2,3),type="monthly"),c(0,1/12,1/6))
 })
+## same logic as inverse year fraction. 
+## takes readily identifiable dates and tests in yrfrac correctly maps them.

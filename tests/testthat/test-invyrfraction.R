@@ -4,3 +4,5 @@ test_that("inyrfraction works", {
   expect_equal(invyrfraction(c(0,0.5,1),type="weekly"),c("Week = 1","Week = 27","Week = 53"))
 })
 
+## Uses easily visually identifiable year fractions to test 
+## if the function correctly maps them to their month/hour/week
