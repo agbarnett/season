@@ -1,7 +1,7 @@
 Package: season
 Type: Package
 Title: Seasonal Analysis of Health Data
-Version: 0.3.13.9000
+Version: 0.3.14
 Author: Adrian Barnett and Peter Baker and Oliver Hughes
 Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
 Depends:
