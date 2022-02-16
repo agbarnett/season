@@ -70,7 +70,7 @@ ggplot(CVDdaily, aes(x=tmpd, y=cvd))+
 
 ## Regression model
 
-We now examine the association between temperature and death using a case-crossover model. This model compares the number of deaths on case and control days, and only uses controls that are near the case day. By choosing control days near case days, the model controls for long-term trends and seasonal patterns. Below we use the default of cases and controls selected from the same 28 day (4 week) windows. The model is fitted using conditional logistic regression. The technical details are in our book [Analysing Seasonal Health Data](https://www.springer.com/gp/book/9783642107474).
+We now examine the association between temperature and death using a case-crossover model. This model compares the number of deaths on case and control days, and only uses controls that are near the case day. By choosing control days near case days, the model controls for long-term trends and seasonal patterns. Below we use the default of cases and controls selected from the same 28 day (4 week) windows. The model is fitted using conditional logistic regression. The technical details are in our book [Analysing Seasonal Health Data](https://link.springer.com/book/10.1007/978-3-642-10748-1).
 
 To model a non-linear effect for temperature, we first create a spline for temperture with knots at 60 and 75 degrees Fahrenheit, which essentially means we expect a change in the association around these temperatures. 
 
