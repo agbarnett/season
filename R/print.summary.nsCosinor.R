@@ -1,5 +1,13 @@
-## print.summary.nsCosinor.R
-print.summary.nsCosinor <- function(x, ...){
+## print.summary.nscosinor.R
+
+#' printing a summary of an nscosinor
+#' @name print.summary.nscosinor
+#' @method print summary.nscosinor
+#' @param \dots further arguments passed to or from other methods.
+#' @param x a \code{summary.nsCosinor} object produced by
+#' \code{summary.nsCosinor}
+#' @export
+print.summary.nscosinor <- function(x, ...){
 
   if (class(x)!="summary.nsCosinor"){
     stop("Object must be of class 'summary.nsCosinor'")

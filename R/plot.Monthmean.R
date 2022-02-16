@@ -1,4 +1,16 @@
 # plot.Monthmean.R
+
+
+#' Plot of Monthly Mean Estimates
+#' 
+#' Plots estimated monthly means.
+#' 
+#' 
+#' @param x a \code{Monthmean} object produced by \code{monthmean}.
+#' @param \dots additional arguments passed to the plot.
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @seealso \code{monthmean}
+#' @export 
 plot.Monthmean<-function(x,...){
 ## Check
   if (class(x) != "Monthmean"){

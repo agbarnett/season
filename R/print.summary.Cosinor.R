@@ -1,4 +1,12 @@
-# Oct 2011
+# print.summary.Cosinor.R
+# October 2011
+
+#' printing a summary of a Cosinor
+#' @name  print.summary.Cosinor
+#' @param x a \code{summary.Cosinor} object produced by \code{summary.Cosinor}
+#' @param \dots optional arguments to \code{print} or \code{plot} methods.
+#' @method print summary.Cosinor 
+#' @export
 print.summary.Cosinor <- function(x, ...){
   ## report results
   if (class(x)!="summary.Cosinor"){

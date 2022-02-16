@@ -1,5 +1,29 @@
 ### Plot the monthly data
 
+
+
+#' Plot of Monthly Estimates
+#' 
+#' Plots the estimated from a generalized linear model with a categorical
+#' variable of month.
+#' 
+#' 
+#' @param x a \code{monthglm} object produced by \code{monthglm}.
+#' @param alpha statistical significance level of confidence intervals.
+#' @param ylim y coordinates ranges (the default is NULL, and the limits are
+#' automatically calculated).
+#' @param \dots additional arguments passed to the plot.
+#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @seealso \code{monthglm}
+#' @examples
+#' \donttest{
+#' data(CVD)
+#' mmodel = monthglm(formula=cvd~1, data=CVD, family=poisson(),
+#'                   offsetpop=expression(pop/100000), offsetmonth=TRUE, refmonth=6)
+#' plot(mmodel)
+#' }
+#' 
+#' @export 
 plot.monthglm<-function(x, alpha=0.05, ylim=NULL, ...){
   ## Checks
   if (class(x)!="monthglm"){stop("Object must be of class 'monthglm'")} 
