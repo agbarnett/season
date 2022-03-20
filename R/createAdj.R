@@ -28,7 +28,7 @@
 #' @return Creates a text file named \code{filename} that contains the total
 #' number of neighbours (num), the index number of the adjacent neighbours
 #' (adj) and the weights (weights).
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
 #' # Nearest neighbour matrix for 5 time points

@@ -18,7 +18,7 @@
 #' 
 #' @param x a \code{Cosinor} object produced by \code{cosinor}.
 #' @param \dots additional arguments passed to the sinusoid plot.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{cosinor}, \code{summary.Cosinor}, \code{seasrescheck}
 #' @export
 plot.Cosinor<-function(x,...){

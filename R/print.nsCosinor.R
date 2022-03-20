@@ -13,7 +13,7 @@
 #' 
 #' @param x a \code{nsCosinor} object produced by \code{nscosinor}.
 #' @param \dots further arguments passed to or from other methods.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{nscosinor}, \code{summary.nsCosinor}
 #' @export 
 print.nsCosinor<-function(x, ...){

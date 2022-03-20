@@ -52,5 +52,5 @@ Health Data}. Springer.
 \code{plot.Monthmean}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

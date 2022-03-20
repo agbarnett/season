@@ -25,7 +25,7 @@
 #' @return \item{daym}{date (day and month for \code{daily}) or fractional
 #' month (for \code{monthly}) or fractional of the 24-hour clock (for
 #' \code{hourly}).}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' 
 #' invyrfraction(c(0, 0.5, 0.99), type='daily')

@@ -8,7 +8,7 @@
 #' 
 #' @param x a \code{Monthmean} object produced by \code{monthmean}.
 #' @param \dots additional arguments passed to the plot.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{monthmean}
 #' @export 
 plot.Monthmean<-function(x,...){

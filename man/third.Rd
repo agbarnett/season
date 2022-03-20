@@ -40,5 +40,5 @@ third(CVD$cvd, n.lag=12)
 
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

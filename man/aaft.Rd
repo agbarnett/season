@@ -39,5 +39,5 @@ Kugiumtzis D (2000) Surrogate data test for nonlinearity
 including monotonic transformations, \emph{Phys. Rev. E}, vol 62
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

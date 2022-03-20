@@ -13,7 +13,7 @@
 #' 
 #' @param object a \code{casecross} object produced by \code{casecross}.
 #' @param \dots further arguments passed to or from other methods.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{casecross}
 #' @export 
 summary.casecross<-function(object, ...){

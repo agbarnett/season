@@ -113,5 +113,5 @@ coronary heart disease \emph{Statistics in Medicine}. 23(22) 3505--23.
 \code{plot.nsCosinor}, \code{summary.nsCosinor}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

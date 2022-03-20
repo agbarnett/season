@@ -26,5 +26,5 @@ data then time is shown on the x-axis.
 \code{cosinor}, \code{summary.Cosinor}, \code{seasrescheck}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

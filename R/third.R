@@ -30,7 +30,7 @@
 #' @return \item{waxis}{The axis --\code{n.lag} to \code{n.lag}.}
 #' \item{third}{The estimated third order moment in the range --n.lag to n.lag,
 #' including the symmetries.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' 
 #' data(CVD)

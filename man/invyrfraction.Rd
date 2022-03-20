@@ -39,5 +39,5 @@ invyrfraction(c(0, 0.5, 0.99), type='hourly')
 
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

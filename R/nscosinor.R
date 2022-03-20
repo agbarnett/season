@@ -81,7 +81,7 @@
 #' error for overall noise (std.error), standard error for season(s)
 #' (std.season), phase(s) and amplitude(s)} \item{cycles}{vector of cycles in
 #' units of time.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{plot.nsCosinor}, \code{summary.nsCosinor}
 #' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 #' Health Data}. Springer.

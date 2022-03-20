@@ -16,7 +16,7 @@
 #' between 1 and 12 if type=\sQuote{\code{monthly}}.
 #' @param type \sQuote{daily} for dates, or \sQuote{\code{monthly}} for months.
 #' @return \item{yrfrac}{Fraction of the year.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' 
 #' # create fractions for the start, middle and end of the year

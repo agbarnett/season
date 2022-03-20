@@ -19,7 +19,7 @@
 #' only dates in the data will be returned (default=FALSE).
 #' @return \item{year}{year (4 digits).} \item{month}{month (2 digits).}
 #' \item{ndaysmonth}{number of days in the month (either 28, 29, 30 or 31).}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @export flagleap
 flagleap<-function(data,report=TRUE,matchin=FALSE){
   n<-nrow(data)

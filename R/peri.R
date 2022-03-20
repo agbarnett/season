@@ -14,7 +14,7 @@
 #' radians, \eqn{\omega}.} \item{c}{frequencies in cycles of time,
 #' \eqn{2\pi/\omega}.} \item{amp}{amplitude periodogram.} \item{phase}{phase
 #' periodogram.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
 #' data(CVD)

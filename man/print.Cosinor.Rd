@@ -22,5 +22,5 @@ Uses \code{print.glm}.
 \code{cosinor}, \code{summary.Cosinor}, \code{glm}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

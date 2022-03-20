@@ -14,7 +14,7 @@
 #' @param tau controls flexibility of trend and season.
 #' @param lambda distance between observations.
 #' @param cmean used to give a vague prior for the starting values.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 kalfil <- function(data,f,vartheta,w,tau,lambda,cmean){
 # Setting up matrices
   k<-length(f); # Number of frequencies

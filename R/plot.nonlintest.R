@@ -11,7 +11,7 @@
 #' @param x a \code{nonlintest} object produced by \code{nonlintest}.
 #' @param plot display plot (TRUE) or return plot (FALSE)
 #' @param \dots additional arguments to \code{plot}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{nonlintest}
 #' @export 
 plot.nonlintest<-function(x, plot=TRUE, ...){

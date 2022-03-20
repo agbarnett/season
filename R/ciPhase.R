@@ -19,7 +19,7 @@
 #' @return \item{mean}{the estimated mean phase.} \item{lower}{the estimated
 #' lower limit of the confidence interval.} \item{upper}{the estimated upper
 #' limit of the confidence interval.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N. (1993) \emph{Statistical Analysis of Circular Data}.
 #' Cambridge University Press. Page 36.
 #' 

@@ -24,7 +24,7 @@
 #' @param data a vector of equally spaced numeric observations (time series).
 #' @param nsur the number of surrogates to generate (1 or more).
 #' @return \item{surrogates}{a matrix of the \code{nsur} surrogates.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Kugiumtzis D (2000) Surrogate data test for nonlinearity
 #' including monotonic transformations, \emph{Phys. Rev. E}, vol 62
 #' @examples

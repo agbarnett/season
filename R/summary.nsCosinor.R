@@ -28,7 +28,7 @@
 #' \item{stats}{summary statistics (mean and confidence interval) for the
 #' residual standard deviation, the standard deviation for each seasonal cycle,
 #' and the amplitude and phase for each cycle.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{nscosinor}, \code{plot.nsCosinor}
 #' @export
 summary.nsCosinor<-function(object, ...){

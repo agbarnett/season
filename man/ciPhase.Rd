@@ -43,5 +43,5 @@ Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
 Springer.
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

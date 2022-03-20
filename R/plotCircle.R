@@ -17,7 +17,7 @@
 #' be January, the second February, and so on.
 #' @param dp decimal places for statistics, default=1.
 #' @param \dots additional arguments to \code{plot}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
 #' plotCircle(months=seq(1,12,1),dp=0)

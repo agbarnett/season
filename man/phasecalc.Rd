@@ -32,5 +32,5 @@ Fisher, N.I. (1993) \emph{Statistical Analysis of Circular
 Data}. Cambridge University Press, Cambridge. Page 31.
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

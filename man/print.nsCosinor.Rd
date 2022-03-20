@@ -23,5 +23,5 @@ summary statistics.
 \code{nscosinor}, \code{summary.nsCosinor}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

@@ -10,7 +10,7 @@
 #' @param time x-axis.
 #' @param lower lower limit of the confidence level.
 #' @param upper upper limit of the confidence level.
-#' @author Adrian Barnett \email{a.barnett@@qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 cipolygon<-function(time,lower,upper){
  n<-length(time)
  points<-matrix(nrow=n*2,ncol=2)

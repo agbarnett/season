@@ -13,7 +13,7 @@
 #' @param x a \code{Monthmean} object produced by \code{monthmean}.
 #' @param digits minimal number of significant digits, see \code{print.default}
 #' @param \dots additional arguments passed to the print.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{monthmean}
 #' @export 
 print.Monthmean<-function(x, digits=1, ...){

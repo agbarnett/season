@@ -13,7 +13,7 @@
 #' @param ylim y coordinates ranges (the default is NULL, and the limits are
 #' automatically calculated).
 #' @param \dots additional arguments passed to the plot.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{monthglm}
 #' @examples
 #' \donttest{

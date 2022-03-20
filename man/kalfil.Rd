@@ -26,5 +26,5 @@ Internal function to do a forward and backward sweep of the Kalman filter,
 used by \code{nscosinor}. For internal use only.
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

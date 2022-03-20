@@ -109,5 +109,5 @@ Health Data}. Springer.
 \code{summary.Cosinor}, \code{plot.Cosinor}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

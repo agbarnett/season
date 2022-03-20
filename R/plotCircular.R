@@ -46,7 +46,7 @@
 #' @param auto.legend list of parameters for legend, see \code{\link{legend}}
 #' @param \dots additional arguments to \code{\link{plot}} and/or
 #' \code{\link{legend}}. See \code{\link{par}} for more details
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N.I. (1993) \emph{Statistical Analysis of Circular
 #' Data}. Cambridge University Press, Cambridge.
 #' @examples

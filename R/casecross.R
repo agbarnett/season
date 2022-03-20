@@ -76,7 +76,7 @@
 #' \item{ncases}{total number of cases.} \item{ncasedays}{number of case days
 #' with at least one control day.} \item{ncontroldayss}{average number of
 #' control days per case day.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{summary.casecross}, \code{coxph}
 #' @references Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
 #' analyses of air pollution exposure data: Referent selection strategies and

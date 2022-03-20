@@ -55,7 +55,7 @@
 #' variables).} \item{fitted.plus}{standard fitted values, including all other
 #' independent variables.} \item{residuals}{residuals.} \item{date}{name of the
 #' date variable (in Date format when type=\sQuote{daily}).}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{summary.Cosinor}, \code{plot.Cosinor}
 #' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 #' Health Data}. Springer.

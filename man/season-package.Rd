@@ -29,7 +29,7 @@ Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer.
 }
 \author{
-Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker
+Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes 
 
 Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
 }

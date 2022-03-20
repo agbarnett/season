@@ -44,5 +44,5 @@ amplitude is given on an absolute scale.
 \code{cosinor}, \code{plot.Cosinor}, \code{invyrfraction}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

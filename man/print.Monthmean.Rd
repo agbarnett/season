@@ -24,5 +24,5 @@ The code prints the monthly mean estimates.
 \code{monthmean}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

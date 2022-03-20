@@ -16,7 +16,7 @@
 #' @param cosine estimated cosine value from a cosinor model.
 #' @param sine estimated sine value from a cosinor model.
 #' @return \item{phaser}{Estimated phase in radians.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N.I. (1993) \emph{Statistical Analysis of Circular
 #' Data}. Cambridge University Press, Cambridge. Page 31.
 #' @examples

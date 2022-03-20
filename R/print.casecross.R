@@ -12,7 +12,7 @@
 #' 
 #' @param x a \code{casecross} object produced by \code{casecross}.
 #' @param \dots optional arguments to \code{print} or \code{plot} methods.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{casecross}, \code{summary.casecross}, \code{coxph}
 #' @export 
 print.casecross<-function(x, ...){

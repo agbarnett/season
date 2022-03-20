@@ -28,5 +28,5 @@ The data should contain the numeric variable called \sQuote{year} as a 4
 digit year (e.g., 1973).
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

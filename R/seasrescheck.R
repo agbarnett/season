@@ -13,7 +13,7 @@
 #' \code{\link{cpgram}})
 #' 
 #' @param res residuals from some time series regression model.
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
 #' # cardiovascular disease data

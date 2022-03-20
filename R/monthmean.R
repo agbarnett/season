@@ -26,7 +26,7 @@
 #' (\sQuote{\code{average}}) (default=FALSE).
 #' @return Returns an object of class \dQuote{Monthmean} with the following
 #' parts: \item{mean}{a vector of length 12 with the monthly means.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{plot.Monthmean}
 #' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 #' Health Data}. Springer.

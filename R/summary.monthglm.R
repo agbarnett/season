@@ -17,7 +17,7 @@
 #' or empty otherwise.} \item{x}{object of class \code{monthglm}}
 #' \item{object}{object of class \code{monthglm}} \item{list()}{further
 #' arguments passed to or from other methods.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{monthglm}, \code{plot.monthglm}
 #' @export
 summary.monthglm<-function(object, ...){

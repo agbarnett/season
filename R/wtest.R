@@ -16,7 +16,7 @@
 #' @param data data frame (optional).
 #' @param alpha significance level (default=0.05).
 #' @return \item{test}{test statistic.} \item{pvalue}{p-value.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Walter, S.D., Elwood, J.M. (1975) A test for seasonality of
 #' events with a variable population at risk. \emph{British Journal of
 #' Preventive and Social Medicine} 29, 18--21.

@@ -26,10 +26,9 @@
 #' @import MASS
 #' @import ggplot2 
 #' @import survival
-#' @author Adrian Barnett <a.barnett<at>qut.edu.au>\cr Peter Baker
-#' <p.baker1<at>uq.edu.au>
+#' @author Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes 
 #' 
-#' Maintainer: Adrian Barnett <a.barnett<at>qut.edu.au>
+#' Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
 #' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 #' Health Data}. Springer.
 #' @keywords package ts models

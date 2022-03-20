@@ -19,5 +19,5 @@ The default print method for a \code{nonlintest} object produced by
 \code{nonlintest}, \code{plot.nonlintest}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

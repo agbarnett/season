@@ -10,7 +10,7 @@
 #' 
 #' @param x a \code{nonlintest} object produced by \code{nonlintest}.
 #' @param \dots additional arguments to \code{plot}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{nonlintest}, \code{plot.nonlintest}
 #' @export
 print.nonlintest<-function(x, ...){

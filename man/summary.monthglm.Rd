@@ -33,5 +33,5 @@ was used then the estimates are shown as odds ratios.
 \code{monthglm}, \code{plot.monthglm}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

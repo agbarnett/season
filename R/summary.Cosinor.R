@@ -32,7 +32,7 @@
 #' phase value (TRUE) or return a number (FALSE).} \item{type}{type of data
 #' (yearly/monthly/weekly/hourly).} \item{ctable}{table of regression
 #' coefficients.}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{cosinor}, \code{plot.Cosinor}, \code{invyrfraction}
 #' @export
 summary.Cosinor = function(object, digits = 2, ...){

@@ -22,5 +22,5 @@ Uses \code{print.coxph}.
 \code{casecross}, \code{summary.casecross}, \code{coxph}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

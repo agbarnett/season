@@ -40,5 +40,5 @@ change over time.
 \code{nscosinor}, \code{plot.nsCosinor}
 }
 \author{
-Adrian Barnett \email{a.barnett<at>qut.edu.au}
+Adrian Barnett \email{a.barnett@qut.edu.au}
 }

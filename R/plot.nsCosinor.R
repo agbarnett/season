@@ -12,7 +12,7 @@
 #' @param x a \code{nsCosinor} object produced by \code{nscosinor}.
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{gplot}{A plot of class \code{ggplot}}
-#' @author Adrian Barnett \email{a.barnett<at>qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso \code{nscosinor}
 #' @export 
 plot.nsCosinor<-function(x, ...){
