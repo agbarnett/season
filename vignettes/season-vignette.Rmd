@@ -144,7 +144,27 @@ ggplot(data=to.plot, aes(x=temperature, y=mean, ymin=lower, ymax=upper))+
   theme_bw()
 ```
 
-The plot shows a U-shaped risk, with increased odds at low and high temperatures relative to the reference temperature of 70 degrees.
+### Plot of the lagged temperature and death association for a specific temperature 
+
+We can also take a "slice" of the 3D plot to show the association on each lagged day.
+The plot shows the mean odds (solid line) and 95% confidence interval (shaded area).
+
+```{r, fig.width=5}
+for.plot = crosspred(basis=tmpd.basis, coef=coef, vcov=vcov, at=80, lag=c(0,14), model.link = 'log', cen=70)
+to.plot = data.frame(lag = for.plot$lag[1]:for.plot$lag[2],
+                     mean = as.numeric(for.plot$matRRfit),
+                     lower = as.numeric(for.plot$matRRlow),
+                     upper = as.numeric(for.plot$matRRhigh))
+ggplot(data=to.plot, aes(x=lag, y=mean, ymin=lower, ymax=upper))+
+  geom_hline(lty=2, yintercept = 1)+ # horizontal reference line at no change in odds
+  geom_ribbon(alpha=0.3)+
+  geom_line()+
+  xlab('Lag (days)')+
+  ylab('Odds ratio')+
+  theme_bw()
+```
+
+The plot shows that the estimated risk is highest on the day of exposure and generally declines with increasing lag.
 
 ## Non-stationary seasonal patterns
 

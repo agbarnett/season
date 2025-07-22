@@ -195,21 +195,6 @@ NULL
 NULL
 
 
-#' Remove Letters and Characters from a String
-#' 
-#' Remove letters and characters from a string to leave only numbers. Removes
-#' all letters (upper and lower case) and the characters \dQuote{.}, \dQuote{(}
-#' and \dQuote{)}. For internal use only.
-#' 
-#' 
-#' @name nochars
-#' @param text text string.
-#' @author Adrian Barnett \email{a.barnett@@qut.edu.au}
-NULL
-
-
-
-
 
 #' Initial Values for Non-stationary Cosinor
 #' 
@@ -227,7 +212,7 @@ NULL
 #' @param lambda distance between observations (lambda=1/12 for monthly data,
 #' default).
 #' @param n.season number of seasons.
-#' @author Adrian Barnett \email{a.barnett@@qut.edu.au}
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 NULL
 
 

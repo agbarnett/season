@@ -68,7 +68,7 @@ plot.monthglm<-function(x, alpha=0.05, ylim=NULL, ...){
   month.lab<-vector(mode='character',length=nrow(toplot))
   for (i in 1:nrow(toplot)){
     lines(c(order[i],order[i]),c(toplot$lower[i],toplot$upper[i]))
-    months.num<-as.numeric(nochars(row.names(toplot)[i]))
+    months.num<-as.numeric(str_remove_all(row.names(toplot)[i], pattern='[^0-9]')) # replaced `nochars`
     month.lab[i]<-month.abb[months.num]
   }
   month.lab<-substr(month.abb,1,1)
