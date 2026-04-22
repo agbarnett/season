@@ -33,6 +33,7 @@ Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes
 
 Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
 }
+\keyword{internal}
 \keyword{models}
 \keyword{package}
 \keyword{ts}
