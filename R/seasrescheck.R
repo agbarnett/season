@@ -10,7 +10,7 @@
 #' 
 #' Plots: i) histogram of the residuals, ii) a scatter plot against residual
 #' order, iii) the autocovariance, iv) the cumulative periodogram (see
-#' \code{\link{cpgram}})
+#' [cpgram()])
 #' 
 #' @param res residuals from some time series regression model.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}

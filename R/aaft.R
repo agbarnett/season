@@ -19,14 +19,14 @@
 #' The AAFT uses phase-scrambling to create a surrogate of the time series that
 #' has a similar spectrum (and hence similar second-order statistics). The AAFT
 #' is useful for testing for non-linearity in a time series, and is used by
-#' \code{nonlintest}.
+#' `nonlintest`.
 #' 
 #' @param data a vector of equally spaced numeric observations (time series).
 #' @param nsur the number of surrogates to generate (1 or more).
-#' @return \item{surrogates}{a matrix of the \code{nsur} surrogates.}
+#' @return \item{surrogates}{a matrix of the `nsur` surrogates.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Kugiumtzis D (2000) Surrogate data test for nonlinearity
-#' including monotonic transformations, \emph{Phys. Rev. E}, vol 62
+#' including monotonic transformations, *Phys. Rev. E*, vol 62
 #' @examples
 #' 
 #' \donttest{

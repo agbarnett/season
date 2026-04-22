@@ -5,8 +5,8 @@
 
 #' Summary for a Cosinor
 #' 
-#' The default print method for a \code{Cosinor} object produced by
-#' \code{cosinor}.
+#' The default print method for a `Cosinor` object produced by
+#' `cosinor`.
 #' 
 #' Summarises the sinusoidal seasonal pattern and tests whether there is
 #' statistically significant seasonal or circadian pattern (assuming a smooth
@@ -17,15 +17,15 @@
 #' amplitude is given on an absolute scale.
 #' 
 #' 
-#' @param object a \code{Cosinor} object produced by \code{cosinor}.
-#' @param digits minimal number of significant digits, see \code{print.default}
+#' @param object a `Cosinor` object produced by `cosinor`.
+#' @param digits minimal number of significant digits, see `print.default`
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{n}{sample size.} \item{amp}{estimated amplitude.}
 #' \item{amp.scale}{the scale of the estimated amplitude (empty for standard
 #' regression; \sQuote{probability scale} for logistic regession;
 #' \sQuote{absolute scale} for Poisson regression).} \item{phase}{estimated
 #' peak phase on a time scale.} \item{lphase}{estimated low phase on a time
-#' scale (half a year after/before \code{phase}).}
+#' scale (half a year after/before `phase`).}
 #' \item{significant}{statistically significant sinusoid (TRUE/FALSE).}
 #' \item{alpha}{statistical significance level.} \item{digits}{minimal number
 #' of significant digits.} \item{text}{add explanatory text to the returned
@@ -33,7 +33,7 @@
 #' (yearly/monthly/weekly/hourly).} \item{ctable}{table of regression
 #' coefficients.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{cosinor}, \code{plot.Cosinor}, \code{invyrfraction}
+#' @seealso `cosinor`, `plot.Cosinor`, `invyrfraction`
 #' @export
 summary.Cosinor = function(object, digits = 2, ...){
  type = object$call$type 

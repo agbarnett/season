@@ -15,9 +15,9 @@ dependent data distributions. Tools are available for both time series data
 (equally spaced in time) and survey data (unequally spaced in time).
 
 Sinusoidal (parametric) seasonal patterns are available
-(\code{\link{cosinor}}, \code{\link{nscosinor}}), as well as models for
-monthly data (\code{\link{monthglm}}), and the case-crossover method to
-control for seasonality (\code{\link{casecross}}).
+(\code{\link[=cosinor]{cosinor()}}, \code{\link[=nscosinor]{nscosinor()}}), as well as models for
+monthly data (\code{\link[=monthglm]{monthglm()}}), and the case-crossover method to
+control for seasonality (\code{\link[=casecross]{casecross()}}).
 
 \code{season} aims to fill an important gap in the software by providing a
 range of tools for analysing seasonal data. The examples are based on health
@@ -29,9 +29,9 @@ Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer.
 }
 \author{
-Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes 
+Adrian Barnett \href{mailto:a.barnett@qut.edu.au}{a.barnett@qut.edu.au}\cr Peter Baker\cr Oliver Hughes
 
-Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
+Maintainer: Adrian Barnett \href{mailto:a.barnett@qut.edu.au}{a.barnett@qut.edu.au}
 }
 \keyword{internal}
 \keyword{models}

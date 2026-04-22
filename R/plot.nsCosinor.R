@@ -4,16 +4,16 @@
 
 #' Plot the Results of a Non-stationary Cosinor
 #' 
-#' Plots the trend and season(s) from a \code{nsCosinor} object produced by
-#' \code{nscosinor}.
+#' Plots the trend and season(s) from a `nsCosinor` object produced by
+#' `nscosinor`.
 #' 
 #' The code produces the season(s) and trend estimates.
 #' 
-#' @param x a \code{nsCosinor} object produced by \code{nscosinor}.
+#' @param x a `nsCosinor` object produced by `nscosinor`.
 #' @param \dots further arguments passed to or from other methods.
-#' @return \item{gplot}{A plot of class \code{ggplot}}
+#' @return \item{gplot}{A plot of class `ggplot`}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{nscosinor}
+#' @seealso `nscosinor`
 #' @export 
 plot.nsCosinor<-function(x, ...){
 

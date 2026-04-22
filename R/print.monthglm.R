@@ -2,9 +2,9 @@
 ## Prints basic results from monthglm
 
 
-#' Print \code{monthglm}
+#' Print `monthglm`
 #' 
-#' @param x Object of class \code{monthglm}
+#' @param x Object of class `monthglm`
 #' @param ... further arguments passed to or from other methods. 
 #'
 #' @export

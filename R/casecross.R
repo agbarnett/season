@@ -23,66 +23,66 @@
 #' on the seasonal and long-term patterns in the independent variable(s).
 #' 
 #' Control and case days are only compared if they are in the same stratum. The
-#' stratum is controlled by \code{stratalength}, the default value is 28 days,
+#' stratum is controlled by `stratalength`, the default value is 28 days,
 #' so that cases and controls are compared in four week sections.  Smaller
 #' stratum lengths provide a closer control for season, but reduce the
 #' available number of controls.  Control days that are close to the case day
 #' may have similar levels of the independent variable(s). To reduce this
-#' correlation it is possible to place an \code{exclusion} around the cases.
+#' correlation it is possible to place an `exclusion` around the cases.
 #' The default is 2, which means that the smallest gap between a case and
 #' control will be 3 days.
 #' 
 #' To remove any confounding by day of the week it is possible to additionally
-#' match by day of the week (\code{matchdow}), although this usually reduces
+#' match by day of the week (`matchdow`), although this usually reduces
 #' the number of available controls. This matching is in addition to the strata
 #' matching.
 #' 
 #' It is possible to additionally match case and control days by an important
-#' confounder (\code{matchconf}) in order to remove its effect. Control days
+#' confounder (`matchconf`) in order to remove its effect. Control days
 #' are matched to case days if they are: i) in the same strata, ii) have the
-#' same day of the week if \code{matchdow=TRUE}, iii) have a value of
-#' \code{matchconf} that is within plus/minus \code{confrange} of the value of
-#' \code{matchconf} on the case day. If the range is set too narrow then the
+#' same day of the week if `matchdow=TRUE`, iii) have a value of
+#' `matchconf` that is within plus/minus `confrange` of the value of
+#' `matchconf` on the case day. If the range is set too narrow then the
 #' number of available controls will become too small, which in turn means the
 #' number of case days with at least one control day is compromised.
 #' 
-#' The method uses conditional logistic regression (see \code{\link[survival]{coxph}} and
+#' The method uses conditional logistic regression (see [survival::coxph()] and
 #' so the parameter estimates are odds ratios.)
 #' 
 #' The code assumes that the data frame contains a date variable (in
-#' \code{\link{Date}} format) called \sQuote{date}.
+#' [Date()] format) called \sQuote{date}.
 #' 
 #' @param formula formula. The dependent variable should be an integer count
 #' (e.g., daily number of deaths).
 #' @param data data set as a data frame.
 #' @param exclusion exclusion period (in days) around cases, set to 2
 #' (default). Must be greater than or equal to zero and smaller than
-#' \code{stratalength}.
+#' `stratalength`.
 #' @param stratalength length of stratum in days, set to 28 (default).
 #' @param matchdow match case and control days using day of the week
 #' (TRUE/default=FALSE). This matching is in addition to the strata matching.
 #' @param usefinalwindow use the last stratum in the time series, which is
 #' likely to contain less days than all the other strata (TRUE/default=FALSE).
 #' @param matchconf match case and control days using an important confounder
-#' (optional; must be in quotes). \code{matchconf} is the variable to match on.
+#' (optional; must be in quotes). `matchconf` is the variable to match on.
 #' This matching is in addition to the strata matching.
 #' @param confrange range of the confounder within which case and control days
-#' will be treated as a match (optional). Range = \code{matchconf} (on case
-#' day) \eqn{+/-} \code{confrange}.
+#' will be treated as a match (optional). Range = `matchconf` (on case
+#' day) \eqn{+/-} `confrange`.
 #' @param stratamonth use strata based on months, default=FALSE. Instead of a
-#' fixed strata size when using \code{stratalength}.
+#' fixed strata size when using `stratalength`.
 #' @return \item{call}{the original call to the casecross function.}
-#' \item{c.model}{conditional logistic regression model of class \code{coxph}.}
+#' \item{c.model}{conditional logistic regression model of class `coxph`.}
 #' \item{ncases}{total number of cases.} \item{ncasedays}{number of case days
 #' with at least one control day.} \item{ncontroldayss}{average number of
 #' control days per case day.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{summary.casecross}, \code{coxph}
+#' @seealso `summary.casecross`, `coxph`
 #' @references Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
 #' analyses of air pollution exposure data: Referent selection strategies and
-#' their implications for bias. \emph{Epidemiology} 16(6), 717--726.
+#' their implications for bias. *Epidemiology* 16(6), 717--726.
 #' 
-#' Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
+#' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
 #' Springer.
 #' @examples
 #' \donttest{# cardiovascular disease data

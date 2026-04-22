@@ -3,7 +3,7 @@
 
 #' Periodogram
 #' 
-#' Estimated periodogram using the fast Fourier transform (\code{fft}).
+#' Estimated periodogram using the fast Fourier transform (`fft`).
 #' 
 #' 
 #' @param data a data frame.

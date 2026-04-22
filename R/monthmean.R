@@ -14,7 +14,7 @@
 #' the mean to account for the unequal number of days in the month (e.g., 31 in
 #' January and 28 or 29 in February).
 #' 
-#' This function assumes that the data set (\code{data}) contains variables for
+#' This function assumes that the data set (`data`) contains variables for
 #' the year and month called year and month, respectively.
 #' 
 #' @param data data set as a data frame.
@@ -22,14 +22,14 @@
 #' calculated.
 #' @param offsetpop optional population, used as an offset (default=NULL).
 #' @param adjmonth adjust monthly counts and scale to a 30 day month
-#' (\sQuote{\code{thirty}}) or the average month length
-#' (\sQuote{\code{average}}) (default=FALSE).
+#' (\sQuote{`thirty`}) or the average month length
+#' (\sQuote{`average`}) (default=FALSE).
 #' @return Returns an object of class \dQuote{Monthmean} with the following
 #' parts: \item{mean}{a vector of length 12 with the monthly means.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{plot.Monthmean}
-#' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-#' Health Data}. Springer.
+#' @seealso `plot.Monthmean`
+#' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
+#' Health Data*. Springer.
 #' @examples
 #' \donttest{
 #' # cardiovascular disease data

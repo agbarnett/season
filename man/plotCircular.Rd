@@ -43,7 +43,7 @@ should be as many labels as there are \code{area1}).}
 
 \item{stats}{put area values at the ends of the segments, default:TRUE.}
 
-\item{dp}{decimal places for statistics, default:1.}
+\item{dp}{decimal places for statistics, default=1.}
 
 \item{clockwise}{plot in a clockwise direction, default:TRUE.}
 
@@ -70,10 +70,10 @@ variable, default:FALSE}
 \item{legend}{whether to include legend or not, default:TRUE when plotting
 two variables}
 
-\item{auto.legend}{list of parameters for legend, see \code{\link{legend}}}
+\item{auto.legend}{list of parameters for legend, see \code{\link[=legend]{legend()}}}
 
-\item{\dots}{additional arguments to \code{\link{plot}} and/or
-\code{\link{legend}}. See \code{\link{par}} for more details}
+\item{\dots}{additional arguments to \code{\link[=plot]{plot()}} and/or
+\code{\link[=legend]{legend()}}. See \code{\link[=par]{par()}} for more details}
 }
 \description{
 A circular plot useful for visualising monthly or weekly data.

@@ -5,15 +5,15 @@
 
 #' Print the Results of a Case-Crossover Model
 #' 
-#' The default print method for a \code{casecross} object produced by
-#' \code{casecross}.
+#' The default print method for a `casecross` object produced by
+#' `casecross`.
 #' 
-#' Uses \code{print.coxph}.
+#' Uses `print.coxph`.
 #' 
-#' @param x a \code{casecross} object produced by \code{casecross}.
-#' @param \dots optional arguments to \code{print} or \code{plot} methods.
+#' @param x a `casecross` object produced by `casecross`.
+#' @param \dots optional arguments to `print` or `plot` methods.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{casecross}, \code{summary.casecross}, \code{coxph}
+#' @seealso `casecross`, `summary.casecross`, `coxph`
 #' @export 
 print.casecross<-function(x, ...){
 ## Check

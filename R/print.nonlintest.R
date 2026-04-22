@@ -4,14 +4,14 @@
 
 #' Print the Results of the Non-linear Test
 #' 
-#' The default print method for a \code{nonlintest} object produced by
-#' \code{nonlintest}.
+#' The default print method for a `nonlintest` object produced by
+#' `nonlintest`.
 #' 
 #' 
-#' @param x a \code{nonlintest} object produced by \code{nonlintest}.
-#' @param \dots additional arguments to \code{plot}
+#' @param x a `nonlintest` object produced by `nonlintest`.
+#' @param \dots additional arguments to `plot`
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{nonlintest}, \code{plot.nonlintest}
+#' @seealso `nonlintest`, `plot.nonlintest`
 #' @export
 print.nonlintest<-function(x, ...){
   ## Check

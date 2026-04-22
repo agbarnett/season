@@ -6,10 +6,10 @@
 #' Plots estimated monthly means.
 #' 
 #' 
-#' @param x a \code{Monthmean} object produced by \code{monthmean}.
+#' @param x a `Monthmean` object produced by `monthmean`.
 #' @param \dots additional arguments passed to the plot.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{monthmean}
+#' @seealso `monthmean`
 #' @export 
 plot.Monthmean<-function(x,...){
 ## Check

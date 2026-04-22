@@ -5,7 +5,7 @@
 
 #' Creates an Adjacency Matrix
 #' 
-#' Creates an adjacency matrix in a form suitable for using in \code{BRugs} or
+#' Creates an adjacency matrix in a form suitable for using in `BRugs` or
 #' WinBUGS.
 #' 
 #' Adjacency matrices are used by conditional autoregressive (CAR) models to
@@ -24,7 +24,7 @@
 #' @param filename filename that the adjacency matrix file will be written to.
 #' @param suffix string to be appended to \sQuote{num}, \sQuote{adj} and
 #' \sQuote{weights} object names
-#' @return Creates a text file named \code{filename} that contains the total
+#' @return Creates a text file named `filename` that contains the total
 #' number of neighbours (num), the index number of the adjacent neighbours
 #' (adj) and the weights (weights).
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}

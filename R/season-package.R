@@ -15,11 +15,11 @@ NULL
 #' (equally spaced in time) and survey data (unequally spaced in time).
 #' 
 #' Sinusoidal (parametric) seasonal patterns are available
-#' (\code{\link{cosinor}}, \code{\link{nscosinor}}), as well as models for
-#' monthly data (\code{\link{monthglm}}), and the case-crossover method to
-#' control for seasonality (\code{\link{casecross}}).
+#' ([cosinor()], [nscosinor()]), as well as models for
+#' monthly data ([monthglm()]), and the case-crossover method to
+#' control for seasonality ([casecross()]).
 #' 
-#' \code{season} aims to fill an important gap in the software by providing a
+#' `season` aims to fill an important gap in the software by providing a
 #' range of tools for analysing seasonal data. The examples are based on health
 #' data, but the functions are equally applicable to any data with a seasonal
 #' pattern.
@@ -36,8 +36,8 @@ NULL
 #' @author Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes 
 #' 
 #' Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
-#' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-#' Health Data}. Springer.
+#' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
+#' Health Data*. Springer.
 #' @keywords internal package ts models
 "_PACKAGE"
 

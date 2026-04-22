@@ -5,16 +5,16 @@
 
 #' Summary of the Results of a Case-crossover Model
 #' 
-#' The default summary method for a \code{casecross} object produced by
-#' \code{casecross}.
+#' The default summary method for a `casecross` object produced by
+#' `casecross`.
 #' 
 #' Shows the number of control days, the average number of control days per
 #' case days, and the parameter estimates.
 #' 
-#' @param object a \code{casecross} object produced by \code{casecross}.
+#' @param object a `casecross` object produced by `casecross`.
 #' @param \dots further arguments passed to or from other methods.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{casecross}
+#' @seealso `casecross`
 #' @export 
 summary.casecross<-function(object, ...){
 

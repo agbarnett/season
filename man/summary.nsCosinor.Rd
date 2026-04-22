@@ -15,8 +15,8 @@
 \item{cycles}{vector of cycles in units of time, e.g., for a six and
 twelve month pattern \code{cycles=c(6,12)}.} \item{niters}{total number of
 MCMC samples.} \item{burnin}{number of MCMC samples discarded as a burn-in.}
-\item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-seasonal parameter, tau[3] for 2nd seasonal parameter, etc.}
+\item{tau}{vector of smoothing parameters, \code{tau[1]} for trend, \code{tau[2]} for 1st
+seasonal parameter, \code{tau[3]} for 2nd seasonal parameter, etc.}
 \item{stats}{summary statistics (mean and confidence interval) for the
 residual standard deviation, the standard deviation for each seasonal cycle,
 and the amplitude and phase for each cycle.}

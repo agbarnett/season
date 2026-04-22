@@ -13,8 +13,8 @@
 #' @param phase the phase of the sinusoid (location of the peak).
 #' @param \dots additional arguments passed to the plot.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-#' Health Data}. Springer.
+#' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
+#' Health Data*. Springer.
 #' @examples
 #' sinusoid(amplitude=1, frequency=1, phase=1)
 #' 

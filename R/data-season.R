@@ -41,8 +41,8 @@ NULL
 #' standardised month length. Monthly number of CVD deaths multiplied by
 #' (365.25/12)/ndaysmonth. So the standard month length is 30.4 days.} }
 #' @references Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000).
-#' \emph{The National Morbidity, Mortality, and Air Pollution Study, Part I:
-#' Methods and Methodologic Issues}.  Research Report 94, Health Effects
+#' *The National Morbidity, Mortality, and Air Pollution Study, Part I:
+#' Methods and Methodologic Issues*.  Research Report 94, Health Effects
 #' Institute, Cambridge MA.
 #' @source From the NMMAPS study.
 #' @keywords datasets
@@ -85,8 +85,8 @@ NULL
 #' \item{summer}{indicator variable for summer}
 #' \item{autumn}{indicator variable for autumn} }
 #' @references Samet JM, Dominici F, Zeger SL, Schwartz J, Dockery DW (2000).
-#' \emph{The National Morbidity, Mortality, and Air Pollution Study, Part I:
-#' Methods and Methodologic Issues}. Research Report 94, Health Effects
+#' *The National Morbidity, Mortality, and Air Pollution Study, Part I:
+#' Methods and Methodologic Issues*. Research Report 94, Health Effects
 #' Institute, Cambridge MA.
 #' @source From the NMMAPS study.
 #' @keywords datasets
@@ -117,8 +117,8 @@ NULL
 #' interview} \item{bmi}{body mass index at visit 1 (kg/m\eqn{^2})}
 #' \item{walking}{walking time per week (in minutes) at each visit} }
 #' @references Eakin E, et al (2009) Telephone counselling for physical
-#' activity and diet in type 2 diabetes and hypertension, \emph{Am J of Prev
-#' Med}, vol 36, pages 142--9
+#' activity and diet in type 2 diabetes and hypertension, *Am J of Prev
+#' Med*, vol 36, pages 142--9
 #' @source From Prof Elizabeth Eakin and colleagues, The University of
 #' Queensland, Brisbane.
 #' @keywords datasets
@@ -144,8 +144,8 @@ NULL
 #' 
 #' @name indoor
 #' @docType data
-#' @format A \code{data.frame} with the following 3 variables.  \describe{
-#' \item{datetime}{date and time in \code{POSIXlt} format}
+#' @format A `data.frame` with the following 3 variables.  \describe{
+#' \item{datetime}{date and time in `POSIXlt` format}
 #' \item{living}{the living room temperature}
 #' \item{bedroom}{the bedroom temperature} }
 #' @source Adrian G Barnett.

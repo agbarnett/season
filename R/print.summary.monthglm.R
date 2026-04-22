@@ -3,8 +3,8 @@
 #' printing a summary of a month.glm
 #' @name print.summary.monthglm
 #' @method print summary.monthglm
-#' @param x a \code{summary.monthglm} object produced by
-#' \code{summary.monthglm}.
+#' @param x a `summary.monthglm` object produced by
+#' `summary.monthglm`.
 #' @param \dots further arguments passed to or from other methods.
 #' @export
 print.summary.monthglm <- function(x, ...){
