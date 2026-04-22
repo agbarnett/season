@@ -27,7 +27,7 @@
 #' @param labels optional labels to appear at the ends of the segments (there
 #' should be as many labels as there are `area1`).
 #' @param stats put area values at the ends of the segments, default:TRUE.
-#' @param dp decimal places for statistics, default:1.
+#' @param dp decimal places for statistics, default=1.
 #' @param clockwise plot in a clockwise direction, default:TRUE.
 #' @param spoke.col spoke colour, default:black.
 #' @param lines add dotted lines to separate petals, default:FALSE.

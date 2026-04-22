@@ -11,7 +11,7 @@
 #' The code prints the monthly mean estimates.
 #' 
 #' @param x a `Monthmean` object produced by `monthmean`.
-#' @param digits minimal number of significant digits, see `print.default`
+#' @inheritParams summary.Cosinor
 #' @param \dots additional arguments passed to the print.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthmean`

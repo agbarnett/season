@@ -43,7 +43,7 @@ should be as many labels as there are \code{area1}).}
 
 \item{stats}{put area values at the ends of the segments, default:TRUE.}
 
-\item{dp}{decimal places for statistics, default:1.}
+\item{dp}{decimal places for statistics, default=1.}
 
 \item{clockwise}{plot in a clockwise direction, default:TRUE.}
 

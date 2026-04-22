@@ -40,12 +40,7 @@
 #' @param type \dQuote{daily} for daily data (default), or \dQuote{weekly} for
 #' weekly data, or \dQuote{monthly} for monthly data, or \dQuote{hourly} for
 #' hourly data.
-#' @param offsetmonth include an offset to account for the uneven number of
-#' days in the month (TRUE/FALSE). Should be used for monthly counts
-#' (type=\dQuote{monthly}) (with `family=poisson()`).
-#' @param offsetpop include an offset for the population (optional), this
-#' should be a variable in the data frame. Do not log-transform this offset, as
-#' the transform is applied by the code.
+#' @inheritParams monthglm
 #' @param text add explanatory text to the returned phase value (TRUE) or
 #' return a number (FALSE). Passed to the `invyrfraction` function.
 #' @return Returns an object of class \dQuote{Cosinor} with the following
