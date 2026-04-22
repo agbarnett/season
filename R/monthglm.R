@@ -79,7 +79,7 @@ monthglm = function(formula,data,family=gaussian(),refmonth=1,
   ## Transform month numbers to names
   if(cmonthvar%in%c('integer','numeric')){
     months.u = as.factor(monthvar)  
-    nums = as.numeric(str_remove_all(levels(months.u), pattern='[^0-9]')) # Month numbers; replaced `nochars`
+    nums = keep_month_numbers(levels(months.u)) # Month numbers; replaced `nochars`
     levels(months.u)[nums] = month.abb[nums]
     months = relevel(months.u,ref=month.abb[refmonth]) # set reference month
   }

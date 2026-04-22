@@ -18,7 +18,7 @@
 #' @export 
 print.Monthmean<-function(x, digits=1, ...){
 ## Check
-  if (class(x) != "Monthmean"){
+  if (!inherits(x, "Monthmean")){
     stop("Object must be of class 'Monthmean'")
   } 
 ## Print

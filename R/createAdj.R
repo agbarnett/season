@@ -21,8 +21,7 @@
 #' 
 #' @param matrix square matrix with 1's for neighbours and NA's for
 #' non-neighbours.
-#' @param filename filename that the adjacency matrix file will be written to
-#' (default=\sQuote{Adj.txt}).
+#' @param filename filename that the adjacency matrix file will be written to.
 #' @param suffix string to be appended to \sQuote{num}, \sQuote{adj} and
 #' \sQuote{weights} object names
 #' @return Creates a text file named \code{filename} that contains the total
@@ -34,11 +33,11 @@
 #' # Nearest neighbour matrix for 5 time points
 #' x = c(NA,1,NA,NA,NA)
 #' (V = toeplitz(x))
-#' createAdj(V)
+#' createAdj(V, filename = tempfile(fileext = ".txt"))
 #' }
 #' 
 #' @export createAdj
-createAdj<-function(matrix,filename='Adj.txt',suffix=NULL){
+createAdj<-function(matrix,filename,suffix=NULL){
 # checks
 if(is.matrix(matrix)!=TRUE){stop('Input must be a matrix')}
 if(dim(matrix)[1]!=dim(matrix)[2]){stop('Matrix must be square')}

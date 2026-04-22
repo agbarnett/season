@@ -21,7 +21,7 @@
 #' @seealso \code{monthglm}, \code{plot.monthglm}
 #' @export
 summary.monthglm<-function(object, ...){
-  if (class(object)!="monthglm"){stop("Object must be of class 'monthglm'")} 
+  if (!inherits(object,"monthglm")){stop("Object must be of class 'monthglm'")} 
 ## Tabulate the monthly data ##
   z<-qnorm(0.975)
   s<-summary(object$glm)

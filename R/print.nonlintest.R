@@ -15,7 +15,7 @@
 #' @export
 print.nonlintest<-function(x, ...){
   ## Check
-  if (class(x) != "nonlintest"){
+  if (!inherits(x, "nonlintest")){
     stop("Object must be of class 'nonlintest'")
   } 
 

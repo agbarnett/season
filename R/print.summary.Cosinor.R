@@ -9,7 +9,7 @@
 #' @export
 print.summary.Cosinor <- function(x, ...){
   ## report results
-  if (class(x)!="summary.Cosinor"){
+  if (!inherits(x,"summary.Cosinor")){
     stop("Object must be of class 'summary.Cosinor'")
   } 
 # fix the digits, October 2011

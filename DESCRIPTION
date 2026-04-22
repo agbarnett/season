@@ -8,7 +8,6 @@ Depends:
     R (>= 3.0.1),
     ggplot2 (>= 0.9.3),
     MASS,
-    stringr,
     survival
 Description: Routines for the seasonal analysis of health data, including regression models, time-stratified case-crossover, plotting functions and residual checks, see Barnett and Dobson (2010) ISBN 978-3-642-10748-1. Thanks to Yuming Guo for checking the case-crossover code. 
 License: GPL (>= 3)
@@ -22,5 +21,5 @@ Suggests:
     coda,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3
 Config/testthat/edition: 3
