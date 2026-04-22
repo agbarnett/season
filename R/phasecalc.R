@@ -17,8 +17,8 @@
 #' @param sine estimated sine value from a cosinor model.
 #' @return \item{phaser}{Estimated phase in radians.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @references Fisher, N.I. (1993) \emph{Statistical Analysis of Circular
-#' Data}. Cambridge University Press, Cambridge. Page 31.
+#' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
+#' Data*. Cambridge University Press, Cambridge. Page 31.
 #' @examples
 #' 
 #' phasecalc(cosine=0, sine=1) # pi/2

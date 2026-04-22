@@ -8,8 +8,8 @@
 
 \item{response}{response variable.}
 
-\item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-seasonal parameter, tau[3] for 2nd seasonal parameter, etc. Larger values of
+\item{tau}{vector of smoothing parameters, \code{tau[1]} for trend, \code{tau[2]} for 1st
+seasonal parameter, \code{tau[3]} for 2nd seasonal parameter, etc. Larger values of
 tau allow more change between observations and hence a greater potential
 flexibility in the trend and season.}
 

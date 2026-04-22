@@ -15,14 +15,14 @@ keep_month_numbers <- function(x) {
 #' Initial Values for Non-stationary Cosinor
 #' 
 #' Creates initial values for the non-stationary cosinor decomposition
-#' \code{nscosinor}. For internal use only.
+#' `nscosinor`. For internal use only.
 #' 
 #' 
 #' @name nscosinor.initial
 #' @param data a data frame.
 #' @param response response variable.
-#' @param tau vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-#' seasonal parameter, tau[3] for 2nd seasonal parameter, etc. Larger values of
+#' @param tau vector of smoothing parameters, `tau[1]` for trend, `tau[2]` for 1st
+#' seasonal parameter, `tau[3]` for 2nd seasonal parameter, etc. Larger values of
 #' tau allow more change between observations and hence a greater potential
 #' flexibility in the trend and season.
 #' @param lambda distance between observations (lambda=1/12 for monthly data,
@@ -38,7 +38,7 @@ NULL
 #' Random Inverse Gamma Distribution
 #' 
 #' Internal function to simulate a value from an inverse Gamma distribution,
-#' used by \code{nscosinor}. See the MCMCpack library. For internal use only.
+#' used by `nscosinor`. See the MCMCpack library. For internal use only.
 #' 
 #' 
 #' @name rinvgamma

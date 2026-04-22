@@ -4,8 +4,8 @@
 #' @name print.summary.nscosinor
 #' @method print summary.nscosinor
 #' @param \dots further arguments passed to or from other methods.
-#' @param x a \code{summary.nsCosinor} object produced by
-#' \code{summary.nsCosinor}
+#' @param x a `summary.nsCosinor` object produced by
+#' `summary.nsCosinor`
 #' @export
 print.summary.nscosinor <- function(x, ...){
 

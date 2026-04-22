@@ -20,10 +20,10 @@
 #' lower limit of the confidence interval.} \item{upper}{the estimated upper
 #' limit of the confidence interval.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @references Fisher, N. (1993) \emph{Statistical Analysis of Circular Data}.
+#' @references Fisher, N. (1993) *Statistical Analysis of Circular Data*.
 #' Cambridge University Press. Page 36.
 #' 
-#' Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
+#' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
 #' Springer.
 #' @examples
 #' \donttest{

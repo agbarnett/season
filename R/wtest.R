@@ -9,7 +9,7 @@
 #' Tests for a seasonal pattern in Binomial data.
 #' 
 #' A test of whether monthly data has a sinusoidal seasonal pattern. The test
-#' has low power compared with the \code{\link{cosinor}} test.
+#' has low power compared with the [cosinor()] test.
 #' 
 #' @param cases variable name for cases (\dQuote{successes}).
 #' @param offset variable name for at-risk population (\dQuote{trials}).
@@ -18,10 +18,10 @@
 #' @return \item{test}{test statistic.} \item{pvalue}{p-value.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Walter, S.D., Elwood, J.M. (1975) A test for seasonality of
-#' events with a variable population at risk. \emph{British Journal of
-#' Preventive and Social Medicine} 29, 18--21.
+#' events with a variable population at risk. *British Journal of
+#' Preventive and Social Medicine* 29, 18--21.
 #' 
-#' Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
+#' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
 #' Springer.
 #' @examples
 #' 

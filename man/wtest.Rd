@@ -23,7 +23,7 @@ Tests for a seasonal pattern in Binomial data.
 }
 \details{
 A test of whether monthly data has a sinusoidal seasonal pattern. The test
-has low power compared with the \code{\link{cosinor}} test.
+has low power compared with the \code{\link[=cosinor]{cosinor()}} test.
 }
 \examples{
 

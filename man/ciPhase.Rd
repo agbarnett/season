@@ -9,7 +9,7 @@ ciPhase(theta, alpha = 0.05)
 \arguments{
 \item{theta}{chain of Markov chain Monte Carlo (MCMC) samples of the phase.}
 
-\item{alpha}{the confidence level (default = 0.05 for a 95\% confidence
+\item{alpha}{the confidence level (default = 0.05 for a 95\\% confidence
 interval).}
 }
 \value{

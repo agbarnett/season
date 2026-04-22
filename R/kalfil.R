@@ -3,7 +3,7 @@
 #' Forward and Backward Sweep of the Kalman Filter
 #' 
 #' Internal function to do a forward and backward sweep of the Kalman filter,
-#' used by \code{nscosinor}. For internal use only.
+#' used by `nscosinor`. For internal use only.
 #' 
 #' 
 #' @name kalfil

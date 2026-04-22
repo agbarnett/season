@@ -3,8 +3,8 @@
 
 #' printing a summary of a Cosinor
 #' @name  print.summary.Cosinor
-#' @param x a \code{summary.Cosinor} object produced by \code{summary.Cosinor}
-#' @param \dots optional arguments to \code{print} or \code{plot} methods.
+#' @param x a `summary.Cosinor` object produced by `summary.Cosinor`
+#' @param \dots optional arguments to `print` or `plot` methods.
 #' @method print summary.Cosinor 
 #' @export
 print.summary.Cosinor <- function(x, ...){

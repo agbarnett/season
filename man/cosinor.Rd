@@ -39,7 +39,7 @@ cloglog. Note, it must have the parentheses.}
 type=\dQuote{hourly}}
 
 \item{rescheck}{plot the residual checks (TRUE/FALSE), see
-\code{\link{seasrescheck}}.}
+\code{\link[=seasrescheck]{seasrescheck()}}.}
 
 \item{type}{\dQuote{daily} for daily data (default), or \dQuote{weekly} for
 weekly data, or \dQuote{monthly} for monthly data, or \dQuote{hourly} for
@@ -59,7 +59,7 @@ return a number (FALSE). Passed to the \code{invyrfraction} function.}
 \value{
 Returns an object of class \dQuote{Cosinor} with the following
 parts: \item{call}{the original call to the cosinor function.} \item{glm}{an
-object of class \code{glm} (see \code{\link{glm}}).} \item{fitted}{fitted
+object of class \code{glm} (see \code{\link[=glm]{glm()}}).} \item{fitted}{fitted
 values for intercept and cosinor only (ignoring other independent
 variables).} \item{fitted.plus}{standard fitted values, including all other
 independent variables.} \item{residuals}{residuals.} \item{date}{name of the

@@ -8,13 +8,13 @@
 #' variable of month.
 #' 
 #' 
-#' @param x a \code{monthglm} object produced by \code{monthglm}.
+#' @param x a `monthglm` object produced by `monthglm`.
 #' @param alpha statistical significance level of confidence intervals.
 #' @param ylim y coordinates ranges (the default is NULL, and the limits are
 #' automatically calculated).
 #' @param \dots additional arguments passed to the plot.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{monthglm}
+#' @seealso `monthglm`
 #' @examples
 #' \donttest{
 #' data(CVD)

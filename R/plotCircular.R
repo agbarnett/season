@@ -12,7 +12,7 @@
 #' A circular plot can be useful for spotting the shape of the seasonal
 #' pattern. This function can be used to plot any circular patterns, e.g.,
 #' weekly or monthly. The number of segments will be the length of the variable
-#' \code{area1}.
+#' `area1`.
 #' 
 #' The plots are also called rose diagrams, with the segments then called
 #' \sQuote{petals}.
@@ -25,7 +25,7 @@
 #' (optional).
 #' @param scale scale the overall size of the segments (default:0.8).
 #' @param labels optional labels to appear at the ends of the segments (there
-#' should be as many labels as there are \code{area1}).
+#' should be as many labels as there are `area1`).
 #' @param stats put area values at the ends of the segments, default:TRUE.
 #' @param dp decimal places for statistics, default:1.
 #' @param clockwise plot in a clockwise direction, default:TRUE.
@@ -43,12 +43,12 @@
 #' variable, default:FALSE
 #' @param legend whether to include legend or not, default:TRUE when plotting
 #' two variables
-#' @param auto.legend list of parameters for legend, see \code{\link{legend}}
-#' @param \dots additional arguments to \code{\link{plot}} and/or
-#' \code{\link{legend}}. See \code{\link{par}} for more details
+#' @param auto.legend list of parameters for legend, see [legend()]
+#' @param \dots additional arguments to [plot()] and/or
+#' [legend()]. See [par()] for more details
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @references Fisher, N.I. (1993) \emph{Statistical Analysis of Circular
-#' Data}. Cambridge University Press, Cambridge.
+#' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
+#' Data*. Cambridge University Press, Cambridge.
 #' @examples
 #' \donttest{
 #' # months (dummy data)

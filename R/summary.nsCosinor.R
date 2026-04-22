@@ -4,13 +4,13 @@
 
 #' Summary for a Non-stationary Cosinor
 #' 
-#' The default summary method for a \code{nsCosinor} object produced by
-#' \code{nscosinor}.
+#' The default summary method for a `nsCosinor` object produced by
+#' `nscosinor`.
 #' 
 #' The amplitude describes the average height of each seasonal cycle, and the
 #' phase describes the location of the peak. The results for the phase are
 #' given in radians (0 to 2\eqn{\pi}), they can be transformed to the time
-#' scale using the \code{invyrfraction} making sure to first divide by
+#' scale using the `invyrfraction` making sure to first divide by
 #' 2\eqn{\pi}.
 #' 
 #' The larger the standard deviation for the seasonal cycles, the greater the
@@ -18,18 +18,18 @@
 #' change over time.
 #' 
 #' @aliases summary.nsCosinor 
-#' @param object a \code{nsCosinor} object produced by \code{nscosinor}.
+#' @param object a `nsCosinor` object produced by `nscosinor`.
 #' @param \dots further arguments passed to or from other methods.
 #' @return \item{cycles}{vector of cycles in units of time, e.g., for a six and
-#' twelve month pattern \code{cycles=c(6,12)}.} \item{niters}{total number of
+#' twelve month pattern `cycles=c(6,12)`.} \item{niters}{total number of
 #' MCMC samples.} \item{burnin}{number of MCMC samples discarded as a burn-in.}
-#' \item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-#' seasonal parameter, tau[3] for 2nd seasonal parameter, etc.}
+#' \item{tau}{vector of smoothing parameters, `tau[1]` for trend, `tau[2]` for 1st
+#' seasonal parameter, `tau[3]` for 2nd seasonal parameter, etc.}
 #' \item{stats}{summary statistics (mean and confidence interval) for the
 #' residual standard deviation, the standard deviation for each seasonal cycle,
 #' and the amplitude and phase for each cycle.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{nscosinor}, \code{plot.nsCosinor}
+#' @seealso `nscosinor`, `plot.nsCosinor`
 #' @export
 summary.nsCosinor<-function(object, ...){
 

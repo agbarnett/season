@@ -12,9 +12,9 @@
 #' 
 #' Returns the fraction of the year in the range [0,1).
 #' 
-#' @param date a date variable if type=\sQuote{\code{daily}}, or an integer
-#' between 1 and 12 if type=\sQuote{\code{monthly}}.
-#' @param type \sQuote{daily} for dates, or \sQuote{\code{monthly}} for months.
+#' @param date a date variable if type=\sQuote{`daily`}, or an integer
+#' between 1 and 12 if type=\sQuote{`monthly`}.
+#' @param type \sQuote{daily} for dates, or \sQuote{`monthly`} for months.
 #' @return \item{yrfrac}{Fraction of the year.}
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples

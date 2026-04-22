@@ -92,11 +92,11 @@ same day of the week if \code{matchdow=TRUE}, iii) have a value of
 number of available controls will become too small, which in turn means the
 number of case days with at least one control day is compromised.
 
-The method uses conditional logistic regression (see \code{\link[survival]{coxph}} and
+The method uses conditional logistic regression (see \code{\link[survival:coxph]{survival::coxph()}} and
 so the parameter estimates are odds ratios.)
 
 The code assumes that the data frame contains a date variable (in
-\code{\link{Date}} format) called \sQuote{date}.
+\code{\link[=Date]{Date()}} format) called \sQuote{date}.
 }
 \examples{
 \donttest{# cardiovascular disease data

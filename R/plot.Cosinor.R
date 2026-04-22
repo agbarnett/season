@@ -7,8 +7,8 @@
 
 #' Plot the Results of a Cosinor
 #' 
-#' Plots the fitted sinusoid from a \code{Cosinor} object produced by
-#' \code{cosinor}.
+#' Plots the fitted sinusoid from a `Cosinor` object produced by
+#' `cosinor`.
 #' 
 #' The code produces the fitted sinusoid based on the intercept and sinusoid.
 #' The y-axis is on the scale of probability if the link function is
@@ -16,10 +16,10 @@
 #' data then month is shown on the x-axis. If the analysis was based on daily
 #' data then time is shown on the x-axis.
 #' 
-#' @param x a \code{Cosinor} object produced by \code{cosinor}.
+#' @param x a `Cosinor` object produced by `cosinor`.
 #' @param \dots additional arguments passed to the sinusoid plot.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso \code{cosinor}, \code{summary.Cosinor}, \code{seasrescheck}
+#' @seealso `cosinor`, `summary.Cosinor`, `seasrescheck`
 #' @export
 plot.Cosinor<-function(x,...){
 ## Checks

@@ -17,8 +17,8 @@
 #' per month, 1 plots all the months in the same panel.
 #' @param \dots further arguments passed to or from other methods.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @references Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-#' Health Data}. Springer.
+#' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
+#' Health Data*. Springer.
 #' @examples
 #' \donttest{
 #' data(CVD)

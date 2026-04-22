@@ -24,7 +24,7 @@ The default summary method for a \code{monthglm} object produced by
 \code{monthglm}.
 }
 \details{
-The estimates are the mean, 95\% confidence interval, Z-value and associated
+The estimates are the mean, 95\\% confidence interval, Z-value and associated
 p-value (comparing each month to the reference month). If Poisson regression
 was used then the estimates are shown as rate ratios. If logistic regression
 was used then the estimates are shown as odds ratios.
