@@ -17,11 +17,11 @@
 #' @export 
 print.casecross<-function(x, ...){
 ## Check
-  if (class(x) != "casecross"){
+  if (!inherits(x, "casecross")){
     stop("Object must be of class 'casecross'")
   } 
 ## Use print.coxph
-  if (class(x$c.model) != "coxph"){
+  if (!inherits(x$c.model, "coxph")){
     stop("Conditional logistic regression model object 'c.model' must be of class 'coxph'")
   }    
   print(x$c.model, ...)

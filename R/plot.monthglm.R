@@ -26,7 +26,7 @@
 #' @export 
 plot.monthglm<-function(x, alpha=0.05, ylim=NULL, ...){
   ## Checks
-  if (class(x)!="monthglm"){stop("Object must be of class 'monthglm'")} 
+  if (!inherits(x, "monthglm")){stop("Object must be of class 'monthglm'")} 
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   ## y-axis limits
   if(is.null(ylim)==FALSE){this.y.lim=ylim}

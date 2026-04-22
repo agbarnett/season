@@ -38,7 +38,7 @@
 summary.Cosinor = function(object, digits = 2, ...){
  type = object$call$type 
 ## Checks
- if (class(object)!= "Cosinor"){stop("Object must be of class 'Cosinor'")} 
+ if (!inherits(object,"Cosinor")){stop("Object must be of class 'Cosinor'")} 
  s = summary(object$glm) # create summary
  cnames = row.names(s$coefficients)
  cindex = sum(as.numeric(cnames == 'cosw')*(1:length(cnames)))

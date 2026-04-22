@@ -34,7 +34,7 @@
 summary.nsCosinor<-function(object, ...){
 
   ## Checks
-  if (class(object)!="nsCosinor"){stop("Object must be of class 'nsCosinor'")} 
+  if (!inherits(object,"nsCosinor")){stop("Object must be of class 'nsCosinor'")} 
 
   ## basic variables
   k<-length(object$cycles);

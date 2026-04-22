@@ -28,7 +28,7 @@
 #' @export yrfraction
 yrfraction<-function(date,type='daily'){
   if (type=='daily'){
-    if (class(date)!="Date"){stop("Date variable for annual data must be in date format, see ?Dates")} 
+    if (!inherits(date,"Date")){stop("Date variable for annual data must be in date format, see ?Dates")} 
     year<-as.numeric(format(date,'%Y'));
     lastday<-ISOdate(year,12,31); # last day in December
     day<-as.numeric(format(date,'%j')); # Day of year as decimal number (001-366)

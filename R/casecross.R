@@ -107,7 +107,7 @@ casecross = function(formula, data, exclusion = 2, stratalength = 28,
  outcome  =  dow  =  case  = timex  =  dow.x  =  dow.y  =  matchday.x  =  matchday.y  =  windownum.x  =  windownum.y  =  NULL # Setting some variables to NULL first (for R CMD check)
  thisdata = data
  ## Checks
- if (class(thisdata$date)!= "Date"){
+ if (!inherits(thisdata$date, "Date")){
   stop("date variable must be in date format, see ?Dates")}
  if (exclusion<0){stop("Minimum value for exclusion is zero")}
  parts = paste(formula)

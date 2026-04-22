@@ -19,7 +19,7 @@
 summary.casecross<-function(object, ...){
 
   ## Check
-  if (class(object)!="casecross"){stop("Object must be of class 'casecross'")} 
+  if (!inherits(object,"casecross")){stop("Object must be of class 'casecross'")} 
 
   ## output results
   if(object$call$stratamonth==FALSE){cat('Time-stratified case-crossover with a stratum length of',

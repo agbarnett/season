@@ -18,7 +18,7 @@
 print.Cosinor<-function(x, ...){
 
   ## Checks
-  if (class(x)!="Cosinor"){stop("Object must be of class 'Cosinor'")} 
+  if (!inherits(x,"Cosinor")){stop("Object must be of class 'Cosinor'")} 
 
   ## Use GLM function ###
   print(x$glm, ...)

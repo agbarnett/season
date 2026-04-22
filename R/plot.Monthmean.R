@@ -13,7 +13,7 @@
 #' @export 
 plot.Monthmean<-function(x,...){
 ## Check
-  if (class(x) != "Monthmean"){
+  if (!inherits(x, "Monthmean")){
     stop("Object must be of class 'Monthmean'")
   } 
 ## Plot
