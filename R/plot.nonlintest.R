@@ -39,9 +39,9 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
       }
     }
 
-    gplot = ggplot(for.plot, aes(r, s, z = z)) +
-      stat_contour() +
-      geom_tile(aes(fill = z))
+    gplot = ggplot2::ggplot(for.plot, ggplot2::aes(r, s, z = z)) +
+      ggplot2::stat_contour() +
+      ggplot2::geom_tile(ggplot2::aes(fill = z))
     if (plot == FALSE) {
       return(gplot)
     }
