@@ -16,7 +16,11 @@ wtest(cases, offset, data, alpha = 0.05)
 \item{alpha}{significance level (default=0.05).}
 }
 \value{
-\item{test}{test statistic.} \item{pvalue}{p-value.}
+a list with the following elements:
+\itemize{
+\item test: test statistic.
+\item pvalue: p-value.
+}
 }
 \description{
 Tests for a seasonal pattern in Binomial data.

@@ -58,12 +58,17 @@ return a number (FALSE). Passed to the \code{invyrfraction} function.}
 }
 \value{
 Returns an object of class \dQuote{Cosinor} with the following
-parts: \item{call}{the original call to the cosinor function.} \item{glm}{an
-object of class \code{glm} (see \code{\link[=glm]{glm()}}).} \item{fitted}{fitted
-values for intercept and cosinor only (ignoring other independent
-variables).} \item{fitted.plus}{standard fitted values, including all other
-independent variables.} \item{residuals}{residuals.} \item{date}{name of the
-date variable (in Date format when type=\sQuote{daily}).}
+parts:
+\itemize{
+\item call: the original call to the cosinor function.
+\item glm: an object of class \code{glm} (see \code{\link[=glm]{glm()}}).
+\item fitted: fitted values for intercept and cosinor only (ignoring other
+independent variables).
+\item fitted.plus: standard fitted values, including all other independent
+variables.
+\item residuals: residuals.
+\item date: name of the date variable (in Date format when type = \code{daily}).
+}
 }
 \description{
 Fits a cosinor model as part of a generalized linear model.

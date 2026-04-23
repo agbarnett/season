@@ -19,17 +19,25 @@ nonlintest(data, n.lag, n.boot, alpha = 0.05)
 }
 \value{
 Returns an object of class \dQuote{nonlintest} with the following
-parts: \item{region}{the region of the third order moment where the test
-exceeds the limits (up to \code{n.lag}).} \item{n.lag}{the maximum lag
-tested using the third-order moment.} \item{stats}{a list of following
-statistics for the area outside the test limits:} \item{outside}{the total
-area outside of limits (summed over the whole third-order moment).}
-\item{stan}{the total area outside the limits divided by its standard
-deviation to give a standardised estimate.} \item{median}{the median area
-outside the test limits.} \item{upper}{the (1-\code{alpha})th percentile of
-the area outside the limits.} \item{pvalue}{Bootstrap p-value of the area
-outside the limits to test if the series is linear.} \item{test}{Reject the
-null hypothesis that the series is linear (TRUE/FALSE).}
+parts:
+\itemize{
+\item region: the region of the third order moment where the test exceeds
+the limits (up to \code{n.lag}).
+\item n.lag: the maximum lag tested using the third-order moment.
+\item stats: a list of statistics for the area outside the test limits:
+\itemize{
+\item outside: the total area outside of limits (summed over the whole
+third-order moment).
+\item stan: the total area outside the limits divided by its standard
+deviation to give a standardised estimate.
+\item median: the median area outside the test limits.
+\item upper: the (1-\code{alpha})th percentile of the area outside the limits.
+\item pvalue: bootstrap p-value of the area outside the limits to test
+if the series is linear.
+\item test: reject the null hypothesis that the series is linear
+(TRUE/FALSE).
+}
+}
 }
 \description{
 A bootstrap test of non-linearity in a time series using the third-order

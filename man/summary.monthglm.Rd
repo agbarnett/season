@@ -12,12 +12,13 @@
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
-\item{n}{sample size.} \item{month.ests}{parameter estimates for the
-intercept and months.} \item{month.effect}{scale of the monthly effects.
-\sQuote{RR} for \sQuote{rate ratios}, \sQuote{OR} for \sQuote{odds ratios},
-or empty otherwise.} \item{x}{object of class \code{monthglm}}
-\item{object}{object of class \code{monthglm}} \item{list()}{further
-arguments passed to or from other methods.}
+a list with the following elements:
+\itemize{
+\item n: sample size.
+\item month.ests: parameter estimates for the intercept and months.
+\item month.effect: scale of the monthly effects. \code{RR} for rate ratios,
+\code{OR} for odds ratios, or empty otherwise.
+}
 }
 \description{
 The default summary method for a \code{monthglm} object produced by

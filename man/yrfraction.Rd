@@ -13,7 +13,7 @@ between 1 and 12 if type=\sQuote{\code{monthly}}.}
 \item{type}{\sQuote{daily} for dates, or \sQuote{\code{monthly}} for months.}
 }
 \value{
-\item{yrfrac}{Fraction of the year.}
+the fraction of the year.
 }
 \description{
 Calculate the fraction of the year for a date variable (after accounting for

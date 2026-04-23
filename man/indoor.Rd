@@ -5,10 +5,12 @@
 \alias{indoor}
 \title{Indoor Temperature Data}
 \format{
-A \code{data.frame} with the following 3 variables.  \describe{
-\item{datetime}{date and time in \code{POSIXlt} format}
-\item{living}{the living room temperature}
-\item{bedroom}{the bedroom temperature} }
+A \code{data.frame} with the following 3 variables:
+\itemize{
+\item datetime: date and time in \code{POSIXlt} format
+\item living: the living room temperature
+\item bedroom: the bedroom temperature
+}
 }
 \source{
 Adrian G Barnett.

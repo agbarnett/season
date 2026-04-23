@@ -40,9 +40,14 @@ should be a variable in the data frame. Do not log-transform the offset as
 the log-transform is applied by the function.}
 }
 \value{
-\item{call}{the original call to the monthglm function.}
-\item{fit}{GLM model.} \item{fitted}{fitted values.}
-\item{residuals}{residuals.} \item{out}{details on the monthly estimates.}
+a list with the following elements:
+\itemize{
+\item call: the original call to the monthglm function.
+\item fit: GLM model.
+\item fitted: fitted values.
+\item residuals: residuals.
+\item out: details on the monthly estimates.
+}
 }
 \description{
 Fit a generalized linear model with a categorical variable of month.

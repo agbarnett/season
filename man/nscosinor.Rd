@@ -46,18 +46,23 @@ intervals.}
 }
 \value{
 Returns an object of class \dQuote{nsCosinor} with the following
-parts: \item{call}{the original call to the nscosinor function.}
-\item{time}{the year and month for monthly data.} \item{trend}{mean trend
-and 95\\% confidence interval.} \item{season}{mean season(s) and 95\\%
-confidence interval(s).} \item{oseason}{overall season(s) and 95\\%
-confidence interval(s). This will be the same as \code{season} if there is
-only one seasonal cycle.} \item{fitted}{fitted values and 95\\% confidence
-interval, based on trend + season(s).} \item{residuals}{residuals based on
-mean trend and season(s).} \item{n}{the length of the series.}
-\item{chains}{MCMC chains (of class mcmc) of variance estimates: standard
+parts:
+\itemize{
+\item call: the original call to the nscosinor function.
+\item time: the year and month for monthly data.
+\item trend: mean trend and 95\\% confidence interval.
+\item season: mean season(s) and 95\\% confidence interval(s).
+\item oseason: overall season(s) and 95\\% confidence interval(s). This will
+be the same as \code{season} if there is only one seasonal cycle.
+\item fitted: fitted values and 95\\% confidence interval, based on trend +
+season(s).
+\item residuals: residuals based on mean trend and season(s).
+\item n: the length of the series.
+\item chains: MCMC chains (of class mcmc) of variance estimates: standard
 error for overall noise (std.error), standard error for season(s)
-(std.season), phase(s) and amplitude(s)} \item{cycles}{vector of cycles in
-units of time.}
+(std.season), phase(s) and amplitude(s).
+\item cycles: vector of cycles in units of time.
+}
 }
 \description{
 Decompose a time series using a non-stationary cosinor for the seasonal

@@ -46,11 +46,14 @@ day) \eqn{+/-} \code{confrange}.}
 fixed strata size when using \code{stratalength}.}
 }
 \value{
-\item{call}{the original call to the casecross function.}
-\item{c.model}{conditional logistic regression model of class \code{coxph}.}
-\item{ncases}{total number of cases.} \item{ncasedays}{number of case days
-with at least one control day.} \item{ncontroldayss}{average number of
-control days per case day.}
+a list with the following elements:
+\itemize{
+\item call: the original call to the casecross function.
+\item c.model: conditional logistic regression model of class \code{coxph}.
+\item ncases: total number of cases.
+\item ncasedays: number of case days with at least one control day.
+\item ncontroldayss: average number of control days per case day.
+}
 }
 \description{
 Fits a time-stratified case--crossover to regularly spaced time series data.

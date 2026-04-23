@@ -13,11 +13,11 @@ keep_month_numbers <- function(x) {
 }
 
 #' Initial Values for Non-stationary Cosinor
-#' 
+#'
 #' Creates initial values for the non-stationary cosinor decomposition
 #' `nscosinor`. For internal use only.
-#' 
-#' 
+#'
+#'
 #' @name nscosinor.initial
 #' @param data a data frame.
 #' @param response response variable.
@@ -32,18 +32,14 @@ keep_month_numbers <- function(x) {
 NULL
 
 
-
-
-
 #' Random Inverse Gamma Distribution
-#' 
+#'
 #' Internal function to simulate a value from an inverse Gamma distribution,
 #' used by `nscosinor`. See the MCMCpack library. For internal use only.
-#' 
-#' 
+#'
+#'
 #' @name rinvgamma
 #' @param n number of observations.
 #' @param shape Gamma shape parameter.
 #' @param scale Gamma scale parameter (default=1).
 NULL
-

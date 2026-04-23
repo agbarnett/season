@@ -13,9 +13,12 @@ ciPhase(theta, alpha = 0.05)
 interval).}
 }
 \value{
-\item{mean}{the estimated mean phase.} \item{lower}{the estimated
-lower limit of the confidence interval.} \item{upper}{the estimated upper
-limit of the confidence interval.}
+a list with the following elements:
+\itemize{
+\item mean: the estimated mean phase.
+\item lower: the estimated lower limit of the confidence interval.
+\item upper: the estimated upper limit of the confidence interval.
+}
 }
 \description{
 Calculates the mean and confidence interval for the phase based on a chain

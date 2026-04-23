@@ -12,7 +12,7 @@ phasecalc(cosine, sine)
 \item{sine}{estimated sine value from a cosinor model.}
 }
 \value{
-\item{phaser}{Estimated phase in radians.}
+the estimated phase in radians.
 }
 \description{
 Calculate the phase given the estimated sine and cosine values from a
