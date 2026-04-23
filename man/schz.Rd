@@ -5,13 +5,16 @@
 \alias{schz}
 \title{Schizophrenia Births in Australia, 1930--1971}
 \format{
-A data frame with 504 observations on the following 6 variables.
-\describe{ \item{year}{year of birth} \item{month}{month of
-birth} \item{yrmon}{a combination of year and month:
-\eqn{year+(month-1)/12}} \item{NBirths}{monthly number of births in
-Australia, used as an offset} \item{SczBroad}{monthly number of
-schizophrenia births using the broad diagnostic criteria}
-\item{SOI}{southern oscillation index} }
+A data frame with 504 observations on the following 6 variables:
+\itemize{
+\item year: year of birth
+\item month: month of birth
+\item yrmon: a combination of year and month: \eqn{year+(month-1)/12}
+\item NBirths: monthly number of births in Australia, used as an offset
+\item SczBroad: monthly number of schizophrenia births using the broad
+diagnostic criteria
+\item SOI: southern oscillation index
+}
 }
 \source{
 From Prof John McGrath and colleagues, The University of Queensland,

@@ -16,9 +16,8 @@ months, \dQuote{\code{hourly}} for hours.}
 number (FALSE).}
 }
 \value{
-\item{daym}{date (day and month for \code{daily}) or fractional
-month (for \code{monthly}) or fractional of the 24-hour clock (for
-\code{hourly}).}
+the date (day and month for \code{daily}), fractional month (for
+\code{monthly}), or fraction of the 24-hour clock (for \code{hourly}).
 }
 \description{
 Inverts a fraction of the year or hour to a useful time scale.

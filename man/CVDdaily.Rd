@@ -5,23 +5,26 @@
 \alias{CVDdaily}
 \title{Daily Cardiovascular Deaths in Los Angeles, 1987--2000}
 \format{
-A data frame with 5114 observations on the following 16 variables.
-\describe{ \item{date}{date of death in date format
-(year-month-day)} \item{cvd}{daily number of CVD deaths}
-\item{dow}{day of the week (character)} \item{tmpd}{daily
-mean temperature (degrees Fahrenheit)} \item{o3mean}{daily mean
-ozone (parts per billion)} \item{o3tmean}{daily trimmed mean ozone
-(parts per billion)} \item{Mon}{indicator variable for Monday}
-\item{Tue}{indicator variable for Tuesday}
-\item{Wed}{indicator variable for Wednesday}
-\item{Thu}{indicator variable for Thursday}
-\item{Fri}{indicator variable for Friday}
-\item{Sat}{indicator variable for Saturday}
-\item{month}{month (integer from 1 to 12)}
-\item{winter}{indicator variable for winter}
-\item{spring}{indicator variable for spring}
-\item{summer}{indicator variable for summer}
-\item{autumn}{indicator variable for autumn} }
+A data frame with 5114 observations on the following 16 variables:
+\itemize{
+\item date: date of death in date format (year-month-day)
+\item cvd: daily number of CVD deaths
+\item dow: day of the week (character)
+\item tmpd: daily mean temperature (degrees Fahrenheit)
+\item o3mean: daily mean ozone (parts per billion)
+\item o3tmean: daily trimmed mean ozone (parts per billion)
+\item Mon: indicator variable for Monday
+\item Tue: indicator variable for Tuesday
+\item Wed: indicator variable for Wednesday
+\item Thu: indicator variable for Thursday
+\item Fri: indicator variable for Friday
+\item Sat: indicator variable for Saturday
+\item month: month (integer from 1 to 12)
+\item winter: indicator variable for winter
+\item spring: indicator variable for spring
+\item summer: indicator variable for summer
+\item autumn: indicator variable for autumn
+}
 }
 \source{
 From the NMMAPS study.

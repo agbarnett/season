@@ -5,12 +5,16 @@
 \alias{exercise}
 \title{Exercise Data from Queensland, 2005--2007}
 \format{
-A data frame with 1302 observations on the following 7 variables.
-\describe{ \item{id}{subject number} \item{visit}{visit
-number (1, 2 or 3)} \item{date}{date of interview (year-month-day)}
-\item{year}{year of interview} \item{month}{month of
-interview} \item{bmi}{body mass index at visit 1 (kg/m\eqn{^2})}
-\item{walking}{walking time per week (in minutes) at each visit} }
+A data frame with 1302 observations on the following 7 variables:
+\itemize{
+\item id: subject number
+\item visit: visit number (1, 2 or 3)
+\item date: date of interview (year-month-day)
+\item year: year of interview
+\item month: month of interview
+\item bmi: body mass index at visit 1 (kg/m\eqn{^2})
+\item walking: walking time per week (in minutes) at each visit
+}
 }
 \source{
 From Prof Elizabeth Eakin and colleagues, The University of

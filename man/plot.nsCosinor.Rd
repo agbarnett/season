@@ -12,7 +12,7 @@
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
-\item{gplot}{A plot of class \code{ggplot}}
+a plot of class \code{ggplot}.
 }
 \description{
 Plots the trend and season(s) from a \code{nsCosinor} object produced by
