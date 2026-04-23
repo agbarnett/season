@@ -1,26 +1,52 @@
-Package: season
 Type: Package
+Package: season
 Title: Seasonal Analysis of Health Data
-Version: 0.3.16
-Author: Adrian Barnett and Peter Baker and Oliver Hughes
-Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
-Depends:
-    R (>= 3.0.1),
-    ggplot2 (>= 0.9.3),
-    MASS,
-    survival
-Description: Routines for the seasonal analysis of health data, including regression models, time-stratified case-crossover, plotting functions and residual checks, see Barnett and Dobson (2010) ISBN 978-3-642-10748-1. Thanks to Yuming Guo for checking the case-crossover code. 
+Version: 0.3.16.9000
+Authors@R: c(
+  person(
+    given = "Adrian",
+    family = "Barnett",
+    email = "a.barnett@qut.edu.au",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "https://orcid.org/0000-0001-6339-0374")
+    ),
+  person(
+    given = "Peter",
+    family = "Baker",
+    role = c("aut"),
+    email = "p.baker1@uq.edu.au",
+    comment = c(ORCID = "https://orcid.org/0000-0002-1241-7263")
+    ),
+  person(
+    given = "Nicholas",
+    family = "Tierney",
+    email = "nicholas.tierney@gmail.com",
+    role = c("aut"),
+    comment = c(ORCID = "https://orcid.org/0000-0003-1460-8722")
+    )
+  )
+Description: Routines for the seasonal analysis of health data, including
+    regression models, time-stratified case-crossover, plotting functions
+    and residual checks, see Barnett and Dobson (2010) ISBN
+    978-3-642-10748-1. Thanks to Yuming Guo for checking the
+    case-crossover code.
 License: GPL (>= 3)
+Depends:
+    R (>= 4.2.0)
+Suggests: 
+    coda,
+    dlnm,
+    ggplot2 (>= 0.9.3),
+    knitr,
+    MASS,
+    mgcv,
+    rmarkdown,
+    survival,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-Suggests: 
-    knitr,
-    rmarkdown,
-    mgcv,
-    dlnm,
-    coda,
-    testthat (>= 3.0.0)
-VignetteBuilder: knitr
-RoxygenNote: 7.3.3
-Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3

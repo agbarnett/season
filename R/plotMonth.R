@@ -35,22 +35,35 @@ plotMonth <- function(data, resp, panels = 12, ...) {
   # 12 panels
   data$Month = factor(data$month, levels = 1:12, labels = month.abb) # to change facet_wrap labels
   if (panels == 12) {
-    gplot = ggplot(data, aes(year, yaxis)) +
-      geom_line() +
-      theme_bw() +
-      xlab(' ') +
-      ylab(resp) +
-      facet_wrap(~Month)
+    gplot = ggplot2::ggplot(
+      data,
+      ggplot2::aes(
+        year,
+        yaxis
+      )
+    ) +
+      ggplot2::geom_line() +
+      ggplot2::theme_bw() +
+      ggplot2::xlab(' ') +
+      ggplot2::ylab(resp) +
+      ggplot2::facet_wrap(~Month)
     print(gplot)
   }
 
   # 1 panels
   if (panels == 1) {
-    gplot = ggplot(data, aes(year, yaxis, color = Month)) +
-      geom_line() +
-      theme_bw() +
-      xlab(' ') +
-      ylab(resp)
+    gplot = ggplot2::ggplot(
+      data,
+      ggplot2::aes(
+        year,
+        yaxis,
+        color = Month
+      )
+    ) +
+      ggplot2::geom_line() +
+      ggplot2::theme_bw() +
+      ggplot2::xlab(' ') +
+      ggplot2::ylab(resp)
     print(gplot)
   }
 }

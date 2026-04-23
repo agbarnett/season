@@ -30,9 +30,6 @@ NULL
 #' @importFrom grDevices gray
 #' @importFrom graphics axis box hist lines par plot points polygon rug text
 #' @importFrom stats acf as.formula cpgram fft fitted gaussian glm median model.frame na.omit pchisq qchisq qnorm quantile relevel resid residuals rgamma rnorm runif sd time acf as.formula cpgram fft fitted gaussian glm median model.frame na.omit pchisq qchisq qnorm quantile relevel resid residuals rgamma rnorm runif sd time
-#' @import MASS
-#' @import ggplot2
-#' @import survival
 #' @author Adrian Barnett <a.barnett@qut.edu.au>\cr Peter Baker\cr Oliver Hughes
 #'
 #' Maintainer: Adrian Barnett <a.barnett@qut.edu.au>

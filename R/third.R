@@ -94,9 +94,16 @@ third = function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
 
   # Lags of minima and maxima
   if (plot == TRUE) {
-    gplot = ggplot(for.plot, aes(xaxis, yaxis, z = zaxis)) +
-      stat_contour() +
-      geom_tile(aes(fill = zaxis))
+    gplot = ggplot2::ggplot(
+      for.plot,
+      ggplot2::aes(
+        xaxis,
+        yaxis,
+        z = zaxis
+      )
+    ) +
+      ggplot2::stat_contour() +
+      ggplot2::geom_tile(ggplot2::aes(fill = zaxis))
     print(gplot)
   }
 

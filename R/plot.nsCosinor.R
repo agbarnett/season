@@ -53,16 +53,26 @@ plot.nsCosinor <- function(x, ...) {
   plot.frame = rbind(trend.frame, season.frame)
 
   # plot with ribbon
-  gplot = ggplot(plot.frame, aes(time, mean)) +
-    geom_ribbon(
-      aes(ymin = lower, ymax = upper, alpha = 5),
+  gplot = ggplot2::ggplot(
+    plot.frame,
+    ggplot2::aes(time, mean)
+  ) +
+    ggplot2::geom_ribbon(
+      ggplot2::aes(
+        ymin = lower,
+        ymax = upper,
+        alpha = 5
+      ),
       show.legend = FALSE
     ) +
-    geom_line() +
-    theme_bw() +
-    xlab('Time') +
-    ylab(' ') +
-    facet_grid(type ~ ., scales = 'free_y')
+    ggplot2::geom_line() +
+    ggplot2::theme_bw() +
+    ggplot2::xlab('Time') +
+    ggplot2::ylab(' ') +
+    ggplot2::facet_grid(
+      type ~ .,
+      scales = 'free_y'
+    )
   #  print(gplot)
 
   # return

@@ -66,14 +66,18 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   B_j <- matrix(0, kk, kk)
   HH_j <- matrix(0, kk, kk)
   # Initial alpha sample;
-  alpha_j[, n + 1] <- mvrnorm(n = 1, mu = p_j[, n + 1], Sigma = C_j[,, n + 1])
+  alpha_j[, n + 1] <- MASS::mvrnorm(
+    n = 1,
+    mu = p_j[, n + 1],
+    Sigma = C_j[,, n + 1]
+  )
   # Iterate backwards in time;
   for (t in n:1) {
     B_j <- C_j[,, t] %*% t(G) %*% qr.solve(R_j[,, t + 1])
     HH_j <- C_j[,, t] - (B_j %*% R_j[,, t + 1] %*% t(B_j))
     h_j[, t] = p_j[, t] + (B_j %*% (alpha_j[, t + 1] - a_j[, t + 1]))
     ## Sample alpha_j from a multivariate Normal (mvrnorm from MASS library)
-    alpha_j[, t] <- mvrnorm(n = 1, mu = h_j[, t], Sigma = t(HH_j))
+    alpha_j[, t] <- MASS::mvrnorm(n = 1, mu = h_j[, t], Sigma = t(HH_j))
   }
   # Estimate vartheta and lambdas (labelled 'w')
   se <- matrix(0, n) # squared error

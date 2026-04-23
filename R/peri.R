@@ -70,12 +70,20 @@
       type = 'Cycles'
     )
     to.plot = rbind(to.plot.one, to.plot.two)
-    gplot = ggplot(to.plot, aes(xaxis, yaxis, ymin = 0, ymax = yaxis)) +
-      geom_linerange() +
-      theme_bw() +
-      xlab('Frequency in radians or cycles') +
-      ylab('Periodogram') +
-      facet_wrap(~type, scales = 'free_x')
+    gplot = ggplot2::ggplot(
+      to.plot,
+      ggplot2::aes(
+        xaxis,
+        yaxis,
+        ymin = 0,
+        ymax = yaxis
+      )
+    ) +
+      ggplot2::geom_linerange() +
+      ggplot2::theme_bw() +
+      ggplot2::xlab('Frequency in radians or cycles') +
+      ggplot2::ylab('Periodogram') +
+      ggplot2::facet_wrap(~type, scales = 'free_x')
     print(gplot)
   }
   # return

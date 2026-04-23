@@ -286,7 +286,7 @@ casecross = function(
   ncontrols = round(mean(as.numeric(table(onlycntl$time))), 1)
   ## Run the conditional logistic regression
   finalformula = as.formula(paste('Surv(timex,case)~', indep, '+strata(time)'))
-  c.model = coxph(
+  c.model = survival::coxph(
     finalformula,
     weights = outcome,
     data = finished,
