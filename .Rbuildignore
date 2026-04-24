@@ -3,3 +3,4 @@
 ^[.]?air[.]toml$
 ^\.vscode$
 ^\.github$
+^codecov\.yml$
