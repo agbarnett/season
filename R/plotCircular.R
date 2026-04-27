@@ -95,7 +95,7 @@ plotCircular <- function(
   if (is.null(area2)) {
     legend <- FALSE
   } else {
-    if (length(area1) != length(area2))
+    if (length(area1) != length(area2)) {
       cat(
         "Warning: length of",
         deparse(substitute(area1)),
@@ -103,11 +103,14 @@ plotCircular <- function(
         deparse(substitute(area2)),
         "not equal\n"
       )
+    }
   }
 
   ##print(pieces.col)
   density.1 <- density.2 <- 0
-  if (pieces.col[1] != "white") density.1 <- NA
+  if (pieces.col[1] != "white") {
+    density.1 <- NA
+  }
   if (length(pieces.col) == 2) {
     if (pieces.col[2] != "white") density.2 <- NA
   }
@@ -118,7 +121,11 @@ plotCircular <- function(
   bins <- length(area1)
   clockstart = pi / 2 # default clock start at 12 o'clock
   half <- 2 * pi / (bins * 2) # for moving text/spokes half-way round
-  if (clockwise == TRUE) mult = -1 else mult = 1
+  if (clockwise == TRUE) {
+    mult = -1
+  } else {
+    mult = 1
+  }
 
   ## First plot a circle (of radius 1) as a frame
   detail <- 200 # number that controls graphical detail of cheeses
