@@ -4,3 +4,5 @@
 ^\.vscode$
 ^\.github$
 ^codecov\.yml$
+^\.positai$
+^\.claude$
