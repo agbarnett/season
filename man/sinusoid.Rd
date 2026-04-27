@@ -7,7 +7,7 @@
 sinusoid(amplitude, frequency, phase, ...)
 }
 \arguments{
-\item{amplitude}{the amplitude of the sinsuoid (its maximum value).}
+\item{amplitude}{the amplitude of the sinusoid (its maximum value).}
 
 \item{frequency}{the frequency of the sinusoid in 0 to 2\eqn{\pi} (number of
 cycles).}

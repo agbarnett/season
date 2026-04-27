@@ -36,7 +36,7 @@
 #' @param ylab y axis label, default:blank
 #' @param pieces.col colours for circular pieces, default:\sQuote{white} for
 #' 1st and \sQuote{grey} for second variable. Note that a list of available
-#' colours may be found with \sQuote{colors()}
+#' colours may be found with [colours()].
 #' @param length make the length of the segments proportional to the dependent
 #' variable, default:FALSE
 #' @param legend whether to include legend or not, default:TRUE when plotting

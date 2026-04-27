@@ -74,7 +74,7 @@
 #'   * c.model: conditional logistic regression model of class `coxph`.
 #'   * ncases: total number of cases.
 #'   * ncasedays: number of case days with at least one control day.
-#'   * ncontroldayss: average number of control days per case day.
+#'   * ncontroldays: average number of control days per case day.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `summary.casecross`, `coxph`
 #' @references Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
