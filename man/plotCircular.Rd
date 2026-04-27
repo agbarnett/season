@@ -62,7 +62,7 @@ default:0.03.}
 
 \item{pieces.col}{colours for circular pieces, default:\sQuote{white} for
 1st and \sQuote{grey} for second variable. Note that a list of available
-colours may be found with \code{\link[=colours]{colours()}}.}
+colours may be found with \sQuote{colors()}}
 
 \item{length}{make the length of the segments proportional to the dependent
 variable, default:FALSE}

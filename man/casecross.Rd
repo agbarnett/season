@@ -52,7 +52,7 @@ a list with the following elements:
 \item c.model: conditional logistic regression model of class \code{coxph}.
 \item ncases: total number of cases.
 \item ncasedays: number of case days with at least one control day.
-\item ncontroldays: average number of control days per case day.
+\item ncontroldayss: average number of control days per case day.
 }
 }
 \description{

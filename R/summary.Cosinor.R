@@ -21,7 +21,7 @@
 #'   * n: sample size.
 #'   * amp: estimated amplitude.
 #'   * amp.scale: the scale of the estimated amplitude (empty for standard
-#'     regression; \sQuote{probability scale} for logistic regression;
+#'     regression; \sQuote{probability scale} for logistic regession;
 #'     \sQuote{absolute scale} for Poisson regression).
 #'   * phase: estimated peak phase on a time scale.
 #'   * lphase: estimated low phase on a time scale (half a year after/before

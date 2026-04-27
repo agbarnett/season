@@ -7,7 +7,7 @@
 #' \eqn{A} is the amplitude, \eqn{f} is the frequency, \eqn{t} is time and
 #' \eqn{P} is the phase.
 #'
-#' @param amplitude the amplitude of the sinusoid (its maximum value).
+#' @param amplitude the amplitude of the sinsuoid (its maximum value).
 #' @param frequency the frequency of the sinusoid in 0 to 2\eqn{\pi} (number of
 #' cycles).
 #' @param phase the phase of the sinusoid (location of the peak).
