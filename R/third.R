@@ -61,11 +61,16 @@ third = function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
           centred[(1 + k):(nsamp - large + k)]
       ) /
         nsamp
-      XXX[n.lag + 1 + k, n.lag + 1 + d] = XXX[d + n.lag + 1, k + n.lag + 1] # Symmetry
-      XXX[n.lag + 1 - d, n.lag + 1 + k - d] = XXX[d + n.lag + 1, k + n.lag + 1] # Symmetry
-      XXX[n.lag + 1 + k - d, n.lag + 1 - d] = XXX[d + n.lag + 1, k + n.lag + 1] # Symmetry
-      XXX[n.lag + 1 + d - k, n.lag + 1 - k] = XXX[d + n.lag + 1, k + n.lag + 1] # Symmetry
-      XXX[n.lag + 1 - k, n.lag + 1 + d - k] = XXX[d + n.lag + 1, k + n.lag + 1] # Symmetry
+      # Symmetry
+      XXX[n.lag + 1 + k, n.lag + 1 + d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      # Symmetry
+      XXX[n.lag + 1 - d, n.lag + 1 + k - d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      # Symmetry
+      XXX[n.lag + 1 + k - d, n.lag + 1 - d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      # Symmetry
+      XXX[n.lag + 1 + d - k, n.lag + 1 - k] = XXX[d + n.lag + 1, k + n.lag + 1]
+      # Symmetry
+      XXX[n.lag + 1 - k, n.lag + 1 + d - k] = XXX[d + n.lag + 1, k + n.lag + 1]
       if (plot == TRUE) {
         frame = data.frame(
           xaxis = d,
