@@ -45,7 +45,7 @@ default).}
 intervals.}
 }
 \value{
-Returns an object of class \dQuote{nsCosinor} with the following
+Returns an object of class "nsCosinor" with the following
 parts:
 \itemize{
 \item call: the original call to the nscosinor function.

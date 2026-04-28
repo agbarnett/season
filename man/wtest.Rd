@@ -7,9 +7,9 @@
 wtest(cases, offset, data, alpha = 0.05)
 }
 \arguments{
-\item{cases}{variable name for cases (\dQuote{successes}).}
+\item{cases}{variable name for cases ("successes").}
 
-\item{offset}{variable name for at-risk population (\dQuote{trials}).}
+\item{offset}{variable name for at-risk population ("trials").}
 
 \item{data}{data frame (optional).}
 

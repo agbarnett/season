@@ -60,8 +60,8 @@ default:0.03.}
 
 \item{ylab}{y axis label, default:blank}
 
-\item{pieces.col}{colours for circular pieces, default:\sQuote{white} for
-1st and \sQuote{grey} for second variable. Note that a list of available
+\item{pieces.col}{colours for circular pieces, default:"white" for
+1st and "grey" for second variable. Note that a list of available
 colours may be found with \code{\link[=colours]{colours()}}.}
 
 \item{length}{make the length of the segments proportional to the dependent
@@ -85,7 +85,7 @@ weekly or monthly. The number of segments will be the length of the variable
 \code{area1}.
 
 The plots are also called rose diagrams, with the segments then called
-\sQuote{petals}.
+"petals".
 }
 \examples{
 \donttest{

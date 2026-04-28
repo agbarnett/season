@@ -11,7 +11,7 @@
 #' function only uses a time-stratified design, and other designs such as the
 #' symmetric bi-directional design, are not available.
 #'
-#' The case--crossover method compares \dQuote{case} days when events occurred
+#' The case--crossover method compares "case" days when events occurred
 #' (e.g., deaths) with control days to look for differences in exposure that
 #' might explain differences in the number of cases. Control days are selected
 #' to be nearby to case days, which means that only recent changes in the
@@ -51,7 +51,7 @@
 #' so the parameter estimates are odds ratios.
 #'
 #' The code assumes that the data frame contains a date variable (in
-#' [Date()] format) called \sQuote{date}.
+#' [Date()] format) called "date".
 #'
 #' @param formula formula. The dependent variable should be an integer count
 #' (e.g., daily number of deaths).

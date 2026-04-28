@@ -10,7 +10,7 @@
 #'
 #' The code produces the fitted sinusoid based on the intercept and sinusoid.
 #' The y-axis is on the scale of probability if the link function is
-#' \sQuote{logit} or \sQuote{cloglog}. If the analysis was based on monthly
+#' "logit" or "cloglog". If the analysis was based on monthly
 #' data then month is shown on the x-axis. If the analysis was based on daily
 #' data then time is shown on the x-axis.
 #'

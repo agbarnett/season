@@ -67,7 +67,7 @@
 #' @param monthly TRUE for monthly data.
 #' @param alpha Statistical significance level used by the confidence
 #' intervals.
-#' @return Returns an object of class \dQuote{nsCosinor} with the following
+#' @return Returns an object of class "nsCosinor" with the following
 #' parts:
 #'   * call: the original call to the nscosinor function.
 #'   * time: the year and month for monthly data.

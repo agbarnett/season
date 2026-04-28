@@ -18,7 +18,7 @@ nonlintest(data, n.lag, n.boot, alpha = 0.05)
 \item{alpha}{statistical significance level of test (default=0.05).}
 }
 \value{
-Returns an object of class \dQuote{nonlintest} with the following
+Returns an object of class "nonlintest" with the following
 parts:
 \itemize{
 \item region: the region of the third order moment where the test exceeds

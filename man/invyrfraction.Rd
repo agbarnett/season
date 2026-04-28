@@ -9,25 +9,24 @@ invyrfraction(frac, type = "daily", text = TRUE)
 \arguments{
 \item{frac}{a vector of fractions of the year, all between 0 and 1.}
 
-\item{type}{\dQuote{\code{daily}} for dates, \dQuote{\code{monthly}} for
-months, \dQuote{\code{hourly}} for hours.}
+\item{type}{"daily" for dates, "monthly" for months, "hourly" for hours.}
 
 \item{text}{add an explanatory text to the returned value (TRUE) or return a
 number (FALSE).}
 }
 \value{
-the date (day and month for \code{daily}), fractional month (for
-\code{monthly}), or fraction of the 24-hour clock (for \code{hourly}).
+the date (day and month for "daily"), fractional month (for
+"monthly"), or fraction of the 24-hour clock (for "hourly").
 }
 \description{
 Inverts a fraction of the year or hour to a useful time scale.
 }
 \details{
-Returns the day and month (for \code{daily}) or fraction of the month (for
-\code{monthly}) given a fraction of the year. Assumes a year length of
-365.25 days for \code{daily}. When using \code{monthly} the 1st of January
+Returns the day and month (for "daily") or fraction of the month (for
+"monthly") given a fraction of the year. Assumes a year length of
+365.25 days for "daily". When using "monthly" the 1st of January
 is 1, the 1st of December is 12, and the 31st of December is 12.9. For
-\code{hourly} it returns the fraction of the 24-hour clock starting from
+"hourly" it returns the fraction of the 24-hour clock starting from
 zero (midnight).
 }
 \examples{

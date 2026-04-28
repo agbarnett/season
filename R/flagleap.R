@@ -7,7 +7,7 @@
 #' Counts the number of days per month given a range of dates. Used to adjust
 #' monthly count data for the at-risk time period. For internal use only.
 #'
-#' The data should contain the numeric variable called \sQuote{year} as a 4
+#' The data should contain the numeric variable called "year" as a 4
 #' digit year (e.g., 1973).
 #'
 #' @param data data.

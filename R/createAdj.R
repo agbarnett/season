@@ -20,8 +20,8 @@
 #' @param matrix square matrix with 1's for neighbours and NA's for
 #' non-neighbours.
 #' @param filename filename that the adjacency matrix file will be written to.
-#' @param suffix string to be appended to \sQuote{num}, \sQuote{adj} and
-#' \sQuote{weights} object names
+#' @param suffix string to be appended to "num", "adj" and
+#' "weights" object names
 #' @return Creates a text file named `filename` that contains the total
 #' number of neighbours (num), the index number of the adjacent neighbours
 #' (adj) and the weights (weights).

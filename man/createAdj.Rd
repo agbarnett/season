@@ -12,8 +12,8 @@ non-neighbours.}
 
 \item{filename}{filename that the adjacency matrix file will be written to.}
 
-\item{suffix}{string to be appended to \sQuote{num}, \sQuote{adj} and
-\sQuote{weights} object names}
+\item{suffix}{string to be appended to "num", "adj" and
+"weights" object names}
 }
 \value{
 Creates a text file named \code{filename} that contains the total

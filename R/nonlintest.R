@@ -39,7 +39,7 @@
 #' @param n.boot the number of bootstrap replications (suggested minimum of
 #' 100; 1000 or more would be better).
 #' @param alpha statistical significance level of test (default=0.05).
-#' @return Returns an object of class \dQuote{nonlintest} with the following
+#' @return Returns an object of class "nonlintest" with the following
 #' parts:
 #'   * region: the region of the third order moment where the test exceeds
 #'     the limits (up to `n.lag`).
