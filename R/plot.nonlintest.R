@@ -43,7 +43,7 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
       ggplot2::stat_contour() +
       ggplot2::geom_tile(ggplot2::aes(fill = z))
     if (plot == FALSE) {
-      return(gplot)
+      return(invisible(gplot))
     }
     if (plot == TRUE) {
       print(gplot)
