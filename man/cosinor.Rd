@@ -39,31 +39,36 @@ cloglog. Note, it must have the parentheses.}
 type=\dQuote{hourly}}
 
 \item{rescheck}{plot the residual checks (TRUE/FALSE), see
-\code{\link{seasrescheck}}.}
+\code{\link[=seasrescheck]{seasrescheck()}}.}
 
 \item{type}{\dQuote{daily} for daily data (default), or \dQuote{weekly} for
 weekly data, or \dQuote{monthly} for monthly data, or \dQuote{hourly} for
 hourly data.}
 
 \item{offsetmonth}{include an offset to account for the uneven number of
-days in the month (TRUE/FALSE). Should be used for monthly counts
-(type=\dQuote{monthly}) (with \code{family=poisson()}).}
+days in the month (TRUE/FALSE). Should be used for monthly counts (with
+\code{family=poisson()}).}
 
 \item{offsetpop}{include an offset for the population (optional), this
-should be a variable in the data frame. Do not log-transform this offset, as
-the transform is applied by the code.}
+should be a variable in the data frame. Do not log-transform the offset as
+the log-transform is applied by the function.}
 
 \item{text}{add explanatory text to the returned phase value (TRUE) or
 return a number (FALSE). Passed to the \code{invyrfraction} function.}
 }
 \value{
 Returns an object of class \dQuote{Cosinor} with the following
-parts: \item{call}{the original call to the cosinor function.} \item{glm}{an
-object of class \code{glm} (see \code{\link{glm}}).} \item{fitted}{fitted
-values for intercept and cosinor only (ignoring other independent
-variables).} \item{fitted.plus}{standard fitted values, including all other
-independent variables.} \item{residuals}{residuals.} \item{date}{name of the
-date variable (in Date format when type=\sQuote{daily}).}
+parts:
+\itemize{
+\item call: the original call to the cosinor function.
+\item glm: an object of class \code{glm} (see \code{\link[=glm]{glm()}}).
+\item fitted: fitted values for intercept and cosinor only (ignoring other
+independent variables).
+\item fitted.plus: standard fitted values, including all other independent
+variables.
+\item residuals: residuals.
+\item date: name of the date variable (in Date format when type = \code{daily}).
+}
 }
 \description{
 Fits a cosinor model as part of a generalized linear model.

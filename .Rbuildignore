@@ -1,2 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^[.]?air[.]toml$
+^\.vscode$
+^\.github$
+^codecov\.yml$
+^\.positai$
+^\.claude$

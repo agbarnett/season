@@ -19,9 +19,12 @@ values (default=TRUE).}
 \item{plot}{contour plot of the third order moment (default=TRUE).}
 }
 \value{
-\item{waxis}{The axis --\code{n.lag} to \code{n.lag}.}
-\item{third}{The estimated third order moment in the range --n.lag to n.lag,
-including the symmetries.}
+a list with the following elements:
+\itemize{
+\item waxis: the axis from \code{-n.lag} to \code{n.lag}.
+\item third: the estimated third order moment in the range -n.lag to n.lag,
+including the symmetries.
+}
 }
 \description{
 Estimated third order moment for a time series.

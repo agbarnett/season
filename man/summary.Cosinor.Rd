@@ -14,18 +14,24 @@
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
-\item{n}{sample size.} \item{amp}{estimated amplitude.}
-\item{amp.scale}{the scale of the estimated amplitude (empty for standard
-regression; \sQuote{probability scale} for logistic regession;
-\sQuote{absolute scale} for Poisson regression).} \item{phase}{estimated
-peak phase on a time scale.} \item{lphase}{estimated low phase on a time
-scale (half a year after/before \code{phase}).}
-\item{significant}{statistically significant sinusoid (TRUE/FALSE).}
-\item{alpha}{statistical significance level.} \item{digits}{minimal number
-of significant digits.} \item{text}{add explanatory text to the returned
-phase value (TRUE) or return a number (FALSE).} \item{type}{type of data
-(yearly/monthly/weekly/hourly).} \item{ctable}{table of regression
-coefficients.}
+a list with the following named elements:
+\itemize{
+\item n: sample size.
+\item amp: estimated amplitude.
+\item amp.scale: the scale of the estimated amplitude (empty for standard
+regression; \sQuote{probability scale} for logistic regression;
+\sQuote{absolute scale} for Poisson regression).
+\item phase: estimated peak phase on a time scale.
+\item lphase: estimated low phase on a time scale (half a year after/before
+\code{phase}).
+\item significant: statistically significant sinusoid (TRUE/FALSE).
+\item alpha: statistical significance level.
+\item digits: minimal number of significant digits.
+\item text: add explanatory text to the returned phase value (TRUE) or return
+a number (FALSE).
+\item type: type of data (yearly/monthly/weekly/hourly).
+\item ctable: table of regression coefficients.
+}
 }
 \description{
 The default print method for a \code{Cosinor} object produced by

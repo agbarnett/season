@@ -29,8 +29,8 @@ month pattern \code{cycles=c(6,12)}.}
 
 \item{burnin}{number of MCMC samples discarded as a burn-in (default=500).}
 
-\item{tau}{vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-seasonal parameter, tau[3] for 2nd seasonal parameter, etc. Larger values of
+\item{tau}{vector of smoothing parameters, \code{tau[1]} for trend, \code{tau[2]} for 1st
+seasonal parameter, \code{tau[3]} for 2nd seasonal parameter, etc. Larger values of
 tau allow more change between observations and hence a greater potential
 flexibility in the trend and season.}
 
@@ -46,18 +46,23 @@ intervals.}
 }
 \value{
 Returns an object of class \dQuote{nsCosinor} with the following
-parts: \item{call}{the original call to the nscosinor function.}
-\item{time}{the year and month for monthly data.} \item{trend}{mean trend
-and 95\% confidence interval.} \item{season}{mean season(s) and 95\%
-confidence interval(s).} \item{oseason}{overall season(s) and 95\%
-confidence interval(s). This will be the same as \code{season} if there is
-only one seasonal cycle.} \item{fitted}{fitted values and 95\% confidence
-interval, based on trend + season(s).} \item{residuals}{residuals based on
-mean trend and season(s).} \item{n}{the length of the series.}
-\item{chains}{MCMC chains (of class mcmc) of variance estimates: standard
+parts:
+\itemize{
+\item call: the original call to the nscosinor function.
+\item time: the year and month for monthly data.
+\item trend: mean trend and 95\\% confidence interval.
+\item season: mean season(s) and 95\\% confidence interval(s).
+\item oseason: overall season(s) and 95\\% confidence interval(s). This will
+be the same as \code{season} if there is only one seasonal cycle.
+\item fitted: fitted values and 95\\% confidence interval, based on trend +
+season(s).
+\item residuals: residuals based on mean trend and season(s).
+\item n: the length of the series.
+\item chains: MCMC chains (of class mcmc) of variance estimates: standard
 error for overall noise (std.error), standard error for season(s)
-(std.season), phase(s) and amplitude(s)} \item{cycles}{vector of cycles in
-units of time.}
+(std.season), phase(s) and amplitude(s).
+\item cycles: vector of cycles in units of time.
+}
 }
 \description{
 Decompose a time series using a non-stationary cosinor for the seasonal
@@ -76,9 +81,9 @@ model gives potentially very flexible seasonal estimates.
 The frequency of the seasonal estimate(s) are controlled by \code{cycle}.
 The cycles should be specified in units of time. If the data is monthly,
 then setting \code{lambda=1/12} and \code{cycles=12} will fit an annual
-seasonal pattern. If the data is daily, then setting \code{lambda=}
+seasonal pattern. If the data is daily, then setting \verb{lambda=}
 \code{1/365.25} and \code{cycles=365.25} will fit an annual seasonal
-pattern. Specifying \code{cycles=} \code{c(182.6,365.25)} will fit two
+pattern. Specifying \verb{cycles=} \code{c(182.6,365.25)} will fit two
 seasonal patterns, one with a twice-annual cycle, and one with an annual
 cycle.
 

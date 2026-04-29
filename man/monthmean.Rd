@@ -20,7 +20,10 @@ calculated.}
 }
 \value{
 Returns an object of class \dQuote{Monthmean} with the following
-parts: \item{mean}{a vector of length 12 with the monthly means.}
+parts:
+\itemize{
+\item mean: a vector of length 12 with the monthly means.
+}
 }
 \description{
 Calculate the monthly mean or adjusted monthly mean for count data.

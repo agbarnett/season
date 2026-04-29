@@ -12,7 +12,7 @@ aaft(data, nsur)
 \item{nsur}{the number of surrogates to generate (1 or more).}
 }
 \value{
-\item{surrogates}{a matrix of the \code{nsur} surrogates.}
+a matrix of the \code{nsur} surrogates.
 }
 \description{
 Generates random linear surrogate data of a time series with the same

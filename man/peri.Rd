@@ -15,10 +15,14 @@ periodogram (default=TRUE).}
 \item{plot}{plot the estimated periodogram (default=TRUE).}
 }
 \value{
-\item{peri}{periodogram, I(\eqn{\omega}).} \item{f}{frequencies in
-radians, \eqn{\omega}.} \item{c}{frequencies in cycles of time,
-\eqn{2\pi/\omega}.} \item{amp}{amplitude periodogram.} \item{phase}{phase
-periodogram.}
+a list with the following elements:
+\itemize{
+\item peri: periodogram, I(\eqn{\omega}).
+\item f: frequencies in radians, \eqn{\omega}.
+\item c: frequencies in cycles of time, \eqn{2\pi/\omega}.
+\item amp: amplitude periodogram.
+\item phase: phase periodogram.
+}
 }
 \description{
 Estimated periodogram using the fast Fourier transform (\code{fft}).

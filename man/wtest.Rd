@@ -16,14 +16,18 @@ wtest(cases, offset, data, alpha = 0.05)
 \item{alpha}{significance level (default=0.05).}
 }
 \value{
-\item{test}{test statistic.} \item{pvalue}{p-value.}
+a list with the following elements:
+\itemize{
+\item test: test statistic.
+\item pvalue: p-value.
+}
 }
 \description{
 Tests for a seasonal pattern in Binomial data.
 }
 \details{
 A test of whether monthly data has a sinusoidal seasonal pattern. The test
-has low power compared with the \code{\link{cosinor}} test.
+has low power compared with the \code{\link[=cosinor]{cosinor()}} test.
 }
 \examples{
 

@@ -15,7 +15,7 @@ Tests the residuals for any remaining seasonality.
 \details{
 Plots: i) histogram of the residuals, ii) a scatter plot against residual
 order, iii) the autocovariance, iv) the cumulative periodogram (see
-\code{\link{cpgram}})
+\code{\link[=cpgram]{cpgram()}})
 }
 \examples{
 \donttest{

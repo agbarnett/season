@@ -46,11 +46,14 @@ day) \eqn{+/-} \code{confrange}.}
 fixed strata size when using \code{stratalength}.}
 }
 \value{
-\item{call}{the original call to the casecross function.}
-\item{c.model}{conditional logistic regression model of class \code{coxph}.}
-\item{ncases}{total number of cases.} \item{ncasedays}{number of case days
-with at least one control day.} \item{ncontroldayss}{average number of
-control days per case day.}
+a list with the following elements:
+\itemize{
+\item call: the original call to the casecross function.
+\item c.model: conditional logistic regression model of class \code{coxph}.
+\item ncases: total number of cases.
+\item ncasedays: number of case days with at least one control day.
+\item ncontroldays: average number of control days per case day.
+}
 }
 \description{
 Fits a time-stratified case--crossover to regularly spaced time series data.
@@ -92,11 +95,11 @@ same day of the week if \code{matchdow=TRUE}, iii) have a value of
 number of available controls will become too small, which in turn means the
 number of case days with at least one control day is compromised.
 
-The method uses conditional logistic regression (see \code{\link{coxph}} and
+The method uses conditional logistic regression (see \code{\link[survival:coxph]{survival::coxph()}} and
 so the parameter estimates are odds ratios.)
 
 The code assumes that the data frame contains a date variable (in
-\code{\link{Date}} format) called \sQuote{date}.
+\code{\link[=Date]{Date()}} format) called \sQuote{date}.
 }
 \examples{
 \donttest{# cardiovascular disease data

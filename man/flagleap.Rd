@@ -16,8 +16,12 @@ flagleap(data, report = TRUE, matchin = FALSE)
 only dates in the data will be returned (default=FALSE).}
 }
 \value{
-\item{year}{year (4 digits).} \item{month}{month (2 digits).}
-\item{ndaysmonth}{number of days in the month (either 28, 29, 30 or 31).}
+a data frame with the following columns:
+\itemize{
+\item year: year (4 digits).
+\item month: month (2 digits).
+\item ndaysmonth: number of days in the month (either 28, 29, 30 or 31).
+}
 }
 \description{
 Counts the number of days per month given a range of dates. Used to adjust
