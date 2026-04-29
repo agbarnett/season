@@ -38,8 +38,8 @@ plotMonth <- function(data, resp, panels = 12, ...) {
     gplot = ggplot2::ggplot(
       data,
       ggplot2::aes(
-        year,
-        yaxis
+        x = year,
+        y = yaxis
       )
     ) +
       ggplot2::geom_line() +
