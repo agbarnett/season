@@ -16,7 +16,8 @@
 #' zero (midnight).
 #'
 #' @param frac a vector of fractions of the year, all between 0 and 1.
-#' @param type "daily" for dates, "monthly" for months, "hourly" for hours.
+#' @param type "daily" for dates, "monthly" for months, "hourly" for hours,
+#'   "weekly" for weeks.
 #' @param text add an explanatory text to the returned value (TRUE) or return a
 #' number (FALSE).
 #' @return the date (day and month for "daily"), fractional month (for
@@ -24,9 +25,10 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
-#' invyrfraction(c(0, 0.5, 0.99), type='daily')
-#' invyrfraction(c(0, 0.5, 0.99), type='monthly')
 #' invyrfraction(c(0, 0.5, 0.99), type='hourly')
+#' invyrfraction(c(0, 0.5, 0.99), type='daily')
+#' invyrfraction(c(0, 0.5, 0.99), type='weekly')
+#' invyrfraction(c(0, 0.5, 0.99), type='monthly')
 #'
 #' @export invyrfraction
 invyrfraction <- function(frac, type = 'daily', text = TRUE) {

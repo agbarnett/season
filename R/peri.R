@@ -4,7 +4,6 @@
 #'
 #' Estimated periodogram using the fast Fourier transform (`fft`).
 #'
-#'
 #' @param data a data frame.
 #' @param adjmean subtract the mean from the series before calculating the
 #' periodogram (default=TRUE).

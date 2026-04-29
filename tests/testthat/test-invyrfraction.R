@@ -1,15 +1,27 @@
 test_that("inyrfraction works", {
-  expect_equal(
-    invyrfraction(c(0, 0.5, 1), type = "hourly"),
-    c("Hour = 0", "Hour = 12", "Hour = 24")
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "hourly", text = TRUE)
   )
-  expect_equal(
-    invyrfraction(c(0, 0.5, 1), type = "monthly"),
-    c("Month = 1", "Month = 7", "Month = 13")
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "hourly", text = FALSE)
   )
-  expect_equal(
-    invyrfraction(c(0, 0.5, 1), type = "weekly"),
-    c("Week = 1", "Week = 27", "Week = 53")
+  # expect_snapshot(
+  #   invyrfraction(frac = c(0, 0.5, 1), type = "daily", text = TRUE)
+  # )
+  # expect_snapshot(
+  #   invyrfraction(frac = c(0, 0.5, 1), type = "daily", text = FALSE)
+  # )
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "weekly", text = TRUE)
+  )
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "weekly", text = FALSE)
+  )
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "monthly", text = TRUE)
+  )
+  expect_snapshot(
+    invyrfraction(frac = c(0, 0.5, 1), type = "monthly", text = FALSE)
   )
 })
 

@@ -34,7 +34,8 @@
 #' `family=poisson()`).
 #' @param offsetpop include an offset for the population (optional), this
 #' should be a variable in the data frame. Do not log-transform the offset as
-#' the log-transform is applied by the function.
+#' the log-transform is applied by the function. This should be an expression,
+#' as given in the example below.
 #' @return a list with the following elements:
 #'   * call: the original call to the monthglm function.
 #'   * fit: GLM model.
@@ -65,6 +66,10 @@ monthglm = function(
   ## checks
   if (refmonth < 1 | refmonth > 12) {
     stop("Reference month must be between 1 and 12")
+  }
+  offsetmonth_lgl <- is.logical(offsetmonth)
+  if (!offsetmonth_lgl) {
+    stop("`offsetmonth` must be logical, we see type: ", class(offsetmonth))
   }
   ## original call with defaults (see amer package)
   ans = as.list(match.call())

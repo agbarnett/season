@@ -9,7 +9,8 @@ invyrfraction(frac, type = "daily", text = TRUE)
 \arguments{
 \item{frac}{a vector of fractions of the year, all between 0 and 1.}
 
-\item{type}{"daily" for dates, "monthly" for months, "hourly" for hours.}
+\item{type}{"daily" for dates, "monthly" for months, "hourly" for hours,
+"weekly" for weeks.}
 
 \item{text}{add an explanatory text to the returned value (TRUE) or return a
 number (FALSE).}
@@ -31,9 +32,10 @@ zero (midnight).
 }
 \examples{
 
-invyrfraction(c(0, 0.5, 0.99), type='daily')
-invyrfraction(c(0, 0.5, 0.99), type='monthly')
 invyrfraction(c(0, 0.5, 0.99), type='hourly')
+invyrfraction(c(0, 0.5, 0.99), type='daily')
+invyrfraction(c(0, 0.5, 0.99), type='weekly')
+invyrfraction(c(0, 0.5, 0.99), type='monthly')
 
 }
 \author{

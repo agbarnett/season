@@ -52,7 +52,8 @@ days in the month (TRUE/FALSE). Should be used for monthly counts (with
 
 \item{offsetpop}{include an offset for the population (optional), this
 should be a variable in the data frame. Do not log-transform the offset as
-the log-transform is applied by the function.}
+the log-transform is applied by the function. This should be an expression,
+as given in the example below.}
 
 \item{text}{add explanatory text to the returned phase value (TRUE) or
 return a number (FALSE). Passed to the \code{invyrfraction} function.}

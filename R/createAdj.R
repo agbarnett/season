@@ -22,9 +22,11 @@
 #' @param filename filename that the adjacency matrix file will be written to.
 #' @param suffix string to be appended to "num", "adj" and
 #' "weights" object names
-#' @return Creates a text file named `filename` that contains the total
-#' number of neighbours (num), the index number of the adjacent neighbours
-#' (adj) and the weights (weights).
+#' @return A list of:
+#'   * num: the total number of neighbours
+#'   * adj: the index number of the adjacent neighbours
+#'   * weights: weights
+#' Optionally if `filename` is specified, it will write this to file.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{

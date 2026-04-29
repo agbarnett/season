@@ -1,4 +1,4 @@
-head(CVDdaily)
+# head(CVDdaily)
 # subset for example
 CVDdaily <- subset(CVDdaily, date <= as.Date('1987-12-31'))
 # Effect of ozone on CVD death
