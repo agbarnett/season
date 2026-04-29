@@ -42,16 +42,14 @@ invyrfraction <- function(frac, type = 'daily', text = TRUE) {
     day = day - (365 * as.numeric(day > 365)) # avoid values > 365
     day = pmax(day, 1) # avoid values < 1
     date <- strptime(day, '%j')
-    day <- as.numeric(format(date, '%d')) # Day of the month as decimal number (01?31)
+    daym <- as.numeric(format(date, '%d')) # Day of the month as decimal number (01?31)
     month <- format(date, '%B') # Month name
     if (text == TRUE) {
-      daym <- paste('Month =', month, ', day =', day)
+      daym <- paste('Month =', month, ', day =', daym)
     }
     if (text == FALSE) {
-      monthnum <- as.numeric(format(date, '%m')) # Month number
-      mnthlength <- c(31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-      daym <- monthnum + ((day - 1) / mnthlength[monthnum])
-    } #
+      daym <- day
+    }
   }
   if (type == 'weekly') {
     week <- (frac * 52) + 1

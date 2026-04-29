@@ -15,6 +15,21 @@
 ---
 
     Code
+      invyrfraction(frac = c(0, 0.5, 0.99), type = "daily", text = TRUE)
+    Output
+      [1] "Month = January , day = 1"   "Month = July , day = 2"     
+      [3] "Month = December , day = 28"
+
+---
+
+    Code
+      invyrfraction(frac = c(0, 0.5, 0.99), type = "daily", text = FALSE)
+    Output
+      [1]   1.0000 183.6250 362.5975
+
+---
+
+    Code
       invyrfraction(frac = c(0, 0.5, 1), type = "weekly", text = TRUE)
     Output
       [1] "Week = 1"  "Week = 27" "Week = 53"
