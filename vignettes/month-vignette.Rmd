@@ -207,7 +207,7 @@ The previous global smooth was likely not the best smoothing approach as we know
 #| label: adj-matrix
 neighbours <- toeplitz(c(NA, 1, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA))
 # link January and December
-neighbours[1, 12] <- neighbours[12, 1] = 1 
+neighbours[1, 12] <- neighbours[12, 1] <- 1 
 neighbours
 adj <- createAdj(neighbours)
 adj
