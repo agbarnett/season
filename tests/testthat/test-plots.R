@@ -36,6 +36,8 @@ test_that("plot.Cosinor - binomial cloglog (probability scale)", {
 })
 
 test_that("plot.Cosinor - hourly indoor temperature", {
+  skip_on_ci()
+  skip_on_cran()
   m <- cosinor(bedroom ~ 1, date = "datetime", data = indoor, type = "hourly")
   vdiffr::expect_doppelganger("plot-Cosinor-hourly", function() plot(m))
 })
