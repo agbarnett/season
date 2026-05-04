@@ -16,7 +16,7 @@
 # adjacency matrix errors as expectd
 
     Code
-      createAdj(matrix = as.data.frame(V), filename = adj_file)
+      createAdj(matrix = as.data.frame(V))
     Condition
       Error in `createAdj()`:
       ! Input must be a matrix
@@ -24,7 +24,7 @@
 ---
 
     Code
-      createAdj(matrix = rbind(V, c(rep(0, 5))), filename = adj_file)
+      createAdj(matrix = rbind(V, c(rep(0, 5))))
     Condition
       Error in `createAdj()`:
       ! Matrix must be square
@@ -32,7 +32,7 @@
 ---
 
     Code
-      createAdj(matrix = V, filename = adj_file)
+      createAdj(matrix = V)
     Condition
       Error in `createAdj()`:
       ! Matrix must be symmetric

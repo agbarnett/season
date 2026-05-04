@@ -1,0 +1,284 @@
+---
+title: "Modelling monthly data"
+author: "Adrian Barnett"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Modelling monthly data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+#| label: setup
+#| include: FALSE
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(season)
+library(dplyr)
+library(tibble)
+library(stringr)
+library(ggplot2)
+library(flextable)
+library(nimble) # for Bayesian models
+```
+
+## Monthly data
+
+Time series data are often collected as monthly counts, for example, the monthly number of deaths or hospital admissions. In this vignette we will use the monthly number of deaths from cardiovascular disease (CVD) in people aged 75 and over in Los-Angeles for the years 1987 to 2000 ($n=168$ observations). We will compare three models for examining a seasonal pattern using month.
+
+First we load the data and then use `ggplot2` to draw a lineplot of the monthly death counts over time.
+
+```{r}
+#| label: plot-cvd-yearmon-cvd
+ggplot(CVD, aes(x = yrmon, y = cvd)) +
+  geom_line(colour = 'darkred', linewidth = 1.05) +
+  labs(
+    x = "Time",
+    y = "Monthly number of CVD deaths",
+  ) +
+  theme_bw()
+```
+
+There is a clear seasonal pattern, with more deaths in the winter months and fewer in the summer.
+
+## Month as a fixed effect
+
+In the first model, we treat each month as a separate category with a fixed parameter. 
+
+```{r}
+#| label: month-fixed-effect
+model1 <- monthglm(
+  formula = cvd ~ 1,
+  data = CVD,
+  family = quasipoisson(),
+  offsetpop = expression(pop / 100000),
+  offsetmonth = TRUE,
+  refmonth = 6
+)
+plot(model1, ylab = 'Rate ratio')
+```
+
+The outcome is counts, so it is best to use a Poisson distribution. Using the `family = quasipoisson` instead of `family = poisson` accounts for any over-dispersion in the data, where the variance in counts is greater than the mean. Without acknowledging this over-dispersion, the confidence intervals for the estimated effects would be too narrow. You can see this if you change the `quasipoisson` to `poisson`.
+
+We adjust for the population size using an offset scaled to 100,000 people. This is useful for adjusting for changes over time in the population size.
+
+We also adjust for the varying number of days in the month using the `offsetmonth=TRUE` option as longer months will have more deaths on average than shorter months (e.g., January vs February).
+
+The estimates in the plot are rate ratios. We used June as the reference month, so the rate ratio in this month is 1. The plot shows a typical seasonal pattern with a winter increase in deaths that peaks in January (around 40% higher than June). 
+
+## Month as a random effect
+
+Next we fit month as a random instead of fixed effect. This allows the monthly estimates to follow a distribution. The distribution most often used for random effects is the Normal distribution. 
+
+To fit the random effects model we switch to a Bayesian approach using the `nimble` package.
+
+```{r}
+#| label: code-random-month
+code_random_month <- nimbleCode({
+  ## Likelihood
+  for (i in 1:N){ # loop through time
+    cvd[i] ~ dpois(mu[i])
+    log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta.c[month[i]]
+  }
+  # priors
+  alpha ~ dnorm(0, sd = 100)
+  for (k in 1:12){
+    beta[k] ~ dnorm(0, tau = tau.month)
+    beta.c[k] <- beta[k] - mean.beta
+  }
+  mean.beta <- mean(beta[1:12])
+  tau.month ~ dgamma(1,1)
+  sigma.month <- 1/sqrt(tau.month) # rescale to standard deviation
+})
+```
+
+As before, we assume that the counts follow a Poisson distribution. We have two offsets, one for the population and one for the days of the month.
+
+Each month is fitted as a random effect centred on zero. The ensure that the month effects sum to zero, we create a centred version by subtracting the mean.
+
+Next we set up the data ready for `nimble` to use. The number of days in each month are scaled to a 30 day month.
+
+```{r}
+#| label: constants-data
+constants <- list(N = nrow(CVD),
+                  month = CVD$month, 
+                  offset = CVD$pop/100000, # scaled to per 100,000 people
+                  ndaysmonth = (CVD$ndaysmonth)/30) # scaled to per 30 days
+data <- list(cvd = CVD$cvd)
+```
+
+Next we create the initial values to get the chains started, using an estimate of the mean for the intercept.
+
+```{r}
+#| label: inits
+inits <- list(tau.month = 1,
+              alpha = log(mean(CVD$cvd / (CVD$pop/100000))),
+              beta = rep(0,12))
+```
+
+Next we run the Markov chain Monte Carlo (MCMC) estimates using two chains. We plot the samples for both chains for the intercept as a quick check that the estimates have converged.
+
+```{r}
+#| label: run-mcmc
+# parameters to store
+parms = c('alpha','beta.c','sigma.month')
+# define the model
+model <- nimbleModel(code_random_month, 
+                    data = data, 
+                    inits = inits, 
+                    constants = constants)
+# MCMC samples
+thin = 3
+MCMC = 1000
+mcmc_random <- nimbleMCMC(model = model,
+                   inits = inits,
+                   monitors = parms,
+                   niter = MCMC*2*thin, # times 2 for burn-in 
+                   thin = thin,
+                   nchains = 2, 
+                   nburnin = MCMC,
+                   summary = TRUE, 
+                   setSeed = c(1,2), # one seed per chain
+                   WAIC = TRUE)
+# check chains for intercept
+plot(mcmc_random$samples$chain1[,1], type='l')
+lines(mcmc_random$samples$chain2[,1], type='l', col='red')
+```
+
+Next we plot the estimated month effect with the 95% credible intervals.
+
+```{r}
+#| label: plot-month-effect
+# prepare estimates for plot
+to_plot = as.data.frame(mcmc_random$summary$all.chains) %>%
+  rownames_to_column() %>%
+  filter(str_detect(rowname, pattern= 'beta')) %>%
+  mutate(month = as.numeric(str_extract(rowname,pattern='[1-9][0-2]?')))
+# labels for x-axis
+month.letter = substr(month.abb,1,1)
+# plot
+colour = 'darkorange2'
+ggplot(to_plot, aes(x=month, y=exp(Mean), ymin=exp(`95%CI_low`), ymax=exp(`95%CI_upp`)))+
+ geom_line(linewidth=1.05, col=colour)+
+ geom_errorbar(width=0, linewidth=1.05, col=colour)+
+ geom_point(col=colour, size=3)+
+ geom_hline(lty=2, yintercept=1)+
+ ylab('Rate ratio')+
+ xlab(NULL)+
+ scale_x_continuous(breaks = 1:12, labels=month.letter)+
+ theme_bw()+
+ theme(panel.grid.minor = element_blank())
+```
+
+This approach can be described as a `global smooth' because we applied a shrinkage factor to all months equally using the Normal distribution.
+
+## Month as a correlated random effect
+
+The previous global smooth was likely not the best smoothing approach as we know that neighbouring months will have more in common than distant months. We can model this correlation using the neighbouring approach that is often used for spatial models. First, we create a neighbourhood matrix for the 12 months.
+
+```{r}
+#| label: adj-matrix
+neighbours = toeplitz(c(NA,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA))
+neighbours[1,12] = neighbours[12,1] = 1 # link January and December
+neighbours
+adj = createAdj(neighbours)
+adj
+```
+
+In the 12 by 12 matrix, each month has two neighbours. The `createAdj` function is to create the adjacency matrix needed for the spatial CAR function, where CAR stands for conditional autoregressive. In this case the autoregression will be applied to neighbouring months to create the smooth.
+
+```{r}
+#| label: neighbour-nimble
+code_neighbour_month <- nimbleCode({
+  ## Likelihood
+  for (i in 1:N){ # loop through time
+    cvd[i] ~ dpois(mu[i])
+    log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta[month[i]]
+  }
+  # priors
+  alpha ~ dnorm(0, sd = 100)
+  beta[1:12] ~ dcar_normal(adj[1:L], weights[1:L], num[1:12], tau.neighbours, zero_mean = 1)
+  tau.month ~ dgamma(1,1)
+  tau.neighbours ~ dgamma(1,1)
+  sigma.month <- 1/sqrt(tau.month) # rescale to standard deviation
+  sigma.neighbours <- 1/sqrt(tau.neighbours) 
+})
+```
+
+The data needs to be updated with the neighbourhood information.
+
+```{r}
+#| label: nimble-constants
+constants <- list(N = nrow(CVD),
+                  L = length(adj$adj),
+                  adj = adj$adj,
+                  num = adj$num,
+                  weights = adj$weight,
+                  month = CVD$month, 
+                  offset = CVD$pop/100000, # scaled to per 100,000 people
+                  ndaysmonth = (CVD$ndaysmonth)/30) # scaled to per 30 days
+```
+
+```{r}
+#| label: nimble-mcmc-plot
+# parameters to store
+parms = c('alpha','beta','sigma.month','sigma.neighbours')
+# define the model
+model <- nimbleModel(code_neighbour_month, 
+                    data = data, 
+                    inits = inits, 
+                    constants = constants)
+# MCMC samples
+mcmc_neighbours <- nimbleMCMC(model = model,
+                   inits = inits,
+                   monitors = parms,
+                   niter = MCMC*2*thin, # times 2 for burn-in 
+                   thin = thin,
+                   nchains = 2, 
+                   nburnin = MCMC,
+                   summary = TRUE, 
+                   setSeed = c(1,2), # one seed per chain
+                   WAIC = TRUE)
+# check chains for intercept
+plot(mcmc_neighbours$samples$chain1[,1], type='l')
+lines(mcmc_neighbours$samples$chain2[,1], type='l', col='red')
+```
+
+```{r}
+#| label: plot-estimates
+# prepare estimates for plot
+to_plot = as.data.frame(mcmc_neighbours$summary$all.chains) %>%
+  rownames_to_column() %>%
+  filter(str_detect(rowname, pattern= 'beta')) %>%
+  mutate(month = as.numeric(str_extract(rowname,pattern='[1-9][0-2]?')))
+# plot
+colour = 'darkseagreen3'
+ggplot(to_plot, aes(x=month, y=exp(Mean), ymin=exp(`95%CI_low`), ymax=exp(`95%CI_upp`)))+
+ geom_line(linewidth=1.05, col=colour)+
+ geom_errorbar(width=0, linewidth=1.05, col=colour)+
+ geom_point(col=colour, size=3)+
+ geom_hline(lty=2, yintercept=1)+
+ ylab('Rate ratio')+
+ xlab(NULL)+
+ scale_x_continuous(breaks = 1:12, labels=month.letter)+
+ theme_bw()+
+ theme(panel.grid.minor = element_blank())
+```
+
+The plots of rate ratios for the two models are similar. We can compare the fit of the two models using the WAIC.
+
+```{r}
+#| label: compare-model-fit
+waic1 = data.frame(model = 'Random', parameters = mcmc_random$WAIC$pWAIC, WAIC = mcmc_random$WAIC$WAIC)
+waic2 = data.frame(model = 'Neighbours', parameters = mcmc_neighbours$WAIC$pWAIC, WAIC = mcmc_neighbours$WAIC$WAIC)
+to_table = bind_rows(waic1,waic2)
+flextable(to_table) %>%
+  colformat_double(j=2:3, digits=1)
+```
+
+The neighbourhood model uses slightly more parameters but this extra complexity has not improved the fit. The strong seasonal pattern has meant that the neighbouring smoothing is not needed. 
+
+Note, for simplicity, the above examples do not include over-dispersion in the Bayesian models.
