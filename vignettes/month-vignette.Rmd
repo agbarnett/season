@@ -176,7 +176,9 @@ The previous global smooth was likely not the best smoothing approach as we know
 neighbours = toeplitz(c(NA,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA))
 neighbours[1,12] = neighbours[12,1] = 1 # link January and December
 neighbours
-adj = createAdj(neighbours)
+adjfile <- tempfile(fileext = ".txt")
+adj = createAdj(neighbours, filename = adjfile)
+adj
 ```
 
 In the 12 by 12 matrix, each month has two neighbours. The `createAdj` function is to create the adjacency matrix needed for the spatial CAR function, where CAR stands for conditional autoregressive. In this case the autoregression will be applied to neighbouring months to create the smooth.

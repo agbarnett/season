@@ -37,6 +37,7 @@ Suggests:
     coda,
     dlnm,
     dplyr,
+    flextable,
     ggplot2 (>= 0.9.3),
     knitr,
     MASS,
