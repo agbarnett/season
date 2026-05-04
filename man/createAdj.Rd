@@ -4,13 +4,11 @@
 \alias{createAdj}
 \title{Creates an Adjacency Matrix}
 \usage{
-createAdj(matrix, filename, suffix = NULL)
+createAdj(matrix, suffix = NULL)
 }
 \arguments{
 \item{matrix}{square matrix with 1's for neighbours and NA's for
 non-neighbours.}
-
-\item{filename}{filename that the adjacency matrix file will be written to.}
 
 \item{suffix}{string to be appended to "num", "adj" and
 "weights" object names}
@@ -21,7 +19,6 @@ A list of:
 \item num: the total number of neighbours
 \item adj: the index number of the adjacent neighbours
 \item weights: weights
-Optionally if \code{filename} is specified, it will write this to file.
 }
 }
 \description{
@@ -45,7 +42,7 @@ to be correlated.
 # Nearest neighbour matrix for 5 time points
 x = c(NA,1,NA,NA,NA)
 (V = toeplitz(x))
-createAdj(V, filename = tempfile(fileext = ".txt"))
+createAdj(V)
 }
 
 }

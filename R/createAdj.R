@@ -19,25 +19,23 @@
 #'
 #' @param matrix square matrix with 1's for neighbours and NA's for
 #' non-neighbours.
-#' @param filename filename that the adjacency matrix file will be written to.
 #' @param suffix string to be appended to "num", "adj" and
 #' "weights" object names
 #' @return A list of:
 #'   * num: the total number of neighbours
 #'   * adj: the index number of the adjacent neighbours
 #'   * weights: weights
-#' Optionally if `filename` is specified, it will write this to file.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
 #' # Nearest neighbour matrix for 5 time points
 #' x = c(NA,1,NA,NA,NA)
 #' (V = toeplitz(x))
-#' createAdj(V, filename = tempfile(fileext = ".txt"))
+#' createAdj(V)
 #' }
 #'
 #' @export createAdj
-createAdj <- function(matrix, filename, suffix = NULL) {
+createAdj <- function(matrix, suffix = NULL) {
   # checks
   if (is.matrix(matrix) != TRUE) {
     stop('Input must be a matrix')
@@ -50,10 +48,7 @@ createAdj <- function(matrix, filename, suffix = NULL) {
   }
   # Vectors from matrix
   n <- nrow(matrix)
-  num <- vector(length = n, mode = 'numeric')
-  for (i in 1:n) {
-    num[i] <- sum(matrix[i, ], na.rm = TRUE)
-  }
+  num <- rowSums(matrix, na.rm = TRUE)
   adj <- vector(length = sum(num), mode = 'numeric')
   weight <- vector(length = sum(num), mode = 'numeric')
   index <- 1
@@ -68,45 +63,11 @@ createAdj <- function(matrix, filename, suffix = NULL) {
       index <- index + length(aaa)
     }
   }
-  sumNumNeigh <- sum(weight)
-  ## Note for consideration next version
-  ## consider using something like
-  ## dump(ls(pattern = paste("num",suffix,sep="")),file=filename)
-  ## although no need to change if this is working OK     PB 4/12/2009
-  ## Create adjacency matrix in CAR format ##
-  zz <- file(filename, "w") # open an output file connection
-  cat("list(num", suffix, "=c(\n", sep = '', file = zz)
-  nums <- paste(num, collapse = ',')
-  cat(nums, sep = '', file = zz)
-  cat("),\nadj", suffix, "=c(\n", sep = '', file = zz)
-  # Output adjacency numbers as one row per region
-  index <- 0
-  for (i in 1:length(num)) {
-    if (num[i] > 0) {
-      for (j in 1:num[i]) {
-        index = index + 1
-        if (index < sumNumNeigh) {
-          cat(adj[index], ",", sep = '', file = zz)
-        }
-        if (index == sumNumNeigh) {
-          cat(adj[index], sep = '', file = zz)
-        }
-      }
-    }
-    cat("\n", sep = '', file = zz)
-  }
-  cat("),\nweights", suffix, "=c(\n", sep = '', file = zz)
-  weights <- paste(weight, collapse = ',')
-  cat(weights, sep = '', file = zz)
-  cat("))\n", sep = '', file = zz)
-  close(zz)
-  toret <- list()
-  toret$num <- num
-  toret$adj <- adj
-  toret$weight <- weight
+
+  toret <- list(
+    num = num,
+    adj = adj,
+    weight = weight
+  )
   return(toret)
 }
-# Example (nearest neighbour)
-#x<-c(NA,1,NA,NA,NA)
-#V= toeplitz (x)
-#createAdj(V)
