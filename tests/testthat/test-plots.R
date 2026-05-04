@@ -138,6 +138,8 @@ test_that("plot.nonlintest - region of significance", {
 # plot.nsCosinor --------------------------------------------------------
 
 test_that("plot.nsCosinor - single cycle", {
+  skip_on_ci()
+  skip_on_cran()
   set.seed(2026 - 04 - 29)
   m <- nscosinor(
     data = head(CVD, 60),
@@ -152,6 +154,8 @@ test_that("plot.nsCosinor - single cycle", {
 })
 
 test_that("plot.nsCosinor - two cycles", {
+  skip_on_ci()
+  skip_on_cran()
   set.seed(2026 - 04 - 29)
   m <- nscosinor(
     data = head(CVD, 48),

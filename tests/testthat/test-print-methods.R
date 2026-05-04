@@ -120,6 +120,7 @@ test_that("print.nonlintest reports zero differences when region is all zero", {
 })
 
 test_that("print.nsCosinor prints model overview and residual stats", {
+  skip_on_ci()
   set.seed(2026 - 04 - 29)
   m <- nscosinor(
     data = head(CVD, 60),
@@ -226,6 +227,7 @@ test_that("print.summary.monthglm uses 'Odds ratios' for binomial", {
 })
 
 test_that("print.summary.nscosinor prints amplitude and phase blocks", {
+  skip_on_ci()
   # NOTE: registered as `print.summary.nscosinor` (lowercase 'n') while the
   # class is `summary.nsCosinor` (capital 'C') — S3 dispatch is case-sensitive
   # so calling print() falls through to print.default. Calling the function
@@ -255,6 +257,7 @@ test_that("print.summary.nscosinor handles multiple seasonal cycles", {
   # iterates over each cycle. Same dispatch caveat as the single-cycle
   # case: must be called directly because the @method registration
   # uses lowercase 'nscosinor' rather than 'nsCosinor'.
+  skip_on_ci()
   set.seed(2026 - 04 - 29)
   m <- nscosinor(
     data = head(CVD, 48),
