@@ -79,19 +79,21 @@ To fit the random effects model we switch to a Bayesian approach using the `nimb
 #| label: code-random-month
 code_random_month <- nimbleCode({
   ## Likelihood
-  for (i in 1:N){ # loop through time
+  for (i in 1:N) {
+    # loop through time
     cvd[i] ~ dpois(mu[i])
     log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta.c[month[i]]
   }
   # priors
   alpha ~ dnorm(0, sd = 100)
-  for (k in 1:12){
+  for (k in 1:12) {
     beta[k] ~ dnorm(0, tau = tau.month)
     beta.c[k] <- beta[k] - mean.beta
   }
   mean.beta <- mean(beta[1:12])
-  tau.month ~ dgamma(1,1)
-  sigma.month <- 1/sqrt(tau.month) # rescale to standard deviation
+  tau.month ~ dgamma(1, 1)
+  # rescale to standard deviation
+  sigma.month <- 1 / sqrt(tau.month) 
 })
 ```
 
@@ -103,20 +105,27 @@ Next we set up the data ready for `nimble` to use. The number of days in each mo
 
 ```{r}
 #| label: constants-data
-constants <- list(N = nrow(CVD),
-                  month = CVD$month, 
-                  offset = CVD$pop/100000, # scaled to per 100,000 people
-                  ndaysmonth = (CVD$ndaysmonth)/30) # scaled to per 30 days
+constants <- list(
+  N = nrow(CVD),
+  month = CVD$month,
+  # scaled to per 100,000 people
+  offset = CVD$pop / 100000,
+  # scaled to per 30 days
+  ndaysmonth = (CVD$ndaysmonth) / 30
+)
 data <- list(cvd = CVD$cvd)
+
 ```
 
 Next we create the initial values to get the chains started, using an estimate of the mean for the intercept.
 
 ```{r}
 #| label: inits
-inits <- list(tau.month = 1,
-              alpha = log(mean(CVD$cvd / (CVD$pop/100000))),
-              beta = rep(0,12))
+inits <- list(
+  tau.month = 1,
+  alpha = log(mean(CVD$cvd / (CVD$pop / 100000))),
+  beta = rep(0, 12)
+)
 ```
 
 Next we run the Markov chain Monte Carlo (MCMC) estimates using two chains. We plot the samples for both chains for the intercept as a quick check that the estimates have converged.
@@ -124,28 +133,34 @@ Next we run the Markov chain Monte Carlo (MCMC) estimates using two chains. We p
 ```{r}
 #| label: run-mcmc
 # parameters to store
-parms = c('alpha','beta.c','sigma.month')
+parms <- c('alpha', 'beta.c', 'sigma.month')
 # define the model
-model <- nimbleModel(code_random_month, 
-                    data = data, 
-                    inits = inits, 
-                    constants = constants)
+model <- nimbleModel(
+  code_random_month,
+  data = data,
+  inits = inits,
+  constants = constants
+)
 # MCMC samples
-thin = 3
-MCMC = 1000
-mcmc_random <- nimbleMCMC(model = model,
-                   inits = inits,
-                   monitors = parms,
-                   niter = MCMC*2*thin, # times 2 for burn-in 
-                   thin = thin,
-                   nchains = 2, 
-                   nburnin = MCMC,
-                   summary = TRUE, 
-                   setSeed = c(1,2), # one seed per chain
-                   WAIC = TRUE)
+thin <- 3
+MCMC <- 1000
+mcmc_random <- nimbleMCMC(
+  model = model,
+  inits = inits,
+  monitors = parms,
+  # times 2 for burn-in
+  niter = MCMC * 2 * thin, 
+  thin = thin,
+  nchains = 2,
+  nburnin = MCMC,
+  summary = TRUE,
+  # one seed per chain
+  setSeed = c(1, 2), 
+  WAIC = TRUE
+)
 # check chains for intercept
-plot(mcmc_random$samples$chain1[,1], type='l')
-lines(mcmc_random$samples$chain2[,1], type='l', col='red')
+plot(mcmc_random$samples$chain1[, 1], type = 'l')
+lines(mcmc_random$samples$chain2[, 1], type = 'l', col = 'red')
 ```
 
 Next we plot the estimated month effect with the 95% credible intervals.
@@ -153,24 +168,33 @@ Next we plot the estimated month effect with the 95% credible intervals.
 ```{r}
 #| label: plot-month-effect
 # prepare estimates for plot
-to_plot = as.data.frame(mcmc_random$summary$all.chains) %>%
-  rownames_to_column() %>%
-  filter(str_detect(rowname, pattern= 'beta')) %>%
-  mutate(month = as.numeric(str_extract(rowname,pattern='[1-9][0-2]?')))
+to_plot <- as.data.frame(mcmc_random$summary$all.chains) |>
+  rownames_to_column() |>
+  filter(str_detect(rowname, pattern = 'beta')) |>
+  mutate(month = as.numeric(str_extract(rowname, pattern = '[1-9][0-2]?')))
 # labels for x-axis
-month.letter = substr(month.abb,1,1)
+month.letter <- substr(month.abb, 1, 1)
 # plot
-colour = 'darkorange2'
-ggplot(to_plot, aes(x=month, y=exp(Mean), ymin=exp(`95%CI_low`), ymax=exp(`95%CI_upp`)))+
- geom_line(linewidth=1.05, col=colour)+
- geom_errorbar(width=0, linewidth=1.05, col=colour)+
- geom_point(col=colour, size=3)+
- geom_hline(lty=2, yintercept=1)+
- ylab('Rate ratio')+
- xlab(NULL)+
- scale_x_continuous(breaks = 1:12, labels=month.letter)+
- theme_bw()+
- theme(panel.grid.minor = element_blank())
+colour <- 'darkorange2'
+ggplot(
+  to_plot,
+  aes(
+    x = month,
+    y = exp(Mean),
+    ymin = exp(`95%CI_low`),
+    ymax = exp(`95%CI_upp`)
+  )
+) +
+  geom_line(linewidth = 1.05, col = colour) +
+  geom_errorbar(width = 0, linewidth = 1.05, col = colour) +
+  geom_point(col = colour, size = 3) +
+  geom_hline(lty = 2, yintercept = 1) +
+  ylab('Rate ratio') +
+  xlab(NULL) +
+  scale_x_continuous(breaks = 1:12, labels = month.letter) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank())
+
 ```
 
 This approach can be described as a `global smooth' because we applied a shrinkage factor to all months equally using the Normal distribution.
@@ -181,10 +205,11 @@ The previous global smooth was likely not the best smoothing approach as we know
 
 ```{r}
 #| label: adj-matrix
-neighbours = toeplitz(c(NA,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA))
-neighbours[1,12] = neighbours[12,1] = 1 # link January and December
+neighbours <- toeplitz(c(NA, 1, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA))
+# link January and December
+neighbours[1, 12] <- neighbours[12, 1] = 1 
 neighbours
-adj = createAdj(neighbours)
+adj <- createAdj(neighbours)
 adj
 ```
 
@@ -194,89 +219,130 @@ In the 12 by 12 matrix, each month has two neighbours. The `createAdj` function 
 #| label: neighbour-nimble
 code_neighbour_month <- nimbleCode({
   ## Likelihood
-  for (i in 1:N){ # loop through time
+  for (i in 1:N) {
+    # loop through time
     cvd[i] ~ dpois(mu[i])
     log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta[month[i]]
   }
   # priors
   alpha ~ dnorm(0, sd = 100)
-  beta[1:12] ~ dcar_normal(adj[1:L], weights[1:L], num[1:12], tau.neighbours, zero_mean = 1)
-  tau.month ~ dgamma(1,1)
-  tau.neighbours ~ dgamma(1,1)
-  sigma.month <- 1/sqrt(tau.month) # rescale to standard deviation
-  sigma.neighbours <- 1/sqrt(tau.neighbours) 
+  beta[1:12] ~ dcar_normal(
+    adj[1:L],
+    weights[1:L],
+    num[1:12],
+    tau.neighbours,
+    zero_mean = 1
+  )
+  tau.month ~ dgamma(1, 1)
+  tau.neighbours ~ dgamma(1, 1)
+  # rescale to standard deviation
+  sigma.month <- 1 / sqrt(tau.month) 
+  sigma.neighbours <- 1 / sqrt(tau.neighbours)
 })
+
 ```
 
 The data needs to be updated with the neighbourhood information.
 
 ```{r}
 #| label: nimble-constants
-constants <- list(N = nrow(CVD),
-                  L = length(adj$adj),
-                  adj = adj$adj,
-                  num = adj$num,
-                  weights = adj$weight,
-                  month = CVD$month, 
-                  offset = CVD$pop/100000, # scaled to per 100,000 people
-                  ndaysmonth = (CVD$ndaysmonth)/30) # scaled to per 30 days
+constants <- list(
+  N = nrow(CVD),
+  L = length(adj$adj),
+  adj = adj$adj,
+  num = adj$num,
+  weights = adj$weight,
+  month = CVD$month,
+  # scaled to per 100,000 people
+  offset = CVD$pop / 100000, 
+  # scaled to per 30 days
+  ndaysmonth = (CVD$ndaysmonth) / 30
+) 
+
 ```
 
 ```{r}
 #| label: nimble-mcmc-plot
 # parameters to store
-parms = c('alpha','beta','sigma.month','sigma.neighbours')
+parms <- c('alpha', 'beta', 'sigma.month', 'sigma.neighbours')
+
 # define the model
-model <- nimbleModel(code_neighbour_month, 
-                    data = data, 
-                    inits = inits, 
-                    constants = constants)
+model <- nimbleModel(
+  code_neighbour_month,
+  data = data,
+  inits = inits,
+  constants = constants
+)
+
 # MCMC samples
-mcmc_neighbours <- nimbleMCMC(model = model,
-                   inits = inits,
-                   monitors = parms,
-                   niter = MCMC*2*thin, # times 2 for burn-in 
-                   thin = thin,
-                   nchains = 2, 
-                   nburnin = MCMC,
-                   summary = TRUE, 
-                   setSeed = c(1,2), # one seed per chain
-                   WAIC = TRUE)
+mcmc_neighbours <- nimbleMCMC(
+  model = model,
+  inits = inits,
+  monitors = parms,
+  # times 2 for burn-in
+  niter = MCMC * 2 * thin, 
+  thin = thin,
+  nchains = 2,
+  nburnin = MCMC,
+  summary = TRUE,
+  # one seed per chain
+  setSeed = c(1, 2), 
+  WAIC = TRUE
+)
 # check chains for intercept
-plot(mcmc_neighbours$samples$chain1[,1], type='l')
-lines(mcmc_neighbours$samples$chain2[,1], type='l', col='red')
+plot(mcmc_neighbours$samples$chain1[, 1], type = 'l')
+lines(mcmc_neighbours$samples$chain2[, 1], type = 'l', col = 'red')
+
 ```
 
 ```{r}
 #| label: plot-estimates
 # prepare estimates for plot
-to_plot = as.data.frame(mcmc_neighbours$summary$all.chains) %>%
-  rownames_to_column() %>%
-  filter(str_detect(rowname, pattern= 'beta')) %>%
-  mutate(month = as.numeric(str_extract(rowname,pattern='[1-9][0-2]?')))
+to_plot <- as.data.frame(mcmc_neighbours$summary$all.chains) |>
+  rownames_to_column() |>
+  filter(str_detect(rowname, pattern = 'beta')) |>
+  mutate(month = as.numeric(str_extract(rowname, pattern = '[1-9][0-2]?')))
 # plot
-colour = 'darkseagreen3'
-ggplot(to_plot, aes(x=month, y=exp(Mean), ymin=exp(`95%CI_low`), ymax=exp(`95%CI_upp`)))+
- geom_line(linewidth=1.05, col=colour)+
- geom_errorbar(width=0, linewidth=1.05, col=colour)+
- geom_point(col=colour, size=3)+
- geom_hline(lty=2, yintercept=1)+
- ylab('Rate ratio')+
- xlab(NULL)+
- scale_x_continuous(breaks = 1:12, labels=month.letter)+
- theme_bw()+
- theme(panel.grid.minor = element_blank())
+colour <- 'darkseagreen3'
+ggplot(
+  to_plot,
+  aes(
+    x = month,
+    y = exp(Mean),
+    ymin = exp(`95%CI_low`),
+    ymax = exp(`95%CI_upp`)
+  )
+) +
+  geom_line(linewidth = 1.05, col = colour) +
+  geom_errorbar(width = 0, linewidth = 1.05, col = colour) +
+  geom_point(col = colour, size = 3) +
+  geom_hline(lty = 2, yintercept = 1) +
+  ylab('Rate ratio') +
+  xlab(NULL) +
+  scale_x_continuous(breaks = 1:12, labels = month.letter) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank())
+
 ```
 
 The plots of rate ratios for the two models are similar. We can compare the fit of the two models using the WAIC.
 
 ```{r}
 #| label: compare-model-fit
-waic1 = data.frame(model = 'Random', parameters = mcmc_random$WAIC$pWAIC, WAIC = mcmc_random$WAIC$WAIC)
-waic2 = data.frame(model = 'Neighbours', parameters = mcmc_neighbours$WAIC$pWAIC, WAIC = mcmc_neighbours$WAIC$WAIC)
-to_table = bind_rows(waic1,waic2)
-flextable(to_table) %>%
-  colformat_double(j=2:3, digits=1)
+waic1 <- data.frame(
+  model = 'Random',
+  parameters = mcmc_random$WAIC$pWAIC,
+  WAIC = mcmc_random$WAIC$WAIC
+)
+waic2 <- data.frame(
+  model = 'Neighbours',
+  parameters = mcmc_neighbours$WAIC$pWAIC,
+  WAIC = mcmc_neighbours$WAIC$WAIC
+)
+to_table <- bind_rows(waic1, waic2)
+flextable(to_table) |>
+  colformat_double(j = 2:3, digits = 1)
+
 ```
 
 The neighbourhood model uses slightly more parameters but this extra complexity has not improved the fit. The strong seasonal pattern has meant that the neighbouring smoothing is not needed. 
