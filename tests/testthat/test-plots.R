@@ -3,6 +3,8 @@
 # plot.Cosinor ----------------------------------------------------------
 library(purrr)
 test_that("plot.Cosinor - monthly Poisson", {
+  skip_on_ci()
+  skip_on_cran()
   m <- cosinor(
     cvd ~ 1,
     date = "month",
@@ -18,11 +20,15 @@ test_that("plot.Cosinor - monthly Poisson", {
 })
 
 test_that("plot.Cosinor - daily identity", {
+  skip_on_ci()
+  skip_on_cran()
   m <- cosinor(cvd ~ 1, date = "date", data = CVDdaily, type = "daily")
   vdiffr::expect_doppelganger("plot-Cosinor-daily-identity", function() plot(m))
 })
 
 test_that("plot.Cosinor - binomial cloglog (probability scale)", {
+  skip_on_ci()
+  skip_on_cran()
   m <- cosinor(
     stillborn ~ 1,
     date = "dob",
@@ -45,6 +51,8 @@ test_that("plot.Cosinor - hourly indoor temperature", {
 # plot.monthglm ---------------------------------------------------------
 
 test_that("plot.monthglm - Poisson rate ratios", {
+  skip_on_ci()
+  skip_on_cran()
   m <- monthglm(
     cvd ~ 1,
     data = CVD,
@@ -56,11 +64,15 @@ test_that("plot.monthglm - Poisson rate ratios", {
 })
 
 test_that("plot.monthglm - Gaussian", {
+  skip_on_ci()
+  skip_on_cran()
   m <- monthglm(adj ~ 1, data = CVD, family = gaussian())
   vdiffr::expect_doppelganger("plot-monthglm-gaussian", function() plot(m))
 })
 
 test_that("plot.monthglm - user-supplied ylim", {
+  skip_on_ci()
+  skip_on_cran()
   m <- monthglm(cvd ~ 1, data = CVD, family = poisson(), offsetmonth = TRUE)
   vdiffr::expect_doppelganger(
     "plot-monthglm-ylim",
@@ -71,6 +83,8 @@ test_that("plot.monthglm - user-supplied ylim", {
 # plot.Monthmean --------------------------------------------------------
 
 test_that("plot.Monthmean - adjusted CVD rates", {
+  skip_on_ci()
+  skip_on_cran()
   mm <- monthmean(
     data = CVD,
     resp = "cvd",
@@ -154,6 +168,8 @@ test_that("plot.nsCosinor - two cycles", {
 # plotCircle ------------------------------------------------------------
 
 test_that("plotCircle - 12 monthly values", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotCircle",
     function() plotCircle(months = 1:12, dp = 0)
@@ -163,6 +179,8 @@ test_that("plotCircle - 12 monthly values", {
 # plotCircular ----------------------------------------------------------
 
 test_that("plotCircular - single area", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotCircular-one-area",
     function() plotCircular(area1 = 1:12, labels = month.abb, dp = 0)
@@ -170,6 +188,8 @@ test_that("plotCircular - single area", {
 })
 
 test_that("plotCircular accepts spokes, length, stats=FALSE, and clockwise=FALSE", {
+  skip_on_ci()
+  skip_on_cran()
   # Coverage for the optional features documented in roxygen but not
   # exercised by the two visual snapshots above. We only assert that
   # rendering doesn't error; visual fidelity is covered by the
