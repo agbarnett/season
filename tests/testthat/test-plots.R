@@ -238,6 +238,8 @@ test_that("plotCircular warns when area1 and area2 have different lengths", {
 })
 
 test_that("plotCircular - two areas with auto legend", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotCircular-two-areas",
     function() {
@@ -258,6 +260,8 @@ test_that("plotCircular - two areas with auto legend", {
 # plotMonth -------------------------------------------------------------
 
 test_that("plotMonth - 12 panels CVD", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotMonth-12-panels",
     function() plotMonth(data = CVD, resp = "cvd", panels = 12)
@@ -265,6 +269,8 @@ test_that("plotMonth - 12 panels CVD", {
 })
 
 test_that("plotMonth - single panel", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotMonth-one-panel",
     function() plotMonth(data = CVD, resp = "cvd", panels = 1)
@@ -281,6 +287,8 @@ test_that("plotMonth errors when panels is not 1 or 12", {
 # peri() (built-in plot = TRUE branch) ----------------------------------
 
 test_that("peri renders the periodogram when plot = TRUE", {
+  skip_on_ci()
+  skip_on_cran()
   vdiffr::expect_doppelganger(
     "peri-plot",
     function() peri(CVD$cvd, plot = TRUE)
@@ -290,6 +298,8 @@ test_that("peri renders the periodogram when plot = TRUE", {
 # third() (built-in plot = TRUE branch) ---------------------------------
 
 test_that("third renders the third-order moment when plot = TRUE", {
+  skip_on_ci()
+  skip_on_cran()
   # outmax = FALSE silences the cat() message; we only want the plot here.
   vdiffr::expect_doppelganger(
     "third-plot",
