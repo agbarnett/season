@@ -10,7 +10,8 @@
 #' @param alpha statistical significance level of confidence intervals.
 #' @param ylim y coordinates ranges (the default is NULL, and the limits are
 #' automatically calculated).
-#' @param \dots additional arguments passed to the plot.
+#' @param xlab,ylab x and y labels. Defaults is no label: "".
+#' @param \dots additional arguments passed to [plot()].
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthglm`
 #' @examples
@@ -22,7 +23,14 @@
 #' }
 #'
 #' @export
-plot.monthglm <- function(x, alpha = 0.05, ylim = NULL, ...) {
+plot.monthglm <- function(
+  x,
+  alpha = 0.05,
+  ylim = NULL,
+  xlab = "",
+  ylab = "",
+  ...
+) {
   ## Checks
   if (!inherits(x, "monthglm")) {
     stop("Object must be of class 'monthglm'")
@@ -73,6 +81,8 @@ plot.monthglm <- function(x, alpha = 0.05, ylim = NULL, ...) {
     xaxt = 'n',
     ylim = this.y.lim,
     xlim = c(1, 12),
+    xlab = xlab,
+    ylab = ylab,
     ...
   )
   month.lab <- vector(mode = 'character', length = nrow(toplot))

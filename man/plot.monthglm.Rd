@@ -4,7 +4,7 @@
 \alias{plot.monthglm}
 \title{Plot of Monthly Estimates}
 \usage{
-\method{plot}{monthglm}(x, alpha = 0.05, ylim = NULL, ...)
+\method{plot}{monthglm}(x, alpha = 0.05, ylim = NULL, xlab = "", ylab = "", ...)
 }
 \arguments{
 \item{x}{a \code{monthglm} object produced by \code{monthglm}.}
@@ -14,7 +14,9 @@
 \item{ylim}{y coordinates ranges (the default is NULL, and the limits are
 automatically calculated).}
 
-\item{\dots}{additional arguments passed to the plot.}
+\item{xlab, ylab}{x and y labels. Defaults is no label: "".}
+
+\item{\dots}{additional arguments passed to \code{\link[=plot]{plot()}}.}
 }
 \description{
 Plots the estimated from a generalized linear model with a categorical
