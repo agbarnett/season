@@ -42,6 +42,14 @@
       monthsNov 0.7895 0.7746 0.8046 -24.4267      0
       monthsDec 0.9286 0.9121 0.9455  -8.0697      0
 
+# summary.monthglm errors on non-monthglm input
+
+    Code
+      summary.monthglm(list(a = 1))
+    Condition
+      Error in `summary.monthglm()`:
+      ! Object must be of class 'monthglm'
+
 # summary.nsCosinor errors on non-nsCosinor input
 
     Code
@@ -70,4 +78,12 @@
       Thu    -0.016790296 0.9833499 0.029455877 -0.57001513 0.56866744
       Fri     0.027247952 1.0276226 0.029173235  0.93400517 0.35030123
       Sat     0.001855841 1.0018576 0.028900116  0.06421568 0.94879849
+
+# summary.casecross errors on non-casecross input
+
+    Code
+      summary.casecross(list(a = 1))
+    Condition
+      Error in `summary.casecross()`:
+      ! Object must be of class 'casecross'
 

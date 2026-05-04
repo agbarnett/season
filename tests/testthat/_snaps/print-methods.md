@@ -40,6 +40,14 @@
       Null Deviance:	    4330 
       Residual Deviance: 1066 	AIC: 2611
 
+# print.monthglm errors on non-monthglm input
+
+    Code
+      print.monthglm(list(a = 1))
+    Condition
+      Error in `print.monthglm()`:
+      ! Object must be of class 'monthglm'
+
 # print.Monthmean prints a named 12-row table
 
     Code
@@ -147,6 +155,14 @@
       Error in `print.casecross()`:
       ! Object must be of class 'casecross'
 
+# print.casecross errors when c.model is not a coxph fit
+
+    Code
+      print(bad)
+    Condition
+      Error in `print.casecross()`:
+      ! Conditional logistic regression model object 'c.model' must be of class 'coxph'
+
 # print.summary.Cosinor prints the cosinor test report
 
     Code
@@ -193,6 +209,26 @@
       monthsNov 0.7894712 0.7746378 0.8045886 -24.426747 8.891612e-132
       monthsDec 0.9286091 0.9120533 0.9454655  -8.069682  7.048164e-16
 
+# print.summary.monthglm uses 'Odds ratios' for binomial
+
+    Code
+      print(summary(m))
+    Output
+      Number of observations = 168 
+      Odds ratios 
+                     mean     lower     upper    zvalue        pvalue
+      monthsFeb 0.7956431 0.7741639 0.8177182 -16.37211  3.025234e-60
+      monthsMar 0.6704909 0.6527854 0.6886767 -29.27641 2.071210e-188
+      monthsApr 0.6135494 0.5971851 0.6303620 -35.41638 9.554173e-275
+      monthsMay 0.5555216 0.5407776 0.5706676 -42.83210  0.000000e+00
+      monthsJun 0.5224839 0.5084660 0.5368884 -46.78390  0.000000e+00
+      monthsJul 0.5021564 0.4887683 0.5159112 -49.96136  0.000000e+00
+      monthsAug 0.5064214 0.4929254 0.5202870 -49.36932  0.000000e+00
+      monthsSep 0.5059515 0.4923557 0.5199227 -49.02295  0.000000e+00
+      monthsOct 0.5470756 0.5325470 0.5620007 -43.92146  0.000000e+00
+      monthsNov 0.6182944 0.6018069 0.6352336 -34.86498 2.525075e-266
+      monthsDec 0.8489118 0.8264999 0.8719315 -11.99911  3.591556e-33
+
 # print.summary.nscosinor prints amplitude and phase blocks
 
     Code
@@ -218,4 +254,27 @@
     Condition
       Error in `print.summary.nscosinor()`:
       ! Object must be of class 'summary.nsCosinor'
+
+# print.summary.nscosinor handles multiple seasonal cycles
+
+    Code
+      print.summary.nscosinor(summary(m))
+    Output
+      Statistics for non-stationary cosinor based on MCMC chains
+      Number of MCMC samples = 31
+      
+      Standard deviations
+      Residual, mean=102.8497, 95% CI [81.49613, 122.9949]
+      Cycle=6
+      Season, mean=0.1359504, 95% CI [0.08590661, 0.2021593]
+      Cycle=12
+      Season, mean=0.1859972, 95% CI [0.1413316, 0.262306]
+      
+      Phase and amplitude
+      Cycle=6
+      Amplitude, mean=96.1238, 95% CI [68.79918, 136.6394]
+      Phase (radians), mean=1.190498, 95% CI [0.7148488, 1.628128]
+      Cycle=12
+      Amplitude, mean=215.3999, 95% CI [169.8538, 245.6512]
+      Phase (radians), mean=0.7427375, 95% CI [0.5959092, 0.9045558]
 

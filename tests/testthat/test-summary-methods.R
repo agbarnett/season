@@ -23,6 +23,25 @@ test_that("summary.Cosinor errors on non-Cosinor input", {
   )
 })
 
+test_that("summary.Cosinor reports stillbirth amplitude on probability scale (p.80)", {
+  # Book p.80: cloglog cosinor on stillbirth gives an amplitude of
+  # 0.0012 on the probability scale, peak probability of stillbirth on
+  # January 27 (= 0.0070), low on July 29 (= 0.0047). The peak/low
+  # probabilities are six months apart by construction.
+  m <- cosinor(
+    stillborn ~ 1,
+    date = "dob",
+    data = stillbirth,
+    family = binomial(link = "cloglog")
+  )
+  s <- summary(m)
+  expect_equal(round(s$amp, 4), 0.0012)
+  expect_equal(s$amp.scale, "(probability scale)")
+  expect_match(s$phase, "January.*27|27.*January")
+  expect_match(s$lphase, "July.*29|29.*July")
+  expect_true(s$significant)
+})
+
 test_that("summary.monthglm builds the documented summary.monthglm object", {
   m <- monthglm(
     cvd ~ 1,
@@ -60,7 +79,10 @@ test_that("summary.monthglm picks the right month.effect label per family", {
 })
 
 test_that("summary.monthglm errors on non-monthglm input", {
-  expect_error(summary.monthglm(list(a = 1)), "must be of class 'monthglm'")
+  expect_snapshot(
+    error = TRUE,
+    summary.monthglm(list(a = 1))
+  )
 })
 
 test_that("summary.nsCosinor builds the documented summary.nsCosinor object", {
@@ -87,6 +109,26 @@ test_that("summary.nsCosinor errors on non-nsCosinor input", {
   )
 })
 
+test_that("summary.nsCosinor handles multiple seasonal cycles", {
+  # When length(cycles) >= 2, wstats / ampstats / phasestats become
+  # k-row matrices rather than scalars. This exercises the k>=2 branch.
+  set.seed(2026 - 04 - 29)
+  m <- nscosinor(
+    data = head(CVD, 48),
+    response = "adj",
+    cycles = c(6, 12),
+    tau = c(10, 50, 50),
+    niters = 50,
+    burnin = 20,
+    div = 1000
+  )
+  s <- summary(m)
+  expect_equal(s$cycles, c(6, 12))
+  expect_equal(dim(s$stats$wstats), c(2, 3))
+  expect_equal(dim(s$stats$ampstats), c(2, 3))
+  expect_equal(dim(s$stats$phasestats), c(2, 3))
+})
+
 test_that("summary.casecross prints a structured report", {
   m <- casecross(
     cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
@@ -96,5 +138,8 @@ test_that("summary.casecross prints a structured report", {
 })
 
 test_that("summary.casecross errors on non-casecross input", {
-  expect_error(summary.casecross(list(a = 1)), "must be of class 'casecross'")
+  expect_snapshot(
+    error = TRUE,
+    summary.casecross(list(a = 1))
+  )
 })
