@@ -46,6 +46,7 @@ Suggests:
     purrr,
     rmarkdown,
     spelling,
+    stringr,
     survival,
     testthat (>= 3.0.0),
     tibble,
