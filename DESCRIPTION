@@ -3,27 +3,12 @@ Package: season
 Title: Seasonal Analysis of Health Data
 Version: 0.3.16.9000
 Authors@R: c(
-  person(
-    given = "Adrian",
-    family = "Barnett",
-    email = "a.barnett@qut.edu.au",
-    role = c("aut", "cre"),
-    comment = c(ORCID = "https://orcid.org/0000-0001-6339-0374")
-    ),
-  person(
-    given = "Peter",
-    family = "Baker",
-    role = c("aut"),
-    email = "p.baker1@uq.edu.au",
-    comment = c(ORCID = "https://orcid.org/0000-0002-1241-7263")
-    ),
-  person(
-    given = "Nicholas",
-    family = "Tierney",
-    email = "nicholas.tierney@gmail.com",
-    role = c("aut"),
-    comment = c(ORCID = "https://orcid.org/0000-0003-1460-8722")
-    )
+    person("Adrian", "Barnett", , "a.barnett@qut.edu.au", role = c("aut", "cre"),
+           comment = c(ORCID = "https://orcid.org/0000-0001-6339-0374")),
+    person("Peter", "Baker", , "p.baker1@uq.edu.au", role = "aut",
+           comment = c(ORCID = "https://orcid.org/0000-0002-1241-7263")),
+    person("Nicholas", "Tierney", , "nicholas.tierney@gmail.com", role = "aut",
+           comment = c(ORCID = "https://orcid.org/0000-0003-1460-8722"))
   )
 Description: Routines for the seasonal analysis of health data, including
     regression models, time-stratified case-crossover, plotting functions
@@ -33,21 +18,22 @@ Description: Routines for the seasonal analysis of health data, including
 License: GPL (>= 3)
 Depends:
     R (>= 4.2.0)
-Suggests: 
+Imports: 
     coda,
+    ggplot2 (>= 4.0.3),
+    MASS (>= 7.3.65),
+    survival (>= 3.8.6)
+Suggests: 
     dlnm,
     dplyr,
     flextable,
-    ggplot2 (>= 0.9.3),
     knitr,
-    MASS,
     mgcv,
     nimble,
     purrr,
     rmarkdown,
     spelling,
     stringr,
-    survival,
     testthat (>= 3.0.0),
     tibble,
     vdiffr
@@ -55,7 +41,7 @@ VignetteBuilder:
     knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
-Language: en-GB
