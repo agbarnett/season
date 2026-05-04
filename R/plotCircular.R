@@ -13,7 +13,7 @@
 #' `area1`.
 #'
 #' The plots are also called rose diagrams, with the segments then called
-#' \sQuote{petals}.
+#' "petals".
 #'
 #' @param area1 variable to plot, the area of the segments (or petals) are
 #' proportional to this variable.
@@ -34,8 +34,8 @@
 #' @param main title for plot, default:blank
 #' @param xlab x axis label, default:blank
 #' @param ylab y axis label, default:blank
-#' @param pieces.col colours for circular pieces, default:\sQuote{white} for
-#' 1st and \sQuote{grey} for second variable. Note that a list of available
+#' @param pieces.col colours for circular pieces, default:"white" for
+#' 1st and "grey" for second variable. Note that a list of available
 #' colours may be found with [colours()].
 #' @param length make the length of the segments proportional to the dependent
 #' variable, default:FALSE
@@ -324,9 +324,9 @@ plotCircular <- function(
     }
 
     ##if (length(auto.legend$title)==0) {
-    ##  title <- NULL
+    ## title <- NULL
     ##} else {
-    ##  title <- auto.legend$title
+    ## title <- auto.legend$title
     ##}
 
     if (length(auto.legend$labels) == 0) {

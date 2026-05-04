@@ -62,7 +62,7 @@ function only uses a time-stratified design, and other designs such as the
 symmetric bi-directional design, are not available.
 }
 \details{
-The case--crossover method compares \dQuote{case} days when events occurred
+The case--crossover method compares "case" days when events occurred
 (e.g., deaths) with control days to look for differences in exposure that
 might explain differences in the number of cases. Control days are selected
 to be nearby to case days, which means that only recent changes in the
@@ -88,18 +88,21 @@ matching.
 
 It is possible to additionally match case and control days by an important
 confounder (\code{matchconf}) in order to remove its effect. Control days
-are matched to case days if they are: i) in the same strata, ii) have the
-same day of the week if \code{matchdow=TRUE}, iii) have a value of
-\code{matchconf} that is within plus/minus \code{confrange} of the value of
-\code{matchconf} on the case day. If the range is set too narrow then the
-number of available controls will become too small, which in turn means the
-number of case days with at least one control day is compromised.
+are matched to case days if they are:
+i) in the same strata,
+ii) have the same day of the week if \code{matchdow=TRUE},
+iii) have a value of \code{matchconf} that is within plus/minus \code{confrange} of
+the value of \code{matchconf} on the case day.
 
-The method uses conditional logistic regression (see \code{\link[survival:coxph]{survival::coxph()}} and
-so the parameter estimates are odds ratios.)
+If the range is set too narrow then the number of available controls will
+become too small, which in turn means the number of case days with at least
+one control day is compromised.
+
+The method uses conditional logistic regression (see \code{\link[survival:coxph]{survival::coxph()}}),
+so the parameter estimates are odds ratios.
 
 The code assumes that the data frame contains a date variable (in
-\code{\link[=Date]{Date()}} format) called \sQuote{date}.
+\code{\link[=Date]{Date()}} format) called "date".
 }
 \examples{
 \donttest{# cardiovascular disease data

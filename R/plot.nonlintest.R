@@ -43,12 +43,12 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
       ggplot2::stat_contour() +
       ggplot2::geom_tile(ggplot2::aes(fill = z))
     if (plot == FALSE) {
-      return(gplot)
+      return(invisible(gplot))
     }
     if (plot == TRUE) {
       print(gplot)
     }
     #zlab='Area outside the test limits', ...)
-    #  mtext(side=3,'Points of 3rd order moment that exceed limits');
+    # mtext(side=3,'Points of 3rd order moment that exceed limits');
   } # end of if
 } # end of function

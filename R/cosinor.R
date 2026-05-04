@@ -22,26 +22,27 @@
 #' model can be applied to unequally spaced data.
 #'
 #' @param formula regression formula.
-#' @param date a date variable if type=\dQuote{daily}, or an integer between 1
-#' and 53 if type=\dQuote{weekly}, or an integer between 1 and 12 if
-#' type=\dQuote{monthly}, or a [POSIXct] date if type=\dQuote{hourly}.
+#' @param date a date variable if type="daily", or an integer between 1
+#' and 53 if type="weekly", or an integer between 1 and 12 if
+#' type="monthly", or a [POSIXct] date if type="hourly".
 #' @param data data set as a data frame.
-#' @param family a description of the error distribution and link function to
-#' be used in the model. Available link functions: identity, log, logit,
-#' cloglog. Note, it must have the parentheses.
-#' @param alpha significance level, set to 0.05 (default).
-#' @param cycles number of seasonal cycles per year if type=\dQuote{daily},
-#' \dQuote{weekly} or \dQuote{monthly}; number of cycles per 24 hours if
-#' type=\dQuote{hourly}
+#' @param family a description of the error distribution and link function to be
+#'   used in the model. Available link functions: [gaussian()] (default),
+#'   [identity()], [log()], `logit()`, `cloglog()`. Note, it must have the
+#'   parentheses.
+#' @param alpha Significance level. Default is 0.05.
+#' @param cycles number of seasonal cycles per year if type="daily",
+#' "weekly" or "monthly"; number of cycles per 24 hours if
+#' type="hourly"
 #' @param rescheck plot the residual checks (TRUE/FALSE), see
 #' [seasrescheck()].
-#' @param type \dQuote{daily} for daily data (default), or \dQuote{weekly} for
-#' weekly data, or \dQuote{monthly} for monthly data, or \dQuote{hourly} for
+#' @param type "daily" for daily data (default), or "weekly" for
+#' weekly data, or "monthly" for monthly data, or "hourly" for
 #' hourly data.
 #' @inheritParams monthglm
 #' @param text add explanatory text to the returned phase value (TRUE) or
 #' return a number (FALSE). Passed to the `invyrfraction` function.
-#' @return Returns an object of class \dQuote{Cosinor} with the following
+#' @return Returns an object of class "Cosinor" with the following
 #' parts:
 #'   * call: the original call to the cosinor function.
 #'   * glm: an object of class `glm` (see [glm()]).

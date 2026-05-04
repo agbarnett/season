@@ -9,8 +9,8 @@
 #' A test of whether monthly data has a sinusoidal seasonal pattern. The test
 #' has low power compared with the [cosinor()] test.
 #'
-#' @param cases variable name for cases (\dQuote{successes}).
-#' @param offset variable name for at-risk population (\dQuote{trials}).
+#' @param cases variable name for cases ("successes").
+#' @param offset variable name for at-risk population ("trials").
 #' @param data data frame (optional).
 #' @param alpha significance level (default=0.05).
 #' @return a list with the following elements:

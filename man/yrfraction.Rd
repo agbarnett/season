@@ -7,10 +7,10 @@
 yrfraction(date, type = "daily")
 }
 \arguments{
-\item{date}{a date variable if type=\sQuote{\code{daily}}, or an integer
-between 1 and 12 if type=\sQuote{\code{monthly}}.}
+\item{date}{a date variable if type="daily", or an integer between 1 and 12
+if type="monthly".}
 
-\item{type}{\sQuote{daily} for dates, or \sQuote{\code{monthly}} for months.}
+\item{type}{"daily" for dates, or "monthly" for months.}
 }
 \value{
 the fraction of the year.

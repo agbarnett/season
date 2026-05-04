@@ -22,27 +22,28 @@ cosinor(
 \arguments{
 \item{formula}{regression formula.}
 
-\item{date}{a date variable if type=\dQuote{daily}, or an integer between 1
-and 53 if type=\dQuote{weekly}, or an integer between 1 and 12 if
-type=\dQuote{monthly}, or a \link{POSIXct} date if type=\dQuote{hourly}.}
+\item{date}{a date variable if type="daily", or an integer between 1
+and 53 if type="weekly", or an integer between 1 and 12 if
+type="monthly", or a \link{POSIXct} date if type="hourly".}
 
 \item{data}{data set as a data frame.}
 
-\item{family}{a description of the error distribution and link function to
-be used in the model. Available link functions: identity, log, logit,
-cloglog. Note, it must have the parentheses.}
+\item{family}{a description of the error distribution and link function to be
+used in the model. Available link functions: \code{\link[=gaussian]{gaussian()}} (default),
+\code{\link[=identity]{identity()}}, \code{\link[=log]{log()}}, \code{logit()}, \code{cloglog()}. Note, it must have the
+parentheses.}
 
-\item{alpha}{significance level, set to 0.05 (default).}
+\item{alpha}{Significance level. Default is 0.05.}
 
-\item{cycles}{number of seasonal cycles per year if type=\dQuote{daily},
-\dQuote{weekly} or \dQuote{monthly}; number of cycles per 24 hours if
-type=\dQuote{hourly}}
+\item{cycles}{number of seasonal cycles per year if type="daily",
+"weekly" or "monthly"; number of cycles per 24 hours if
+type="hourly"}
 
 \item{rescheck}{plot the residual checks (TRUE/FALSE), see
 \code{\link[=seasrescheck]{seasrescheck()}}.}
 
-\item{type}{\dQuote{daily} for daily data (default), or \dQuote{weekly} for
-weekly data, or \dQuote{monthly} for monthly data, or \dQuote{hourly} for
+\item{type}{"daily" for daily data (default), or "weekly" for
+weekly data, or "monthly" for monthly data, or "hourly" for
 hourly data.}
 
 \item{offsetmonth}{include an offset to account for the uneven number of
@@ -51,13 +52,14 @@ days in the month (TRUE/FALSE). Should be used for monthly counts (with
 
 \item{offsetpop}{include an offset for the population (optional), this
 should be a variable in the data frame. Do not log-transform the offset as
-the log-transform is applied by the function.}
+the log-transform is applied by the function. This should be an expression,
+as given in the example below.}
 
 \item{text}{add explanatory text to the returned phase value (TRUE) or
 return a number (FALSE). Passed to the \code{invyrfraction} function.}
 }
 \value{
-Returns an object of class \dQuote{Cosinor} with the following
+Returns an object of class "Cosinor" with the following
 parts:
 \itemize{
 \item call: the original call to the cosinor function.
