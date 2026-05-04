@@ -9,7 +9,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r}
+#| label: setup
+#| include: FALSE
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -74,6 +76,7 @@ Next we fit month as a random instead of fixed effect. This allows the monthly e
 To fit the random effects model we switch to a Bayesian approach using the `nimble` package.
 
 ```{r}
+#| label: code-random-month
 code_random_month <- nimbleCode({
   ## Likelihood
   for (i in 1:N){ # loop through time
@@ -99,6 +102,7 @@ Each month is fitted as a random effect centred on zero. The ensure that the mon
 Next we set up the data ready for `nimble` to use. The number of days in each month are scaled to a 30 day month.
 
 ```{r}
+#| label: constants-data
 constants <- list(N = nrow(CVD),
                   month = CVD$month, 
                   offset = CVD$pop/100000, # scaled to per 100,000 people
@@ -109,6 +113,7 @@ data <- list(cvd = CVD$cvd)
 Next we create the initial values to get the chains started, using an estimate of the mean for the intercept.
 
 ```{r}
+#| label: inits
 inits <- list(tau.month = 1,
               alpha = log(mean(CVD$cvd / (CVD$pop/100000))),
               beta = rep(0,12))
@@ -117,6 +122,7 @@ inits <- list(tau.month = 1,
 Next we run the Markov chain Monte Carlo (MCMC) estimates using two chains. We plot the samples for both chains for the intercept as a quick check that the estimates have converged.
 
 ```{r}
+#| label: run-mcmc
 # parameters to store
 parms = c('alpha','beta.c','sigma.month')
 # define the model
@@ -145,6 +151,7 @@ lines(mcmc_random$samples$chain2[,1], type='l', col='red')
 Next we plot the estimated month effect with the 95% credible intervals.
 
 ```{r}
+#| label: plot-month-effect
 # prepare estimates for plot
 to_plot = as.data.frame(mcmc_random$summary$all.chains) %>%
   rownames_to_column() %>%
@@ -173,17 +180,18 @@ This approach can be described as a `global smooth' because we applied a shrinka
 The previous global smooth was likely not the best smoothing approach as we know that neighbouring months will have more in common than distant months. We can model this correlation using the neighbouring approach that is often used for spatial models. First, we create a neighbourhood matrix for the 12 months.
 
 ```{r}
+#| label: adj-matrix
 neighbours = toeplitz(c(NA,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA))
 neighbours[1,12] = neighbours[12,1] = 1 # link January and December
 neighbours
-adjfile <- tempfile(fileext = ".txt")
-adj = createAdj(neighbours, filename = adjfile)
+adj = createAdj(neighbours)
 adj
 ```
 
 In the 12 by 12 matrix, each month has two neighbours. The `createAdj` function is to create the adjacency matrix needed for the spatial CAR function, where CAR stands for conditional autoregressive. In this case the autoregression will be applied to neighbouring months to create the smooth.
 
 ```{r}
+#| label: neighbour-nimble
 code_neighbour_month <- nimbleCode({
   ## Likelihood
   for (i in 1:N){ # loop through time
@@ -203,6 +211,7 @@ code_neighbour_month <- nimbleCode({
 The data needs to be updated with the neighbourhood information.
 
 ```{r}
+#| label: nimble-constants
 constants <- list(N = nrow(CVD),
                   L = length(adj$adj),
                   adj = adj$adj,
@@ -214,6 +223,7 @@ constants <- list(N = nrow(CVD),
 ```
 
 ```{r}
+#| label: nimble-mcmc-plot
 # parameters to store
 parms = c('alpha','beta','sigma.month','sigma.neighbours')
 # define the model
@@ -238,6 +248,7 @@ lines(mcmc_neighbours$samples$chain2[,1], type='l', col='red')
 ```
 
 ```{r}
+#| label: plot-estimates
 # prepare estimates for plot
 to_plot = as.data.frame(mcmc_neighbours$summary$all.chains) %>%
   rownames_to_column() %>%
@@ -260,6 +271,7 @@ ggplot(to_plot, aes(x=month, y=exp(Mean), ymin=exp(`95%CI_low`), ymax=exp(`95%CI
 The plots of rate ratios for the two models are similar. We can compare the fit of the two models using the WAIC.
 
 ```{r}
+#| label: compare-model-fit
 waic1 = data.frame(model = 'Random', parameters = mcmc_random$WAIC$pWAIC, WAIC = mcmc_random$WAIC$WAIC)
 waic2 = data.frame(model = 'Neighbours', parameters = mcmc_neighbours$WAIC$pWAIC, WAIC = mcmc_neighbours$WAIC$WAIC)
 to_table = bind_rows(waic1,waic2)
