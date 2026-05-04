@@ -25,7 +25,11 @@
 'peri' <- function(data, adjmean = TRUE, plot = TRUE) {
   xaxis <- yaxis <- NULL # Setting some variables to NULL first (for R CMD check)
 
-  if (adjmean == TRUE) adjust <- mean(data) else adjust <- 0
+  if (adjmean == TRUE) {
+    adjust <- mean(data)
+  } else {
+    adjust <- 0
+  }
   n <- length(data)
   nfft <- (n / 2) + 1
   if (n %% 2 != 0) {

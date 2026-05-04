@@ -58,16 +58,26 @@ monthmean <- function(data, resp, offsetpop = NULL, adjmonth = FALSE) {
   # calculations
   days <- flagleap(data) # get the number of days in each month
   mean <- vector(length = 12, mode = 'numeric')
-  if (adjmonth == 'thirty') adjf = 30
-  if (adjmonth == 'average') adjf = 365.25 / 12
-  if (is.null(offsetpop) == TRUE) adjp = 1 else
-    adjp = with(data, eval(offsetpop)) # population adjustment
+  if (adjmonth == 'thirty') {
+    adjf = 30
+  }
+  if (adjmonth == 'average') {
+    adjf = 365.25 / 12
+  }
+  if (is.null(offsetpop) == TRUE) {
+    adjp = 1
+  } else {
+    adjp = with(data, eval(offsetpop))
+  } # population adjustment
   xxxx = subset(data, select = resp)[, 1] # instead of with
   for (i in 1:12) {
-    if (adjmonth != FALSE)
+    if (adjmonth != FALSE) {
       mean[i] <- mean(
         xxxx[data$month == i] * (adjf / days$ndaysmonth[i]) / adjp
-      ) else mean[i] <- mean(xxxx[data$month == i] / adjp) # no monthly adjustment
+      )
+    } else {
+      mean[i] <- mean(xxxx[data$month == i] / adjp)
+    } # no monthly adjustment
   }
   # return
   toret <- list()

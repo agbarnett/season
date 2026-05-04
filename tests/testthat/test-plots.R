@@ -214,7 +214,7 @@ test_that("plotCircular warns when area1 and area2 have different lengths", {
 test_that("plotCircular - two areas with auto legend", {
   vdiffr::expect_doppelganger(
     "plotCircular-two-areas",
-    function()
+    function() {
       plotCircular(
         area1 = AFL$players,
         area2 = AFL$expected,
@@ -225,6 +225,7 @@ test_that("plotCircular - two areas with auto legend", {
         pieces.col = c("seagreen", "purple2"),
         auto.legend = list(labels = c("Obs", "Exp"), title = "# players")
       )
+    }
   )
 })
 
