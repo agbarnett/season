@@ -1,7 +1,6 @@
 # Base R plots are wrapped in function() so vdiffr can render them onto its
-# own device. ggplot2 plots are passed directly.
 
-# ---- plot.Cosinor ----------------------------------------------------------
+# plot.Cosinor ----------------------------------------------------------
 
 test_that("plot.Cosinor - monthly Poisson", {
   m <- cosinor(
@@ -41,7 +40,7 @@ test_that("plot.Cosinor - hourly indoor temperature", {
   vdiffr::expect_doppelganger("plot-Cosinor-hourly", function() plot(m))
 })
 
-# ---- plot.monthglm ---------------------------------------------------------
+# plot.monthglm ---------------------------------------------------------
 
 test_that("plot.monthglm - Poisson rate ratios", {
   m <- monthglm(
@@ -54,7 +53,7 @@ test_that("plot.monthglm - Poisson rate ratios", {
   vdiffr::expect_doppelganger("plot-monthglm-poisson", function() plot(m))
 })
 
-test_that("plot.monthglm - Gaussian (no rate-ratio reference line)", {
+test_that("plot.monthglm - Gaussian", {
   m <- monthglm(adj ~ 1, data = CVD, family = gaussian())
   vdiffr::expect_doppelganger("plot-monthglm-gaussian", function() plot(m))
 })
@@ -67,7 +66,7 @@ test_that("plot.monthglm - user-supplied ylim", {
   )
 })
 
-# ---- plot.Monthmean --------------------------------------------------------
+# plot.Monthmean --------------------------------------------------------
 
 test_that("plot.Monthmean - adjusted CVD rates", {
   mm <- monthmean(
@@ -79,7 +78,28 @@ test_that("plot.Monthmean - adjusted CVD rates", {
   vdiffr::expect_doppelganger("plot-Monthmean", function() plot(mm))
 })
 
-# ---- plot.nonlintest -------------------------------------------------------
+# plot.nonlintest -------------------------------------------------------
+
+test_that("plot.nonlintest reports when no points exceed the test limits", {
+  # If the region matrix is all-zero (no third-order moment cell
+  # exceeds the bootstrap limits), plot.nonlintest cat()s a message
+  # and returns invisibly without producing a plot.
+  set.seed(2026 - 05 - 04)
+  res <- nonlintest(data = rnorm(80), n.lag = 3, n.boot = 10)
+  # White-noise input with very small n.boot is the easiest way to
+  # land in the "no exceedance" branch; if not, this skips quietly.
+  if (max(abs(res$region)) != 0) {
+    skip("input triggered exceedances; can't test 'none' branch")
+  }
+  expect_output(plot(res), "No points of the third-order moment exceed")
+})
+
+test_that("plot.nonlintest errors on non-nonlintest input", {
+  expect_snapshot(
+    error = TRUE,
+    plot.nonlintest(list(a = 1))
+  )
+})
 
 test_that("plot.nonlintest - region of significance", {
   # Bilinear AR(1) series - explicitly nonlinear, so nonlintest() will flag
@@ -90,12 +110,16 @@ test_that("plot.nonlintest - region of significance", {
   n <- 200
   e <- rnorm(n)
   x <- numeric(n)
-  for (t in 2:n) x[t] <- 0.6 * x[t - 1] * e[t - 1] + e[t]
+  x <- purrr::accumulate(
+    2:n,
+    \(x_prev, idx) 0.6 * x_prev * e[idx - 1] + e[idx],
+    .init = 0
+  )
   res <- nonlintest(data = x, n.lag = 3, n.boot = 25)
   vdiffr::expect_doppelganger("plot-nonlintest", plot(res, plot = TRUE))
 })
 
-# ---- plot.nsCosinor --------------------------------------------------------
+# plot.nsCosinor --------------------------------------------------------
 
 test_that("plot.nsCosinor - single cycle", {
   set.seed(2026 - 04 - 29)
@@ -125,7 +149,7 @@ test_that("plot.nsCosinor - two cycles", {
   vdiffr::expect_doppelganger("plot-nsCosinor-two-cycles", plot(m))
 })
 
-# ---- plotCircle ------------------------------------------------------------
+# plotCircle ------------------------------------------------------------
 
 test_that("plotCircle - 12 monthly values", {
   vdiffr::expect_doppelganger(
@@ -134,12 +158,56 @@ test_that("plotCircle - 12 monthly values", {
   )
 })
 
-# ---- plotCircular ----------------------------------------------------------
+# plotCircular ----------------------------------------------------------
 
 test_that("plotCircular - single area", {
   vdiffr::expect_doppelganger(
     "plotCircular-one-area",
     function() plotCircular(area1 = 1:12, labels = month.abb, dp = 0)
+  )
+})
+
+test_that("plotCircular accepts spokes, length, stats=FALSE, and clockwise=FALSE", {
+  # Coverage for the optional features documented in roxygen but not
+  # exercised by the two visual snapshots above. We only assert that
+  # rendering doesn't error; visual fidelity is covered by the
+  # doppelgangers.
+  pdf(file = tempfile(fileext = ".pdf"))
+  on.exit(dev.off())
+
+  expect_no_error(plotCircular(
+    area1 = AFL$players,
+    spokes = sqrt(AFL$players), # uncertainty bars
+    labels = month.abb,
+    dp = 0
+  ))
+  expect_no_error(plotCircular(
+    area1 = 1:12,
+    labels = month.abb,
+    dp = 0,
+    length = TRUE # length proportional to area1
+  ))
+  expect_no_error(plotCircular(
+    area1 = 1:12,
+    labels = month.abb,
+    dp = 0,
+    stats = FALSE # labels only, no numeric annotations
+  ))
+  expect_no_error(plotCircular(
+    area1 = 1:12,
+    labels = month.abb,
+    dp = 0,
+    clockwise = FALSE # counter-clockwise direction
+  ))
+})
+
+test_that("plotCircular warns when area1 and area2 have different lengths", {
+  pdf(file = tempfile(fileext = ".pdf"))
+  on.exit(dev.off())
+  # Mismatch should print a warning via cat() rather than error out.
+  expect_output(
+    plotCircular(area1 = 1:12, area2 = 1:6, labels = month.abb, dp = 0),
+    "not equal"
   )
 })
 
@@ -160,7 +228,7 @@ test_that("plotCircular - two areas with auto legend", {
   )
 })
 
-# ---- plotMonth -------------------------------------------------------------
+# plotMonth -------------------------------------------------------------
 
 test_that("plotMonth - 12 panels CVD", {
   vdiffr::expect_doppelganger(
@@ -183,7 +251,7 @@ test_that("plotMonth errors when panels is not 1 or 12", {
   )
 })
 
-# ---- peri() (built-in plot = TRUE branch) ----------------------------------
+# peri() (built-in plot = TRUE branch) ----------------------------------
 
 test_that("peri renders the periodogram when plot = TRUE", {
   vdiffr::expect_doppelganger(
@@ -192,7 +260,7 @@ test_that("peri renders the periodogram when plot = TRUE", {
   )
 })
 
-# ---- third() (built-in plot = TRUE branch) ---------------------------------
+# third() (built-in plot = TRUE branch) ---------------------------------
 
 test_that("third renders the third-order moment when plot = TRUE", {
   # outmax = FALSE silences the cat() message; we only want the plot here.
