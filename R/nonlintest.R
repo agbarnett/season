@@ -10,7 +10,7 @@
 # alpha - level of test
 ## Outputs
 # jackstats - test of null hypothesis using double bootstrap
-#             [outside,standardised,upperlimit,pvalue,H0(accept/reject)]
+#            [outside,standardised,upperlimit,pvalue,H0(accept/reject)]
 # (outside - total area outside of null hypothesis limits)
 ## Other functions called
 # third - 3rd order moment

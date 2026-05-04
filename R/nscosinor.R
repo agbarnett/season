@@ -138,7 +138,7 @@
     if (burnin > niters) {
       stop("Number of iterations must be greater than burn-in")
     }
-    ###  was    yrmon<-year+((month-1)/12)
+    ### was    yrmon<-year+((month-1)/12)
     yrmon <- data$year + ((data$month - 1) / 12) #
     n <- length(resp)
     k <- length(cycles)
@@ -268,7 +268,7 @@
     toret$trend <- trend
     toret$season <- season
     toret$oseason <- oseason
-    #    toret$fitted.values<-fitted # over-ride with values below
+    #   toret$fitted.values<-fitted # over-ride with values below
     toret$fitted.values <- new.fitted
     toret$residuals <- res
     toret$n <- n

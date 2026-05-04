@@ -86,68 +86,68 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 # slightly from current, possibly due to algorithmic refinements?).
 
 # test_that("casecross matchconf produces a casecross object with reduced controls", {
-#   model_matchconf <- casecross(
-#     cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
-#     data = CVDdaily,
-#     stratalength = 28,
-#     exclusion = 4,
-#     matchconf = "tmpd",
-#     confrange = 1
-#   )
-#   expect_s3_class(model_matchconf, "casecross")
-#   # Tight match on temp reduces controls per case vs
-#   # unmatched 28-day default (19.7).
-#   # On textbook it is 5.1, but here we get 4.8?
-#   expect_equal(model_matchconf$ncontroldays, 4.8)
+#  model_matchconf <- casecross(
+#    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+#    data = CVDdaily,
+#    stratalength = 28,
+#    exclusion = 4,
+#    matchconf = "tmpd",
+#    confrange = 1
+#  )
+#  expect_s3_class(model_matchconf, "casecross")
+#  # Tight match on temp reduces controls per case vs
+#  # unmatched 28-day default (19.7).
+#  # On textbook it is 5.1, but here we get 4.8?
+#  expect_equal(model_matchconf$ncontroldays, 4.8)
 #
-#   coef_match <- coef(model_matchconf$c.model)
+#  coef_match <- coef(model_matchconf$c.model)
 #
-#   library(broom)
-#   model_tidy <- tidy(model_matchconf$c.model)
+#  library(broom)
+#  model_tidy <- tidy(model_matchconf$c.model)
 #
-#   coef_match_o3 <- coef_match[["o3mean"]] |> round(9)
-#   coef_match_o3_exp <- coef_match[["o3mean"]] |> exp() |> round(4)
+#  coef_match_o3 <- coef_match[["o3mean"]] |> round(9)
+#  coef_match_o3_exp <- coef_match[["o3mean"]] |> exp() |> round(4)
 #
-#   # fails
-#   # expect_equal(coef_match_o3, 0.0035045071)
-#   # expect_equal(coef_match_o3_exp, 1.003511)
-#   expect_gt(coef_match_o3_exp, 1)
-#   # expect non significant - not true here.
-#   subset(model_tidy, term == "o3mean")$p.value
+#  # fails
+#  # expect_equal(coef_match_o3, 0.0035045071)
+#  # expect_equal(coef_match_o3_exp, 1.003511)
+#  expect_gt(coef_match_o3_exp, 1)
+#  # expect non significant - not true here.
+#  subset(model_tidy, term == "o3mean")$p.value
 #
-#   coef_match_temp <- coef_match[["tmpd_5"]] |> round(9)
-#   coef_match_temp_exp <- coef_match[["tmpd_5"]] |> exp() |> round(7)
+#  coef_match_temp <- coef_match[["tmpd_5"]] |> round(9)
+#  coef_match_temp_exp <- coef_match[["tmpd_5"]] |> exp() |> round(7)
 #
-#   expect_equal(coef_match_temp, 0.009497229)
-#   expect_equal(coef_match_temp_exp, 1.0095425)
+#  expect_equal(coef_match_temp, 0.009497229)
+#  expect_equal(coef_match_temp_exp, 1.0095425)
 #
-#   expect_output(summary(m), "Matched on tmpd plus/minus 1")
+#  expect_output(summary(m), "Matched on tmpd plus/minus 1")
 # })
 
 # TODO try and emulate results on page 139
-# ---- stratamonth=TRUE: monthly strata ------------------------------------
+# stratamonth=TRUE: monthly strata ------------------------------------
 # Section 5.1.5 (book p.139) discusses using calendar months as strata
 # instead of fixed-length windows; this exercises the stratamonth
 # branch in casecross() and the corresponding summary.casecross
 # print path.
 
 # test_that("casecross stratamonth=TRUE uses monthly strata", {
-#   m <- casecross(
-#     cvd ~
-#       o3mean +
-#         tmpd:winter +
-#         tmpd:spring +
-#         tmpd:summer +
-#         tmpd:autumn +
-#         Mon +
-#         Tue +
-#         Wed +
-#         Thu +
-#         Fri +
-#         Sat,
-#     data = CVDdaily,
-#     stratamonth = TRUE
-#   )
-#   expect_s3_class(m, "casecross")
-#   expect_output(summary(m), "months as strata")
+#  m <- casecross(
+#    cvd ~
+#      o3mean +
+#        tmpd:winter +
+#        tmpd:spring +
+#        tmpd:summer +
+#        tmpd:autumn +
+#        Mon +
+#        Tue +
+#        Wed +
+#        Thu +
+#        Fri +
+#        Sat,
+#    data = CVDdaily,
+#    stratamonth = TRUE
+#  )
+#  expect_s3_class(m, "casecross")
+#  expect_output(summary(m), "months as strata")
 # })

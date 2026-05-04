@@ -1,7 +1,7 @@
 ## plot.Cosinor.R
 ## Aug 2014
 ## NB: Needs a rewrite at some stage - ... is not used so
-##     plot not as flexible as it might be
+##    plot not as flexible as it might be
 
 #' Plot the Results of a Cosinor
 #'

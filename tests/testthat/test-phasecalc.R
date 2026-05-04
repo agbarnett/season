@@ -1,8 +1,8 @@
 # Tests for phasecalc(), based on the documented intent in roxygen:
 #
-#  > Calculate the phase given the estimated sine and cosine values
-#    from a cosinor model. Returns the phase in radians, in the range
-#    0-2pi. The phase is the peak in the sinusoid.
+# > Calculate the phase given the estimated sine and cosine values
+#   from a cosinor model. Returns the phase in radians, in the range
+#   0-2pi. The phase is the peak in the sinusoid.
 #
 # The phase satisfies A.cos(omega t − P) = c.cos(omega t) + s.sin(omega t) where
 # (c, s) are the cosine/sine coefficients. So the phase is the angle
@@ -52,7 +52,7 @@ test_that("phasecalc always returns a value in [0, 2pi)", {
   expect_all_true(dat_phase$within_2pi)
 })
 
-# ---- agreement with atan2 (the reference implementation) ----------------
+# agreement with atan2 (the reference implementation) ----------------
 
 test_that("phasecalc agrees with atan2(sine, cosine) wrapped into [0, 2pi)", {
   # If they ever drift the docs are wrong, the function is wrong, or both.

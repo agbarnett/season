@@ -118,7 +118,7 @@ monthglm = function(
   } else {
     moff = rep(1, l)
   } # days per month divided by average month length
-  ###  data$off = log(poff*moff)
+  ### data$off = log(poff*moff)
   off = log(poff * moff) #
   fit = glm(formula = f, data = data, family = family, offset = off)
   ## return

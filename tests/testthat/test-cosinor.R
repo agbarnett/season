@@ -52,17 +52,17 @@ test_that("Replicate results on page 78", {
 # TODO
 # cannot quite replicate this
 # test_that("Replicate monthly results on page 78", {
-#   m_month <- cosinor(
-#     formula = cvd ~ 1,
-#     date = "month",
-#     data = CVD,
-#     type = "monthly",
-#     family = poisson(),
-#     offsetmonth = TRUE
-#   )
+#  m_month <- cosinor(
+#    formula = cvd ~ 1,
+#    date = "month",
+#    data = CVD,
+#    type = "monthly",
+#    family = poisson(),
+#    offsetmonth = TRUE
+#  )
 #
-#   m_month
-#   summary(m_month)
+#  m_month
+#  summary(m_month)
 # })
 
 # binomial cloglog on stillbirth ---------------------------------------

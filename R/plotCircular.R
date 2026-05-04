@@ -324,9 +324,9 @@ plotCircular <- function(
     }
 
     ##if (length(auto.legend$title)==0) {
-    ##  title <- NULL
+    ## title <- NULL
     ##} else {
-    ##  title <- auto.legend$title
+    ## title <- auto.legend$title
     ##}
 
     if (length(auto.legend$labels) == 0) {

@@ -73,7 +73,7 @@ plot.nsCosinor <- function(x, ...) {
       type ~ .,
       scales = 'free_y'
     )
-  #  print(gplot)
+  # print(gplot)
 
   # return
   return(gplot)

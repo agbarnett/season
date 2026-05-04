@@ -49,6 +49,6 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
       print(gplot)
     }
     #zlab='Area outside the test limits', ...)
-    #  mtext(side=3,'Points of 3rd order moment that exceed limits');
+    # mtext(side=3,'Points of 3rd order moment that exceed limits');
   } # end of if
 } # end of function

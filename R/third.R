@@ -2,11 +2,11 @@
 ## estimate the third order moment
 ## Jan 2014
 # inputs
-#       data       - time-series
-#       n.lag    - number of lags, max = length of time series
-#       centre	  - centre series by subtracting mean (TRUE/FALSE)
-#       outmax  - display lags of maxima and minima (TRUE/FALSE)
-#       plot  - ggplot plot of the third order moment (TRUE/FALSE)
+#      data       - time-series
+#      n.lag    - number of lags, max = length of time series
+#      centre	  - centre series by subtracting mean (TRUE/FALSE)
+#      outmax  - display lags of maxima and minima (TRUE/FALSE)
+#      plot  - ggplot plot of the third order moment (TRUE/FALSE)
 
 #' Third-order Moment
 #'
@@ -42,7 +42,7 @@ third = function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
   if (nsamp < 10) {
     cat('warning n<10\n')
   }
-  # ---------------- cumulants in non-redundant region -----------------
+  # ------------ cumulants in non-redundant region -----------------
   XXX = matrix(data = 0, n.lag + n.lag + 1, n.lag + n.lag + 1)
   if (centre == TRUE) {
     centred = data - mean(data)
