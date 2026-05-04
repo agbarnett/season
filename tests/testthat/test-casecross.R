@@ -39,7 +39,7 @@ test_that("casecross reproduces published 28-day stratum model (p.136)", {
 
   coef_o3 <- model_coef[["o3_mean_10"]] |> round(7)
   coef_o3_exp <- model_coef[["o3_mean_10"]] |> exp() |> round(7)
-  coef_mon_exp <- model_coef[["Mon"]] |> exp() |> round()
+  coef_mon_exp <- model_coef[["Mon"]] |> exp() |> round(4)
 
   expect_equal(coef_o3, -0.0071281)
   expect_equal(coef_o3_exp, 0.9928973)
