@@ -11,7 +11,9 @@
 # the cosine = 0 protection.
 
 # four cardinal quadrants --------------------------------------------
-
+library(tibble)
+library(purrr)
+library(dplyr)
 test_that("phasecalc returns 0 when the peak is at the start of the cycle", {
   # cos has coefficient 1, sin has coefficient 0 -> the model is just
   # cos(omega t) which peaks at t = 0 -> phase = 0.

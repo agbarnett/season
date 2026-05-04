@@ -36,14 +36,17 @@ Depends:
 Suggests: 
     coda,
     dlnm,
+    dplyr,
     ggplot2 (>= 0.9.3),
     knitr,
     MASS,
     mgcv,
+    purrr,
     rmarkdown,
     spelling,
     survival,
     testthat (>= 3.0.0),
+    tibble,
     vdiffr
 VignetteBuilder: 
     knitr

@@ -1,7 +1,7 @@
 # Base R plots are wrapped in function() so vdiffr can render them onto its
 
 # plot.Cosinor ----------------------------------------------------------
-
+library(purrr)
 test_that("plot.Cosinor - monthly Poisson", {
   m <- cosinor(
     cvd ~ 1,
