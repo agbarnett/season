@@ -11,7 +11,7 @@
 #' function only uses a time-stratified design, and other designs such as the
 #' symmetric bi-directional design, are not available.
 #'
-#' The case--crossover method compares \dQuote{case} days when events occurred
+#' The case--crossover method compares "case" days when events occurred
 #' (e.g., deaths) with control days to look for differences in exposure that
 #' might explain differences in the number of cases. Control days are selected
 #' to be nearby to case days, which means that only recent changes in the
@@ -37,18 +37,21 @@
 #'
 #' It is possible to additionally match case and control days by an important
 #' confounder (`matchconf`) in order to remove its effect. Control days
-#' are matched to case days if they are: i) in the same strata, ii) have the
-#' same day of the week if `matchdow=TRUE`, iii) have a value of
-#' `matchconf` that is within plus/minus `confrange` of the value of
-#' `matchconf` on the case day. If the range is set too narrow then the
-#' number of available controls will become too small, which in turn means the
-#' number of case days with at least one control day is compromised.
+#' are matched to case days if they are:
+#'   i) in the same strata,
+#'   ii) have the same day of the week if `matchdow=TRUE`,
+#'   iii) have a value of `matchconf` that is within plus/minus `confrange` of
+#'   the value of `matchconf` on the case day.
 #'
-#' The method uses conditional logistic regression (see [survival::coxph()] and
-#' so the parameter estimates are odds ratios.)
+#' If the range is set too narrow then the number of available controls will
+#' become too small, which in turn means the number of case days with at least
+#' one control day is compromised.
+#'
+#' The method uses conditional logistic regression (see [survival::coxph()]),
+#' so the parameter estimates are odds ratios.
 #'
 #' The code assumes that the data frame contains a date variable (in
-#' [Date()] format) called \sQuote{date}.
+#' [Date()] format) called "date".
 #'
 #' @param formula formula. The dependent variable should be an integer count
 #' (e.g., daily number of deaths).
@@ -137,13 +140,16 @@ casecross = function(
   if (substr(matchconf, 1, 1) != "") {
     f = as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
   }
-  datatouse = model.frame(f, data = thisdata, na.action = na.omit) # remove cases with missing covariates
+  # remove cases with missing covariates
+  datatouse = model.frame(f, data = thisdata, na.action = na.omit)
   ## Check for irregularly spaced data
   if (any(diff(datatouse$date) > 1)) {
     cat('Note, irregularly spaced data...\n')
     cat('...check your data for missing days\n')
   }
-  datediff = as.numeric(datatouse$date) - min(as.numeric(datatouse$date)) # use minimum data in entire sample (error fixed 2 September 2018, second data was not 'datatouse')
+  # use minimum data in entire sample (error fixed 2 September 2018
+  # second data was not 'datatouse')
+  datediff = as.numeric(datatouse$date) - min(as.numeric(datatouse$date))
   time = as.numeric(datediff) + 1 # used as strata number
 
   ## Create strata
@@ -159,7 +165,8 @@ casecross = function(
     ## Increase strata windows in jumps of 'stratalength'
     windownum = floor(datediff / stratalength) + 1
     nwindows = floor(nrow(thisdata) / stratalength) + 1
-    matchday = datediff - ((windownum - 1) * stratalength) + 1 # Day number in strata
+    # Day number in strata
+    matchday = datediff - ((windownum - 1) * stratalength) + 1
     ## Exclude the last window if it is less than 'stratalength'
     lastwindow = datatouse[datatouse$windownum == nwindows, ]
     if (nrow(lastwindow) > 0) {

@@ -19,8 +19,8 @@ a list with the following named elements:
 \item n: sample size.
 \item amp: estimated amplitude.
 \item amp.scale: the scale of the estimated amplitude (empty for standard
-regression; \sQuote{probability scale} for logistic regression;
-\sQuote{absolute scale} for Poisson regression).
+regression; "probability scale" for logistic regression;
+"absolute scale" for Poisson regression).
 \item phase: estimated peak phase on a time scale.
 \item lphase: estimated low phase on a time scale (half a year after/before
 \code{phase}).

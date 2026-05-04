@@ -12,13 +12,17 @@ non-neighbours.}
 
 \item{filename}{filename that the adjacency matrix file will be written to.}
 
-\item{suffix}{string to be appended to \sQuote{num}, \sQuote{adj} and
-\sQuote{weights} object names}
+\item{suffix}{string to be appended to "num", "adj" and
+"weights" object names}
 }
 \value{
-Creates a text file named \code{filename} that contains the total
-number of neighbours (num), the index number of the adjacent neighbours
-(adj) and the weights (weights).
+A list of:
+\itemize{
+\item num: the total number of neighbours
+\item adj: the index number of the adjacent neighbours
+\item weights: weights
+Optionally if \code{filename} is specified, it will write this to file.
+}
 }
 \description{
 Creates an adjacency matrix in a form suitable for using in \code{BRugs} or

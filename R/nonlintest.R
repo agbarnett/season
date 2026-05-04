@@ -10,7 +10,7 @@
 # alpha - level of test
 ## Outputs
 # jackstats - test of null hypothesis using double bootstrap
-#             [outside,standardised,upperlimit,pvalue,H0(accept/reject)]
+#            [outside,standardised,upperlimit,pvalue,H0(accept/reject)]
 # (outside - total area outside of null hypothesis limits)
 ## Other functions called
 # third - 3rd order moment
@@ -39,7 +39,7 @@
 #' @param n.boot the number of bootstrap replications (suggested minimum of
 #' 100; 1000 or more would be better).
 #' @param alpha statistical significance level of test (default=0.05).
-#' @return Returns an object of class \dQuote{nonlintest} with the following
+#' @return Returns an object of class "nonlintest" with the following
 #' parts:
 #'   * region: the region of the third order moment where the test exceeds
 #'     the limits (up to `n.lag`).

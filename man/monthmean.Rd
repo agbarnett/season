@@ -14,12 +14,11 @@ calculated.}
 
 \item{offsetpop}{optional population, used as an offset (default=NULL).}
 
-\item{adjmonth}{adjust monthly counts and scale to a 30 day month
-(\sQuote{\code{thirty}}) or the average month length
-(\sQuote{\code{average}}) (default=FALSE).}
+\item{adjmonth}{adjust monthly counts and scale to a 30 day month ("thirty")
+or the average month length ("average") (default=FALSE).}
 }
 \value{
-Returns an object of class \dQuote{Monthmean} with the following
+Returns an object of class "Monthmean" with the following
 parts:
 \itemize{
 \item mean: a vector of length 12 with the monthly means.

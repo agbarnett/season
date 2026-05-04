@@ -8,26 +8,27 @@
 #'
 #' Inverts a fraction of the year or hour to a useful time scale.
 #'
-#' Returns the day and month (for `daily`) or fraction of the month (for
-#' `monthly`) given a fraction of the year. Assumes a year length of
-#' 365.25 days for `daily`. When using `monthly` the 1st of January
+#' Returns the day and month (for "daily") or fraction of the month (for
+#' "monthly") given a fraction of the year. Assumes a year length of
+#' 365.25 days for "daily". When using "monthly" the 1st of January
 #' is 1, the 1st of December is 12, and the 31st of December is 12.9. For
-#' `hourly` it returns the fraction of the 24-hour clock starting from
+#' "hourly" it returns the fraction of the 24-hour clock starting from
 #' zero (midnight).
 #'
 #' @param frac a vector of fractions of the year, all between 0 and 1.
-#' @param type \dQuote{`daily`} for dates, \dQuote{`monthly`} for
-#' months, \dQuote{`hourly`} for hours.
+#' @param type "daily" for dates, "monthly" for months, "hourly" for hours,
+#'   "weekly" for weeks.
 #' @param text add an explanatory text to the returned value (TRUE) or return a
 #' number (FALSE).
-#' @return the date (day and month for `daily`), fractional month (for
-#' `monthly`), or fraction of the 24-hour clock (for `hourly`).
+#' @return the date (day and month for "daily"), fractional month (for
+#'   "monthly"), or fraction of the 24-hour clock (for "hourly").
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
-#' invyrfraction(c(0, 0.5, 0.99), type='daily')
-#' invyrfraction(c(0, 0.5, 0.99), type='monthly')
 #' invyrfraction(c(0, 0.5, 0.99), type='hourly')
+#' invyrfraction(c(0, 0.5, 0.99), type='daily')
+#' invyrfraction(c(0, 0.5, 0.99), type='weekly')
+#' invyrfraction(c(0, 0.5, 0.99), type='monthly')
 #'
 #' @export invyrfraction
 invyrfraction <- function(frac, type = 'daily', text = TRUE) {
@@ -41,16 +42,14 @@ invyrfraction <- function(frac, type = 'daily', text = TRUE) {
     day = day - (365 * as.numeric(day > 365)) # avoid values > 365
     day = pmax(day, 1) # avoid values < 1
     date <- strptime(day, '%j')
-    day <- as.numeric(format(date, '%d')) # Day of the month as decimal number (01?31)
+    daym <- as.numeric(format(date, '%d')) # Day of the month as decimal number (01?31)
     month <- format(date, '%B') # Month name
     if (text == TRUE) {
-      daym <- paste('Month =', month, ', day =', day)
+      daym <- paste('Month =', month, ', day =', daym)
     }
     if (text == FALSE) {
-      monthnum <- as.numeric(format(date, '%m')) # Month number
-      mnthlength <- c(31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-      daym <- monthnum + ((day - 1) / mnthlength[monthnum])
-    } #
+      daym <- day
+    }
   }
   if (type == 'weekly') {
     week <- (frac * 52) + 1
