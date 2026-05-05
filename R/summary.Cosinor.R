@@ -56,7 +56,8 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   }
   if (link == 'logit') {
     p1 <- exp(s$coefficients[1, 1]) / (1 + exp(s$coefficients[1, 1])) # back-transform amp
-    p2 <- exp(s$coefficients[1, 1] + amp) / (1 + exp(s$coefficients[1, 1] + amp)) # back-transform amp
+    p2 <- exp(s$coefficients[1, 1] + amp) /
+      (1 + exp(s$coefficients[1, 1] + amp)) # back-transform amp
     amp <- p2 - p1
     addition <- "(probability scale)"
   }
