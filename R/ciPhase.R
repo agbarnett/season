@@ -48,7 +48,7 @@ ciPhase <- function(theta, alpha = 0.05) {
   # only rotate if centre is in top-half of the circle
   ideal <- theta
   diff <- 0
-  if (centre < pi / 2 | centre > 3 * pi / 2) {
+  if (centre < pi / 2 || centre > 3 * pi / 2) {
     diff <- pi - centre
     diffneg <- (-2 * pi) + diff
     ideal <- theta + diff * (theta < pi) + diffneg * (theta > pi)

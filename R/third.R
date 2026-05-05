@@ -92,9 +92,9 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
   # Lags of minima and maxima
   if (outmax) {
     cat('Maximum at (including symmetries)\n')
-    cat(which(XXX == max(XXX), arr.ind = T) - n.lag - 1, '\n')
+    cat(which(XXX == max(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
     cat('Minimum at (including symmetries)\n')
-    cat(which(XXX == min(XXX), arr.ind = T) - n.lag - 1, '\n')
+    cat(which(XXX == min(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
   }
 
   # Lags of minima and maxima

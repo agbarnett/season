@@ -33,7 +33,7 @@ plot.Cosinor <- function(x, ...) {
   time <- subset(x$glm$data, select = x$date)[, 1]
   o <- order(time)
   par(mai = c(0.8, 0.8, 0.1, 0.1)) # c(bottom, left, top, right)
-  if (x$call$link != 'logit' & x$call$link != 'cloglog') {
+  if (x$call$link != 'logit' && x$call$link != 'cloglog') {
     plot(
       time[o],
       x$fitted.values[o],
@@ -65,7 +65,7 @@ plot.Cosinor <- function(x, ...) {
       rug(time[o])
     }
   }
-  if (x$call$link == 'logit' | x$call$link == 'cloglog') {
+  if (x$call$link == 'logit' || x$call$link == 'cloglog') {
     ylab <- paste('Probability(', ylab, ')', sep = '')
     plot(
       time[o],

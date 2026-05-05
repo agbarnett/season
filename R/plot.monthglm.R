@@ -53,7 +53,7 @@ plot.monthglm <- function(
   out$upper <- s$coef[, 1] + (z * s$coef[, 2])
 
   ## Exponentiate the results if rate or odds ratio
-  if (type == "poisson" | type == "quasipoisson" | type == "binomial") {
+  if (type == "poisson" || type == "quasipoisson" || type == "binomial") {
     out$mean <- exp(out$mean)
     out$lower <- exp(out$lower)
     out$upper <- exp(out$upper)
@@ -70,8 +70,8 @@ plot.monthglm <- function(
   }
 
   ## plot
-  ymin <- min(c(toplot$lower, refer), na.rm = T) # include reference
-  ymax <- max(c(toplot$upper, refer), na.rm = T) # include reference
+  ymin <- min(c(toplot$lower, refer), na.rm = TRUE) # include reference
+  ymax <- max(c(toplot$upper, refer), na.rm = TRUE) # include reference
   if (is.null(ylim)) {
     this.y.lim <- c(ymin, ymax)
   }
@@ -93,7 +93,7 @@ plot.monthglm <- function(
   }
   month.lab <- substr(month.abb, 1, 1)
   axis(side = 1, labels = month.lab, at = 1:12)
-  if (type == "poisson" | type == "quasipoisson" | type == "binomial") {
+  if (type == "poisson" || type == "quasipoisson" || type == "binomial") {
     lines(c(1, 12), c(1, 1), lty = 2) # reference list
     points(x$call$refmonth, 1) # reference point
   }
@@ -163,8 +163,8 @@ plot.monthglm <- function(
 #'   }
 #'
 #'   ## plot
-#'   ymin <- min(c(toplot$lower, refer), na.rm = T) # include reference
-#'   ymax <- max(c(toplot$upper, refer), na.rm = T) # include reference
+#'   ymin <- min(c(toplot$lower, refer), na.rm = TRUE) # include reference
+#'   ymax <- max(c(toplot$upper, refer), na.rm = TRUE) # include reference
 #'   if (is.null(ylim)) {
 #'     this.y.lim = c(ymin, ymax)
 #'   }

@@ -36,13 +36,13 @@ yrfraction <- function(date, type = 'daily') {
     yrfrac <- (day - 1) / yrlength
   }
   if (type == 'weekly') {
-    if (max(date) > 53 | min(date) < 1) {
+    if (max(date) > 53 || min(date) < 1) {
       stop("Date variable for weekly data must be month integer (1 to 53)")
     }
     yrfrac <- (date - 1) / (365.25 / 7)
   }
   if (type == 'monthly') {
-    if (max(date) > 12 | min(date) < 1) {
+    if (max(date) > 12 || min(date) < 1) {
       stop("Date variable for monthly data must be month integer (1 to 12)")
     }
     yrfrac <- (date - 1) / 12

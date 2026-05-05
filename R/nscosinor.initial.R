@@ -7,7 +7,7 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   k <- 1 # Assume just one season
   kk <- 2 * (k + 1)
   n <- nrow(data)
-  F <- rep(c(1, 0), k + 1)
+  Fvec <- rep(c(1, 0), k + 1)
   alpha_j <- matrix(0, kk, n + 1)
   G <- matrix(0, kk, kk)
   G[1, 1] <- 1
@@ -28,7 +28,7 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   alphase <- matrix(0, n - 1, k)
   for (t in 2:(n + 1)) {
     #<- time = 1 to n;
-    se[t - 1] <- (vector.response[t - 1] - (t(F) %*% alpha_j[, t]))^2
+    se[t - 1] <- (vector.response[t - 1] - (t(Fvec) %*% alpha_j[, t]))^2
     if (t > 2) {
       # <- 2 to n;
       past <- G %*% alpha_j[, t - 1]

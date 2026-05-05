@@ -174,7 +174,7 @@ casecross <- function(
       lastlength <- max(time[windownum == nwindows]) -
         min(time[windownum == nwindows]) +
         1
-      if (lastlength < stratalength & !usefinalwindow) {
+      if (lastlength < stratalength && !usefinalwindow) {
         datatouse <- datatouse[windownum < nwindows, ]
       }
     }
@@ -202,7 +202,9 @@ casecross <- function(
     )
   }
   if (!startsWith(matchconf, "")) {
-    also <- sum(as.numeric(names(cases) == matchconf) * (seq_along(names(cases))))
+    also <- sum(
+      as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
+    )
     cases.tomerge <- subset(
       cases,
       select = c(matchday, time, outcome, windownum, dow, also)
@@ -265,7 +267,10 @@ casecross <- function(
     findc <- sum(
       as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
     )
-    final.cases <- subset(cases, select = c(-dow, -matchday, -windownum, -findc))
+    final.cases <- subset(
+      cases,
+      select = c(-dow, -matchday, -windownum, -findc)
+    )
   }
   if (startsWith(matchconf, "")) {
     controls <- subset(

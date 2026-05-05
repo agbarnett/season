@@ -64,7 +64,7 @@ monthglm <- function(
   offsetpop = NULL
 ) {
   ## checks
-  if (refmonth < 1 | refmonth > 12) {
+  if (refmonth < 1 || refmonth > 12) {
     stop("Reference month must be between 1 and 12")
   }
   offsetmonth_lgl <- is.logical(offsetmonth)
@@ -104,9 +104,16 @@ monthglm <- function(
   }
   ## prepare data/formula
   parts <- paste(formula)
-  f <- as.formula(paste(parts[2], parts[1], parts[3:length(formula)], '+months'))
-  dep <- parts[2] # dependent variable
-  days <- flagleap(data = data, report = FALSE, matchin = T) # get the number of days in each month
+  f <- as.formula(paste(
+    parts[2],
+    parts[1],
+    parts[3:length(formula)],
+    '+months'
+  ))
+  # dependent variable
+  dep <- parts[2]
+  # get the number of days in each month
+  days <- flagleap(data = data, report = FALSE, matchin = TRUE)
   l <- nrow(data)
   if (!is.null(offsetpop)) {
     poff <- with(data, eval(offsetpop))

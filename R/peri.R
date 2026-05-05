@@ -50,10 +50,10 @@
     if (realpart[j] >= 0) {
       phase[j] <- ph
     }
-    if (realpart[j] < 0 & imagpart[j] >= 0) {
+    if (realpart[j] < 0 && imagpart[j] >= 0) {
       phase[j] <- ph + pi
     }
-    if (realpart[j] < 0 & imagpart[j] < 0) {
+    if (realpart[j] < 0 && imagpart[j] < 0) {
       phase[j] <- ph - pi
     }
     # put in 0 to 2pi range

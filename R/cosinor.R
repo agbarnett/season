@@ -98,20 +98,22 @@ cosinor <- function(
     stop("Error: 'offsetmonth' must be of type logical")
   }
   if (
-    type != 'daily' & type != 'weekly' & type != 'monthly' & type != 'hourly'
+    type != 'daily' && type != 'weekly' && type != 'monthly' && type != 'hourly'
   ) {
     stop("type must be daily, weekly, monthly or hourly")
   }
-  if (type == 'hourly' & length(grep('POSIXct', this.class, fixed = TRUE)) == 0) {
+  if (
+    type == 'hourly' && length(grep('POSIXct', this.class, fixed = TRUE)) == 0
+  ) {
     stop("date variable must be of class POSIXct when type='hourly'")
   }
-  if (type == 'daily' & this.class != 'Date') {
+  if (type == 'daily' && this.class != 'Date') {
     stop("date variable must be of class Date when type='daily'")
   }
-  if (alpha <= 0 | alpha >= 1) {
+  if (alpha <= 0 || alpha >= 1) {
     stop("alpha must be between 0 and 1")
   }
-  if (type == 'hourly' & offsetmonth) {
+  if (type == 'hourly' && offsetmonth) {
     stop("do not use monthly offset for hourly data")
   }
 

@@ -36,7 +36,7 @@ summary.monthglm <- function(object, ...) {
   out$zvalue <- s$coef[, 3]
   out$pvalue <- s$coef[, 4]
   # Exponentiate the results if rate or odds ratio
-  if (type == "poisson" | type == "binomial") {
+  if (type == "poisson" || type == "binomial") {
     out$mean <- exp(out$mean)
     out$lower <- exp(out$lower)
     out$upper <- exp(out$upper)

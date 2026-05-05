@@ -155,7 +155,7 @@ plotCircular <- function(
   if (!is.null(area2)) {
     aarea2 <- area2
   }
-  if (length == F) {
+  if (!length) {
     aarea1 <- sqrt(area1 * 12 / pi)
     if (!is.null(area2)) {
       aarea2 <- sqrt(area2 * 12 / pi)
@@ -260,7 +260,7 @@ plotCircular <- function(
     }
   }
   ## add the text
-  if (!is.null(labels) & !stats) {
+  if (!is.null(labels) && !stats) {
     for (cheeseno in 1:bins) {
       x <- mult * 0.92 * cos((2 * pi * cheeseno / bins) + start + half)
       y <- 0.92 * sin((2 * pi * cheeseno / bins) + start + half)
@@ -269,7 +269,7 @@ plotCircular <- function(
   }
 
   ## add the labels with stats
-  if (!is.null(labels) & stats) {
+  if (!is.null(labels) && stats) {
     clabel2 <- formatC(area1, format = "f", digits = dp) # convert to character
     for (cheeseno in 1:bins) {
       x <- mult * 0.86 * cos((2 * pi * cheeseno / bins) + start + half)

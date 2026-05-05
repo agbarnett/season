@@ -124,7 +124,7 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
       }
     }
   }
-  uppert <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = T)
+  uppert <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = TRUE)
   diff_l <- (Xthird - mcent_l1) * uppert # Just get for s<r;
   diff_u <- (Xthird - mcent_u1) * uppert # Just get for s<r;
 

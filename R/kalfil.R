@@ -21,7 +21,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   kk <- 2 * (k + 1)
   n <- length(data)
   data <- c(0, data) # Add zero to start of data
-  F <- rep(c(1, 0), k + 1)
+  Fvec <- rep(c(1, 0), k + 1)
   G <- matrix(0, kk, kk)
   G[1, 1] <- 1
   G[1, 2] <- lambda
@@ -51,13 +51,17 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   for (t in 1:n) {
     a_j[, t + 1] <- G %*% p_j[, t] # prediction eqn
     R_j[,, t + 1] <- (G %*% C_j[,, t] %*% t(G)) + V # prediction eqn
-    e_j[, t + 1] <- data[t + 1] - (t(F) %*% a_j[, t + 1]) # residual
-    Q_j <- t(F) %*% R_j[,, t + 1] %*% F + (vartheta^2) # fitted value variance
+    e_j[, t + 1] <- data[t + 1] - (t(Fvec) %*% a_j[, t + 1]) # residual
+    Q_j <- t(Fvec) %*% R_j[,, t + 1] %*% Fvec + (vartheta^2) # fitted value variance
     # Kalman filter:
     p_j[, t + 1] <- a_j[, t + 1] +
-      (R_j[,, t + 1] %*% F %*% (qr.solve(Q_j)) %*% e_j[, t + 1])
+      (R_j[,, t + 1] %*% Fvec %*% (qr.solve(Q_j)) %*% e_j[, t + 1])
     C_j[,, t + 1] <- R_j[,, t + 1] -
-      (R_j[,, t + 1] %*% F %*% (qr.solve(Q_j)) %*% t(F) %*% t(R_j[,, t + 1]))
+      (R_j[,, t + 1] %*%
+        Fvec %*%
+        (qr.solve(Q_j)) %*%
+        t(Fvec) %*%
+        t(R_j[,, t + 1]))
   }
   ## Backward sweep of Kalman filter
   # DLM matrices
@@ -84,7 +88,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   alphase <- matrix(0, n - 1, k)
   for (t in 2:(n + 1)) {
     #<- time = 1 to n;
-    se[t - 1] <- (data[t] - (t(F) %*% alpha_j[, t]))^2
+    se[t - 1] <- (data[t] - (t(Fvec) %*% alpha_j[, t]))^2
     if (t > 2) {
       # <- 2 to n;
       past <- G %*% alpha_j[, t - 1]

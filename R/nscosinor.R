@@ -120,7 +120,7 @@
     names <- names(data)
     yearyes <- sum(names == 'year')
     monthyes <- sum(names == 'month')
-    if (yearyes < 1 | monthyes < 1) {
+    if (yearyes < 1 || monthyes < 1) {
       stop("Data needs to contain numeric year and month variables")
     }
     if (length(tau) != length(cycles) + 1) {
