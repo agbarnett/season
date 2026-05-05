@@ -128,7 +128,7 @@
         "Need to give a smoothing parameter (tau) for each cycle, plus one for the trend"
       )
     }
-    resp = subset(data, select = response)[, 1] # instead of attach
+    resp <- subset(data, select = response)[, 1] # instead of attach
     if (sum(is.na(resp)) > 0) {
       stop("Missing data in the dependent variable not allowed")
     }
@@ -144,7 +144,7 @@
     k <- length(cycles)
     kk <- 2 * (k + 1)
     ## Get initial values
-    good.inits = nscosinor.initial(
+    good.inits <- nscosinor.initial(
       data = data,
       response = response,
       lambda = lambda,
@@ -201,11 +201,11 @@
         allseasons[i, j - burnin] <- sum(alphachain[snums, i, j])
       }
     }
-    lprob = alpha / 2
-    uprob = 1 - (alpha / 2)
+    lprob <- alpha / 2
+    uprob <- 1 - (alpha / 2)
     lnum <- round((niters - burnin) * lprob)
     unum <- round((niters - burnin) * uprob)
-    for.fitted = allseasons + alphachain[1, 1:n, (burnin + 1):niters]
+    for.fitted <- allseasons + alphachain[1, 1:n, (burnin + 1):niters]
     for (i in 1:n) {
       trend$mean[i] <- mean(alphachain[1, i, burnin:niters])
       trend$lower[i] <- sum(
@@ -247,10 +247,10 @@
     }
     names(season) <- rep(c('mean', 'lower', 'upper'), k)
     ## Time
-    if (monthly == TRUE) {
+    if (monthly) {
       time <- yrmon
     }
-    if (monthly != TRUE) {
+    if (!monthly) {
       time <- 1:n
     }
     ## Calculated fitted values and residuals
@@ -292,7 +292,7 @@
       start = burnin + 1
     )
     # Add the names
-    colnames(toret$chains) = c(
+    colnames(toret$chains) <- c(
       'std.error',
       paste('std.season', 1:k, sep = ''),
       paste('phase', 1:k, sep = ''),

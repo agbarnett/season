@@ -54,7 +54,7 @@
 #' summary(mmodel)
 #'
 #' @export monthglm
-monthglm = function(
+monthglm <- function(
   formula,
   data,
   family = gaussian(),
@@ -72,61 +72,61 @@ monthglm = function(
     stop("`offsetmonth` must be logical, we see type: ", class(offsetmonth))
   }
   ## original call with defaults (see amer package)
-  ans = as.list(match.call())
-  frmls = formals(deparse(ans[[1]]))
-  add = which(!(names(frmls) %in% names(ans)))
-  call = as.call(c(ans, frmls[add]))
+  ans <- as.list(match.call())
+  frmls <- formals(deparse(ans[[1]]))
+  add <- which(!(names(frmls) %in% names(ans)))
+  call <- as.call(c(ans, frmls[add]))
 
-  monthvar = with(data, get(monthvar))
-  cmonthvar = class(monthvar)
+  monthvar <- with(data, get(monthvar))
+  cmonthvar <- class(monthvar)
   ## If month is a character, create the numbers
   if (cmonthvar %in% c('factor', 'character')) {
     if (cmonthvar == 'character') {
       if (max(nchar(monthvar)) == 3) {
-        mlevels = substr(month.name, 1, 3)
+        mlevels <- substr(month.name, 1, 3)
       } else {
-        mlevels = month.name
+        mlevels <- month.name
       }
-      monthvar = factor(monthvar, levels = mlevels)
+      monthvar <- factor(monthvar, levels = mlevels)
     }
-    months = as.numeric(monthvar)
-    data$month = months # add to data for flagleap
-    months = as.factor(months)
-    levels(months)[months] = month.abb[months]
-    months = relevel(months.u, ref = month.abb[refmonth]) # set reference month
+    months <- as.numeric(monthvar)
+    data$month <- months # add to data for flagleap
+    months <- as.factor(months)
+    levels(months)[months] <- month.abb[months]
+    months <- relevel(months.u, ref = month.abb[refmonth]) # set reference month
   }
   ## Transform month numbers to names
   if (cmonthvar %in% c('integer', 'numeric')) {
-    months.u = as.factor(monthvar)
-    nums = keep_month_numbers(levels(months.u)) # Month numbers; replaced `nochars`
-    levels(months.u)[nums] = month.abb[nums]
-    months = relevel(months.u, ref = month.abb[refmonth]) # set reference month
+    months.u <- as.factor(monthvar)
+    nums <- keep_month_numbers(levels(months.u)) # Month numbers; replaced `nochars`
+    levels(months.u)[nums] <- month.abb[nums]
+    months <- relevel(months.u, ref = month.abb[refmonth]) # set reference month
   }
   ## prepare data/formula
-  parts = paste(formula)
-  f = as.formula(paste(parts[2], parts[1], parts[3:length(formula)], '+months'))
-  dep = parts[2] # dependent variable
-  days = flagleap(data = data, report = FALSE, matchin = T) # get the number of days in each month
-  l = nrow(data)
-  if (is.null(offsetpop) == FALSE) {
-    poff = with(data, eval(offsetpop))
+  parts <- paste(formula)
+  f <- as.formula(paste(parts[2], parts[1], parts[3:length(formula)], '+months'))
+  dep <- parts[2] # dependent variable
+  days <- flagleap(data = data, report = FALSE, matchin = T) # get the number of days in each month
+  l <- nrow(data)
+  if (!is.null(offsetpop)) {
+    poff <- with(data, eval(offsetpop))
   } else {
-    poff = rep(1, l)
+    poff <- rep(1, l)
   } #
-  if (offsetmonth == TRUE) {
-    moff = days$ndaysmonth / (365.25 / 12)
+  if (offsetmonth) {
+    moff <- days$ndaysmonth / (365.25 / 12)
   } else {
-    moff = rep(1, l)
+    moff <- rep(1, l)
   } # days per month divided by average month length
   ### data$off = log(poff*moff)
-  off = log(poff * moff) #
-  fit = glm(formula = f, data = data, family = family, offset = off)
+  off <- log(poff * moff) #
+  fit <- glm(formula = f, data = data, family = family, offset = off)
   ## return
-  toret = list()
-  toret$call = call
-  toret$glm = fit
-  toret$fitted.values = fitted(fit)
-  toret$residuals = residuals(fit)
-  class(toret) = 'monthglm'
+  toret <- list()
+  toret$call <- call
+  toret$glm <- fit
+  toret$fitted.values <- fitted(fit)
+  toret$residuals <- residuals(fit)
+  class(toret) <- 'monthglm'
   return(toret)
 }

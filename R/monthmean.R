@@ -20,7 +20,7 @@
 #' calculated.
 #' @param offsetpop optional population, used as an offset (default=NULL).
 #' @param adjmonth adjust monthly counts and scale to a 30 day month ("thirty")
-#'   or the average month length ("average") (default=FALSE).
+#'   or the average month length ("average") (default="none").
 #' @return Returns an object of class "Monthmean" with the following
 #' parts:
 #'   * mean: a vector of length 12 with the monthly means.
@@ -38,19 +38,24 @@
 #' }
 #'
 #' @export monthmean
-monthmean <- function(data, resp, offsetpop = NULL, adjmonth = FALSE) {
+monthmean <- function(
+  data,
+  resp,
+  offsetpop = NULL,
+  adjmonth = c("none", "thirty", "average")
+) {
   # checks
-  if (is.null(data) == TRUE) {
+  if (is.null(data)) {
     stop("must have an input data set (data)")
   }
-  if (is.null(resp) == TRUE) {
+  if (is.null(resp)) {
     stop("must have an input variable (resp)")
   }
   nnn <- names(data)
-  if (any(nnn == 'year') == FALSE) {
+  if (!any(nnn == 'year')) {
     stop("data set must contain a variable with the 4 digit year called 'year'")
   }
-  if (any(nnn == 'month') == FALSE) {
+  if (!any(nnn == 'month')) {
     stop(
       "data set must contain a variable with the numeric month called 'month'"
     )
@@ -58,20 +63,23 @@ monthmean <- function(data, resp, offsetpop = NULL, adjmonth = FALSE) {
   # calculations
   days <- flagleap(data) # get the number of days in each month
   mean <- vector(length = 12, mode = 'numeric')
+
+  adjmonth <- rlang::arg_match(adjmonth)
+
   if (adjmonth == 'thirty') {
-    adjf = 30
+    adjf <- 30
   }
   if (adjmonth == 'average') {
-    adjf = 365.25 / 12
+    adjf <- 365.25 / 12
   }
-  if (is.null(offsetpop) == TRUE) {
-    adjp = 1
+  if (is.null(offsetpop)) {
+    adjp <- 1
   } else {
-    adjp = with(data, eval(offsetpop))
+    adjp <- with(data, eval(offsetpop))
   } # population adjustment
-  xxxx = subset(data, select = resp)[, 1] # instead of with
+  xxxx <- subset(data, select = resp)[, 1] # instead of with
   for (i in 1:12) {
-    if (adjmonth != FALSE) {
+    if (adjmonth != "none") {
       mean[i] <- mean(
         xxxx[data$month == i] * (adjf / days$ndaysmonth[i]) / adjp
       )

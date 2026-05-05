@@ -92,8 +92,8 @@ cosinor <- function(
   text = TRUE
 ) {
   ## checks
-  classes = lapply(data, class) # classes of all variables
-  this.class = as.character(classes[which(names(data) == date)]) # also used later
+  classes <- lapply(data, class) # classes of all variables
+  this.class <- as.character(classes[which(names(data) == date)]) # also used later
   if (!is.logical(offsetmonth)) {
     stop("Error: 'offsetmonth' must be of type logical")
   }
@@ -102,7 +102,7 @@ cosinor <- function(
   ) {
     stop("type must be daily, weekly, monthly or hourly")
   }
-  if (type == 'hourly' & length(grep('POSIXct', this.class)) == 0) {
+  if (type == 'hourly' & length(grep('POSIXct', this.class, fixed = TRUE)) == 0) {
     stop("date variable must be of class POSIXct when type='hourly'")
   }
   if (type == 'daily' & this.class != 'Date') {
@@ -111,7 +111,7 @@ cosinor <- function(
   if (alpha <= 0 | alpha >= 1) {
     stop("alpha must be between 0 and 1")
   }
-  if (type == 'hourly' & offsetmonth == TRUE) {
+  if (type == 'hourly' & offsetmonth) {
     stop("do not use monthly offset for hourly data")
   }
 
@@ -132,28 +132,28 @@ cosinor <- function(
   ))
 
   ## get the year/hour fraction
-  to.frac = subset(data, select = date)[, 1]
+  to.frac <- subset(data, select = date)[, 1]
   if (type == 'hourly') {
-    number = as.numeric(format(to.frac, '%H')) +
+    number <- as.numeric(format(to.frac, '%H')) +
       (as.numeric(format(to.frac, '%M')) / 60) +
       (as.numeric(format(to.frac, '%S')) / 60 * 60)
-    frac = number / 24
+    frac <- number / 24
   }
   if (type != 'hourly') {
-    class(to.frac) = this.class # return to class (needed for date class)
-    frac = yrfraction(to.frac, type = type) #
+    class(to.frac) <- this.class # return to class (needed for date class)
+    frac <- yrfraction(to.frac, type = type) #
   }
   data$cosw <- cos(frac * 2 * pi * cycles)
   data$sinw <- sin(frac * 2 * pi * cycles)
   newdata <- data.frame(cosw = data$cosw, sinw = data$sinw) # used later
-  poff = rep(1, nrow(data))
-  if (is.null(offsetpop) == FALSE) {
-    poff = offsetpop
+  poff <- rep(1, nrow(data))
+  if (!is.null(offsetpop)) {
+    poff <- offsetpop
   }
-  moff = rep(1, nrow(data))
-  if (offsetmonth == TRUE) {
-    days = flagleap(data = data, report = FALSE, matchin = TRUE) # get the number of days in each month
-    moff = days$ndaysmonth / (365.25 / 12) # days per month divided by average month length
+  moff <- rep(1, nrow(data))
+  if (offsetmonth) {
+    days <- flagleap(data = data, report = FALSE, matchin = TRUE) # get the number of days in each month
+    moff <- days$ndaysmonth / (365.25 / 12) # days per month divided by average month length
   }
   offset <- log(poff * moff)
   # generalized linear model
@@ -163,9 +163,9 @@ cosinor <- function(
 
   ## create predicted data (intercept + sinusoid)
   cnames <- row.names(s$coefficients)
-  cindex <- sum(as.numeric(cnames == 'cosw') * (1:length(cnames)))
-  sindex <- sum(as.numeric(cnames == 'sinw') * (1:length(cnames)))
-  fitted = fitted(model) # standard fitted values
+  cindex <- sum(as.numeric(cnames == 'cosw') * (seq_along(cnames)))
+  sindex <- sum(as.numeric(cnames == 'sinw') * (seq_along(cnames)))
+  fitted <- fitted(model) # standard fitted values
   pred <- s$coefficients[1, 1] +
     (s$coefficients[cindex, 1] * newdata$cosw) +
     (s$coefficients[sindex, 1] * newdata$sinw)

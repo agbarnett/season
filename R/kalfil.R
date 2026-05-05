@@ -23,14 +23,14 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   data <- c(0, data) # Add zero to start of data
   F <- rep(c(1, 0), k + 1)
   G <- matrix(0, kk, kk)
-  G[1, 1] = 1
-  G[1, 2] = lambda
-  G[2, 2] = 1
+  G[1, 1] <- 1
+  G[1, 2] <- lambda
+  G[2, 2] <- 1
   V <- matrix(0, kk, kk)
-  V[1, 1] = (tau[1]^2) * (lambda^3) / 3
-  V[1, 2] = (tau[1]^2) * (lambda^2) / 2
-  V[2, 1] = (tau[1]^2) * (lambda^2) / 2
-  V[2, 2] = (tau[1]^2) * lambda # Trend variance
+  V[1, 1] <- (tau[1]^2) * (lambda^3) / 3
+  V[1, 2] <- (tau[1]^2) * (lambda^2) / 2
+  V[2, 1] <- (tau[1]^2) * (lambda^2) / 2
+  V[2, 2] <- (tau[1]^2) * lambda # Trend variance
   for (index in 1:k) {
     G[(2 * index) + 1, (2 * index) + 1] <- 2 * cos(2 * pi / f[index])
     G[(2 * index) + 1, (2 * index) + 2] <- -1
@@ -42,7 +42,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
     C_j[index, index, 1] <- cmean[index] # Gives a vague prior for alpha_0
   }
   a_j <- matrix(0, kk, n + 1)
-  p_j = matrix(0, kk, n + 1)
+  p_j <- matrix(0, kk, n + 1)
   e_j <- matrix(0, 1, n + 1)
   R_j <- array(0, c(kk, kk, n + 1))
   # Forward sweep of Kalman filter
@@ -75,7 +75,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   for (t in n:1) {
     B_j <- C_j[,, t] %*% t(G) %*% qr.solve(R_j[,, t + 1])
     HH_j <- C_j[,, t] - (B_j %*% R_j[,, t + 1] %*% t(B_j))
-    h_j[, t] = p_j[, t] + (B_j %*% (alpha_j[, t + 1] - a_j[, t + 1]))
+    h_j[, t] <- p_j[, t] + (B_j %*% (alpha_j[, t + 1] - a_j[, t + 1]))
     ## Sample alpha_j from a multivariate Normal (mvrnorm from MASS library)
     alpha_j[, t] <- MASS::mvrnorm(n = 1, mu = h_j[, t], Sigma = t(HH_j))
   }
@@ -110,7 +110,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
     s <- alpha_j[(2 * index) + 1, 1:n]
     peri <- peri(s, plot = FALSE)
     loc <- sum(
-      as.numeric(rank(abs(peri$c - f[index])) == 1) * (1:length(peri$c))
+      as.numeric(rank(abs(peri$c - f[index])) == 1) * (seq_along(peri$c))
     ) # Get closest frequency
     amp[index] <- peri$amp[loc]
     phase[index] <- peri$phase[loc]

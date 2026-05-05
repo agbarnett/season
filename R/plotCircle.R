@@ -23,7 +23,7 @@
 #'
 #' @export
 plotCircle <- function(months, dp = 1, ...) {
-  if ((length(months) == 12) == FALSE) {
+  if (!(length(months) == 12)) {
     stop('Length of monthly estimates must be 12')
   }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
@@ -32,7 +32,7 @@ plotCircle <- function(months, dp = 1, ...) {
   stan0to1 <- (months - min(months)) / (max(months) - min(months))
   stan1to0 <- abs(stan0to1 - 1) # reverse so that darker shades are higher
   stan <- (stan1to0 * 0.7) + 0.3 # [0.3,1]
-  dens = gray(stan)
+  dens <- gray(stan)
   plot(
     c(0),
     c(0),
@@ -51,7 +51,7 @@ plotCircle <- function(months, dp = 1, ...) {
 
   # important constants
   bins <- 12
-  clockstart = pi / 2 # default clock start at 12 o'clock
+  clockstart <- pi / 2 # default clock start at 12 o'clock
   half <- 2 * pi / (bins * 2) # for moving text half-way round
   start <- pi / 4
   scale <- 1

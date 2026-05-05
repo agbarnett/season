@@ -43,9 +43,9 @@ summary.nsCosinor <- function(object, ...) {
   cycles <- object$cycles
 
   ### split combined chain into old style (Dec 2011)
-  new = list()
-  new$chains$std.error = object$chains[, 1] # added
-  new$chains$std.season = object$chains[, 2] # added
+  new <- list()
+  new$chains$std.error <- object$chains[, 1] # added
+  new$chains$std.season <- object$chains[, 2] # added
 
   ## Statistics ###
   s.std.error <- summary(new$chains$std.error)
@@ -62,8 +62,8 @@ summary.nsCosinor <- function(object, ...) {
     wstats <- c(m, l, u)
     ampstats <- matrix(ncol = 1, nrow = k)
     phasestats <- matrix(ncol = 1, nrow = k)
-    new$chains$amplitude = object$chains[, 4] # added
-    new$chains$phase = object$chains[, 3] # added
+    new$chains$amplitude <- object$chains[, 4] # added
+    new$chains$phase <- object$chains[, 3] # added
     s.amp <- summary(new$chains$amplitude)
     l <- as.numeric(s.amp$quantiles[1])
     u <- as.numeric(s.amp$quantiles[5])

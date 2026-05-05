@@ -37,13 +37,13 @@
 #' @export createAdj
 createAdj <- function(matrix, suffix = NULL) {
   # checks
-  if (is.matrix(matrix) != TRUE) {
+  if (!is.matrix(matrix)) {
     stop('Input must be a matrix')
   }
   if (dim(matrix)[1] != dim(matrix)[2]) {
     stop('Matrix must be square')
   }
-  if (isSymmetric(matrix) == FALSE) {
+  if (!isSymmetric(matrix)) {
     stop('Matrix must be symmetric')
   }
   # Vectors from matrix
@@ -53,7 +53,7 @@ createAdj <- function(matrix, suffix = NULL) {
   weight <- vector(length = sum(num), mode = 'numeric')
   index <- 1
   for (i in 1:n) {
-    ind <- is.na(matrix[i, ]) == FALSE
+    ind <- !is.na(matrix[i, ])
     xxx <- as.numeric(ind) * (1:n)
     if (sum(xxx) > 0) {
       aaa <- xxx[ind]

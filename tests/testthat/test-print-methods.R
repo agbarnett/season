@@ -90,8 +90,8 @@ test_that("print.nonlintest reports both upper and lower exceedances", {
     class = "nonlintest"
   )
   out <- capture.output(print(fake))
-  expect_true(any(grepl("Largest positive difference", out)))
-  expect_true(any(grepl("Largest negative difference", out)))
+  expect_true(any(grepl("Largest positive difference", out, fixed = TRUE)))
+  expect_true(any(grepl("Largest negative difference", out, fixed = TRUE)))
 })
 
 test_that("print.nonlintest reports zero differences when region is all zero", {
@@ -115,8 +115,8 @@ test_that("print.nonlintest reports zero differences when region is all zero", {
     class = "nonlintest"
   )
   out <- capture.output(print(fake))
-  expect_true(any(grepl("Largest difference is zero", out)))
-  expect_true(any(grepl("Smallest difference is zero", out)))
+  expect_true(any(grepl("Largest difference is zero", out, fixed = TRUE)))
+  expect_true(any(grepl("Smallest difference is zero", out, fixed = TRUE)))
 })
 
 test_that("print.nsCosinor prints model overview and residual stats", {

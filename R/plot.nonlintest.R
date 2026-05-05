@@ -26,26 +26,26 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
 
   # Plot (only points that exceed limits)
   if (max(abs(x$region)) != 0) {
-    counter = 0
+    counter <- 0
     for (r in 0:x$n.lag) {
       for (s in r:x$n.lag) {
-        frame = data.frame(r = r, s = s, z = x$region[r + 1, s + 1])
+        frame <- data.frame(r = r, s = s, z = x$region[r + 1, s + 1])
         if (counter == 0) {
-          for.plot = frame
+          for.plot <- frame
         } else {
-          for.plot = rbind(for.plot, frame)
+          for.plot <- rbind(for.plot, frame)
         }
-        counter = counter + 1
+        counter <- counter + 1
       }
     }
 
-    gplot = ggplot2::ggplot(for.plot, ggplot2::aes(r, s, z = z)) +
+    gplot <- ggplot2::ggplot(for.plot, ggplot2::aes(r, s, z = z)) +
       ggplot2::stat_contour() +
       ggplot2::geom_tile(ggplot2::aes(fill = z))
-    if (plot == FALSE) {
+    if (!plot) {
       return(invisible(gplot))
     }
-    if (plot == TRUE) {
+    if (plot) {
       print(gplot)
     }
     #zlab='Area outside the test limits', ...)

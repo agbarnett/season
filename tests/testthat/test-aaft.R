@@ -29,7 +29,7 @@ test_that("aaft returns same second order characteristics", {
   )
 
   expect_all_equal(
-    object = apply(surr_5, MARGIN = 2, FUN = mean),
+    object = colMeans(surr_5),
     expected = mean(cvd_test)
   )
 

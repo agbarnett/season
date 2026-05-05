@@ -22,17 +22,17 @@ summary.casecross <- function(object, ...) {
   }
 
   ## output results
-  if (object$call$stratamonth == FALSE) {
+  if (!object$call$stratamonth) {
     cat(
       'Time-stratified case-crossover with a stratum length of',
       object$call$stratalength,
       'days\n'
     )
   }
-  if (object$call$stratamonth != FALSE) {
+  if (object$call$stratamonth) {
     cat('Time-stratified case-crossover with months as strata\n')
   } # Added Oct 2011
-  if (object$call$matchdow == TRUE) {
+  if (object$call$matchdow) {
     cat('Matched on day of the week\n')
   }
   if (object$call$matchconf != '') {

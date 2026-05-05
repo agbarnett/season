@@ -24,7 +24,7 @@
 #' @export phasecalc
 phasecalc <- function(cosine, sine) {
   if (cosine == 0) {
-    cosine = cosine + 0.000000001
+    cosine <- cosine + 0.000000001
   } # avoid zeros
   div <- sine / cosine
   if (cosine >= 0) {

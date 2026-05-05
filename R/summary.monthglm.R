@@ -46,16 +46,16 @@ summary.monthglm <- function(object, ...) {
   totable <- out[index, ] # Select months
   effect <- ''
   if (type == "poisson") {
-    effect = 'RR'
+    effect <- 'RR'
   }
   if (type == "binomial") {
-    effect = 'OR'
+    effect <- 'OR'
   }
   # returns
   ret <- list()
-  ret$n = length(object$residuals)
-  ret$month.ests = totable
-  ret$month.effect = effect
+  ret$n <- length(object$residuals)
+  ret$month.ests <- totable
+  ret$month.effect <- effect
   class(ret) <- "summary.monthglm"
   ret # uses print.summary.monthglm
 }

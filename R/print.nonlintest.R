@@ -19,15 +19,15 @@ print.nonlintest <- function(x, ...) {
   }
 
   # 1) Stats on third order moment
-  diff_l = x$region * 0
-  diff_u = x$region * 0
-  index = which(x$region > 0, arr.ind = T)
+  diff_l <- x$region * 0
+  diff_u <- x$region * 0
+  index <- which(x$region > 0, arr.ind = T)
   if (length(index) > 0) {
-    diff_u[index] = x$region[index]
+    diff_u[index] <- x$region[index]
   }
-  index = which(x$region < 0, arr.ind = T)
+  index <- which(x$region < 0, arr.ind = T)
   if (length(index) > 0) {
-    diff_l[index] = x$region[index]
+    diff_l[index] <- x$region[index]
   }
 
   cat(
@@ -35,7 +35,7 @@ print.nonlintest <- function(x, ...) {
   )
   # Upper limit
   if (max(diff_u) > 0) {
-    index = which(diff_u == max(diff_u), arr.ind = T)
+    index <- which(diff_u == max(diff_u), arr.ind = T)
     cat('Largest positive difference at lags:\n')
     cat(index - 1, '\n')
     cat('Size of largest largest difference:\n')
@@ -46,7 +46,7 @@ print.nonlintest <- function(x, ...) {
   }
   # Lower limit
   if (min(diff_l) < 0) {
-    index = which(diff_l == min(diff_l), arr.ind = T)
+    index <- which(diff_l == min(diff_l), arr.ind = T)
     cat('Largest negative difference at lags:\n')
     cat(index - 1, '\n')
     cat('Size of largest negative difference:\n')

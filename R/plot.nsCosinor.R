@@ -28,7 +28,7 @@ plot.nsCosinor <- function(x, ...) {
     lower <- smat[, (index * 3) - 1]
     upper <- smat[, (index * 3)]
     type <- paste("Season, cycle=", cycles[index], sep = "")
-    this.frame = data.frame(
+    this.frame <- data.frame(
       time = x$time,
       mean = mean,
       lower = lower,
@@ -36,24 +36,24 @@ plot.nsCosinor <- function(x, ...) {
       type = type
     )
     if (index == 1) {
-      season.frame = this.frame
+      season.frame <- this.frame
     } else {
-      season.frame = rbind(season.frame, this.frame)
+      season.frame <- rbind(season.frame, this.frame)
     }
   }
 
   # trend
-  trend.frame = data.frame(
+  trend.frame <- data.frame(
     time = x$time,
     mean = x$trend$mean,
     lower = x$trend$lower,
     upper = x$trend$upper,
     type = 'Trend'
   )
-  plot.frame = rbind(trend.frame, season.frame)
+  plot.frame <- rbind(trend.frame, season.frame)
 
   # plot with ribbon
-  gplot = ggplot2::ggplot(
+  gplot <- ggplot2::ggplot(
     plot.frame,
     ggplot2::aes(time, mean)
   ) +
