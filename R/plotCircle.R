@@ -23,7 +23,7 @@
 #'
 #' @export
 plotCircle <- function(months, dp = 1, ...) {
-  if (!(length(months) == 12)) {
+  if (length(months) != 12) {
     stop('Length of monthly estimates must be 12')
   }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
