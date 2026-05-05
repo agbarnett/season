@@ -27,15 +27,15 @@
 plotMonth <- function(data, resp, panels = 12, ...) {
   year <- yaxis <- Month <- NULL # Setting some variables to NULL first (for R CMD check)
 
-  if (panels != 1 & panels != 12) {
+  if (panels != 1 && panels != 12) {
     stop("panels must be 1 or 12")
   }
-  data$yaxis = subset(data, select = resp)[, 1]
+  data$yaxis <- subset(data, select = resp)[, 1]
 
   # 12 panels
-  data$Month = factor(data$month, levels = 1:12, labels = month.abb) # to change facet_wrap labels
+  data$Month <- factor(data$month, levels = 1:12, labels = month.abb) # to change facet_wrap labels
   if (panels == 12) {
-    gplot = ggplot2::ggplot(
+    gplot <- ggplot2::ggplot(
       data,
       ggplot2::aes(
         x = year,
@@ -52,7 +52,7 @@ plotMonth <- function(data, resp, panels = 12, ...) {
 
   # 1 panels
   if (panels == 1) {
-    gplot = ggplot2::ggplot(
+    gplot <- ggplot2::ggplot(
       data,
       ggplot2::aes(
         year,

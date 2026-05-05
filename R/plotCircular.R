@@ -119,12 +119,12 @@ plotCircular <- function(
   on.exit(par(op)) # restore graphic settings whenever function exits
 
   bins <- length(area1)
-  clockstart = pi / 2 # default clock start at 12 o'clock
+  clockstart <- pi / 2 # default clock start at 12 o'clock
   half <- 2 * pi / (bins * 2) # for moving text/spokes half-way round
-  if (clockwise == TRUE) {
-    mult = -1
+  if (clockwise) {
+    mult <- -1
   } else {
-    mult = 1
+    mult <- 1
   }
 
   ## First plot a circle (of radius 1) as a frame
@@ -152,12 +152,12 @@ plotCircular <- function(
 
   ## scale cheeses to their area
   aarea1 <- area1
-  if (is.null(area2) == FALSE) {
+  if (!is.null(area2)) {
     aarea2 <- area2
   }
-  if (length == F) {
+  if (!length) {
     aarea1 <- sqrt(area1 * 12 / pi)
-    if (is.null(area2) == FALSE) {
+    if (!is.null(area2)) {
       aarea2 <- sqrt(area2 * 12 / pi)
     }
   }
@@ -165,7 +165,7 @@ plotCircular <- function(
   ## scale the area to the maximum multiplied by the user-defined scale
   ## draw the cheeses
   for (cheeseno in 1:bins) {
-    if (is.null(area2) == TRUE) {
+    if (is.null(area2)) {
       scaled1 <- scale * aarea1 / max(aarea1)
       cheese <- matrix(nrow = 102, ncol = 2, data = 0)
       start <- 2 * pi * ((cheeseno - 1) / bins) + clockstart
@@ -196,7 +196,7 @@ plotCircular <- function(
 
     ## plot with two segments #
     ## 1st pattern
-    if (is.null(area2) == FALSE) {
+    if (!is.null(area2)) {
       allarea <- c(aarea1, aarea2)
       scaled1 <- scale * aarea1 / max(allarea)
       scaled2 <- scale * aarea2 / max(allarea)
@@ -260,7 +260,7 @@ plotCircular <- function(
     }
   }
   ## add the text
-  if (is.null(labels) == FALSE & stats == FALSE) {
+  if (!is.null(labels) && !stats) {
     for (cheeseno in 1:bins) {
       x <- mult * 0.92 * cos((2 * pi * cheeseno / bins) + start + half)
       y <- 0.92 * sin((2 * pi * cheeseno / bins) + start + half)
@@ -269,7 +269,7 @@ plotCircular <- function(
   }
 
   ## add the labels with stats
-  if (is.null(labels) == FALSE & stats == TRUE) {
+  if (!is.null(labels) && stats) {
     clabel2 <- formatC(area1, format = "f", digits = dp) # convert to character
     for (cheeseno in 1:bins) {
       x <- mult * 0.86 * cos((2 * pi * cheeseno / bins) + start + half)
@@ -281,7 +281,7 @@ plotCircular <- function(
   }
 
   ## add spokes representing uncertainty
-  if (is.null(spokes) == FALSE) {
+  if (!is.null(spokes)) {
     scaleds <- scale * spokes / max(spokes)
     halfcheese <- (2 * pi) / (bins * 2)
     for (cheeseno in 1:bins) {
@@ -303,7 +303,7 @@ plotCircular <- function(
   } # end of spokes
 
   ## add dotted lines to separate months
-  if (lines == TRUE) {
+  if (lines) {
     halfcheese <- (2 * pi) / (bins * 2)
     for (cheeseno in 1:bins) {
       breaks <- matrix(data = 0, nrow = 2, ncol = 2)

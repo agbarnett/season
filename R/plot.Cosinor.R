@@ -30,10 +30,10 @@ plot.Cosinor <- function(x, ...) {
   parts <- paste(f)
   ylab <- parts[2]
   ## plot sinusoid ##
-  time = subset(x$glm$data, select = x$date)[, 1]
-  o = order(time)
+  time <- subset(x$glm$data, select = x$date)[, 1]
+  o <- order(time)
   par(mai = c(0.8, 0.8, 0.1, 0.1)) # c(bottom, left, top, right)
-  if (x$call$link != 'logit' & x$call$link != 'cloglog') {
+  if (x$call$link != 'logit' && x$call$link != 'cloglog') {
     plot(
       time[o],
       x$fitted.values[o],
@@ -44,7 +44,7 @@ plot.Cosinor <- function(x, ...) {
       ...
     )
     if (x$call$type == 'monthly') {
-      m.abb = substr(month.abb, 1, 1)
+      m.abb <- substr(month.abb, 1, 1)
       axis(side = 1, at = 1:12, labels = m.abb)
       points(time[o], x$fitted.values[o], pch = 19)
     }
@@ -56,17 +56,17 @@ plot.Cosinor <- function(x, ...) {
       rug(time[o])
     }
     if (x$call$type == 'hourly') {
-      hours = unique(as.numeric(format(time[o], '%H')))
-      smonth = as.numeric(format(time[1], '%m')) # starting month
-      sday = as.numeric(format(time[1], '%d')) # starting day
-      syear = as.numeric(format(time[1], '%Y')) # starting year
+      hours <- unique(as.numeric(format(time[o], '%H')))
+      smonth <- as.numeric(format(time[1], '%m')) # starting month
+      sday <- as.numeric(format(time[1], '%d')) # starting day
+      syear <- as.numeric(format(time[1], '%Y')) # starting year
       firsts <- ISOdate(month = smonth, day = sday, year = syear, hour = hours)
       axis(side = 1, at = firsts, labels = hours)
       rug(time[o])
     }
   }
-  if (x$call$link == 'logit' | x$call$link == 'cloglog') {
-    ylab = paste('Probability(', ylab, ')', sep = '')
+  if (x$call$link == 'logit' || x$call$link == 'cloglog') {
+    ylab <- paste('Probability(', ylab, ')', sep = '')
     plot(
       time[o],
       x$fitted.values[o],
@@ -78,7 +78,7 @@ plot.Cosinor <- function(x, ...) {
       ...
     )
     if (x$call$type == 'monthly') {
-      m.abb = substr(month.abb, 1, 1)
+      m.abb <- substr(month.abb, 1, 1)
       axis(side = 1, at = 1:12, labels = m.abb)
       points(time[o], x$fitted.values[o], pch = 19)
     }

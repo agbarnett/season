@@ -1,6 +1,5 @@
 AAFT
 AFL
-Adj
 CMD
 CVD
 Codecov
@@ -28,6 +27,7 @@ SEIFA
 SL
 Samet
 SczBroad
+WAIC
 WinBUGS
 Yuming
 Zeger
@@ -47,6 +47,7 @@ edu
 ests
 etc
 glm
+lineplot
 lphase
 mcmc
 monthglm

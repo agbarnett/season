@@ -23,5 +23,5 @@ print.Monthmean <- function(x, digits = 1, ...) {
   ## Print
   toprint <- as.data.frame(cbind(month.name, round(x$mean, digits)))
   names(toprint) <- c('Month', 'Mean')
-  print(toprint, row.names = F, ...)
+  print(toprint, row.names = FALSE, ...)
 } # end of function

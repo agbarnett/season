@@ -36,7 +36,7 @@ summary.monthglm <- function(object, ...) {
   out$zvalue <- s$coef[, 3]
   out$pvalue <- s$coef[, 4]
   # Exponentiate the results if rate or odds ratio
-  if (type == "poisson" | type == "binomial") {
+  if (type == "poisson" || type == "binomial") {
     out$mean <- exp(out$mean)
     out$lower <- exp(out$lower)
     out$upper <- exp(out$upper)
@@ -46,16 +46,16 @@ summary.monthglm <- function(object, ...) {
   totable <- out[index, ] # Select months
   effect <- ''
   if (type == "poisson") {
-    effect = 'RR'
+    effect <- 'RR'
   }
   if (type == "binomial") {
-    effect = 'OR'
+    effect <- 'OR'
   }
   # returns
   ret <- list()
-  ret$n = length(object$residuals)
-  ret$month.ests = totable
-  ret$month.effect = effect
+  ret$n <- length(object$residuals)
+  ret$month.ests <- totable
+  ret$month.effect <- effect
   class(ret) <- "summary.monthglm"
   ret # uses print.summary.monthglm
 }

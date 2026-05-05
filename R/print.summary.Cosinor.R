@@ -13,9 +13,9 @@ print.summary.Cosinor <- function(x, ...) {
     stop("Object must be of class 'summary.Cosinor'")
   }
   # fix the digits, October 2011
-  if (x$text != TRUE) {
-    x$phase = round(x$phase, x$digits)
-    x$lphase = round(x$lphase, x$digits)
+  if (!x$text) {
+    x$phase <- round(x$phase, x$digits)
+    x$lphase <- round(x$lphase, x$digits)
   }
 
   cat('Cosinor test:\n')

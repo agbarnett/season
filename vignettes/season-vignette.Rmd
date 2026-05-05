@@ -134,7 +134,7 @@ tmpd.basis <- crossbasis(
   argvar = list(fun = "ns", knots = c(60, 75))
 )
 # add the spline basis variables to the data
-CVDdaily <- cbind(CVDdaily, tmpd.basis[1:nrow(CVDdaily), ])
+CVDdaily <- cbind(CVDdaily, tmpd.basis[seq_len(nrow(CVDdaily)), ])
 # create the regression formula
 spline.names <- colnames(tmpd.basis)
 formula <- paste(
@@ -321,19 +321,19 @@ The phase, or timing of the seasonal peak, in the results above is given in radi
 #| label: backtransform-phase
 cat(
   "Mean phase = ",
-  round(invyrfraction(0.6952055 / (2 * pi), type = "monthly", text = F), 2),
+  round(invyrfraction(0.6952055 / (2 * pi), type = "monthly", text = FALSE), 2),
   " months.\n",
   sep = ""
 )
 cat(
   "Lower 95% interval = ",
-  round(invyrfraction(0.5732958 / (2 * pi), type = "monthly", text = F), 2),
+  round(invyrfraction(0.5732958 / (2 * pi), type = "monthly", text = FALSE), 2),
   " months.\n",
   sep = ""
 )
 cat(
   "Upper 95% interval = ",
-  round(invyrfraction(0.8216251 / (2 * pi), type = "monthly", text = F), 2),
+  round(invyrfraction(0.8216251 / (2 * pi), type = "monthly", text = FALSE), 2),
   " months.\n",
   sep = ""
 )

@@ -25,7 +25,7 @@
 'peri' <- function(data, adjmean = TRUE, plot = TRUE) {
   xaxis <- yaxis <- NULL # Setting some variables to NULL first (for R CMD check)
 
-  if (adjmean == TRUE) {
+  if (adjmean) {
     adjust <- mean(data)
   } else {
     adjust <- 0
@@ -50,10 +50,10 @@
     if (realpart[j] >= 0) {
       phase[j] <- ph
     }
-    if (realpart[j] < 0 & imagpart[j] >= 0) {
+    if (realpart[j] < 0 && imagpart[j] >= 0) {
       phase[j] <- ph + pi
     }
-    if (realpart[j] < 0 & imagpart[j] < 0) {
+    if (realpart[j] < 0 && imagpart[j] < 0) {
       phase[j] <- ph - pi
     }
     # put in 0 to 2pi range
@@ -65,15 +65,15 @@
     }
   }
   ## Plot
-  if (plot == TRUE) {
-    to.plot.one = data.frame(xaxis = f, yaxis = peri, type = 'Radians')
-    to.plot.two = data.frame(
+  if (plot) {
+    to.plot.one <- data.frame(xaxis = f, yaxis = peri, type = 'Radians')
+    to.plot.two <- data.frame(
       xaxis = c[2:nfft],
       yaxis = peri[2:nfft],
       type = 'Cycles'
     )
-    to.plot = rbind(to.plot.one, to.plot.two)
-    gplot = ggplot2::ggplot(
+    to.plot <- rbind(to.plot.one, to.plot.two)
+    gplot <- ggplot2::ggplot(
       to.plot,
       ggplot2::aes(
         xaxis,

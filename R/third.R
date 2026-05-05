@@ -35,71 +35,71 @@
 #' third(CVD$cvd, n.lag=12)
 #'
 #' @export third
-third = function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
+third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
   xaxis <- yaxis <- zaxis <- NULL # Setting some variables to NULL first (for R CMD check)
 
-  nsamp = length(data)
+  nsamp <- length(data)
   if (nsamp < 10) {
     cat('warning n<10\n')
   }
   # ------------ cumulants in non-redundant region -----------------
-  XXX = matrix(data = 0, n.lag + n.lag + 1, n.lag + n.lag + 1)
-  if (centre == TRUE) {
-    centred = data - mean(data)
+  XXX <- matrix(data = 0, n.lag + n.lag + 1, n.lag + n.lag + 1)
+  if (centre) {
+    centred <- data - mean(data)
   } else {
-    centred = data
+    centred <- data
   }
-  if (plot == TRUE) {
-    count = 0
+  if (plot) {
+    count <- 0
   }
   for (d in 0:n.lag) {
     for (k in d:n.lag) {
-      large = max(c(d, k, 0))
-      XXX[d + n.lag + 1, k + n.lag + 1] = sum(
+      large <- max(c(d, k, 0))
+      XXX[d + n.lag + 1, k + n.lag + 1] <- sum(
         centred[1:(nsamp - large)] *
           centred[(1 + d):(nsamp - large + d)] *
           centred[(1 + k):(nsamp - large + k)]
       ) /
         nsamp
       # Symmetry
-      XXX[n.lag + 1 + k, n.lag + 1 + d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      XXX[n.lag + 1 + k, n.lag + 1 + d] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
-      XXX[n.lag + 1 - d, n.lag + 1 + k - d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      XXX[n.lag + 1 - d, n.lag + 1 + k - d] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
-      XXX[n.lag + 1 + k - d, n.lag + 1 - d] = XXX[d + n.lag + 1, k + n.lag + 1]
+      XXX[n.lag + 1 + k - d, n.lag + 1 - d] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
-      XXX[n.lag + 1 + d - k, n.lag + 1 - k] = XXX[d + n.lag + 1, k + n.lag + 1]
+      XXX[n.lag + 1 + d - k, n.lag + 1 - k] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
-      XXX[n.lag + 1 - k, n.lag + 1 + d - k] = XXX[d + n.lag + 1, k + n.lag + 1]
-      if (plot == TRUE) {
-        frame = data.frame(
+      XXX[n.lag + 1 - k, n.lag + 1 + d - k] <- XXX[d + n.lag + 1, k + n.lag + 1]
+      if (plot) {
+        frame <- data.frame(
           xaxis = d,
           yaxis = k,
           zaxis = XXX[d + n.lag + 1, k + n.lag + 1]
         )
         if (count == 0) {
-          for.plot = frame
+          for.plot <- frame
         } else {
-          for.plot = rbind(for.plot, frame)
+          for.plot <- rbind(for.plot, frame)
         }
-        count = count + 1
+        count <- count + 1
       }
     }
   }
 
-  waxis = -n.lag:n.lag
+  waxis <- -n.lag:n.lag
 
   # Lags of minima and maxima
-  if (outmax == TRUE) {
+  if (outmax) {
     cat('Maximum at (including symmetries)\n')
-    cat(which(XXX == max(XXX), arr.ind = T) - n.lag - 1, '\n')
+    cat(which(XXX == max(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
     cat('Minimum at (including symmetries)\n')
-    cat(which(XXX == min(XXX), arr.ind = T) - n.lag - 1, '\n')
+    cat(which(XXX == min(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
   }
 
   # Lags of minima and maxima
-  if (plot == TRUE) {
-    gplot = ggplot2::ggplot(
+  if (plot) {
+    gplot <- ggplot2::ggplot(
       for.plot,
       ggplot2::aes(
         xaxis,
@@ -112,8 +112,8 @@ third = function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
     print(gplot)
   }
 
-  to.return = list()
-  to.return$waxis = waxis
-  to.return$third = XXX
+  to.return <- list()
+  to.return$waxis <- waxis
+  to.return$third <- XXX
   return(to.return)
 } # end of function

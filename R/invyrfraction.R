@@ -39,42 +39,42 @@ invyrfraction <- function(frac, type = 'daily', text = TRUE) {
   if (type == 'daily') {
     yrlength <- 365.25
     day <- (frac * yrlength) + 1
-    day = day - (365 * as.numeric(day > 365)) # avoid values > 365
-    day = pmax(day, 1) # avoid values < 1
+    day <- day - (365 * as.numeric(day > 365)) # avoid values > 365
+    day <- pmax(day, 1) # avoid values < 1
     date <- strptime(day, '%j')
     daym <- as.numeric(format(date, '%d')) # Day of the month as decimal number (01?31)
     month <- format(date, '%B') # Month name
-    if (text == TRUE) {
+    if (text) {
       daym <- paste('Month =', month, ', day =', daym)
     }
-    if (text == FALSE) {
+    if (!text) {
       daym <- day
     }
   }
   if (type == 'weekly') {
     week <- (frac * 52) + 1
-    if (text == TRUE) {
+    if (text) {
       daym <- paste('Week =', round(week, 1))
     }
-    if (text == FALSE) {
+    if (!text) {
       daym <- week
     }
   }
   if (type == 'monthly') {
     month <- (frac * 12) + 1
-    if (text == TRUE) {
+    if (text) {
       daym <- paste('Month =', round(month, 1))
     }
-    if (text == FALSE) {
+    if (!text) {
       daym <- month
     }
   }
   if (type == 'hourly') {
     month <- (frac * 24) # do not add one for hour, start at 00:00
-    if (text == TRUE) {
+    if (text) {
       daym <- paste('Hour =', round(month, 1))
     }
-    if (text == FALSE) {
+    if (!text) {
       daym <- month
     }
   }

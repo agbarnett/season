@@ -4,7 +4,12 @@
 \alias{monthmean}
 \title{Monthly Means}
 \usage{
-monthmean(data, resp, offsetpop = NULL, adjmonth = FALSE)
+monthmean(
+  data,
+  resp,
+  offsetpop = NULL,
+  adjmonth = c("none", "thirty", "average")
+)
 }
 \arguments{
 \item{data}{data set as a data frame.}
@@ -15,7 +20,7 @@ calculated.}
 \item{offsetpop}{optional population, used as an offset (default=NULL).}
 
 \item{adjmonth}{adjust monthly counts and scale to a 30 day month ("thirty")
-or the average month length ("average") (default=FALSE).}
+or the average month length ("average") (default="none").}
 }
 \value{
 Returns an object of class "Monthmean" with the following

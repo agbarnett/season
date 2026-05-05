@@ -22,6 +22,7 @@ Imports:
     coda,
     ggplot2 (>= 4.0.3),
     MASS (>= 7.3.65),
+    rlang,
     survival (>= 3.8.6)
 Suggests: 
     dlnm,

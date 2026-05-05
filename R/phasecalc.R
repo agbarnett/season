@@ -24,16 +24,16 @@
 #' @export phasecalc
 phasecalc <- function(cosine, sine) {
   if (cosine == 0) {
-    cosine = cosine + 0.000000001
+    cosine <- cosine + 0.000000001
   } # avoid zeros
   div <- sine / cosine
   if (cosine >= 0) {
     phaser <- atan(div)
   }
-  if (cosine < 0 & sine >= 0) {
+  if (cosine < 0 && sine >= 0) {
     phaser <- atan(div) + pi
   }
-  if (cosine < 0 & sine < 0) {
+  if (cosine < 0 && sine < 0) {
     phaser <- atan(div) - pi
   }
   # put in 0 to 2pi range
