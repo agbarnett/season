@@ -2,16 +2,15 @@
 % Please edit documentation in R/print.summary.nsCosinor.R
 \name{print.summary.nscosinor}
 \alias{print.summary.nscosinor}
-\title{printing a summary of an nscosinor}
+\title{Print a summary of an \code{\link[=nscosinor]{nscosinor()}} object}
 \usage{
 \method{print}{summary.nscosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{summary.nsCosinor} object produced by
-\code{summary.nsCosinor}}
+\item{x}{a \code{summary.nsCosinor} object produced by \code{\link[=summary.nsCosinor]{summary.nsCosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
-printing a summary of an nscosinor
+Print a summary of an \code{\link[=nscosinor]{nscosinor()}} object
 }

@@ -7,7 +7,7 @@
 \method{print}{casecross}(x, ...)
 }
 \arguments{
-\item{x}{a \code{casecross} object produced by \code{\link[=casecross]{casecross()}}.}
+\item{x}{a \code{\link[=casecross]{casecross()}} object produced by \code{\link[=casecross]{casecross()}}.}
 
 \item{\dots}{optional arguments to \code{\link[=print]{print()}} or \code{\link[=plot]{plot()}} methods.}
 }
@@ -15,7 +15,7 @@
 printed output of \code{\link[=casecross]{casecross()}}.
 }
 \description{
-The default print method for a \code{casecross} object produced by
+The default print method for a \code{\link[=casecross]{casecross()}} object produced by
 \code{\link[=casecross]{casecross()}}.
 }
 \details{

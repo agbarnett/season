@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{a \code{Monthmean} object produced by \code{\link[=monthmean]{monthmean()}}.}
 
-\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}}
+\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}.}
 
 \item{\dots}{additional arguments passed to \code{\link[=print]{print()}}.}
 }

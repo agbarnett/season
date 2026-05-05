@@ -7,7 +7,7 @@
 \method{summary}{monthglm}(object, ...)
 }
 \arguments{
-\item{object}{a \code{monthglm} object produced by [\url{nscosinor()}].}
+\item{object}{a \code{monthglm} object produced by \code{\link[=nscosinor]{nscosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -21,14 +21,23 @@ a list with the following elements:
 }
 }
 \description{
-The default summary method for a \code{monthglm} object produced by
-\code{monthglm}.
+The default summary method for an object produced by \code{\link[=monthglm]{monthglm()}}.
 }
 \details{
 The estimates are the mean, 95\\% confidence interval, Z-value and associated
 p-value (comparing each month to the reference month). If Poisson regression
 was used then the estimates are shown as rate ratios. If logistic regression
 was used then the estimates are shown as odds ratios.
+}
+\examples{
+mmodel <- monthglm(
+  formula = cvd~1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop/100000),
+  offsetmonth = TRUE
+  )
+summary(mmodel)
 }
 \seealso{
 \code{monthglm}, \code{plot.monthglm}

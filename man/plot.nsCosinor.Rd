@@ -7,7 +7,7 @@
 \method{plot}{nsCosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{nsCosinor} object produced by [\url{nscosinor()}].}
+\item{x}{a \code{nsCosinor} object produced by \code{\link[=nscosinor]{nscosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -16,7 +16,7 @@ a plot of class \code{ggplot}.
 }
 \description{
 Plots the trend and season(s) from a \code{nsCosinor} object produced by
-[\url{nscosinor()}].
+\code{\link[=nscosinor]{nscosinor()}}.
 }
 \details{
 The code produces the season(s) and trend estimates.
@@ -40,7 +40,7 @@ plot(res12)
 }
 }
 \seealso{
-[\url{nscosinor()}]
+\code{\link[=nscosinor]{nscosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

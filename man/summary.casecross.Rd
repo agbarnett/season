@@ -7,20 +7,37 @@
 \method{summary}{casecross}(object, ...)
 }
 \arguments{
-\item{object}{a \code{casecross} object produced by \code{casecross}.}
+\item{object}{a \code{\link[=casecross]{casecross()}} object produced by \code{\link[=casecross]{casecross()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
-\description{
-The default summary method for a \code{casecross} object produced by
-\code{casecross}.
-}
-\details{
-Shows the number of control days, the average number of control days per
+\value{
+The number of control days, the average number of control days per
 case days, and the parameter estimates.
 }
+\description{
+The default summary method for an object produced by \code{\link[=casecross]{casecross()}}. Shows the
+number of control days, the average number of control days per case days, and
+the parameter estimates.
+}
+\examples{
+\donttest{
+# cardiovascular disease data
+CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+# Effect of ozone on CVD death
+model1 <- casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+summary(model1)
+# match on day of the week
+model2 <- casecross(cvd ~ o3mean+tmpd, matchdow=TRUE, data=CVDdaily)
+summary(model2)
+# match on temperature to within a degree
+model3 <- casecross(cvd ~ o3mean+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily,
+                   matchconf='tmpd', confrange=1)
+summary(model3)
+}
+}
 \seealso{
-\code{casecross}
+\code{\link[=casecross]{casecross()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

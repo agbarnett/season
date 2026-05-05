@@ -7,7 +7,7 @@
 \method{summary}{nsCosinor}(object, ...)
 }
 \arguments{
-\item{object}{a \code{nsCosinor} object produced by [\url{nscosinor()}].}
+\item{object}{a \code{nsCosinor} object produced by \code{\link[=nscosinor]{nscosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -27,7 +27,7 @@ cycle, and the amplitude and phase for each cycle.
 }
 \description{
 The default summary method for a \code{nsCosinor} object produced by
-[\url{nscosinor()}].
+\code{\link[=nscosinor]{nscosinor()}}.
 }
 \details{
 The amplitude describes the average height of each seasonal cycle, and the
@@ -40,8 +40,27 @@ The larger the standard deviation for the seasonal cycles, the greater the
 non-stationarity. This is because a larger standard deviation means more
 change over time.
 }
+\examples{
+\donttest{
+# model to fit an annual pattern to the monthly cardiovascular disease data
+f <- c(12)
+tau <- c(10,50)
+\dontrun{
+  res12 <- nscosinor(
+    data = CVD,
+    response = 'adj',
+    cycles = f,
+    niters = 5000,
+    burnin = 1000,
+    tau = tau
+    )
+summary(res12)
+plot(res12)
+}
+}
+}
 \seealso{
-[\url{nscosinor()}], \code{plot.nsCosinor}
+\code{\link[=nscosinor]{nscosinor()}} \code{\link[=plot.nsCosinor]{plot.nsCosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

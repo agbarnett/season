@@ -7,13 +7,13 @@
 \method{print}{nsCosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{nsCosinor} object produced by [\url{nscosinor()}].}
+\item{x}{a \code{nsCosinor} object produced by \code{\link[=nscosinor]{nscosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
 The default print method for a \code{nsCosinor} object produced by
-[\url{nscosinor()}].
+\code{\link[=nscosinor]{nscosinor()}}.
 }
 \details{
 Prints out the model call, number of MCMC samples, sample size and residual
@@ -39,7 +39,7 @@ summary(res12)
 }
 }
 \seealso{
-[\url{nscosinor()}] \code{\link[=summary.nsCosinor]{summary.nsCosinor()}}
+\code{\link[=nscosinor]{nscosinor()}} \code{\link[=summary.nsCosinor]{summary.nsCosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

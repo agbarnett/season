@@ -95,12 +95,18 @@ possibly poor initial estimates should be discarded (\code{burnin}).
 }
 \examples{
 \donttest{
-data(CVD)
 # model to fit an annual pattern to the monthly cardiovascular disease data
-f = c(12)
-tau = c(10,50)
-\dontrun{res12 = nscosinor(data=CVD, response='adj', cycles=f, niters=5000,
-         burnin=1000, tau=tau)
+f <- c(12)
+tau <- c(10,50)
+\dontrun{
+  res12 <- nscosinor(
+    data = CVD,
+    response = 'adj',
+    cycles = f,
+    niters = 5000,
+    burnin = 1000,
+    tau = tau
+    )
 summary(res12)
 plot(res12)
 }

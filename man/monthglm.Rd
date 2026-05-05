@@ -67,8 +67,13 @@ accounting for leap years.
 }
 \examples{
 
-mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
-                  offsetpop=expression(pop/100000), offsetmonth=TRUE)
+mmodel <- monthglm(
+  formula = cvd~1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop/100000),
+  offsetmonth = TRUE
+  )
 summary(mmodel)
 
 }
