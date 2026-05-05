@@ -1,22 +1,33 @@
-## summary.casecross.R
-## Summarise results from casecross
 ## Oct 2011
-
 #' Summary of the Results of a Case-crossover Model
 #'
-#' The default summary method for a `casecross` object produced by
-#' `casecross`.
+#' The default summary method for an object produced by [casecross()]. Shows the
+#' number of control days, the average number of control days per case days, and
+#' the parameter estimates.
 #'
-#' Shows the number of control days, the average number of control days per
-#' case days, and the parameter estimates.
-#'
-#' @param object a `casecross` object produced by `casecross`.
+#' @param object a [casecross()] object produced by [casecross()].
 #' @param \dots further arguments passed to or from other methods.
+#' @returns The number of control days, the average number of control days per
+#'   case days, and the parameter estimates.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `casecross`
+#' @seealso [casecross()]
+#' @examples
+#' \donttest{
+#' # cardiovascular disease data
+#' CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+#' # Effect of ozone on CVD death
+#' model1 <- casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+#' summary(model1)
+#' # match on day of the week
+#' model2 <- casecross(cvd ~ o3mean+tmpd, matchdow=TRUE, data=CVDdaily)
+#' summary(model2)
+#' # match on temperature to within a degree
+#' model3 <- casecross(cvd ~ o3mean+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily,
+#'                    matchconf='tmpd', confrange=1)
+#' summary(model3)
+#' }
 #' @export
 summary.casecross <- function(object, ...) {
-  ## Check
   if (!inherits(object, "casecross")) {
     stop("Object must be of class 'casecross'")
   }

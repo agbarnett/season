@@ -44,6 +44,7 @@
 #' @param auto.legend list of parameters for legend, see [legend()]
 #' @param \dots additional arguments to [plot()] and/or
 #' [legend()]. See [par()] for more details
+#' @returns a circular plot, also known as "rosebud", and "nightingale" plots.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
 #' Data*. Cambridge University Press, Cambridge.
@@ -354,11 +355,3 @@ plotCircular <- function(
     )
   }
 } # end of function
-
-## examples
-##area<-c(8,7,6,5,4,3.5,2)
-##plotCircular(area,scale=0.7,clockwise=TRUE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))
-##plotCircular(area,scale=0.8,clockwise=FALSE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))
-
-##area<-c(12,11,6,5,4,3,2)
-##plotCircular(area,scale=0.8,clockwise=TRUE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))

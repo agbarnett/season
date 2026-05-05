@@ -66,7 +66,7 @@ test_that("nscosinor returns an nsCosinor object with the documented fields", {
       "cycles"
     )
   )
-  expect_equal(res$n, 60)
+  expect_identical(res$n, 60)
 })
 
 test_that("nscosinor MCMC chain has the expected dimensions and names", {
@@ -85,8 +85,8 @@ test_that("nscosinor MCMC chain has the expected dimensions and names", {
     div = 1000
   )
   expect_s3_class(res$chains, "mcmc")
-  expect_equal(dim(res$chains), c(n_iter - burn_in, 4))
-  expect_equal(
+  expect_identical(dim(res$chains), c(n_iter - burn_in, 4))
+  expect_identical(
     colnames(res$chains),
     c("std.error", "std.season1", "phase1", "amplitude1")
   )
@@ -104,7 +104,7 @@ test_that("nscosinor handles two seasonal cycles", {
     burnin = 20,
     div = 1000
   )
-  expect_equal(res$cycles, cycle_vec)
-  expect_equal(ncol(res$chains), 1 + 3 * 2)
-  expect_equal(ncol(res$season), 3 * 2)
+  expect_identical(res$cycles, cycle_vec)
+  expect_identical(ncol(res$chains), 1 + 3 * 2)
+  expect_identical(ncol(res$season), 3 * 2)
 })

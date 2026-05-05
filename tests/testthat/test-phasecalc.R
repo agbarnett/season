@@ -11,13 +11,10 @@
 # the cosine = 0 protection.
 
 # four cardinal quadrants --------------------------------------------
-library(tibble)
-library(purrr)
-library(dplyr)
 test_that("phasecalc returns 0 when the peak is at the start of the cycle", {
   # cos has coefficient 1, sin has coefficient 0 -> the model is just
   # cos(omega t) which peaks at t = 0 -> phase = 0.
-  expect_equal(phasecalc(cosine = 1, sine = 0), 0)
+  expect_identical(phasecalc(cosine = 1, sine = 0), 0)
 })
 
 test_that("phasecalc returns pi/2 when the peak is a quarter cycle in", {
@@ -29,7 +26,7 @@ test_that("phasecalc returns pi/2 when the peak is a quarter cycle in", {
 test_that("phasecalc returns pi when the peak is half a cycle in", {
   # cos has coefficient -1, sin has coefficient 0 -> -cos(omega t) =
   # cos(omega t − pi) -> phase = pi.
-  expect_equal(phasecalc(cosine = -1, sine = 0), pi)
+  expect_identical(phasecalc(cosine = -1, sine = 0), pi)
 })
 
 test_that("phasecalc returns 3pi/2 when the peak is three-quarters in", {
@@ -72,7 +69,7 @@ test_that("phasecalc agrees with atan2(sine, cosine) wrapped into [0, 2pi)", {
     phase = purrr::map2_dbl(c0, s0, \(x, y) phasecalc(x, y))
   )
 
-  expect_equal(dat_atan$phase, dat_atan$expected_adj)
+  expect_identical(dat_atan$phase, dat_atan$expected_adj)
 })
 
 # protection against cosine == 0 -------------------------------------

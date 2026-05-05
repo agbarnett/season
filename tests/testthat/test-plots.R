@@ -1,7 +1,6 @@
 # Base R plots are wrapped in function() so vdiffr can render them onto its
 
 # plot.Cosinor ----------------------------------------------------------
-library(purrr)
 test_that("plot.Cosinor - monthly Poisson", {
   skip_on_ci()
   skip_on_cran()
@@ -66,7 +65,7 @@ test_that("plot.monthglm - Poisson rate ratios", {
 test_that("plot.monthglm - Gaussian", {
   skip_on_ci()
   skip_on_cran()
-  m <- monthglm(adj ~ 1, data = CVD, family = gaussian())
+  m <- monthglm(adj ~ 1, data = CVD, family = stats::gaussian())
   vdiffr::expect_doppelganger("plot-monthglm-gaussian", function() plot(m))
 })
 
@@ -101,7 +100,7 @@ test_that("plot.nonlintest reports when no points exceed the test limits", {
   # exceeds the bootstrap limits), plot.nonlintest cat()s a message
   # and returns invisibly without producing a plot.
   set.seed(2026 - 05 - 04)
-  res <- nonlintest(data = rnorm(80), n.lag = 3, n.boot = 10)
+  res <- nonlintest(data = stats::rnorm(80), n.lag = 3, n.boot = 10)
   # White-noise input with very small n.boot is the easiest way to
   # land in the "no exceedance" branch; if not, this skips quietly.
   if (max(abs(res$region)) != 0) {
@@ -124,7 +123,7 @@ test_that("plot.nonlintest - region of significance", {
   # branch which returns invisibly).
   set.seed(2026 - 04 - 29)
   n <- 200
-  e <- rnorm(n)
+  e <- stats::rnorm(n)
   x <- numeric(n)
   x <- purrr::accumulate(
     2:n,
@@ -191,7 +190,7 @@ test_that("plotCircular - single area", {
   )
 })
 
-test_that("plotCircular accepts spokes, length, stats=FALSE, and clockwise=FALSE", {
+test_that("plotCircular accepts spokes, length, stats=FALSE, clockwise=FALSE", {
   skip_on_ci()
   skip_on_cran()
   # Coverage for the optional features documented in roxygen but not

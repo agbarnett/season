@@ -1,20 +1,26 @@
-## print.Monthmean.R
-## Prints basic results from monthmean
 ## Oct 2009
-
 #' Print the Results from Monthmean
 #'
-#' Print the monthly means from a `Monthmean` object produced by
-#' `monthmean`.
+#' Print the monthly mean estimates from a `Monthmean` object produced by
+#' [monthmean()].
 #'
-#' The code prints the monthly mean estimates.
-#'
-#' @param x a `Monthmean` object produced by `monthmean`.
+#' @param x a `Monthmean` object produced by [monthmean()].
 #' @inheritParams summary.Cosinor
-#' @param \dots additional arguments passed to the print.
+#' @param \dots additional arguments passed to [print()].
+#' @returns a table of values of Month and means
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthmean`
 #' @export
+#' @examples
+#' \dontttest{
+#' mmean <- monthmean(
+#'   data=CVD,
+#'   resp='cvd',
+#'   offsetpop = expression(pop/100000),
+#'   adjmonth = 'average'
+#'   )
+#' mmean
+#' }
 print.Monthmean <- function(x, digits = 1, ...) {
   ## Check
   if (!inherits(x, "Monthmean")) {

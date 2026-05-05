@@ -1,19 +1,33 @@
-## plot.nsCosinor.R
-## Plots results from nsCosinor using ggplot2
-
 #' Plot the Results of a Non-stationary Cosinor
 #'
 #' Plots the trend and season(s) from a `nsCosinor` object produced by
-#' `nscosinor`.
+#' [nscosinor()].
 #'
 #' The code produces the season(s) and trend estimates.
 #'
-#' @param x a `nsCosinor` object produced by `nscosinor`.
+#' @param x a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
 #' @return a plot of class `ggplot`.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `nscosinor`
+#' @seealso [nscosinor()]
 #' @export
+#' @examples
+#' \dontttest{
+#' # model to fit an annual pattern to the monthly cardiovascular disease data
+#' f <- 12
+#' tau <- c(10,50)
+#' \dontrun{
+#'   res12 <- nscosinor(
+#'     data = CVD,
+#'     response = 'adj',
+#'     cycles = f,
+#'     niters = 200,
+#'     burnin = 100,
+#'     tau = tau
+#'     )
+#' plot(res12)
+#' }
+#' }
 plot.nsCosinor <- function(x, ...) {
   ## basic variables
   cycles <- x$cycles
@@ -27,7 +41,7 @@ plot.nsCosinor <- function(x, ...) {
     mean <- smat[, (index * 3) - 2]
     lower <- smat[, (index * 3) - 1]
     upper <- smat[, (index * 3)]
-    type <- paste("Season, cycle=", cycles[index], sep = "")
+    type <- paste0("Season, cycle=", cycles[index])
     this.frame <- data.frame(
       time = x$time,
       mean = mean,

@@ -33,9 +33,9 @@ seasrescheck <- function(res) {
   plot(res, type = 'p', main = '', xlab = '')
   lines(c(1, length(res)), c(0, 0), lty = 2)
   # autocovariance
-  acf(res, type = 'correlation', main = '', ylab = 'Autocorrelation')
+  stats::acf(res, type = 'correlation', main = '', ylab = 'Autocorrelation')
   # cumulative periodogram
-  cpgram(res, main = '')
+  stats::cpgram(res, main = '')
   par(mfrow = c(1, 1))
   # box plot?
   par(op) # restore graphic settings

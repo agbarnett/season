@@ -7,19 +7,32 @@
 \method{print}{Cosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{Cosinor} object produced by \code{cosinor}.}
+\item{x}{a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}.}
 
-\item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
+\item{\dots}{optional arguments to \code{\link[=print]{print()}} or \code{\link[=plot]{plot()}} methods.}
+}
+\value{
+Prints basic results from \code{\link[=cosinor]{cosinor()}}, using print method for \code{glm}.
 }
 \description{
 The default print method for a \code{Cosinor} object produced by
-\code{cosinor}.
+\code{\link[=cosinor]{cosinor()}}. Uses the \code{glm} method for \code{\link[=print]{print()}}.
 }
-\details{
-Uses \code{print.glm}.
+\examples{
+\donttest{
+  res <- cosinor(
+    cvd ~ 1,
+    date = 'month',
+    data = CVD,
+    type = 'monthly',
+    family = poisson(),
+    offsetmonth = TRUE
+    )
+  res
+}
 }
 \seealso{
-\code{cosinor}, \code{summary.Cosinor}, \code{glm}
+\code{\link[=cosinor]{cosinor()}} \code{\link[=summary.Cosinor]{summary.Cosinor()}} \code{\link[=glm]{glm()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

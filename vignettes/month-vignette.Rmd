@@ -37,7 +37,7 @@ ggplot(CVD, aes(x = yrmon, y = cvd)) +
   geom_line(colour = 'darkred', linewidth = 1.05) +
   labs(
     x = "Time",
-    y = "Monthly number of CVD deaths",
+    y = "Monthly number of CVD deaths"
   ) +
   theme_bw()
 ```

@@ -18,6 +18,10 @@ automatically calculated).}
 
 \item{\dots}{additional arguments passed to \code{\link[=plot]{plot()}}.}
 }
+\value{
+Plot of the estimated from a generalized linear model with a
+categorical variable of month.
+}
 \description{
 Plots the estimated from a generalized linear model with a categorical
 variable of month.

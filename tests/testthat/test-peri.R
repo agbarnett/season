@@ -6,7 +6,7 @@ test_that("peri returns the documented periodogram outputs", {
   n_cvd <- length(CVD$cvd)
   expect_length(peri_output$peri, n_cvd / 2 + 1)
   expect_true(is.na(peri_output$c[1]))
-  expect_equal(peri_output$f[1], 0)
+  expect_identical(peri_output$f[1], 0)
 })
 
 test_that("peri's largest periodogram peak lands on the seeded cycle length", {
@@ -18,7 +18,7 @@ test_that("peri's largest periodogram peak lands on the seeded cycle length", {
   non_na <- which(!is.na(peri_output$c))
   peri_non_missing <- peri_output$peri[non_na]
   peri_max_idx <- which.max(peri_non_missing)
-  expect_equal(
+  expect_identical(
     peri_output$c[non_na[peri_max_idx]],
     period_12
   )
@@ -29,7 +29,7 @@ test_that("peri keeps the DC component when adjmean = FALSE", {
   # mean energy when adjmean is off and (effectively) zero when on. Noise
   # avoids the all-zero bins that trip up peri()'s phase loop.
   set.seed(2026 - 04 - 29)
-  x <- 10 + rnorm(64, sd = 0.5)
+  x <- 10 + stats::rnorm(64, sd = 0.5)
   expect_lt(peri(x, adjmean = TRUE, plot = FALSE)$peri[1], 1e-8)
   expect_gt(peri(x, adjmean = FALSE, plot = FALSE)$peri[1], 0)
 })

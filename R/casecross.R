@@ -87,8 +87,8 @@
 #' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
 #' Springer.
 #' @examples
-#' \donttest{# cardiovascular disease data
-#' data(CVDdaily)
+#' \donttest{
+#' # cardiovascular disease data
 #' CVDdaily = subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
 #' # Effect of ozone on CVD death
 #' model1 = casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
@@ -114,9 +114,11 @@ casecross <- function(
   confrange = 0,
   stratamonth = FALSE
 ) {
-  outcome <- dow <- case <- timex <- dow.x <- dow.y <- matchday.x <- matchday.y <- windownum.x <- windownum.y <- NULL # Setting some variables to NULL first (for R CMD check)
+  # Setting some variables to NULL first (for R CMD check)
+  outcome <- dow <- case <- timex <- dow.x <- dow.y <- matchday.x <- NULL
+  matchday.y <- windownum.x <- windownum.y <- NULL
   thisdata <- data
-  ## Checks
+
   if (!inherits(thisdata$date, "Date")) {
     stop("date variable must be in date format, see ?Dates")
   }
@@ -136,12 +138,16 @@ casecross <- function(
   call <- as.call(c(ans, frmls[add]))
   thisdata$dow <- as.numeric(format(thisdata$date, '%w'))
   ## Slim down the data
-  f <- as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
+  f <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
   if (!startsWith(matchconf, "")) {
-    f <- as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
+    f <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
   }
   # remove cases with missing covariates
-  datatouse <- model.frame(f, data = thisdata, na.action = na.omit)
+  datatouse <- stats::model.frame(
+    f,
+    data = thisdata,
+    na.action = stats::na.omit
+  )
   ## Check for irregularly spaced data
   if (any(diff(datatouse$date) > 1)) {
     cat('Note, irregularly spaced data...\n')
@@ -233,19 +239,21 @@ casecross <- function(
   controls$casenum <- casenum
   # Merge cases with controls by case number
   controls <- merge(controls, cases.tomerge, by = 'casenum')
-  controls <- controls[controls$windownum.x == controls$windownum.y, ] # must be in same stratum window
+  # must be in same stratum window
+  controls <- controls[controls$windownum.x == controls$windownum.y, ]
   controls$case <- 0 # binary indicator of case
   controls$timex <- 2 # Needed for conditional logistic regression
   controls$diffdays <- abs(controls$matchday.x - controls$matchday.y)
-  controls <- controls[controls$diffdays > exclusion, ] # remove the exclusion window
+  # remove the exclusion window
+  controls <- controls[controls$diffdays > exclusion, ]
   # match on day of the week
   if (matchdow) {
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
   if (!startsWith(matchconf, "")) {
-    one <- paste(matchconf, '.x', sep = '')
-    two <- paste(matchconf, '.y', sep = '')
+    one <- paste0(matchconf, '.x')
+    two <- paste0(matchconf, '.y')
     find1 <- grep(one, names(controls))
     find2 <- grep(two, names(controls))
     matchdiff <- abs(controls[, find1] - controls[, find2])
@@ -290,19 +298,24 @@ casecross <- function(
   finished <- rbind(final.cases, controls)
   ## Remove empty controls
   finished <- finished[finished$outcome > 0, ]
-  ## Count the number of control days without a case day, and the total number of cases
+  ## Count the number of control days without a case day, and the total number
+  ## of cases
   onlycntl <- finished[finished$case == 0, ]
   ncases <- nrow(table(onlycntl$time))
   which.times <- unique(onlycntl$time)
   extra.only <- final.cases[final.cases$time %in% which.times, ]
   ncontrols <- round(mean(as.numeric(table(onlycntl$time))), 1)
   ## Run the conditional logistic regression
-  finalformula <- as.formula(paste('Surv(timex,case)~', indep, '+strata(time)'))
+  finalformula <- stats::as.formula(paste(
+    'Surv(timex,case)~',
+    indep,
+    '+strata(time)'
+  ))
   c.model <- survival::coxph(
     finalformula,
     weights = outcome,
     data = finished,
-    method = c("breslow")
+    method = "breslow"
   )
   toret <- list()
   toret$call <- call

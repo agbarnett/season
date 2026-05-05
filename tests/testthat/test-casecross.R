@@ -32,8 +32,8 @@ test_that("casecross reproduces published 28-day stratum model (p.136)", {
     stratalength = 28,
     exclusion = 4
   )
-  expect_equal(model_28d$ncasedays, 5114)
-  expect_equal(model_28d$ncontroldays, 19.7)
+  expect_identical(model_28d$ncasedays, 5114)
+  expect_identical(model_28d$ncontroldays, 19.7)
 
   model_coef <- coef(model_28d$c.model)
 
@@ -62,8 +62,8 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
     exclusion = 4,
     matchdow = TRUE
   )
-  expect_equal(model_dow$ncasedays, 5114)
-  expect_equal(model_dow$ncontroldays, 3)
+  expect_identical(model_dow$ncasedays, 5114)
+  expect_identical(model_dow$ncontroldays, 3)
 
   coef_dow <- coef(model_dow$c.model)
 
@@ -85,7 +85,7 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 # Anchored structurally rather than by exact OR (published vals on p.138 differ
 # slightly from current, possibly due to algorithmic refinements?).
 
-# test_that("casecross matchconf produces a casecross object with reduced controls", {
+# test_that("casecross matchconf produces a casecross with reduced controls", {
 #  model_matchconf <- casecross(
 #    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
 #    data = CVDdaily,

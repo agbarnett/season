@@ -48,9 +48,13 @@
 #' Health Data*. Springer.
 #' @examples
 #'
-#' data(CVD)
-#' mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
-#'                   offsetpop=expression(pop/100000), offsetmonth=TRUE)
+#' mmodel <- monthglm(
+#'   formula = cvd~1,
+#'   data = CVD,
+#'   family = poisson(),
+#'   offsetpop = expression(pop/100000),
+#'   offsetmonth = TRUE
+#'   )
 #' summary(mmodel)
 #'
 #' @export monthglm
@@ -93,18 +97,21 @@ monthglm <- function(
     data$month <- months # add to data for flagleap
     months <- as.factor(months)
     levels(months)[months] <- month.abb[months]
-    months <- relevel(months.u, ref = month.abb[refmonth]) # set reference month
+    # set reference month
+    months <- stats::relevel(months.u, ref = month.abb[refmonth])
   }
   ## Transform month numbers to names
   if (cmonthvar %in% c('integer', 'numeric')) {
     months.u <- as.factor(monthvar)
-    nums <- keep_month_numbers(levels(months.u)) # Month numbers; replaced `nochars`
+    # Month numbers; replaced `nochars`
+    nums <- keep_month_numbers(levels(months.u))
     levels(months.u)[nums] <- month.abb[nums]
-    months <- relevel(months.u, ref = month.abb[refmonth]) # set reference month
+    # set reference month
+    months <- stats::relevel(months.u, ref = month.abb[refmonth])
   }
   ## prepare data/formula
   parts <- paste(formula)
-  f <- as.formula(paste(
+  f <- stats::as.formula(paste(
     parts[2],
     parts[1],
     parts[3:length(formula)],
@@ -127,13 +134,13 @@ monthglm <- function(
   } # days per month divided by average month length
   ### data$off = log(poff*moff)
   off <- log(poff * moff) #
-  fit <- glm(formula = f, data = data, family = family, offset = off)
+  fit <- stats::glm(formula = f, data = data, family = family, offset = off)
   ## return
   toret <- list()
   toret$call <- call
   toret$glm <- fit
-  toret$fitted.values <- fitted(fit)
-  toret$residuals <- residuals(fit)
+  toret$fitted.values <- stats::fitted(fit)
+  toret$residuals <- stats::residuals(fit)
   class(toret) <- 'monthglm'
   return(toret)
 }

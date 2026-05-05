@@ -1,11 +1,11 @@
 ## print.summary.nscosinor.R
 
-#' printing a summary of an nscosinor
-#' @name print.summary.nscosinor
-#' @method print summary.nscosinor
+#' Print a summary of an [nscosinor()] object
+#'
 #' @param \dots further arguments passed to or from other methods.
-#' @param x a `summary.nsCosinor` object produced by
-#' `summary.nsCosinor`
+#' @param x a `summary.nsCosinor` object produced by [summary.nsCosinor()].
+#' @examples
+
 #' @export
 print.summary.nscosinor <- function(x, ...) {
   if (!inherits(x, "summary.nsCosinor")) {

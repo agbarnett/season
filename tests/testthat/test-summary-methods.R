@@ -23,7 +23,7 @@ test_that("summary.Cosinor errors on non-Cosinor input", {
   )
 })
 
-test_that("summary.Cosinor reports stillbirth amplitude on probability scale (p.80)", {
+test_that("summary.Cosinor reports stillbirth amplitude on probability scale", {
   # Book p.80: cloglog cosinor on stillbirth gives an amplitude of
   # 0.0012 on the probability scale, peak probability of stillbirth on
   # January 27 (= 0.0070), low on July 29 (= 0.0047). The peak/low
@@ -36,7 +36,7 @@ test_that("summary.Cosinor reports stillbirth amplitude on probability scale (p.
   )
   s <- summary(m)
   expect_equal(round(s$amp, 4), 0.0012)
-  expect_equal(s$amp.scale, "(probability scale)")
+  expect_identical(s$amp.scale, "(probability scale)")
   expect_match(s$phase, "January.*27|27.*January")
   expect_match(s$lphase, "July.*29|29.*July")
   expect_true(s$significant)
@@ -56,15 +56,17 @@ test_that("summary.monthglm builds the documented summary.monthglm object", {
 })
 
 test_that("summary.monthglm picks the right month.effect label per family", {
-  # poisson -> "RR" (rate ratios), binomial -> "OR" (odds ratios), gaussian -> "".
+  # poisson -> "RR" (rate ratios)
+  # binomial -> "OR" (odds ratios)
+  # gaussian -> "".
   CVD$success <- CVD$cvd
   CVD$failure <- CVD$ndaysmonth * 100 - CVD$cvd
 
-  expect_equal(
+  expect_identical(
     summary(monthglm(cvd ~ 1, data = CVD, family = poisson()))$month.effect,
     "RR"
   )
-  expect_equal(
+  expect_identical(
     summary(monthglm(
       cbind(success, failure) ~ 1,
       data = CVD,
@@ -72,8 +74,12 @@ test_that("summary.monthglm picks the right month.effect label per family", {
     ))$month.effect,
     "OR"
   )
-  expect_equal(
-    summary(monthglm(adj ~ 1, data = CVD, family = gaussian()))$month.effect,
+  expect_identical(
+    summary(monthglm(
+      adj ~ 1,
+      data = CVD,
+      family = stats::gaussian()
+    ))$month.effect,
     ""
   )
 })
@@ -123,10 +129,10 @@ test_that("summary.nsCosinor handles multiple seasonal cycles", {
     div = 1000
   )
   s <- summary(m)
-  expect_equal(s$cycles, c(6, 12))
-  expect_equal(dim(s$stats$wstats), c(2, 3))
-  expect_equal(dim(s$stats$ampstats), c(2, 3))
-  expect_equal(dim(s$stats$phasestats), c(2, 3))
+  expect_identical(s$cycles, c(6, 12))
+  expect_identical(dim(s$stats$wstats), c(2, 3))
+  expect_identical(dim(s$stats$ampstats), c(2, 3))
+  expect_identical(dim(s$stats$phasestats), c(2, 3))
 })
 
 test_that("summary.casecross prints a structured report", {

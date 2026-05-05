@@ -4,7 +4,7 @@
 #' Summary for a Cosinor
 #'
 #' The default print method for a `Cosinor` object produced by
-#' `cosinor`.
+#' [cosinor()].
 #'
 #' Summarises the sinusoidal seasonal pattern and tests whether there is
 #' statistically significant seasonal or circadian pattern (assuming a smooth
@@ -14,8 +14,8 @@
 #' amplitude is given on a probability scale. For Poisson regression the
 #' amplitude is given on an absolute scale.
 #'
-#' @param object a `Cosinor` object produced by `cosinor`.
-#' @param digits minimal number of significant digits, see `print.default`
+#' @param object a `Cosinor` object produced by [cosinor()].
+#' @param digits minimal number of significant digits, see [print.default()]
 #' @param \dots further arguments passed to or from other methods.
 #' @return a list with the following named elements:
 #'   * n: sample size.
@@ -35,11 +35,23 @@
 #'   * ctable: table of regression coefficients.
 #'
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `cosinor`, `plot.Cosinor`, `invyrfraction`
+#' @seealso [cosinor()] [plot.Cosinor()] [invyrfraction()]
+#' @examples
+#' ## cardiovascular disease data (offset based on number of days in...
+#' ## ...the month scaled to an average month length)
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = 'month',
+#'   data = CVD,
+#'   type = 'monthly',
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#'   )
+#' summary(res)
 #' @export
 summary.Cosinor <- function(object, digits = 2, ...) {
   type <- object$call$type
-  ## Checks
+  
   if (!inherits(object, "Cosinor")) {
     stop("Object must be of class 'Cosinor'")
   }
@@ -55,9 +67,11 @@ summary.Cosinor <- function(object, digits = 2, ...) {
     link <- ' '
   }
   if (link == 'logit') {
-    p1 <- exp(s$coefficients[1, 1]) / (1 + exp(s$coefficients[1, 1])) # back-transform amp
+    # back-transform amp
+    p1 <- exp(s$coefficients[1, 1]) / (1 + exp(s$coefficients[1, 1]))
+    # back-transform amp
     p2 <- exp(s$coefficients[1, 1] + amp) /
-      (1 + exp(s$coefficients[1, 1] + amp)) # back-transform amp
+      (1 + exp(s$coefficients[1, 1] + amp))
     amp <- p2 - p1
     addition <- "(probability scale)"
   }

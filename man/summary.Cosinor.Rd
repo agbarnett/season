@@ -7,9 +7,9 @@
 \method{summary}{Cosinor}(object, digits = 2, ...)
 }
 \arguments{
-\item{object}{a \code{Cosinor} object produced by \code{cosinor}.}
+\item{object}{a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}.}
 
-\item{digits}{minimal number of significant digits, see \code{print.default}}
+\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -35,7 +35,7 @@ a number (FALSE).
 }
 \description{
 The default print method for a \code{Cosinor} object produced by
-\code{cosinor}.
+\code{\link[=cosinor]{cosinor()}}.
 }
 \details{
 Summarises the sinusoidal seasonal pattern and tests whether there is
@@ -46,8 +46,21 @@ amplitude depends on the link function. For logistic regression the
 amplitude is given on a probability scale. For Poisson regression the
 amplitude is given on an absolute scale.
 }
+\examples{
+## cardiovascular disease data (offset based on number of days in...
+## ...the month scaled to an average month length)
+res <- cosinor(
+  cvd ~ 1,
+  date = 'month',
+  data = CVD,
+  type = 'monthly',
+  family = poisson(),
+  offsetmonth = TRUE
+  )
+summary(res)
+}
 \seealso{
-\code{cosinor}, \code{plot.Cosinor}, \code{invyrfraction}
+\code{\link[=cosinor]{cosinor()}} \code{\link[=plot.Cosinor]{plot.Cosinor()}} \code{\link[=invyrfraction]{invyrfraction()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

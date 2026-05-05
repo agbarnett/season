@@ -31,7 +31,7 @@ test_that("monthmean errors when required variables are missing", {
   )
 })
 
-test_that("monthmean adjmonth='thirty' and 'average' rescale by a known constant", {
+test_that("monthmean adjmonth='thirty'/'average' rescale by a known constant", {
   # The two adjustments differ only by their target month length:
   # 30 days vs 365.25/12 days. The ratio should be the same in every month.
   m_thirty <- monthmean(
@@ -46,11 +46,11 @@ test_that("monthmean adjmonth='thirty' and 'average' rescale by a known constant
     offsetpop = expression(pop / 100000),
     adjmonth = "average"
   )
-  expect_equal(m_thirty$mean / m_avg$mean, rep(30 / (365.25 / 12), 12))
+  expect_identical(m_thirty$mean / m_avg$mean, rep(30 / (365.25 / 12), 12))
 })
 
 test_that("monthmean without offset returns the raw monthly means", {
   mm <- monthmean(data = CVD, resp = "cvd")
   cvd_by_month <- aggregate(cvd ~ month, data = CVD, FUN = mean)
-  expect_equal(mm$mean, cvd_by_month$cvd)
+  expect_identical(mm$mean, cvd_by_month$cvd)
 })

@@ -2,16 +2,15 @@
 % Please edit documentation in R/print.summary.monthglm.R
 \name{print.summary.monthglm}
 \alias{print.summary.monthglm}
-\title{printing a summary of a month.glm}
+\title{Printing a summary of a month.glm}
 \usage{
 \method{print}{summary.monthglm}(x, ...)
 }
 \arguments{
-\item{x}{a \code{summary.monthglm} object produced by
-\code{summary.monthglm}.}
+\item{x}{a \code{summary.monthglm} object produced by \code{\link[=summary.monthglm]{summary.monthglm()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
-printing a summary of a month.glm
+Printing a summary of a month.glm
 }

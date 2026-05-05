@@ -1,8 +1,24 @@
-# nscosinor.initial.R
-# Estimate starting values for seasonal variance based on a linear trend and given values for tau
+# Estimate starting values for seasonal variance based on a linear trend and
+# given values for tau
 # Dec 2011
 
-# set up variables and matrices
+#' Initial Values for Non-stationary Cosinor
+#'
+#' Creates initial values for the non-stationary cosinor decomposition
+#' [nscosinor()]. For internal use only.
+#'
+#' @param data a data frame.
+#' @param response response variable.
+#' @param tau vector of smoothing parameters, `tau[1]` for trend, `tau[2]` for
+#'   1st seasonal parameter, `tau[3]` for 2nd seasonal parameter, etc. Larger
+#'   values of tau allow more change between observations and hence a greater
+#'   potential flexibility in the trend and season.
+#' @param lambda distance between observations (lambda=1/12 for monthly data,
+#' default).
+#' @param n.season number of seasons.
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
+#' @note internal
+#' @noRd
 nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   k <- 1 # Assume just one season
   kk <- 2 * (k + 1)
@@ -16,15 +32,17 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   # linear model
   time <- 1:n
   vector.response <- subset(data, select = response)[, 1] # replaced attach
-  model <- glm(vector.response ~ time)
+  model <- stats::glm(vector.response ~ time)
   ## put predictions into alpha
   # 1. trend
-  alpha_j[1, 2:(n + 1)] <- fitted(model)
+  alpha_j[1, 2:(n + 1)] <- stats::fitted(model)
   # 2. season
-  sdr <- sd(resid(model))
-  alpha_j[3, 2:(n + 1)] <- (sdr / 10) * cos(2 * pi * (1:n + 1) / 12) # sinusoid with amplitude equal to 10% of standard deviation of residuals
+  sdr <- stats::sd(stats::resid(model))
+  # sinusoid with amplitude equal to 10% of standard deviation of residuals
+  alpha_j[3, 2:(n + 1)] <- (sdr / 10) * cos(2 * pi * (1:n + 1) / 12)
   # estimate initial value for w
-  se <- matrix(0, n) # squared error
+  # squared error
+  se <- matrix(0, n)
   alphase <- matrix(0, n - 1, k)
   for (t in 2:(n + 1)) {
     #<- time = 1 to n;

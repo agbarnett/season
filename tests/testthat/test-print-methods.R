@@ -52,7 +52,7 @@ test_that("print.Monthmean errors on non-Monthmean input", {
 
 test_that("print.nonlintest prints the test statistics block", {
   set.seed(2026 - 04 - 29)
-  res <- nonlintest(data = rnorm(100), n.lag = 3, n.boot = 25)
+  res <- nonlintest(data = stats::rnorm(100), n.lag = 3, n.boot = 25)
   expect_snapshot(print(res))
 })
 

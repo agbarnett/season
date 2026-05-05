@@ -9,7 +9,7 @@ cosinor(
   formula,
   date,
   data,
-  family = gaussian(),
+  family = stats::gaussian(),
   alpha = 0.05,
   cycles = 1,
   rescheck = FALSE,
@@ -29,7 +29,7 @@ type="monthly", or a \link{POSIXct} date if type="hourly".}
 \item{data}{data set as a data frame.}
 
 \item{family}{a description of the error distribution and link function to be
-used in the model. Available link functions: \code{\link[=gaussian]{gaussian()}} (default),
+used in the model. Available link functions: \code{\link[stats:gaussian]{stats::gaussian()}} (default),
 \code{\link[=identity]{identity()}}, \code{\link[=log]{log()}}, \code{logit()}, \code{cloglog()}. Note, it must have the
 parentheses.}
 
@@ -56,7 +56,7 @@ the log-transform is applied by the function. This should be an expression,
 as given in the example below.}
 
 \item{text}{add explanatory text to the returned phase value (TRUE) or
-return a number (FALSE). Passed to the \code{invyrfraction} function.}
+return a number (FALSE). Passed to the \code{\link[=invyrfraction]{invyrfraction()}} function.}
 }
 \value{
 Returns an object of class "Cosinor" with the following
@@ -83,14 +83,13 @@ symmetric and stationary. The default is to fit an annual seasonal pattern
 year: \code{cycle}=2). The model is fitted using a sine and cosine term that
 together describe the sinusoid. These parameters are added to a generalized
 linear model, so the model can be fitted to a range of dependent data (e.g.,
-Normal, Poisson, Binomial). Unlike the \code{nscosinor} model, the cosinor
+Normal, Poisson, Binomial). Unlike the [\url{nscosinor()}] model, the cosinor
 model can be applied to unequally spaced data.
 }
 \examples{
 
 ## cardiovascular disease data (offset based on number of days in...
 ## ...the month scaled to an average month length)
-data(CVD)
 res = cosinor(cvd~1, date='month', data=CVD, type='monthly',
               family=poisson(), offsetmonth=TRUE)
 summary(res)
@@ -113,7 +112,7 @@ Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer.
 }
 \seealso{
-\code{summary.Cosinor}, \code{plot.Cosinor}
+\code{\link[=summary.Cosinor]{summary.Cosinor()}}, \code{\link[=plot.Cosinor]{plot.Cosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

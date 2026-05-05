@@ -1,7 +1,6 @@
 #' Summary for a Monthglm
 #'
-#' The default summary method for a `monthglm` object produced by
-#' `monthglm`.
+#' The default summary method for an object produced by [monthglm()].
 #'
 #' The estimates are the mean, 95\% confidence interval, Z-value and associated
 #' p-value (comparing each month to the reference month). If Poisson regression
@@ -9,7 +8,7 @@
 #' was used then the estimates are shown as odds ratios.
 #'
 #' @aliases summary.monthglm
-#' @param object a `monthglm` object produced by `nscosinor`.
+#' @param object a `monthglm` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
 #' @return a list with the following elements:
 #'   * n: sample size.
@@ -18,13 +17,22 @@
 #'     `OR` for odds ratios, or empty otherwise.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthglm`, `plot.monthglm`
+#' @examples
+#' mmodel <- monthglm(
+#'   formula = cvd~1,
+#'   data = CVD,
+#'   family = poisson(),
+#'   offsetpop = expression(pop/100000),
+#'   offsetmonth = TRUE
+#'   )
+#' summary(mmodel)
 #' @export
 summary.monthglm <- function(object, ...) {
   if (!inherits(object, "monthglm")) {
     stop("Object must be of class 'monthglm'")
   }
   ## Tabulate the monthly data ##
-  z <- qnorm(0.975)
+  z <- stats::qnorm(0.975)
   s <- summary(object$glm)
   type <- as.character(object$call$family)[1]
   out <- as.data.frame(matrix(data = NA, nrow = nrow(s$coef), ncol = 5))

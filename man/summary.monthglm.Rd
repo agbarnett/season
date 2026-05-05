@@ -7,7 +7,7 @@
 \method{summary}{monthglm}(object, ...)
 }
 \arguments{
-\item{object}{a \code{monthglm} object produced by \code{nscosinor}.}
+\item{object}{a \code{monthglm} object produced by [\url{nscosinor()}].}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }

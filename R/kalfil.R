@@ -3,7 +3,7 @@
 #' Forward and Backward Sweep of the Kalman Filter
 #'
 #' Internal function to do a forward and backward sweep of the Kalman filter,
-#' used by `nscosinor`. For internal use only.
+#' used by [nscosinor()]. For internal use only.
 #'
 #'
 #' @name kalfil
@@ -14,13 +14,18 @@
 #' @param tau controls flexibility of trend and season.
 #' @param lambda distance between observations.
 #' @param cmean used to give a vague prior for the starting values.
+#' @returns list with elements: vartheta, w, alpha, amp, phase, cmean
+#' @note internal
+#' @noRd
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   # Setting up matrices
-  k <- length(f) # Number of frequencies
+  # Number of frequencies
+  k <- length(f)
   kk <- 2 * (k + 1)
   n <- length(data)
-  data <- c(0, data) # Add zero to start of data
+  # Add zero to start of data
+  data <- c(0, data)
   Fvec <- rep(c(1, 0), k + 1)
   G <- matrix(0, kk, kk)
   G[1, 1] <- 1
@@ -30,29 +35,38 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   V[1, 1] <- (tau[1]^2) * (lambda^3) / 3
   V[1, 2] <- (tau[1]^2) * (lambda^2) / 2
   V[2, 1] <- (tau[1]^2) * (lambda^2) / 2
-  V[2, 2] <- (tau[1]^2) * lambda # Trend variance
+  # Trend variance
+  V[2, 2] <- (tau[1]^2) * lambda
   for (index in 1:k) {
     G[(2 * index) + 1, (2 * index) + 1] <- 2 * cos(2 * pi / f[index])
     G[(2 * index) + 1, (2 * index) + 2] <- -1
-    G[(2 * index) + 2, (2 * index) + 1] <- 1 # Seasonal component
-    V[(2 * index) + 1, (2 * index) + 1] <- (tau[index + 1]^2) * w[index]^2 # w = Seasonal variance, lambda in paper
+    # Seasonal component
+    G[(2 * index) + 2, (2 * index) + 1] <- 1
+    # w = Seasonal variance, lambda in paper
+    V[(2 * index) + 1, (2 * index) + 1] <- (tau[index + 1]^2) * w[index]^2
   }
   C_j <- array(0, c(kk, kk, n + 1))
   for (index in 1:kk) {
-    C_j[index, index, 1] <- cmean[index] # Gives a vague prior for alpha_0
+    # Gives a vague prior for alpha_0
+    C_j[index, index, 1] <- cmean[index]
   }
   a_j <- matrix(0, kk, n + 1)
   p_j <- matrix(0, kk, n + 1)
   e_j <- matrix(0, 1, n + 1)
   R_j <- array(0, c(kk, kk, n + 1))
   # Forward sweep of Kalman filter
-  p_j[1, 1] <- mean(data[2:(n + 1)]) # first obs=mean(p_0);
+  # first obs=mean(p_0);
+  p_j[1, 1] <- mean(data[2:(n + 1)])
   ind <- t(0:n)
   for (t in 1:n) {
-    a_j[, t + 1] <- G %*% p_j[, t] # prediction eqn
-    R_j[,, t + 1] <- (G %*% C_j[,, t] %*% t(G)) + V # prediction eqn
-    e_j[, t + 1] <- data[t + 1] - (t(Fvec) %*% a_j[, t + 1]) # residual
-    Q_j <- t(Fvec) %*% R_j[,, t + 1] %*% Fvec + (vartheta^2) # fitted value variance
+    # prediction eqn
+    a_j[, t + 1] <- G %*% p_j[, t]
+    # prediction eqn
+    R_j[,, t + 1] <- (G %*% C_j[,, t] %*% t(G)) + V
+    # residual
+    e_j[, t + 1] <- data[t + 1] - (t(Fvec) %*% a_j[, t + 1])
+    # fitted value variance
+    Q_j <- t(Fvec) %*% R_j[,, t + 1] %*% Fvec + (vartheta^2)
     # Kalman filter:
     p_j[, t + 1] <- a_j[, t + 1] +
       (R_j[,, t + 1] %*% Fvec %*% (qr.solve(Q_j)) %*% e_j[, t + 1])
@@ -100,7 +114,8 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   }
   shape <- (n / 2) - 1
   scale <- sum(se) / 2
-  vartheta <- sqrt(rinvgamma(1, shape, scale)) # Update vartheta from inverse gamma;
+  # Update vartheta from inverse gamma;
+  vartheta <- sqrt(rinvgamma(1, shape, scale))
   shape <- ((n - 1) / 2) - 1
   for (index in 1:k) {
     scale <- sum(alphase[, index]) / 2

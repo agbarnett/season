@@ -1,10 +1,7 @@
-### Plot the monthly data
-
 #' Plot of Monthly Estimates
 #'
 #' Plots the estimated from a generalized linear model with a categorical
 #' variable of month.
-#'
 #'
 #' @param x a `monthglm` object produced by `monthglm`.
 #' @param alpha statistical significance level of confidence intervals.
@@ -12,6 +9,8 @@
 #' automatically calculated).
 #' @param xlab,ylab x and y labels. Defaults is no label: "".
 #' @param \dots additional arguments passed to [plot()].
+#' @returns Plot of the estimated from a generalized linear model with a
+#'   categorical variable of month.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthglm`
 #' @examples
@@ -31,7 +30,7 @@ plot.monthglm <- function(
   ylab = "",
   ...
 ) {
-  ## Checks
+  
   if (!inherits(x, "monthglm")) {
     stop("Object must be of class 'monthglm'")
   }
@@ -42,7 +41,7 @@ plot.monthglm <- function(
   }
   ## Create CIs
   refer <- NA # reference level - only used for binomial or poisson
-  z <- qnorm(1 - (alpha / 2))
+  z <- stats::qnorm(1 - (alpha / 2))
   s <- summary(x$glm)
   type <- as.character(x$call$family)[1]
   out <- as.data.frame(matrix(data = NA, nrow = nrow(s$coef), ncol = 3))
@@ -116,15 +115,15 @@ plot.monthglm <- function(
 #' #' @seealso `monthglm`
 #' #' @examples
 #' #' \donttest{
-#' #' data(CVD)
-#' #' mmodel = monthglm(formula=cvd~1, data=CVD, family=poisson(),
+#' #' mmodel <- monthglm(
+#'   formula=cvd~1, data=CVD, family=poisson(),
 #' #'                   offsetpop=expression(pop/100000), offsetmonth=TRUE, refmonth=6)
 #' #' plot(mmodel)
 #' #' }
 #' #'
 #' #' @export
 #' plot.monthglm <- function(x, alpha = 0.05, ylim = NULL, ...) {
-#'   ## Checks
+#'   
 #'   if (!inherits(x, "monthglm")) {
 #'     stop("Object must be of class 'monthglm'")
 #'   }
@@ -181,7 +180,8 @@ plot.monthglm <- function(
 #'   month.lab <- vector(mode = 'character', length = nrow(toplot))
 #'   for (i in 1:nrow(toplot)) {
 #'     lines(c(order[i], order[i]), c(toplot$lower[i], toplot$upper[i]))
-#'     months.num <- keep_month_numbers(row.names(toplot)[i]) # replaced `nochars`
+#'     # replaced `nochars`
+#'     months.num <- keep_month_numbers(row.names(toplot)[i])
 #'     month.lab[i] <- month.abb[months.num]
 #'   }
 #'   month.lab <- substr(month.abb, 1, 1)

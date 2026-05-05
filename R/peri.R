@@ -23,7 +23,8 @@
 #'
 #' @export peri
 'peri' <- function(data, adjmean = TRUE, plot = TRUE) {
-  xaxis <- yaxis <- NULL # Setting some variables to NULL first (for R CMD check)
+  # Setting some variables to NULL first (for R CMD check)
+  xaxis <- yaxis <- NULL
 
   if (adjmean) {
     adjust <- mean(data)
@@ -35,7 +36,7 @@
   if (n %% 2 != 0) {
     data <- c(data, mean(data))
   } # taper odd length series with mean of data
-  first <- fft(data - adjust) / (n / 2) # Fast Fourier Transform
+  first <- stats::fft(data - adjust) / (n / 2) # Fast Fourier Transform
   realpart <- Re(first[1:nfft])
   imagpart <- -Im(first[1:nfft])
   peri <- (n / 2) * (realpart^2 + imagpart^2) # Periodogram

@@ -6,7 +6,7 @@
 #' Plot the Results of a Cosinor
 #'
 #' Plots the fitted sinusoid from a `Cosinor` object produced by
-#' `cosinor`.
+#' [cosinor()].
 #'
 #' The code produces the fitted sinusoid based on the intercept and sinusoid.
 #' The y-axis is on the scale of probability if the link function is
@@ -14,19 +14,31 @@
 #' data then month is shown on the x-axis. If the analysis was based on daily
 #' data then time is shown on the x-axis.
 #'
-#' @param x a `Cosinor` object produced by `cosinor`.
+#' @param x a `Cosinor` object produced by [cosinor()]
 #' @param \dots additional arguments passed to the sinusoid plot.
+#' @returns connected line plot of fitted sinusoid object produced by [cosinor].
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `cosinor`, `summary.Cosinor`, `seasrescheck`
+#' @seealso [cosinor()], [summary.Cosinor()], [seasrescheck()]
+#' @examples
+#' ## cardiovascular disease data (offset based on number of days in...
+#' ## ...the month scaled to an average month length)
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = 'month',
+#'   data = CVD,
+#'   type = 'monthly',
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#'   )
+#' plot(res)
 #' @export
 plot.Cosinor <- function(x, ...) {
-  ## Checks
   if (!inherits(x, "Cosinor")) {
     stop("Object must be of class 'Cosinor'")
   }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   on.exit(par(op)) # restore graphic settings
-  f <- as.formula(x$call$formula)
+  f <- stats::as.formula(x$call$formula)
   parts <- paste(f)
   ylab <- parts[2]
   ## plot sinusoid ##
@@ -66,7 +78,7 @@ plot.Cosinor <- function(x, ...) {
     }
   }
   if (x$call$link == 'logit' || x$call$link == 'cloglog') {
-    ylab <- paste('Probability(', ylab, ')', sep = '')
+    ylab <- paste0('Probability(', ylab, ')')
     plot(
       time[o],
       x$fitted.values[o],

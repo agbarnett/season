@@ -3,7 +3,7 @@ test_that("seasrescheck plots without error for raw and model residuals", {
   on.exit(dev.off())
 
   set.seed(2026 - 04 - 29)
-  expect_no_error(seasrescheck(rnorm(120)))
+  expect_no_error(seasrescheck(stats::rnorm(120)))
 
   m <- cosinor(
     cvd ~ 1,
@@ -22,6 +22,6 @@ test_that("seasrescheck restores the caller's graphic settings", {
   pdf(file = tempfile(fileext = ".pdf"))
   on.exit(dev.off())
   par_before <- par("mfrow")
-  seasrescheck(rnorm(60))
-  expect_equal(par("mfrow"), par_before)
+  seasrescheck(stats::rnorm(60))
+  expect_identical(par("mfrow"), par_before)
 })

@@ -1,19 +1,22 @@
-## print.nonlintest.R
-## Prints basic results from nonlintest
-
 #' Print the Results of the Non-linear Test
 #'
 #' The default print method for a `nonlintest` object produced by
-#' `nonlintest`.
+#' [nonlintest()].
 #'
-#'
-#' @param x a `nonlintest` object produced by `nonlintest`.
-#' @param \dots additional arguments to `plot`
+#' @param x a `nonlintest` object produced by [nonlintest()].
+#' @param \dots additional arguments to [plot()]
+#' @returns summary of Results of the Non-linear Test.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `nonlintest`, `plot.nonlintest`
+#' @seealso [nonlintest()] [plot.nonlintest()]
 #' @export
+#' @examples
+#' \donttest{
+#' \dontrun{
+#'   test_res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
+#'   test_res
+#' }
+#' }
 print.nonlintest <- function(x, ...) {
-  ## Check
   if (!inherits(x, "nonlintest")) {
     stop("Object must be of class 'nonlintest'")
   }
@@ -31,7 +34,8 @@ print.nonlintest <- function(x, ...) {
   }
 
   cat(
-    'Largest and smallest co-ordinates of the third-order moment outside the test limits\n'
+    'Largest and smallest co-ordinates of the third-order moment outside \\
+    the test limits\n'
   )
   # Upper limit
   if (max(diff_u) > 0) {

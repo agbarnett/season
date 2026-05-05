@@ -5,8 +5,8 @@ surr_5 <- aaft(data = cvd_test, nsur = 5)
 # lines(surr_1[, 1], col = 'red')
 
 test_that("aaft returns correct dimension", {
-  expect_equal(dim(surr_1), c(50, 1))
-  expect_equal(dim(surr_5), c(50, 5))
+  expect_identical(dim(surr_1), c(50, 1))
+  expect_identical(dim(surr_5), c(50, 5))
 })
 
 test_that("aaft returns a different set of numbers to input", {

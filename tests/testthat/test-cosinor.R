@@ -72,7 +72,8 @@ test_that("Replicate results on page 78", {
 
 test_that("cosinor reproduces stillbirth cloglog amplitude/phase (p.80)", {
   # how to determine this:
-  # The estimated peak estimate in the probability of stillbirth is on 27 January is 0.0070, and the low on 29 July (6 months later) is 0.0047.
+  # The estimated peak estimate in the probability of stillbirth is on 27
+  # January is 0.0070, and the low on 29 July (6 months later) is 0.0047.
   model_dob <- cosinor(
     stillborn ~ 1,
     date = "dob",
@@ -101,7 +102,7 @@ test_that("cosinor errors when offsetmonth is not logical", {
   )
 })
 
-test_that("cosinor errors when type is not one of daily/weekly/monthly/hourly", {
+test_that("cosinor errors when type is not daily/weekly/monthly/hourly", {
   expect_snapshot(
     error = TRUE,
     cosinor(
@@ -115,7 +116,7 @@ test_that("cosinor errors when type is not one of daily/weekly/monthly/hourly", 
 })
 
 test_that("cosinor requires POSIXct dates when type='hourly'", {
-  bad <- data.frame(date = as.Date("2020-01-01") + 0:23, y = rnorm(24))
+  bad <- data.frame(date = as.Date("2020-01-01") + 0:23, y = stats::rnorm(24))
   expect_snapshot(
     error = TRUE,
     cosinor(y ~ 1, date = "date", data = bad, type = "hourly")
@@ -123,7 +124,7 @@ test_that("cosinor requires POSIXct dates when type='hourly'", {
 })
 
 test_that("cosinor requires Date when type='daily'", {
-  bad <- data.frame(date = as.character(Sys.Date() + 0:9), y = rnorm(10))
+  bad <- data.frame(date = as.character(Sys.Date() + 0:9), y = stats::rnorm(10))
   expect_snapshot(
     error = TRUE,
     cosinor(y ~ 1, date = "date", data = bad, type = "daily")

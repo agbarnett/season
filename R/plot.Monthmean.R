@@ -1,15 +1,24 @@
-# plot.Monthmean.R
-
 #' Plot of Monthly Mean Estimates
 #'
 #' Plots estimated monthly means.
 #'
-#'
-#' @param x a `Monthmean` object produced by `monthmean`.
+#' @param x a `Monthmean` object produced by [monthmean()].
 #' @param \dots additional arguments passed to the plot.
+#' @returns Connected dot plot of estimated monthly means.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `monthmean`
 #' @export
+#' @examples
+#' \donttest{
+#' mmean <- monthmean(
+#'   data=CVD,
+#'   resp='cvd',
+#'   offsetpop = expression(pop/100000),
+#'   adjmonth = 'average'
+#'   )
+#'   mmean
+#'   plot(mmean)
+#' }
 plot.Monthmean <- function(x, ...) {
   ## Check
   if (!inherits(x, "Monthmean")) {

@@ -7,19 +7,30 @@
 \method{print}{casecross}(x, ...)
 }
 \arguments{
-\item{x}{a \code{casecross} object produced by \code{casecross}.}
+\item{x}{a \code{casecross} object produced by \code{\link[=casecross]{casecross()}}.}
 
-\item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
+\item{\dots}{optional arguments to \code{\link[=print]{print()}} or \code{\link[=plot]{plot()}} methods.}
+}
+\value{
+printed output of \code{\link[=casecross]{casecross()}}.
 }
 \description{
 The default print method for a \code{casecross} object produced by
-\code{casecross}.
+\code{\link[=casecross]{casecross()}}.
 }
 \details{
-Uses \code{print.coxph}.
+Uses \code{\link[survival:print.coxph]{print.coxph()}}.
+}
+\examples{
+\donttest{
+  CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+  # Effect of ozone on CVD death
+  model1 <- casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+  model1
+}
 }
 \seealso{
-\code{casecross}, \code{summary.casecross}, \code{coxph}
+\code{\link[=casecross]{casecross()}}, \code{\link[=summary.casecross]{summary.casecross()}}, \code{\link[survival:coxph]{coxph()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

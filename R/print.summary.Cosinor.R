@@ -1,11 +1,20 @@
-# print.summary.Cosinor.R
 # October 2011
-
-#' printing a summary of a Cosinor
-#' @name  print.summary.Cosinor
-#' @param x a `summary.Cosinor` object produced by `summary.Cosinor`
-#' @param \dots optional arguments to `print` or `plot` methods.
-#' @method print summary.Cosinor
+#' Printing a summary of a Cosinor
+#' @param x a `summary.Cosinor` object produced by [summary.Cosinor()]
+#' @param \dots optional arguments to [print()] or [plot()] methods.
+#' @returns summary of Cosinor test
+#' @returns
+#' ## cardiovascular disease data (offset based on number of days in...
+#' ## ...the month scaled to an average month length)
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = 'month',
+#'   data = CVD,
+#'   type = 'monthly',
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#'   )
+#' summary(res)
 #' @export
 print.summary.Cosinor <- function(x, ...) {
   ## report results

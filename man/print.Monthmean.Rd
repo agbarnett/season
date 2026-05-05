@@ -7,18 +7,29 @@
 \method{print}{Monthmean}(x, digits = 1, ...)
 }
 \arguments{
-\item{x}{a \code{Monthmean} object produced by \code{monthmean}.}
+\item{x}{a \code{Monthmean} object produced by \code{\link[=monthmean]{monthmean()}}.}
 
-\item{digits}{minimal number of significant digits, see \code{print.default}}
+\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}}
 
-\item{\dots}{additional arguments passed to the print.}
+\item{\dots}{additional arguments passed to \code{\link[=print]{print()}}.}
+}
+\value{
+a table of values of Month and means
 }
 \description{
-Print the monthly means from a \code{Monthmean} object produced by
-\code{monthmean}.
+Print the monthly mean estimates from a \code{Monthmean} object produced by
+\code{\link[=monthmean]{monthmean()}}.
 }
-\details{
-The code prints the monthly mean estimates.
+\examples{
+\dontttest{
+mmean <- monthmean(
+  data=CVD,
+  resp='cvd',
+  offsetpop = expression(pop/100000),
+  adjmonth = 'average'
+  )
+mmean
+}
 }
 \seealso{
 \code{monthmean}

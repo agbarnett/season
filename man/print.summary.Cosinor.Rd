@@ -2,15 +2,34 @@
 % Please edit documentation in R/print.summary.Cosinor.R
 \name{print.summary.Cosinor}
 \alias{print.summary.Cosinor}
-\title{printing a summary of a Cosinor}
+\title{Printing a summary of a Cosinor}
 \usage{
 \method{print}{summary.Cosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{summary.Cosinor} object produced by \code{summary.Cosinor}}
+\item{x}{a \code{summary.Cosinor} object produced by \code{\link[=summary.Cosinor]{summary.Cosinor()}}}
 
-\item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
+\item{\dots}{optional arguments to \code{\link[=print]{print()}} or \code{\link[=plot]{plot()}} methods.}
+}
+\value{
+summary of Cosinor test
+
+\subsection{cardiovascular disease data (offset based on number of days in...}{
+}
+
+\subsection{...the month scaled to an average month length)}{
+
+res <- cosinor(
+cvd ~ 1,
+date = 'month',
+data = CVD,
+type = 'monthly',
+family = poisson(),
+offsetmonth = TRUE
+)
+summary(res)
+}
 }
 \description{
-printing a summary of a Cosinor
+Printing a summary of a Cosinor
 }

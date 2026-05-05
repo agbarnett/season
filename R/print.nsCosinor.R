@@ -4,18 +4,36 @@
 #' Print the Results of a Non-stationary Cosinor
 #'
 #' The default print method for a `nsCosinor` object produced by
-#' `nscosinor`.
+#' [nscosinor()].
 #'
 #' Prints out the model call, number of MCMC samples, sample size and residual
 #' summary statistics.
 #'
-#' @param x a `nsCosinor` object produced by `nscosinor`.
+#' @param x a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `nscosinor`, `summary.nsCosinor`
+#' @seealso [nscosinor()] [summary.nsCosinor()]
+#' @examples
+#' \donttest{
+#' # model to fit an annual pattern to the monthly cardiovascular disease data
+#' f <- 12
+#' tau <- c(10,50)
+#' \dontrun{
+#'   res12 <- nscosinor(
+#'     data = CVD,
+#'     response = 'adj',
+#'     cycles = f,
+#'     niters = 250,
+#'     burnin = 100,
+#'     tau = tau
+#'     )
+#' res12
+#' summary(res12)
+#' }
+#' }
 #' @export
 print.nsCosinor <- function(x, ...) {
-  ## Checks
+  
   if (!inherits(x, "nsCosinor")) {
     stop("Object must be of class 'nsCosinor'")
   }

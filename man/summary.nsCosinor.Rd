@@ -7,7 +7,7 @@
 \method{summary}{nsCosinor}(object, ...)
 }
 \arguments{
-\item{object}{a \code{nsCosinor} object produced by \code{nscosinor}.}
+\item{object}{a \code{nsCosinor} object produced by [\url{nscosinor()}].}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -27,13 +27,13 @@ cycle, and the amplitude and phase for each cycle.
 }
 \description{
 The default summary method for a \code{nsCosinor} object produced by
-\code{nscosinor}.
+[\url{nscosinor()}].
 }
 \details{
 The amplitude describes the average height of each seasonal cycle, and the
 phase describes the location of the peak. The results for the phase are
 given in radians (0 to 2\eqn{\pi}), they can be transformed to the time
-scale using the \code{invyrfraction} making sure to first divide by
+scale using the \code{\link[=invyrfraction]{invyrfraction()}} making sure to first divide by
 2\eqn{\pi}.
 
 The larger the standard deviation for the seasonal cycles, the greater the
@@ -41,7 +41,7 @@ non-stationarity. This is because a larger standard deviation means more
 change over time.
 }
 \seealso{
-\code{nscosinor}, \code{plot.nsCosinor}
+[\url{nscosinor()}], \code{plot.nsCosinor}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

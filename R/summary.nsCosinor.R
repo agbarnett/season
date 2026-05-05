@@ -4,12 +4,12 @@
 #' Summary for a Non-stationary Cosinor
 #'
 #' The default summary method for a `nsCosinor` object produced by
-#' `nscosinor`.
+#' [nscosinor()].
 #'
 #' The amplitude describes the average height of each seasonal cycle, and the
 #' phase describes the location of the peak. The results for the phase are
 #' given in radians (0 to 2\eqn{\pi}), they can be transformed to the time
-#' scale using the `invyrfraction` making sure to first divide by
+#' scale using the [invyrfraction()] making sure to first divide by
 #' 2\eqn{\pi}.
 #'
 #' The larger the standard deviation for the seasonal cycles, the greater the
@@ -17,7 +17,7 @@
 #' change over time.
 #'
 #' @aliases summary.nsCosinor
-#' @param object a `nsCosinor` object produced by `nscosinor`.
+#' @param object a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
 #' @return a list with the following elements:
 #'   * cycles: vector of cycles in units of time, e.g., for a six and twelve
@@ -30,10 +30,27 @@
 #'     residual standard deviation, the standard deviation for each seasonal
 #'     cycle, and the amplitude and phase for each cycle.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `nscosinor`, `plot.nsCosinor`
+#' @seealso [nscosinor()] [plot.nsCosinor()]
+#' @examples
+#' \donttest{
+#' # model to fit an annual pattern to the monthly cardiovascular disease data
+#' f <- c(12)
+#' tau <- c(10,50)
+#' \dontrun{
+#'   res12 <- nscosinor(
+#'     data = CVD,
+#'     response = 'adj',
+#'     cycles = f,
+#'     niters = 5000,
+#'     burnin = 1000,
+#'     tau = tau
+#'     )
+#' summary(res12)
+#' plot(res12)
+#' }
+#' }
 #' @export
 summary.nsCosinor <- function(object, ...) {
-  ## Checks
   if (!inherits(object, "nsCosinor")) {
     stop("Object must be of class 'nsCosinor'")
   }

@@ -67,7 +67,6 @@ accounting for leap years.
 }
 \examples{
 
-data(CVD)
 mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
                   offsetpop=expression(pop/100000), offsetmonth=TRUE)
 summary(mmodel)
