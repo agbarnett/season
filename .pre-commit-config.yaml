@@ -3,3 +3,4 @@ repos:
     rev: 0.4.0
     hooks:
       - id: jarl-check
+        args: [--fix]
