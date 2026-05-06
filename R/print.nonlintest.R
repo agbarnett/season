@@ -34,8 +34,8 @@ print.nonlintest <- function(x, ...) {
   }
 
   cat(
-    'Largest and smallest co-ordinates of the third-order moment outside \\
-    the test limits\n'
+    "Largest and smallest co-ordinates of the third-order moment outside",
+    "the test limits\n"
   )
   # Upper limit
   if (max(diff_u) > 0) {

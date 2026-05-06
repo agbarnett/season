@@ -12,7 +12,7 @@
       res_monthly$glm
     Output
       
-      Call:  glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
@@ -57,7 +57,7 @@
       Error in `cosinor()`:
       ! Error: 'offsetmonth' must be of type logical
 
-# cosinor errors when type is not one of daily/weekly/monthly/hourly
+# cosinor errors when type is not daily/weekly/monthly/hourly
 
     Code
       cosinor(cvd ~ 1, date = "month", data = CVD, type = "yearly", family = poisson())

@@ -32,7 +32,7 @@ test_that("casecross reproduces published 28-day stratum model (p.136)", {
     stratalength = 28,
     exclusion = 4
   )
-  expect_identical(model_28d$ncasedays, 5114)
+  expect_identical(model_28d$ncasedays, 5114L)
   expect_identical(model_28d$ncontroldays, 19.7)
 
   model_coef <- coef(model_28d$c.model)
@@ -62,7 +62,7 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
     exclusion = 4,
     matchdow = TRUE
   )
-  expect_identical(model_dow$ncasedays, 5114)
+  expect_identical(model_dow$ncasedays, 5114L)
   expect_identical(model_dow$ncontroldays, 3)
 
   coef_dow <- coef(model_dow$c.model)

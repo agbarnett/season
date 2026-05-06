@@ -13,5 +13,5 @@ test_that("flagleap works", {
     "Total number of days =  5114"
   )
 })
- that flagleap can distinguish leap months from regular months (Feb),
+# that flagleap can distinguish leap months from regular months (Feb),
 ## and correctly identify year and month.

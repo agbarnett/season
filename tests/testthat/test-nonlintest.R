@@ -9,7 +9,7 @@ test_that("nonlintest returns an object with the documented fields", {
   expect_s3_class(res, "nonlintest")
   expect_named(res, c("stats", "region", "diff_l", "diff_u", "n.lag"))
   # region/diff_l/diff_u are (n.lag + 1) x (n.lag + 1) matrices.
-  expect_identical(dim(res$region), c(5, 5))
+  expect_identical(dim(res$region), c(5L, 5L))
 })
 
 test_that("nonlintest output is stable for a fixed seed", {

@@ -22,7 +22,7 @@ Plots the trend and season(s) from a \code{nsCosinor} object produced by
 The code produces the season(s) and trend estimates.
 }
 \examples{
-\dontttest{
+\donttest{
 # model to fit an annual pattern to the monthly cardiovascular disease data
 f <- 12
 tau <- c(10,50)

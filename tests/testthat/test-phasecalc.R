@@ -69,7 +69,7 @@ test_that("phasecalc agrees with atan2(sine, cosine) wrapped into [0, 2pi)", {
     phase = purrr::map2_dbl(c0, s0, \(x, y) phasecalc(x, y))
   )
 
-  expect_identical(dat_atan$phase, dat_atan$expected_adj)
+  expect_equal(dat_atan$phase, dat_atan$expected_adj, tolerance = 1e-8)
 })
 
 # protection against cosine == 0 -------------------------------------

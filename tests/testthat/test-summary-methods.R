@@ -130,9 +130,9 @@ test_that("summary.nsCosinor handles multiple seasonal cycles", {
   )
   s <- summary(m)
   expect_identical(s$cycles, c(6, 12))
-  expect_identical(dim(s$stats$wstats), c(2, 3))
-  expect_identical(dim(s$stats$ampstats), c(2, 3))
-  expect_identical(dim(s$stats$phasestats), c(2, 3))
+  expect_identical(dim(s$stats$wstats), c(2L, 3L))
+  expect_identical(dim(s$stats$ampstats), c(2L, 3L))
+  expect_identical(dim(s$stats$phasestats), c(2L, 3L))
 })
 
 test_that("summary.casecross prints a structured report", {

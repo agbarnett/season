@@ -4,7 +4,6 @@
 #'
 #' @param \dots further arguments passed to or from other methods.
 #' @param x a `summary.nsCosinor` object produced by [summary.nsCosinor()].
-#' @examples
 
 #' @export
 print.summary.nscosinor <- function(x, ...) {

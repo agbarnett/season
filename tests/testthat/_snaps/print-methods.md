@@ -4,7 +4,7 @@
       print(m)
     Output
       
-      Call:  glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
@@ -28,7 +28,7 @@
       print(m)
     Output
       
-      Call:  glm(formula = f, family = family, data = data, offset = off)
+      Call:  stats::glm(formula = f, family = family, data = data, offset = off)
       
       Coefficients:
       (Intercept)    monthsFeb    monthsMar    monthsApr    monthsMay    monthsJun  
@@ -132,7 +132,7 @@
     Output
       Call:
       survival::coxph(formula = finalformula, data = finished, weights = outcome, 
-          method = c("breslow"))
+          method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
       o3mean -0.002883  0.997122  0.001129 -2.553 0.0107

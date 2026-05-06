@@ -30,8 +30,8 @@ print.casecross <- function(x, ...) {
   ## Use print.coxph
   if (!inherits(x$c.model, "coxph")) {
     stop(
-      "Conditional logistic regression model object 'c.model' must be of \\
-      class 'coxph'"
+      "Conditional logistic regression model object 'c.model'",
+      " must be of class 'coxph'"
     )
   }
   print(x$c.model, ...)

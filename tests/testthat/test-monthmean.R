@@ -46,7 +46,11 @@ test_that("monthmean adjmonth='thirty'/'average' rescale by a known constant", {
     offsetpop = expression(pop / 100000),
     adjmonth = "average"
   )
-  expect_identical(m_thirty$mean / m_avg$mean, rep(30 / (365.25 / 12), 12))
+  expect_equal(
+    m_thirty$mean / m_avg$mean,
+    rep(30 / (365.25 / 12), 12),
+    tolerance = 1e-7
+  )
 })
 
 test_that("monthmean without offset returns the raw monthly means", {

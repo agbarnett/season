@@ -21,7 +21,7 @@ Print the monthly mean estimates from a \code{Monthmean} object produced by
 \code{\link[=monthmean]{monthmean()}}.
 }
 \examples{
-\dontttest{
+\donttest{
 mmean <- monthmean(
   data=CVD,
   resp='cvd',

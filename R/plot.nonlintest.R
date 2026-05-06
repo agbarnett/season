@@ -47,10 +47,10 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
 
     gplot <- ggplot2::ggplot(for.plot, ggplot2::aes(r, s, z = z)) +
       ggplot2::geom_tile(ggplot2::aes(fill = z)) +
-      ggplot2::stat_contour() +
-      if (!plot) {
-        return(invisible(gplot))
-      }
+      ggplot2::stat_contour()
+    if (!plot) {
+      return(invisible(gplot))
+    }
     if (plot) {
       print(gplot)
     }

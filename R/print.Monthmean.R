@@ -12,7 +12,7 @@
 #' @seealso `monthmean`
 #' @export
 #' @examples
-#' \dontttest{
+#' \donttest{
 #' mmean <- monthmean(
 #'   data=CVD,
 #'   resp='cvd',

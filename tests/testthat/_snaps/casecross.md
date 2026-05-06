@@ -5,7 +5,7 @@
     Output
       Call:
       survival::coxph(formula = finalformula, data = finished, weights = outcome, 
-          method = c("breslow"))
+          method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
       o3mean -0.002883  0.997122  0.001129 -2.553 0.0107
@@ -34,7 +34,7 @@
     Output
       Call:
       survival::coxph(formula = finalformula, data = finished, weights = outcome, 
-          method = c("breslow"))
+          method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
       o3mean -0.002883  0.997122  0.001129 -2.553 0.0107

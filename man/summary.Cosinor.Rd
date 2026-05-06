@@ -2,19 +2,27 @@
 % Please edit documentation in R/summary.Cosinor.R
 \name{summary.Cosinor}
 \alias{summary.Cosinor}
-\title{Summary for a Cosinor}
+\alias{print.Cosinor}
+\alias{print.summary.Cosinor}
+\title{Print and summary methods for a Cosinor}
 \usage{
 \method{summary}{Cosinor}(object, digits = 2, ...)
+
+\method{print}{Cosinor}(x, ...)
+
+\method{print}{summary.Cosinor}(x, ...)
 }
 \arguments{
 \item{object}{a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}.}
 
-\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}}
+\item{digits}{minimal number of significant digits, see \code{\link[=print.default]{print.default()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
+
+\item{x}{a \code{Cosinor} or \code{summary.Cosinor} object.}
 }
 \value{
-a list with the following named elements:
+\code{summary.Cosinor()} returns a list with the following named elements:
 \itemize{
 \item n: sample size.
 \item amp: estimated amplitude.
@@ -32,21 +40,35 @@ a number (FALSE).
 \item type: type of data (yearly/monthly/weekly/hourly).
 \item ctable: table of regression coefficients.
 }
+
+\code{print.Cosinor()} and \code{print.summary.Cosinor()} are called for their side
+effect of printing to the console and invisibly return \code{x}.
 }
 \description{
-The default print method for a \code{Cosinor} object produced by
-\code{\link[=cosinor]{cosinor()}}.
+Print and summary methods for a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}.
+\code{summary()} summarises the sinusoidal seasonal pattern and tests whether
+there is a statistically significant seasonal or circadian pattern (assuming
+a smooth sinusoidal pattern). The amplitude describes the average height of
+the sinusoid, and the phase describes the location of the peak. The scale of
+the amplitude depends on the link function: for logistic regression the
+amplitude is given on a probability scale; for Poisson regression the
+amplitude is given on an absolute scale. \code{print()} uses the \code{glm} method for
+\code{\link[=print]{print()}} on the underlying model.
 }
-\details{
-Summarises the sinusoidal seasonal pattern and tests whether there is
-statistically significant seasonal or circadian pattern (assuming a smooth
-sinusoidal pattern). The amplitude describes the average height of the
-sinusoid, and the phase describes the location of the peak. The scale of the
-amplitude depends on the link function. For logistic regression the
-amplitude is given on a probability scale. For Poisson regression the
-amplitude is given on an absolute scale.
-}
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print(summary.Cosinor)}: Print a \code{summary.Cosinor} object: amplitude,
+phase, statistical significance, and the regression coefficient table.
+
+}}
+\section{Functions}{
+\itemize{
+\item \code{print(Cosinor)}: Print basic results from \code{\link[=cosinor]{cosinor()}} using the
+\code{glm} print method.
+
+}}
 \examples{
+\donttest{
 ## cardiovascular disease data (offset based on number of days in...
 ## ...the month scaled to an average month length)
 res <- cosinor(
@@ -57,10 +79,12 @@ res <- cosinor(
   family = poisson(),
   offsetmonth = TRUE
   )
+res
 summary(res)
 }
+}
 \seealso{
-\code{\link[=cosinor]{cosinor()}} \code{\link[=plot.Cosinor]{plot.Cosinor()}} \code{\link[=invyrfraction]{invyrfraction()}}
+\code{\link[=cosinor]{cosinor()}} \code{\link[=plot.Cosinor]{plot.Cosinor()}} \code{\link[=invyrfraction]{invyrfraction()}} \code{\link[=glm]{glm()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

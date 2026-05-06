@@ -12,7 +12,7 @@
 \item{\dots}{additional arguments passed to the sinusoid plot.}
 }
 \value{
-Plot of fitted sinusoid object produced by \link{cosinor}
+connected line plot of fitted sinusoid object produced by \link{cosinor}.
 }
 \description{
 Plots the fitted sinusoid from a \code{Cosinor} object produced by
@@ -24,6 +24,19 @@ The y-axis is on the scale of probability if the link function is
 "logit" or "cloglog". If the analysis was based on monthly
 data then month is shown on the x-axis. If the analysis was based on daily
 data then time is shown on the x-axis.
+}
+\examples{
+## cardiovascular disease data (offset based on number of days in...
+## ...the month scaled to an average month length)
+res <- cosinor(
+  cvd ~ 1,
+  date = 'month',
+  data = CVD,
+  type = 'monthly',
+  family = poisson(),
+  offsetmonth = TRUE
+  )
+plot(res)
 }
 \seealso{
 \code{\link[=cosinor]{cosinor()}}, \code{\link[=summary.Cosinor]{summary.Cosinor()}}, \code{\link[=seasrescheck]{seasrescheck()}}

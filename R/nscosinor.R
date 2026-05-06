@@ -132,8 +132,8 @@ nscosinor <- function(
   }
   if (length(tau) != length(cycles) + 1) {
     stop(
-      "Need to give a smoothing parameter (tau) for each cycle, plus one \\
-        for the trend"
+      "Need to give a smoothing parameter (tau) for each cycle, ",
+      "plus one for the trend"
     )
   }
   resp <- subset(data, select = response)[, 1] # instead of attach

@@ -83,7 +83,7 @@ symmetric and stationary. The default is to fit an annual seasonal pattern
 year: \code{cycle}=2). The model is fitted using a sine and cosine term that
 together describe the sinusoid. These parameters are added to a generalized
 linear model, so the model can be fitted to a range of dependent data (e.g.,
-Normal, Poisson, Binomial). Unlike the [\url{nscosinor()}] model, the cosinor
+Normal, Poisson, Binomial). Unlike the \code{\link[=nscosinor]{nscosinor()}} model, the cosinor
 model can be applied to unequally spaced data.
 }
 \examples{
