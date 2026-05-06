@@ -17,7 +17,6 @@
 #'
 #' @export
 print.monthglm <- function(x, ...) {
-  
   if (!inherits(x, "monthglm")) {
     stop("Object must be of class 'monthglm'")
   }
