@@ -12,7 +12,18 @@ Month](http://cranlogs.r-pkg.org/badges/season)
 
 R package to run seasonal analyses in time series. For details see our book "Analysing Seasonal Health Data" (2010) https://www.springer.com/gp/book/9783642107474.
 
+# Installation
+
+You can install `season` via the [R-Universe](https://agbarnett.r-universe.dev/season)
+
+```r
+install.packages('season', repos = c('https://agbarnett.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+# Main functions
+
 Useful functions are:
+
 * `casecross` for case-crossover analysis 
 * `nscosinor` to estimate non-stationary seasonal patterns using the Kalman filter
 * `nonlintest` for a time domain test of non-linearity 
