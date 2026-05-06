@@ -90,11 +90,7 @@ cosinor <- function(
   offsetpop = NULL,
   text = TRUE
 ) {
-  ## checks
-  # classes of all variables
-  classes <- lapply(data, class)
-  # also used later
-  this.class <- as.character(classes[which(names(data) == date)])
+  this.class <- class(data[[date]])
   if (!is.logical(offsetmonth)) {
     stop("Error: 'offsetmonth' must be of type logical")
   }
@@ -103,10 +99,10 @@ cosinor <- function(
   ) {
     stop("type must be daily, weekly, monthly or hourly")
   }
-  if (type == 'hourly' && any(grep('POSIXct', this.class, fixed = TRUE))) {
+  if (type == 'hourly' && !inherits(data[[date]], "POSIXct")) {
     stop("date variable must be of class POSIXct when type='hourly'")
   }
-  if (type == 'daily' && this.class != 'Date') {
+  if (type == 'daily' && !inherits(data[[date]], 'Date')) {
     stop("date variable must be of class Date when type='daily'")
   }
   if (alpha <= 0 || alpha >= 1) {
