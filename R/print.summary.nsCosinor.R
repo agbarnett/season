@@ -4,9 +4,27 @@
 #'
 #' @param \dots further arguments passed to or from other methods.
 #' @param x a `summary.nsCosinor` object produced by [summary.nsCosinor()].
-
+#' @returns summary - Statistics for non-stationary cosinor based on MCMC
+#'   chains.
 #' @export
-print.summary.nscosinor <- function(x, ...) {
+#' @examples
+#' \donttest{
+#' # model to fit an annual pattern to the monthly cardiovascular disease data
+#' f <- c(12)
+#' tau <- c(10,50)
+#' \dontrun{
+#'   res12 <- nscosinor(
+#'     data = CVD,
+#'     response = 'adj',
+#'     cycles = f,
+#'     niters = 200,
+#'     burnin = 100,
+#'     tau = tau
+#'     )
+#' summary(res12)
+#' }
+#' }
+print.summary.nsCosinor <- function(x, ...) {
   if (!inherits(x, "summary.nsCosinor")) {
     stop("Object must be of class 'summary.nsCosinor'")
   }

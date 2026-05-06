@@ -11,6 +11,10 @@
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
+\value{
+Prints out the model call, number of MCMC samples, sample size and
+residual summary statistics.
+}
 \description{
 The default print method for a \code{nsCosinor} object produced by
 \code{\link[=nscosinor]{nscosinor()}}.
