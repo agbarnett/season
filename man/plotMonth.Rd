@@ -16,16 +16,16 @@ per month, 1 plots all the months in the same panel.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
-\description{
-Plots results by month.
+\value{
+Facetted lineplot of response over time, one facet per month.
 }
-\details{
-Assumes the data frame contains variables called year and month.
+\description{
+Plots results by month. Assumes the data frame contains variables called
+year and month.
 }
 \examples{
 \donttest{
-data(CVD)
-plotMonth(data=CVD, resp='cvd', panels=12)
+  plotMonth(data=CVD, resp='cvd', panels=12)
 }
 
 }

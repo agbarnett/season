@@ -137,6 +137,21 @@ summary.Cosinor <- function(object, digits = 2, ...) {
 
 #' @describeIn summary.Cosinor Print basic results from [cosinor()] using the
 #'   `glm` print method.
+#' @examples
+#' \donttest{
+#' ## cardiovascular disease data (offset based on number of days in...
+#' ## ...the month scaled to an average month length)
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = 'month',
+#'   data = CVD,
+#'   type = 'monthly',
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#'   )
+#' res
+#' summary(res)
+#' }
 #' @export
 print.Cosinor <- function(x, ...) {
   if (!inherits(x, "Cosinor")) {
@@ -150,7 +165,14 @@ print.Cosinor <- function(x, ...) {
 # October 2011
 #' @describeIn summary.Cosinor Print a `summary.Cosinor` object: amplitude,
 #'   phase, statistical significance, and the regression coefficient table.
+#' @returns summary of output from [cosinor()].
 #' @export
+#' @examples
+#' ## hourly indoor temperature data
+#' res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
+#' summary(res)
+#' # to get the p-values for the sine and cosine estimates
+#' summary(res$glm)
 print.summary.Cosinor <- function(x, ...) {
   ## report results
   if (!inherits(x, "summary.Cosinor")) {

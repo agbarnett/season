@@ -116,8 +116,10 @@ plotCircular <- function(
     if (pieces.col[2] != "white") density.2 <- NA
   }
 
-  op <- par(no.readonly = TRUE) # the whole list of settable par's.
-  on.exit(par(op)) # restore graphic settings whenever function exits
+  # the whole list of settable par's.
+  op <- par(no.readonly = TRUE)
+  # restore graphic settings whenever function exits
+  on.exit(par(op), add = TRUE)
 
   bins <- length(area1)
   clockstart <- pi / 2 # default clock start at 12 o'clock

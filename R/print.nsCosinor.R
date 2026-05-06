@@ -11,6 +11,8 @@
 #'
 #' @param x a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
+#' @returns Prints out the model call, number of MCMC samples, sample size and
+#'   residual summary statistics.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso [nscosinor()] [summary.nsCosinor()]
 #' @examples
@@ -33,7 +35,6 @@
 #' }
 #' @export
 print.nsCosinor <- function(x, ...) {
-  
   if (!inherits(x, "nsCosinor")) {
     stop("Object must be of class 'nsCosinor'")
   }

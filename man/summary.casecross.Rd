@@ -23,7 +23,8 @@ the parameter estimates.
 \examples{
 \donttest{
 # cardiovascular disease data
-CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+# subset for example
+CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31'))
 # Effect of ozone on CVD death
 model1 <- casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
 summary(model1)

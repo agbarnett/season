@@ -15,9 +15,14 @@
 #' @seealso `monthglm`
 #' @examples
 #' \donttest{
-#' data(CVD)
-#' mmodel = monthglm(formula=cvd~1, data=CVD, family=poisson(),
-#'                   offsetpop=expression(pop/100000), offsetmonth=TRUE, refmonth=6)
+#' mmodel <- monthglm(
+#'   formula = cvd ~ 1,
+#'   data = CVD,
+#'   family = poisson(),
+#'   offsetpop = expression(pop / 100000),
+#'   offsetmonth = TRUE,
+#'   refmonth = 6
+#' )
 #' plot(mmodel)
 #' }
 #'
@@ -30,7 +35,6 @@ plot.monthglm <- function(
   ylab = "",
   ...
 ) {
-  
   if (!inherits(x, "monthglm")) {
     stop("Object must be of class 'monthglm'")
   }
@@ -123,7 +127,7 @@ plot.monthglm <- function(
 #' #'
 #' #' @export
 #' plot.monthglm <- function(x, alpha = 0.05, ylim = NULL, ...) {
-#'   
+#'
 #'   if (!inherits(x, "monthglm")) {
 #'     stop("Object must be of class 'monthglm'")
 #'   }

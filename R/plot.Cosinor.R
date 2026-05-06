@@ -37,7 +37,7 @@ plot.Cosinor <- function(x, ...) {
     stop("Object must be of class 'Cosinor'")
   }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
-  on.exit(par(op)) # restore graphic settings
+  on.exit(par(op), add = TRUE) # restore graphic settings
   f <- stats::as.formula(x$call$formula)
   parts <- paste(f)
   ylab <- parts[2]

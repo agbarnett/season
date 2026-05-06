@@ -36,3 +36,10 @@ NULL
 #' Health Data*. Springer.
 #' @keywords internal package ts models
 "_PACKAGE"
+
+
+utils::globalVariables(
+  c(
+    "time"
+  )
+)

@@ -5,22 +5,21 @@
 
 #' Plot Results by Month
 #'
-#' Plots results by month.
-#'
-#' Assumes the data frame contains variables called year and month.
+#' Plots results by month. Assumes the data frame contains variables called
+#'   year and month.
 #'
 #' @param data a data frame.
 #' @param resp response variable to plot.
 #' @param panels number of panels to use in plot (1 or 12). 12 gives one panel
 #' per month, 1 plots all the months in the same panel.
 #' @param \dots further arguments passed to or from other methods.
+#' @returns Facetted lineplot of response over time, one facet per month.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer.
 #' @examples
 #' \donttest{
-#' data(CVD)
-#' plotMonth(data=CVD, resp='cvd', panels=12)
+#'   plotMonth(data=CVD, resp='cvd', panels=12)
 #' }
 #'
 #' @export

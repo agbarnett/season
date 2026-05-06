@@ -232,7 +232,7 @@
 # print.summary.nscosinor prints amplitude and phase blocks
 
     Code
-      print.summary.nscosinor(summary(m))
+      print.summary.nsCosinor(summary(m))
     Output
       Statistics for non-stationary cosinor based on MCMC chains
       Number of MCMC samples = 31
@@ -250,15 +250,15 @@
 # print.summary.nscosinor errors on non-summary.nsCosinor input
 
     Code
-      print.summary.nscosinor(list(a = 1))
+      print.summary.nsCosinor(list(a = 1))
     Condition
-      Error in `print.summary.nscosinor()`:
+      Error in `print.summary.nsCosinor()`:
       ! Object must be of class 'summary.nsCosinor'
 
 # print.summary.nscosinor handles multiple seasonal cycles
 
     Code
-      print.summary.nscosinor(summary(m))
+      print.summary.nsCosinor(summary(m))
     Output
       Statistics for non-stationary cosinor based on MCMC chains
       Number of MCMC samples = 31

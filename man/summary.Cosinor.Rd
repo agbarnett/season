@@ -43,6 +43,8 @@ a number (FALSE).
 
 \code{print.Cosinor()} and \code{print.summary.Cosinor()} are called for their side
 effect of printing to the console and invisibly return \code{x}.
+
+summary of output from \code{\link[=cosinor]{cosinor()}}.
 }
 \description{
 Print and summary methods for a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}.
@@ -82,6 +84,25 @@ res <- cosinor(
 res
 summary(res)
 }
+\donttest{
+## cardiovascular disease data (offset based on number of days in...
+## ...the month scaled to an average month length)
+res <- cosinor(
+  cvd ~ 1,
+  date = 'month',
+  data = CVD,
+  type = 'monthly',
+  family = poisson(),
+  offsetmonth = TRUE
+  )
+res
+summary(res)
+}
+## hourly indoor temperature data
+res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
+summary(res)
+# to get the p-values for the sine and cosine estimates
+summary(res$glm)
 }
 \seealso{
 \code{\link[=cosinor]{cosinor()}} \code{\link[=plot.Cosinor]{plot.Cosinor()}} \code{\link[=invyrfraction]{invyrfraction()}} \code{\link[=glm]{glm()}}

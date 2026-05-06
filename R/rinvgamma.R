@@ -2,7 +2,7 @@
 #' Random Inverse Gamma Distribution
 #'
 #' Internal function to simulate a value from an inverse Gamma distribution,
-#' used by [nscosinor()]. See the [MCMCpack::rinvgamma()]. For internal use only.
+#' used by [nscosinor()]. See the [MCMCpack::rinvgamma()].
 #'
 #' @param n number of observations.
 #' @param shape Gamma shape parameter.
