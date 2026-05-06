@@ -61,7 +61,7 @@
 monthglm <- function(
   formula,
   data,
-  family = gaussian(),
+  family = stats::gaussian(),
   refmonth = 1,
   monthvar = 'month',
   offsetmonth = FALSE,
