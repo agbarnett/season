@@ -3,8 +3,8 @@
 
 #' Creates an Adjacency Matrix
 #'
-#' Creates an adjacency matrix in a form suitable for using in `BRugs` or
-#' WinBUGS.
+#' Creates an adjacency matrix in a form suitable for use with
+#'   [`nimble`](https://CRAN.R-project.org/package=nimble)
 #'
 #' Adjacency matrices are used by conditional autoregressive (CAR) models to
 #' smooth estimates according to some neighbourhood map.  The basic idea is

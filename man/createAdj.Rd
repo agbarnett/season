@@ -22,8 +22,8 @@ A list of:
 }
 }
 \description{
-Creates an adjacency matrix in a form suitable for using in \code{BRugs} or
-WinBUGS.
+Creates an adjacency matrix in a form suitable for use with
+\href{https://CRAN.R-project.org/package=nimble}{\code{nimble}}
 }
 \details{
 Adjacency matrices are used by conditional autoregressive (CAR) models to
