@@ -7,12 +7,27 @@
 \method{plot}{Monthmean}(x, ...)
 }
 \arguments{
-\item{x}{a \code{Monthmean} object produced by \code{monthmean}.}
+\item{x}{a \code{Monthmean} object produced by \code{\link[=monthmean]{monthmean()}}.}
 
 \item{\dots}{additional arguments passed to the plot.}
 }
+\value{
+Connected dot plot of estimated monthly means.
+}
 \description{
 Plots estimated monthly means.
+}
+\examples{
+\donttest{
+mmean <- monthmean(
+  data=CVD,
+  resp='cvd',
+  offsetpop = expression(pop/100000),
+  adjmonth = 'average'
+  )
+  mmean
+  plot(mmean)
+}
 }
 \seealso{
 \code{monthmean}

@@ -75,6 +75,9 @@ two variables}
 \item{\dots}{additional arguments to \code{\link[=plot]{plot()}} and/or
 \code{\link[=legend]{legend()}}. See \code{\link[=par]{par()}} for more details}
 }
+\value{
+a circular plot, also known as "rosebud", and "nightingale" plots.
+}
 \description{
 A circular plot useful for visualising monthly or weekly data.
 }

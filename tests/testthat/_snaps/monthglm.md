@@ -47,7 +47,7 @@
         pop))
     Output
       
-      Call:  glm(formula = f, family = family, data = data, offset = off)
+      Call:  stats::glm(formula = f, family = family, data = data, offset = off)
       
       Coefficients:
       (Intercept)    monthsFeb    monthsMar    monthsApr    monthsMay    monthsJun  

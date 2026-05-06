@@ -2,16 +2,30 @@
 % Please edit documentation in R/print.summary.monthglm.R
 \name{print.summary.monthglm}
 \alias{print.summary.monthglm}
-\title{printing a summary of a month.glm}
+\title{Printing a summary of a month.glm}
 \usage{
 \method{print}{summary.monthglm}(x, ...)
 }
 \arguments{
-\item{x}{a \code{summary.monthglm} object produced by
-\code{summary.monthglm}.}
+\item{x}{a \code{summary.monthglm} object produced by \code{\link[=summary.monthglm]{summary.monthglm()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
+\value{
+summary of monthglm results. This includes, number of observations,
+and a table of the mean, lower, upper, z value, and p value for each of the
+months.
+}
 \description{
-printing a summary of a month.glm
+Printing a summary of a month.glm
+}
+\examples{
+mmodel <- monthglm(
+  formula = cvd~1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop/100000),
+  offsetmonth = TRUE
+  )
+summary(mmodel)
 }

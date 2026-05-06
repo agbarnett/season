@@ -52,7 +52,7 @@ test_that("print.Monthmean errors on non-Monthmean input", {
 
 test_that("print.nonlintest prints the test statistics block", {
   set.seed(2026 - 04 - 29)
-  res <- nonlintest(data = rnorm(100), n.lag = 3, n.boot = 25)
+  res <- nonlintest(data = stats::rnorm(100), n.lag = 3, n.boot = 25)
   expect_snapshot(print(res))
 })
 
@@ -242,13 +242,13 @@ test_that("print.summary.nscosinor prints amplitude and phase blocks", {
     burnin = 30,
     div = 1000
   )
-  expect_snapshot(print.summary.nscosinor(summary(m)))
+  expect_snapshot(print.summary.nsCosinor(summary(m)))
 })
 
 test_that("print.summary.nscosinor errors on non-summary.nsCosinor input", {
   expect_snapshot(
     error = TRUE,
-    print.summary.nscosinor(list(a = 1))
+    print.summary.nsCosinor(list(a = 1))
   )
 })
 
@@ -268,5 +268,5 @@ test_that("print.summary.nscosinor handles multiple seasonal cycles", {
     burnin = 20,
     div = 1000
   )
-  expect_snapshot(print.summary.nscosinor(summary(m)))
+  expect_snapshot(print.summary.nsCosinor(summary(m)))
 })

@@ -2,15 +2,31 @@
 % Please edit documentation in R/print.monthglm.R
 \name{print.monthglm}
 \alias{print.monthglm}
-\title{Print \code{monthglm}}
+\title{Prints basic results from \code{\link[=monthglm]{monthglm()}}}
 \usage{
 \method{print}{monthglm}(x, ...)
 }
 \arguments{
 \item{x}{Object of class \code{monthglm}}
 
-\item{...}{further arguments passed to or from other methods.}
+\item{...}{further arguments passed to \code{\link[=plot]{plot()}}, or from other methods.}
+}
+\value{
+basic summary using the \code{glm} method for \code{\link[=print]{print()}}..
 }
 \description{
-Print \code{monthglm}
+Prints basic results from \code{\link[=monthglm]{monthglm()}}
+}
+\examples{
+\donttest{
+mmodel <- monthglm(
+  formula = cvd~1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop/100000),
+  offsetmonth = TRUE
+  )
+mmodel
+}
+
 }

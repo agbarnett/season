@@ -32,7 +32,8 @@ then the estimates are rotated back.
 }
 \examples{
 \donttest{
-theta = rnorm(n=2000, mean=0, sd=pi/50) # 2000 normal samples, centred on zero
+# 2000 normal samples, centred on zero
+theta <- rnorm(n=2000, mean=0, sd=pi/50)
 hist(theta, breaks=seq(-pi/8, pi/8, pi/30))
 ciPhase(theta)
 }

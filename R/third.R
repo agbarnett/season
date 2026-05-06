@@ -23,7 +23,7 @@
 #' @param centre centre series by subtracting mean (default=TRUE).
 #' @param outmax display the (x,y) lag co-ordinates for the maximum and minimum
 #' values (default=TRUE).
-#' @param plot contour plot of the third order moment (default=TRUE).
+#' @param plot ggplot contour plot of the third order moment (default=TRUE).
 #' @return a list with the following elements:
 #'   * waxis: the axis from `-n.lag` to `n.lag`.
 #'   * third: the estimated third order moment in the range -n.lag to n.lag,
@@ -36,7 +36,8 @@
 #'
 #' @export third
 third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
-  xaxis <- yaxis <- zaxis <- NULL # Setting some variables to NULL first (for R CMD check)
+  # Setting some variables to NULL first (for R CMD check)
+  xaxis <- yaxis <- zaxis <- NULL
 
   nsamp <- length(data)
   if (nsamp < 10) {

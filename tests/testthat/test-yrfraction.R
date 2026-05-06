@@ -27,7 +27,7 @@ date_tbl_1 <- data.frame(
       "1987-01-03",
       "1987-01-04",
       "1987-01-05"
-    ),
+    )
   ),
   yday = 0:4
 )
@@ -49,13 +49,13 @@ date_tbl_2$frac <- c(
 )
 
 test_that("yrfraction works", {
-  expect_equal(yrfraction(date_tbl_1$date), date_tbl_1$frac)
-  expect_equal(yrfraction(date_tbl_2$date), date_tbl_2$frac)
-  expect_equal(
+  expect_identical(yrfraction(date_tbl_1$date), date_tbl_1$frac)
+  expect_identical(yrfraction(date_tbl_2$date), date_tbl_2$frac)
+  expect_identical(
     yrfraction(c(1, 2, 3), type = "weekly"),
     c(0, 1 / (365.25 / 7), 2 / (365.25 / 7))
   )
-  expect_equal(
+  expect_identical(
     yrfraction(c(1, 2, 3), type = "monthly"),
     c(0, 1 / 12, 2 / 12)
   )

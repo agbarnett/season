@@ -23,6 +23,7 @@ Imports:
     ggplot2 (>= 4.0.3),
     MASS (>= 7.3.65),
     rlang,
+    stats,
     survival (>= 3.8.6)
 Suggests: 
     dlnm,
@@ -46,3 +47,5 @@ Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
+URL: https://github.com/agbarnett/season
+BugReports: https://github.com/agbarnett/season/issues

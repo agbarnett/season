@@ -1,8 +1,7 @@
-# flagleap.R
 # function to flag leap years/months in a range of dates
 # Jan 2014
 
-#' Count the Number of Days in the Month
+#' Flag leap years and months in a range of dates
 #'
 #' Counts the number of days per month given a range of dates. Used to adjust
 #' monthly count data for the at-risk time period. For internal use only.
@@ -20,14 +19,20 @@
 #'   * month: month (2 digits).
 #'   * ndaysmonth: number of days in the month (either 28, 29, 30 or 31).
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @export flagleap
+#' @note internal
+#' @noRd
+#' @examples
+#' flagleap(CVD)
 flagleap <- function(data, report = TRUE, matchin = FALSE) {
   n <- nrow(data)
-  yrmon <- data$year + ((data$month - 1) / 12) # used later
+  # used later
+  yrmon <- data$year + ((data$month - 1) / 12)
   startyr <- min(data$year)
   stopyr <- max(data$year)
-  startdate <- as.numeric(ISOdate(startyr, 1, 1)) / (60 * 60 * 24) # start on 1st Jan
-  stopdate <- as.numeric(ISOdate(stopyr, 12, 31)) / (60 * 60 * 24) # stop on 31st Dec
+  # start on 1st Jan
+  startdate <- as.numeric(ISOdate(startyr, 1, 1)) / (60 * 60 * 24)
+  # stop on 31st Dec
+  stopdate <- as.numeric(ISOdate(stopyr, 12, 31)) / (60 * 60 * 24)
   ndays <- stopdate - startdate + 1
   if (report) {
     cat("Total number of days = ", ndays, "\n")
@@ -37,11 +42,15 @@ flagleap <- function(data, report = TRUE, matchin = FALSE) {
   for (i in startdate:stopdate) {
     # loop through start to stop dates in days
     index <- index + 1
-    z[index] <- i * (60 * 60 * 24) # convert to seconds
+    # convert to seconds
+    z[index] <- i * (60 * 60 * 24)
   }
-  conv <- as.POSIXct(z, origin = "1970-01-01") # convert to a date
-  ndaysyear <- table(format(conv, '%Y')) # number of days per year
-  ndaysmonth <- table(format(conv, '%Y/%m')) # number of days per month (per year)
+  # convert to a date
+  conv <- as.POSIXct(z, origin = "1970-01-01")
+  # number of days per year
+  ndaysyear <- table(format(conv, '%Y'))
+  # number of days per month (per year)
+  ndaysmonth <- table(format(conv, '%Y/%m'))
   year <- as.numeric(substr(names(ndaysmonth), 1, 4))
   month <- as.numeric(substr(names(ndaysmonth), 6, 7))
   days <- as.data.frame(cbind(year, month, as.numeric(ndaysmonth)))

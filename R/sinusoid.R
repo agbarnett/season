@@ -12,6 +12,7 @@
 #' cycles).
 #' @param phase the phase of the sinusoid (location of the peak).
 #' @param \dots additional arguments passed to the plot.
+#' @returns plot of sinusoidal wave of a given amplitude, frequency, and phase.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer.

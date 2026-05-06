@@ -44,6 +44,7 @@
 #' @param auto.legend list of parameters for legend, see [legend()]
 #' @param \dots additional arguments to [plot()] and/or
 #' [legend()]. See [par()] for more details
+#' @returns a circular plot, also known as "rosebud", and "nightingale" plots.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
 #' Data*. Cambridge University Press, Cambridge.
@@ -115,8 +116,10 @@ plotCircular <- function(
     if (pieces.col[2] != "white") density.2 <- NA
   }
 
-  op <- par(no.readonly = TRUE) # the whole list of settable par's.
-  on.exit(par(op)) # restore graphic settings whenever function exits
+  # the whole list of settable par's.
+  op <- par(no.readonly = TRUE)
+  # restore graphic settings whenever function exits
+  on.exit(par(op), add = TRUE)
 
   bins <- length(area1)
   clockstart <- pi / 2 # default clock start at 12 o'clock
@@ -354,11 +357,3 @@ plotCircular <- function(
     )
   }
 } # end of function
-
-## examples
-##area<-c(8,7,6,5,4,3.5,2)
-##plotCircular(area,scale=0.7,clockwise=TRUE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))
-##plotCircular(area,scale=0.8,clockwise=FALSE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))
-
-##area<-c(12,11,6,5,4,3,2)
-##plotCircular(area,scale=0.8,clockwise=TRUE,labels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"))

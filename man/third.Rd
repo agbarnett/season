@@ -16,7 +16,7 @@ third(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE)
 \item{outmax}{display the (x,y) lag co-ordinates for the maximum and minimum
 values (default=TRUE).}
 
-\item{plot}{contour plot of the third order moment (default=TRUE).}
+\item{plot}{ggplot contour plot of the third order moment (default=TRUE).}
 }
 \value{
 a list with the following elements:

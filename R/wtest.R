@@ -64,8 +64,8 @@ wtest <- function(cases, offset, data, alpha = 0.05) {
   # criti
   test <- (((cbar - Ecbar)^2) / Vc) + (((sbar - Esbar)^2) / Vs)
   q <- 1 - alpha
-  xnull <- qchisq(q, df = 2) # null limit (critical value)
-  pvalue <- 1 - pchisq(test, df = 2)
+  xnull <- stats::qchisq(q, df = 2) # null limit (critical value)
+  pvalue <- 1 - stats::pchisq(test, df = 2)
   cat('Walter`s test\n')
   cat('test statistic', test, 'p-value', pvalue, '\n')
   return(list(test = test, pvalue = pvalue))

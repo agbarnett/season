@@ -7,7 +7,7 @@
 \method{plot}{nsCosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{nsCosinor} object produced by \code{nscosinor}.}
+\item{x}{a \code{nsCosinor} object produced by \code{\link[=nscosinor]{nscosinor()}}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
@@ -16,13 +16,31 @@ a plot of class \code{ggplot}.
 }
 \description{
 Plots the trend and season(s) from a \code{nsCosinor} object produced by
-\code{nscosinor}.
+\code{\link[=nscosinor]{nscosinor()}}.
 }
 \details{
 The code produces the season(s) and trend estimates.
 }
+\examples{
+\donttest{
+# model to fit an annual pattern to the monthly cardiovascular disease data
+f <- 12
+tau <- c(10,50)
+\dontrun{
+  res12 <- nscosinor(
+    data = CVD,
+    response = 'adj',
+    cycles = f,
+    niters = 200,
+    burnin = 100,
+    tau = tau
+    )
+plot(res12)
+}
+}
+}
 \seealso{
-\code{nscosinor}
+\code{\link[=nscosinor]{nscosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

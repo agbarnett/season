@@ -5,27 +5,27 @@
 
 #' Plot Results by Month
 #'
-#' Plots results by month.
-#'
-#' Assumes the data frame contains variables called year and month.
+#' Plots results by month. Assumes the data frame contains variables called
+#'   year and month.
 #'
 #' @param data a data frame.
 #' @param resp response variable to plot.
 #' @param panels number of panels to use in plot (1 or 12). 12 gives one panel
 #' per month, 1 plots all the months in the same panel.
 #' @param \dots further arguments passed to or from other methods.
+#' @returns Facetted lineplot of response over time, one facet per month.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer.
 #' @examples
 #' \donttest{
-#' data(CVD)
-#' plotMonth(data=CVD, resp='cvd', panels=12)
+#'   plotMonth(data=CVD, resp='cvd', panels=12)
 #' }
 #'
 #' @export
 plotMonth <- function(data, resp, panels = 12, ...) {
-  year <- yaxis <- Month <- NULL # Setting some variables to NULL first (for R CMD check)
+  # Setting some variables to NULL first (for R CMD check)
+  year <- yaxis <- Month <- NULL
 
   if (panels != 1 && panels != 12) {
     stop("panels must be 1 or 12")
@@ -33,7 +33,8 @@ plotMonth <- function(data, resp, panels = 12, ...) {
   data$yaxis <- subset(data, select = resp)[, 1]
 
   # 12 panels
-  data$Month <- factor(data$month, levels = 1:12, labels = month.abb) # to change facet_wrap labels
+  # to change facet_wrap labels
+  data$Month <- factor(data$month, levels = 1:12, labels = month.abb)
   if (panels == 12) {
     gplot <- ggplot2::ggplot(
       data,

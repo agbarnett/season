@@ -7,13 +7,16 @@
 \method{plot}{Cosinor}(x, ...)
 }
 \arguments{
-\item{x}{a \code{Cosinor} object produced by \code{cosinor}.}
+\item{x}{a \code{Cosinor} object produced by \code{\link[=cosinor]{cosinor()}}}
 
 \item{\dots}{additional arguments passed to the sinusoid plot.}
 }
+\value{
+connected line plot of fitted sinusoid object produced by \link{cosinor}.
+}
 \description{
 Plots the fitted sinusoid from a \code{Cosinor} object produced by
-\code{cosinor}.
+\code{\link[=cosinor]{cosinor()}}.
 }
 \details{
 The code produces the fitted sinusoid based on the intercept and sinusoid.
@@ -22,8 +25,21 @@ The y-axis is on the scale of probability if the link function is
 data then month is shown on the x-axis. If the analysis was based on daily
 data then time is shown on the x-axis.
 }
+\examples{
+## cardiovascular disease data (offset based on number of days in...
+## ...the month scaled to an average month length)
+res <- cosinor(
+  cvd ~ 1,
+  date = 'month',
+  data = CVD,
+  type = 'monthly',
+  family = poisson(),
+  offsetmonth = TRUE
+  )
+plot(res)
+}
 \seealso{
-\code{cosinor}, \code{summary.Cosinor}, \code{seasrescheck}
+\code{\link[=cosinor]{cosinor()}}, \code{\link[=summary.Cosinor]{summary.Cosinor()}}, \code{\link[=seasrescheck]{seasrescheck()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

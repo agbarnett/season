@@ -44,8 +44,12 @@ the year and month called year and month, respectively.
 \examples{
 \donttest{
 # cardiovascular disease data
-data(CVD)
-mmean = monthmean(data=CVD, resp='cvd', offsetpop=expression(pop/100000), adjmonth='average')
+mmean <- monthmean(
+  data=CVD,
+  resp='cvd',
+  offsetpop = expression(pop/100000),
+  adjmonth = 'average'
+  )
 mmean
 plot(mmean)
 }

@@ -28,6 +28,14 @@ pattern.
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/agbarnett/season}
+  \item Report bugs at \url{https://github.com/agbarnett/season/issues}
+}
+
+}
 \author{
 Adrian Barnett \href{mailto:a.barnett@qut.edu.au}{a.barnett@qut.edu.au}\cr Peter Baker\cr Oliver Hughes
 

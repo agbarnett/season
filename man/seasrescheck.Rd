@@ -9,6 +9,11 @@ seasrescheck(res)
 \arguments{
 \item{res}{residuals from some time series regression model.}
 }
+\value{
+four plots: 1. The histogram of the residuals; 2. A scatter plot
+against residual order; 3. The autocovariance; 4. The cumulative
+periodogram (see \code{\link[=cpgram]{cpgram()}}).
+}
 \description{
 Tests the residuals for any remaining seasonality.
 }
@@ -21,9 +26,14 @@ order, iii) the autocovariance, iv) the cumulative periodogram (see
 \donttest{
 # cardiovascular disease data
 # (use an offset of the scaled number of days in a month)
-data(CVD)
-model = cosinor(cvd~1, date='month', data=CVD, type='monthly',
-                family=poisson(), offsetmonth=TRUE)
+model <- cosinor(
+  cvd ~ 1,
+  date = 'month',
+  data = CVD,
+  type = 'monthly',
+  family = poisson(),
+  offsetmonth = TRUE
+  )
 seasrescheck(resid(model))
 }
 

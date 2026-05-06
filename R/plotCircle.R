@@ -1,20 +1,19 @@
-# plotCircle.R
 # Function to plot monthly rates using a grey shaded circular "country"
 # Assumes estimates are in numerical order, 1=Jan, 2=Feb, etc
 # April 2009
 
 #' Circular Plot
 #'
-#' Circular plot of a monthly variable.
-#'
-#' This circular plot can be useful for estimates of an annual seasonal
-#' pattern. Darker shades of grey correspond to larger numbers.
+#' Circular plot of a monthly variable. This circular plot can be useful for
+#' estimates of an annual seasonal pattern. Darker shades of grey correspond to
+#' larger numbers.
 #'
 #' @param months monthly variable to plot, the shades of grey of the 12
 #' segments are proportional to this variable. The first result is assumed to
 #' be January, the second February, and so on.
 #' @param dp decimal places for statistics, default=1.
-#' @param \dots additional arguments to `plot`
+#' @param \dots additional arguments to [plot()]
+#' @returns a donut-type plot of a monthly variable
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
@@ -34,8 +33,8 @@ plotCircle <- function(months, dp = 1, ...) {
   stan <- (stan1to0 * 0.7) + 0.3 # [0.3,1]
   dens <- gray(stan)
   plot(
-    c(0),
-    c(0),
+    0,
+    0,
     bty = 'n',
     xlab = '',
     main = '',
@@ -113,7 +112,8 @@ plotCircle <- function(months, dp = 1, ...) {
     )
     polygon(x, y, col = dens[i], border = NA, lwd = 1)
     # text label
-    clabel2 <- formatC(unstan[nbars - i + 1], format = "f", digits = dp) # convert to character
+    # convert to character
+    clabel2 <- formatC(unstan[nbars - i + 1], format = "f", digits = dp)
     text(2 * width, yref, clabel2)
   }
   par(op) # restore graphic settings

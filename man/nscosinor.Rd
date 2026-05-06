@@ -29,10 +29,10 @@ month pattern \code{cycles=c(6,12)}.}
 
 \item{burnin}{number of MCMC samples discarded as a burn-in (default=500).}
 
-\item{tau}{vector of smoothing parameters, \code{tau[1]} for trend, \code{tau[2]} for 1st
-seasonal parameter, \code{tau[3]} for 2nd seasonal parameter, etc. Larger values of
-tau allow more change between observations and hence a greater potential
-flexibility in the trend and season.}
+\item{tau}{vector of smoothing parameters, \code{tau[1]} for trend, \code{tau[2]} for
+1st seasonal parameter, \code{tau[3]} for 2nd seasonal parameter, etc. Larger
+values of tau allow more change between observations and hence a greater
+potential flexibility in the trend and season.}
 
 \item{lambda}{distance between observations (lambda=1/12 for monthly data,
 default).}
@@ -95,12 +95,18 @@ possibly poor initial estimates should be discarded (\code{burnin}).
 }
 \examples{
 \donttest{
-data(CVD)
 # model to fit an annual pattern to the monthly cardiovascular disease data
-f = c(12)
-tau = c(10,50)
-\dontrun{res12 = nscosinor(data=CVD, response='adj', cycles=f, niters=5000,
-         burnin=1000, tau=tau)
+f <- c(12)
+tau <- c(10,50)
+\dontrun{
+  res12 <- nscosinor(
+    data = CVD,
+    response = 'adj',
+    cycles = f,
+    niters = 5000,
+    burnin = 1000,
+    tau = tau
+    )
 summary(res12)
 plot(res12)
 }

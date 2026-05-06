@@ -26,7 +26,8 @@
 #' Springer.
 #' @examples
 #' \donttest{
-#' theta = rnorm(n=2000, mean=0, sd=pi/50) # 2000 normal samples, centred on zero
+#' # 2000 normal samples, centred on zero
+#' theta <- rnorm(n=2000, mean=0, sd=pi/50)
 #' hist(theta, breaks=seq(-pi/8, pi/8, pi/30))
 #' ciPhase(theta)
 #' }
@@ -55,8 +56,10 @@ ciPhase <- function(theta, alpha = 0.05) {
   }
   toret <- list()
   toret$mean <- mean(ideal) - diff
-  toret$lower <- as.numeric(quantile(ideal, prob = alpha / 2) - diff)
-  toret$upper <- as.numeric(quantile(ideal, prob = 1 - (alpha / 2)) - diff)
+  toret$lower <- as.numeric(stats::quantile(ideal, prob = alpha / 2) - diff)
+  toret$upper <- as.numeric(
+    stats::quantile(ideal, prob = 1 - (alpha / 2)) - diff
+  )
   # cat('Mean',mean,'Lower',lower,'Upper',upper,'\n')
   return(toret)
 }

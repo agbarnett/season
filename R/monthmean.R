@@ -31,8 +31,12 @@
 #' @examples
 #' \donttest{
 #' # cardiovascular disease data
-#' data(CVD)
-#' mmean = monthmean(data=CVD, resp='cvd', offsetpop=expression(pop/100000), adjmonth='average')
+#' mmean <- monthmean(
+#'   data=CVD,
+#'   resp='cvd',
+#'   offsetpop = expression(pop/100000),
+#'   adjmonth = 'average'
+#'   )
 #' mmean
 #' plot(mmean)
 #' }
@@ -93,7 +97,3 @@ monthmean <- function(
   class(toret) <- 'Monthmean'
   return(toret)
 }
-
-# example
-# mmean<-monthmean(data=CVD,resp=cvd,offsetpop=expression(pop/100000))
-# adjmean<-monthmean(data=elderly,resp=cvd,adjmonth='average',offsetpop=expression(pop/100000))

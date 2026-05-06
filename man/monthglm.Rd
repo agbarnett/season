@@ -7,7 +7,7 @@
 monthglm(
   formula,
   data,
-  family = gaussian(),
+  family = stats::gaussian(),
   refmonth = 1,
   monthvar = "month",
   offsetmonth = FALSE,
@@ -67,9 +67,13 @@ accounting for leap years.
 }
 \examples{
 
-data(CVD)
-mmodel = monthglm(formula=cvd~1 ,data=CVD, family=poisson(),
-                  offsetpop=expression(pop/100000), offsetmonth=TRUE)
+mmodel <- monthglm(
+  formula = cvd~1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop/100000),
+  offsetmonth = TRUE
+  )
 summary(mmodel)
 
 }

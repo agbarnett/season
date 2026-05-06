@@ -142,7 +142,7 @@ formula <- paste(
   paste(spline.names, collapse = " + "),
   "+ Mon + Tue + Wed + Thu + Fri + Sat"
 )
-model <- casecross(as.formula(formula), data = CVDdaily)
+model <- casecross(stats::as.formula(formula), data = CVDdaily)
 summary(model)
 
 ```
@@ -292,8 +292,7 @@ This model takes a few minutes to run because it uses Markov chain Monte Carlo s
 #| warning: false
 #| fig-width: 7
 set.seed(1234) # set the random seed to give repeatable results
-data(CVD)
-f <- c(12) # a single twelve month cycle
+f <- 12 # a single twelve month cycle
 tau <- c(10, 50) # achieved via trial-and-error; small tau -> less variability
 ns.season <- nscosinor(
   data = CVD,

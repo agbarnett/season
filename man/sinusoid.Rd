@@ -16,6 +16,9 @@ cycles).}
 
 \item{\dots}{additional arguments passed to the plot.}
 }
+\value{
+plot of sinusoidal wave of a given amplitude, frequency, and phase.
+}
 \description{
 Plots a sinusoid over 0 to 2\eqn{\pi}.
 }

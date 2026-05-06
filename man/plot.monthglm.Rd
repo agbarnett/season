@@ -18,15 +18,24 @@ automatically calculated).}
 
 \item{\dots}{additional arguments passed to \code{\link[=plot]{plot()}}.}
 }
+\value{
+Plot of the estimated from a generalized linear model with a
+categorical variable of month.
+}
 \description{
 Plots the estimated from a generalized linear model with a categorical
 variable of month.
 }
 \examples{
 \donttest{
-data(CVD)
-mmodel = monthglm(formula=cvd~1, data=CVD, family=poisson(),
-                  offsetpop=expression(pop/100000), offsetmonth=TRUE, refmonth=6)
+mmodel <- monthglm(
+  formula = cvd ~ 1,
+  data = CVD,
+  family = poisson(),
+  offsetpop = expression(pop / 100000),
+  offsetmonth = TRUE,
+  refmonth = 6
+)
 plot(mmodel)
 }
 

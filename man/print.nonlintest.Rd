@@ -7,16 +7,27 @@
 \method{print}{nonlintest}(x, ...)
 }
 \arguments{
-\item{x}{a \code{nonlintest} object produced by \code{nonlintest}.}
+\item{x}{a \code{nonlintest} object produced by \code{\link[=nonlintest]{nonlintest()}}.}
 
-\item{\dots}{additional arguments to \code{plot}}
+\item{\dots}{additional arguments to \code{\link[=plot]{plot()}}}
+}
+\value{
+summary of Results of the Non-linear Test.
 }
 \description{
 The default print method for a \code{nonlintest} object produced by
-\code{nonlintest}.
+\code{\link[=nonlintest]{nonlintest()}}.
+}
+\examples{
+\donttest{
+\dontrun{
+  test_res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
+  test_res
+}
+}
 }
 \seealso{
-\code{nonlintest}, \code{plot.nonlintest}
+\code{\link[=nonlintest]{nonlintest()}} \code{\link[=plot.nonlintest]{plot.nonlintest()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

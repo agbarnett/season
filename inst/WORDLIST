@@ -8,12 +8,12 @@ DW
 Dockery
 Dominici
 Eakin
+Facetted
 Guo
 JM
 Kalman
 Kugiumtzis
 Lumley
-MCMCpack
 Methodologic
 Monthglm
 Monthmean
@@ -42,10 +42,12 @@ cosinor
 ctable
 cvd
 dob
+donut
 dow
 edu
 ests
 etc
+ggplot
 glm
 lineplot
 lphase
