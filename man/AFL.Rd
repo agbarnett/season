@@ -22,12 +22,14 @@ Dates of birth from Wikipedia.
 AFL
 }
 \description{
-The data are: a) the monthly frequencies of birthdays and an expected number
-based on monthly birth statistics for 1975 to 1991. b) all 617 players'
-initials and birthdays (excluding non-Australian born players).
+The data are:
+a) the monthly frequencies of birthdays and an expected number
+based on monthly birth statistics for 1975 to 1991.
+b) all 617 players' initials and birthdays (excluding non-Australian
+born players).
 }
 \examples{
-\donttest{data(AFL)
+\donttest{
 barplot(AFL$players, names.arg=month.abb)
 }
 

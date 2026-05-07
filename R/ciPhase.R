@@ -63,8 +63,3 @@ ciPhase <- function(theta, alpha = 0.05) {
   # cat('Mean',mean,'Lower',lower,'Upper',upper,'\n')
   return(toret)
 }
-
-# example
-# theta<-rnorm(n=2000,mean=0,sd=pi/50) # Normal, centred on zero
-# cis<-ciPhase(theta)
-# hist(theta,breaks=seq(-pi/8,pi/8,pi/30))

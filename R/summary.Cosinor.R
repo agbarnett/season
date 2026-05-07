@@ -56,7 +56,7 @@
 #' }
 #' @export
 summary.Cosinor <- function(object, digits = 2, ...) {
-  type <- object$call$type
+  type <- object$type
 
   if (!inherits(object, "Cosinor")) {
     stop("Object must be of class 'Cosinor'")
@@ -98,7 +98,7 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   # convert radian phase to a date
   phase <- invyrfraction(
     frac = phaser / (2 * pi),
-    type = object$call$type,
+    type = type,
     text = object$call$text
   )
   # reverse phase (low)
@@ -111,7 +111,7 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   }
   lphase <- invyrfraction(
     frac = lphaser / (2 * pi),
-    type = object$call$type,
+    type = type,
     text = object$call$text
   )
   # statistical signficance

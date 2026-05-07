@@ -1,6 +1,3 @@
-# cipolygon.R
-# function to draw CI polygon
-
 #' Function to Draw CI Polygon
 #'
 #' Internal function to draw a confidence interval for multiple times as a grey

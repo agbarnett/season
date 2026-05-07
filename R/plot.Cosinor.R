@@ -55,19 +55,19 @@ plot.Cosinor <- function(x, ...) {
       ylab = ylab,
       ...
     )
-    if (x$call$type == 'monthly') {
+    if (x$type == 'monthly') {
       m.abb <- substr(month.abb, 1, 1)
       axis(side = 1, at = 1:12, labels = m.abb)
       points(time[o], x$fitted.values[o], pch = 19)
     }
-    if (x$call$type == 'daily') {
+    if (x$type == 'daily') {
       years <- as.numeric(names(table(format(time[o], '%Y'))))
       firsts <- as.numeric(ISOdate(month = 1, day = 1, year = years)) /
         (24 * 60 * 60)
       axis(side = 1, at = firsts, labels = years)
       rug(time[o])
     }
-    if (x$call$type == 'hourly') {
+    if (x$type == 'hourly') {
       hours <- unique(as.numeric(format(time[o], '%H')))
       smonth <- as.numeric(format(time[1], '%m')) # starting month
       sday <- as.numeric(format(time[1], '%d')) # starting day
@@ -80,8 +80,8 @@ plot.Cosinor <- function(x, ...) {
   if (x$call$link == 'logit' || x$call$link == 'cloglog') {
     ylab <- paste0('Probability(', ylab, ')')
     plot(
-      time[o],
-      x$fitted.values[o],
+      x = time[o],
+      y = x$fitted.values[o],
       type = 'l',
       xaxt = 'n',
       col = 'black',
@@ -89,12 +89,12 @@ plot.Cosinor <- function(x, ...) {
       ylab = ylab,
       ...
     )
-    if (x$call$type == 'monthly') {
+    if (x$type == 'monthly') {
       m.abb <- substr(month.abb, 1, 1)
       axis(side = 1, at = 1:12, labels = m.abb)
       points(time[o], x$fitted.values[o], pch = 19)
     }
-    if (x$call$type == 'daily') {
+    if (x$type == 'daily') {
       years <- as.numeric(names(table(format(time[o], '%Y'))))
       firsts <- as.numeric(ISOdate(month = 1, day = 1, year = years)) /
         (24 * 60 * 60)

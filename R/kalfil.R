@@ -1,10 +1,7 @@
-# Forward and backward sweep of the Kalman filter
-
 #' Forward and Backward Sweep of the Kalman Filter
 #'
 #' Internal function to do a forward and backward sweep of the Kalman filter,
 #' used by [nscosinor()]. For internal use only.
-#'
 #'
 #' @name kalfil
 #' @param data a data frame.

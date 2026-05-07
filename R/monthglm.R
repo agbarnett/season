@@ -1,8 +1,4 @@
-## monthglm.R
-## fit a GLM using month as a factor
-## option to add offset to control for uneven number of days
 ## Jan 2014
-
 #' Fit a GLM with Month
 #'
 #' Fit a generalized linear model with a categorical variable of month.

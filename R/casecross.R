@@ -1,9 +1,4 @@
-## casecross.R
-## time-stratified case-crossover
 ## Oct 2011
-## assumes date variable is called 'date'
-## quicker version
-
 #' Case--crossover Analysis to Control for Seasonality
 #'
 #' Fits a time-stratified case--crossover to regularly spaced time series data.

@@ -1,8 +1,10 @@
 #' Australian Football League (AFL) Players' Birthdays for the 2009 Season
 #'
-#' The data are: a) the monthly frequencies of birthdays and an expected number
-#' based on monthly birth statistics for 1975 to 1991. b) all 617 players'
-#' initials and birthdays (excluding non-Australian born players).
+#' The data are:
+#'   a) the monthly frequencies of birthdays and an expected number
+#'     based on monthly birth statistics for 1975 to 1991.
+#'   b) all 617 players' initials and birthdays (excluding non-Australian
+#'     born players).
 #'
 #' @format A list with the following 5 variables:
 #'   * month: integer month (1 to 12)
@@ -13,7 +15,7 @@
 #'     format)
 #' @source Dates of birth from Wikipedia.
 #' @examples
-#' \donttest{data(AFL)
+#' \donttest{
 #' barplot(AFL$players, names.arg=month.abb)
 #' }
 #'
@@ -48,7 +50,6 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(CVD)
 #' plot(CVD$yrmon, CVD$cvd, type='o', xlab='Date',
 #'      ylab='Number of CVD deaths per month')
 #'
@@ -146,7 +147,6 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(indoor)
 #' res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
 #' summary(res)
 #'

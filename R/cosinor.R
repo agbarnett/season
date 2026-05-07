@@ -1,4 +1,3 @@
-# cosinor.R
 # cosinor function using a GLM
 # available link functions = identity, log, logit, cloglog
 # date = date for daily data, month for monthly data
@@ -85,7 +84,7 @@ cosinor <- function(
   alpha = 0.05,
   cycles = 1,
   rescheck = FALSE,
-  type = 'daily',
+  type = c("daily", "weekly", "monthly", "hourly"),
   offsetmonth = FALSE,
   offsetpop = NULL,
   text = TRUE
@@ -94,11 +93,9 @@ cosinor <- function(
   if (!is.logical(offsetmonth)) {
     stop("Error: 'offsetmonth' must be of type logical")
   }
-  if (
-    type != 'daily' && type != 'weekly' && type != 'monthly' && type != 'hourly'
-  ) {
-    stop("type must be daily, weekly, monthly or hourly")
-  }
+
+  type <- rlang::arg_match(type)
+
   if (type == 'hourly' && !inherits(data[[date]], "POSIXct")) {
     stop("date variable must be of class POSIXct when type='hourly'")
   }
@@ -186,6 +183,7 @@ cosinor <- function(
   toret$fitted.values <- pred
   toret$residuals <- res
   toret$date <- date
+  toret$type <- type
   class(toret) <- 'Cosinor'
   return(toret)
 }

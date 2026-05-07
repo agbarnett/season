@@ -1,6 +1,3 @@
-# createAdj.R
-# create an adjancency matrix by first creating a matrix
-
 #' Creates an Adjacency Matrix
 #'
 #' Creates an adjacency matrix in a form suitable for use with
