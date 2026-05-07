@@ -1,3 +1,10 @@
+test_that("inyrfraction fails type is not one of defined set", {
+  expect_snapshot(
+    error = TRUE,
+    invyrfraction(frac = c(0, 0.5, 1), type = "minutes", text = TRUE)
+  )
+})
+
 test_that("inyrfraction works", {
   expect_snapshot(
     invyrfraction(frac = c(0, 0.5, 1), type = "hourly", text = TRUE)

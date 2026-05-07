@@ -31,7 +31,13 @@
 #' invyrfraction(c(0, 0.5, 0.99), type='monthly')
 #'
 #' @export invyrfraction
-invyrfraction <- function(frac, type = 'daily', text = TRUE) {
+invyrfraction <- function(
+  frac,
+  type = c("daily", "monthly", "hourly", "weekly"),
+  text = TRUE
+) {
+  type <- rlang::arg_match(type)
+
   n <- length(frac)
   if (sum(frac < 0) + sum(frac > 1) > 0) {
     stop('Fraction must be between 0 and 1')

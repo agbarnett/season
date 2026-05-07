@@ -67,7 +67,7 @@
 #' \dontrun{test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
 #' }
 #'
-#' @export nonlintest
+#' @export
 nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
   # Initial variables;
   n <- length(data)

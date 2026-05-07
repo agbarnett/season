@@ -1,8 +1,5 @@
-# monthmean.R
-# function to calculate monthly mean or adjusted monthly mean for count data
 # Assumes that data contains two variables: month and year
 # November 2009
-
 #' Monthly Means
 #'
 #' Calculate the monthly mean or adjusted monthly mean for count data.
@@ -25,7 +22,7 @@
 #' parts:
 #'   * mean: a vector of length 12 with the monthly means.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `plot.Monthmean`
+#' @seealso [plot.Monthmean()]
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer.
 #' @examples

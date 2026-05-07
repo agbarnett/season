@@ -12,7 +12,8 @@
 #'
 #' @param date a date variable if type="daily", or an integer between 1 and 12
 #'   if type="monthly".
-#' @param type "daily" for dates, or "monthly" for months.
+#' @param type One of "daily" (default) for dates, "monthly" for months, or
+#'   "weekly" for weeks.
 #' @return the fraction of the year.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
@@ -24,7 +25,8 @@
 #' yrfraction(1:12, type='monthly')
 #'
 #' @export yrfraction
-yrfraction <- function(date, type = 'daily') {
+yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
+  type <- rlang::arg_match(type)
   if (type == 'daily') {
     if (!inherits(date, "Date")) {
       stop("Date variable for annual data must be in date format, see ?Dates")

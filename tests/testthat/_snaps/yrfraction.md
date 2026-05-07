@@ -38,3 +38,11 @@
       Error in `yrfraction()`:
       ! Date variable for monthly data must be month integer (1 to 12)
 
+# yrfraction fails when type is not of defined set
+
+    Code
+      yrfraction(c(1, 2, 3), type = "minutes")
+    Condition
+      Error in `yrfraction()`:
+      ! `type` must be one of "daily", "weekly", or "monthly", not "minutes".
+

@@ -13,7 +13,7 @@ cosinor(
   alpha = 0.05,
   cycles = 1,
   rescheck = FALSE,
-  type = "daily",
+  type = c("daily", "weekly", "monthly", "hourly"),
   offsetmonth = FALSE,
   offsetpop = NULL,
   text = TRUE

@@ -4,7 +4,7 @@
       names(res_monthly)
     Output
       [1] "call"          "glm"           "fitted.plus"   "fitted.values"
-      [5] "residuals"     "date"         
+      [5] "residuals"     "date"          "type"         
 
 ---
 
@@ -28,7 +28,7 @@
       names(m_daily)
     Output
       [1] "call"          "glm"           "fitted.plus"   "fitted.values"
-      [5] "residuals"     "date"         
+      [5] "residuals"     "date"          "type"         
 
 ---
 
@@ -63,7 +63,8 @@
       cosinor(cvd ~ 1, date = "month", data = CVD, type = "yearly", family = poisson())
     Condition
       Error in `cosinor()`:
-      ! type must be daily, weekly, monthly or hourly
+      ! `type` must be one of "daily", "weekly", "monthly", or "hourly", not "yearly".
+      i Did you mean "weekly"?
 
 # cosinor requires POSIXct dates when type='hourly'
 

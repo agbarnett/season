@@ -60,7 +60,7 @@ Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer.
 }
 \seealso{
-\code{plot.Monthmean}
+\code{\link[=plot.Monthmean]{plot.Monthmean()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

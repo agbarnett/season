@@ -4,13 +4,14 @@
 \alias{yrfraction}
 \title{Fraction of the Year}
 \usage{
-yrfraction(date, type = "daily")
+yrfraction(date, type = c("daily", "weekly", "monthly"))
 }
 \arguments{
 \item{date}{a date variable if type="daily", or an integer between 1 and 12
 if type="monthly".}
 
-\item{type}{"daily" for dates, or "monthly" for months.}
+\item{type}{One of "daily" (default) for dates, "monthly" for months, or
+"weekly" for weeks.}
 }
 \value{
 the fraction of the year.
