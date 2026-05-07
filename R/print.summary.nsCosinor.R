@@ -1,5 +1,3 @@
-## print.summary.nscosinor.R
-
 #' Print a summary of an [nscosinor()] object
 #'
 #' @param \dots further arguments passed to or from other methods.

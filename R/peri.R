@@ -17,7 +17,6 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
-#' data(CVD)
 #' p = peri(CVD$cvd)
 #' }
 #'

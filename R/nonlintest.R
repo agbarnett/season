@@ -64,7 +64,9 @@
 #' pages 26--33
 #' @examples
 #' \donttest{
-#' \dontrun{test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
+#' \dontrun{
+#' test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' }
 #' }
 #'
 #' @export

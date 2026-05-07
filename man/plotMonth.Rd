@@ -25,7 +25,7 @@ year and month.
 }
 \examples{
 \donttest{
-  plotMonth(data=CVD, resp='cvd', panels=12)
+  plotMonth(data = CVD, resp = 'cvd', panels = 12)
 }
 
 }

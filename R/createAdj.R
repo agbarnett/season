@@ -26,8 +26,9 @@
 #' @examples
 #' \donttest{
 #' # Nearest neighbour matrix for 5 time points
-#' x = c(NA,1,NA,NA,NA)
-#' (V = toeplitz(x))
+#' x <- c(NA,1,NA,NA,NA)
+#' V <- toeplitz(x)
+#' V
 #' createAdj(V)
 #' }
 #'

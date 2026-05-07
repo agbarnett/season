@@ -11,13 +11,14 @@
 #' @examples
 #' \donttest{
 #' mmean <- monthmean(
-#'   data=CVD,
-#'   resp='cvd',
-#'   offsetpop = expression(pop/100000),
+#'   data = CVD,
+#'   resp = 'cvd',
+#'   offsetpop = expression(pop / 100000),
 #'   adjmonth = 'average'
-#'   )
-#'   mmean
-#'   plot(mmean)
+#' )
+#' mmean
+#' plot(mmean)
+#'
 #' }
 plot.Monthmean <- function(x, ...) {
   ## Check

@@ -31,8 +31,7 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
-#' data(CVD)
-#' third(CVD$cvd, n.lag=12)
+#' third(CVD$cvd, n.lag = 12)
 #'
 #' @export third
 third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {

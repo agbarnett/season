@@ -99,7 +99,12 @@ res
 summary(res)
 }
 ## hourly indoor temperature data
-res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
+res <- cosinor(
+  bedroom ~ 1,
+  date = 'datetime',
+  type = 'hourly',
+  data = indoor
+)
 summary(res)
 # to get the p-values for the sine and cosine estimates
 summary(res$glm)

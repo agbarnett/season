@@ -58,7 +58,9 @@ X_{t-1}\varepsilon_{t-1} +\varepsilon_t}.
 }
 \examples{
 \donttest{
-\dontrun{test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
+\dontrun{
+test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+}
 }
 
 }

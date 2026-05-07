@@ -15,8 +15,8 @@
 #' @export
 #' @examples
 #' \donttest{
-#'   test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
-#'   plot(test.res)
+#' test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' plot(test.res)
 #' }
 plot.nonlintest <- function(x, plot = TRUE, ...) {
   z <- NULL # Setting some variables to NULL first (for R CMD check)

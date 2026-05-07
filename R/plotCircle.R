@@ -17,7 +17,7 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
-#' plotCircle(months=seq(1,12,1),dp=0)
+#' plotCircle(months = seq(1,12,1), dp = 0)
 #' }
 #'
 #' @export

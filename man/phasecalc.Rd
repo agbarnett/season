@@ -23,8 +23,8 @@ Returns the phase in radians, in the range \eqn{[0,2\pi)}. The phase is the
 peak in the sinusoid.
 }
 \examples{
-
-phasecalc(cosine=0, sine=1) # pi/2
+# pi/2
+phasecalc(cosine=0, sine=1)
 
 }
 \references{

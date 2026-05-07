@@ -18,8 +18,8 @@
 #' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
 #' Data*. Cambridge University Press, Cambridge. Page 31.
 #' @examples
-#'
-#' phasecalc(cosine=0, sine=1) # pi/2
+#' # pi/2
+#' phasecalc(cosine=0, sine=1)
 #'
 #' @export phasecalc
 phasecalc <- function(cosine, sine) {

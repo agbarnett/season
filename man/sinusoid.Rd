@@ -29,7 +29,11 @@ plotted using the equation: \eqn{A\cos(ft-P), t=0,\ldots,2 \pi}, where
 \eqn{P} is the phase.
 }
 \examples{
-sinusoid(amplitude=1, frequency=1, phase=1)
+sinusoid(
+  amplitude = 1,
+  frequency = 1,
+  phase = 1
+  )
 
 }
 \references{
