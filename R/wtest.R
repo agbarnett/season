@@ -13,7 +13,7 @@
 #' @param offset variable name for at-risk population ("trials").
 #' @param data data frame (optional).
 #' @param alpha significance level (default=0.05).
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * test: test statistic.
 #'   * pvalue: p-value.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}

@@ -18,7 +18,7 @@
 #' non-neighbours.
 #' @param suffix string to be appended to "num", "adj" and
 #' "weights" object names
-#' @return A list of:
+#' @returns A list of:
 #'   * num: the total number of neighbours
 #'   * adj: the index number of the adjacent neighbours
 #'   * weights: weights

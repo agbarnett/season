@@ -18,7 +18,7 @@
 #' @param offsetpop optional population, used as an offset (default=NULL).
 #' @param adjmonth adjust monthly counts and scale to a 30 day month ("thirty")
 #'   or the average month length ("average") (default="none").
-#' @return Returns an object of class "Monthmean" with the following
+#' @returns Returns an object of class "Monthmean" with the following
 #' parts:
 #'   * mean: a vector of length 12 with the monthly means.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}

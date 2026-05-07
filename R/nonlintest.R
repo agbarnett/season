@@ -41,7 +41,7 @@
 #' @param n.boot the number of bootstrap replications (suggested minimum of
 #' 100; 1000 or more would be better).
 #' @param alpha statistical significance level of test (default=0.05).
-#' @return Returns an object of class "nonlintest" with the following
+#' @returns Returns an object of class "nonlintest" with the following
 #' parts:
 #'   * region: the region of the third order moment where the test exceeds
 #'     the limits (up to `n.lag`).
@@ -202,4 +202,4 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
   to.return$n.lag <- n.lag
   class(to.return) <- 'nonlintest'
   return(to.return)
-} # end of function
+} 

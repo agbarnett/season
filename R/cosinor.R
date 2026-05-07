@@ -41,7 +41,7 @@
 #' @inheritParams monthglm
 #' @param text add explanatory text to the returned phase value (TRUE) or
 #' return a number (FALSE). Passed to the [invyrfraction()] function.
-#' @return Returns an object of class "Cosinor" with the following
+#' @returns Returns an object of class "Cosinor" with the following
 #' parts:
 #'   * call: the original call to the cosinor function.
 #'   * glm: an object of class `glm` (see [glm()]).

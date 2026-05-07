@@ -22,12 +22,7 @@
 #' mmean
 #' }
 print.Monthmean <- function(x, digits = 1, ...) {
-  ## Check
-  if (!inherits(x, "Monthmean")) {
-    stop("Object must be of class 'Monthmean'")
-  }
-  ## Print
   toprint <- as.data.frame(cbind(month.name, round(x$mean, digits)))
   names(toprint) <- c('Month', 'Mean')
   print(toprint, row.names = FALSE, ...)
-} # end of function
+}

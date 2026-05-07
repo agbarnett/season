@@ -17,7 +17,7 @@
 #' @param x a `Cosinor` or `summary.Cosinor` object.
 #' @param digits minimal number of significant digits, see [print.default()].
 #' @param \dots further arguments passed to or from other methods.
-#' @return `summary.Cosinor()` returns a list with the following named elements:
+#' @returns `summary.Cosinor()` returns a list with the following named elements:
 #'   * n: sample size.
 #'   * amp: estimated amplitude.
 #'   * amp.scale: the scale of the estimated amplitude (empty for standard
@@ -58,9 +58,6 @@
 summary.Cosinor <- function(object, digits = 2, ...) {
   type <- object$type
 
-  if (!inherits(object, "Cosinor")) {
-    stop("Object must be of class 'Cosinor'")
-  }
   s <- summary(object$glm) # create summary
   cnames <- row.names(s$coefficients)
   cindex <- sum(as.numeric(cnames == 'cosw') * (seq_along(cnames)))
@@ -154,13 +151,9 @@ summary.Cosinor <- function(object, digits = 2, ...) {
 #' }
 #' @export
 print.Cosinor <- function(x, ...) {
-  if (!inherits(x, "Cosinor")) {
-    stop("Object must be of class 'Cosinor'")
-  }
-
   ## Use GLM function ###
   print(x$glm, ...)
-} # end of function
+}
 
 # October 2011
 #' @describeIn summary.Cosinor Print a `summary.Cosinor` object: amplitude,
@@ -179,10 +172,6 @@ print.Cosinor <- function(x, ...) {
 #' # to get the p-values for the sine and cosine estimates
 #' summary(res$glm)
 print.summary.Cosinor <- function(x, ...) {
-  ## report results
-  if (!inherits(x, "summary.Cosinor")) {
-    stop("Object must be of class 'summary.Cosinor'")
-  }
   # fix the digits, October 2011
   if (!x$text) {
     x$phase <- round(x$phase, x$digits)

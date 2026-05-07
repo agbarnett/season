@@ -23,10 +23,6 @@
 #' }
 #' }
 print.summary.nsCosinor <- function(x, ...) {
-  if (!inherits(x, "summary.nsCosinor")) {
-    stop("Object must be of class 'summary.nsCosinor'")
-  }
-
   k <- length(x$cycles)
   cat("Statistics for non-stationary cosinor based on MCMC chains\n")
   cat("Number of MCMC samples = ", x$niters - x$burnin + 1, "\n", sep = "", ...)

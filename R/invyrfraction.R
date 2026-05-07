@@ -20,7 +20,7 @@
 #'   "weekly" for weeks.
 #' @param text add an explanatory text to the returned value (TRUE) or return a
 #' number (FALSE).
-#' @return the date (day and month for "daily"), fractional month (for
+#' @returns the date (day and month for "daily"), fractional month (for
 #'   "monthly"), or fraction of the 24-hour clock (for "hourly").
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples

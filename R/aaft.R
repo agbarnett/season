@@ -19,7 +19,7 @@
 #'
 #' @param data a vector of equally spaced numeric observations (time series).
 #' @param nsur the number of surrogates to generate (1 or more).
-#' @return a matrix of the `nsur` surrogates.
+#' @returns a matrix of the `nsur` surrogates.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Kugiumtzis D (2000) Surrogate data test for nonlinearity
 #' including monotonic transformations, *Phys. Rev. E*, vol 62
@@ -69,4 +69,4 @@ aaft <- function(data, nsur) {
     surrogates[, count] <- oxV[iyftV] # surrogates is the AAFT surrogate of data
   } # end of loop
   return(surrogates)
-} # end of function
+} 

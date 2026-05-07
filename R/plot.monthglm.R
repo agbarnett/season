@@ -35,10 +35,8 @@ plot.monthglm <- function(
   ylab = "",
   ...
 ) {
-  if (!inherits(x, "monthglm")) {
-    stop("Object must be of class 'monthglm'")
-  }
-  op <- par(no.readonly = TRUE) # the whole list of settable par's.
+  # the whole list of settable par's.
+  op <- par(no.readonly = TRUE)
   ## y-axis limits
   if (!is.null(ylim)) {
     this.y.lim <- ylim

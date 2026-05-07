@@ -67,7 +67,7 @@
 #' day) \eqn{+/-} `confrange`.
 #' @param stratamonth use strata based on months, default=FALSE. Instead of a
 #' fixed strata size when using `stratalength`.
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * call: the original call to the casecross function.
 #'   * c.model: conditional logistic regression model of class `coxph`.
 #'   * ncases: total number of cases.

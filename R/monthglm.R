@@ -32,7 +32,7 @@
 #' should be a variable in the data frame. Do not log-transform the offset as
 #' the log-transform is applied by the function. This should be an expression,
 #' as given in the example below.
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * call: the original call to the monthglm function.
 #'   * fit: GLM model.
 #'   * fitted: fitted values.

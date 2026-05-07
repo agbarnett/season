@@ -8,7 +8,7 @@
 #' @param adjmean subtract the mean from the series before calculating the
 #' periodogram (default=TRUE).
 #' @param plot plot the estimated periodogram (default=TRUE).
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * peri: periodogram, I(\eqn{\omega}).
 #'   * f: frequencies in radians, \eqn{\omega}.
 #'   * c: frequencies in cycles of time, \eqn{2\pi/\omega}.

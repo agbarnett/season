@@ -36,10 +36,6 @@
 #' }
 #' @export
 summary.casecross <- function(object, ...) {
-  if (!inherits(object, "casecross")) {
-    stop("Object must be of class 'casecross'")
-  }
-
   ## output results
   if (!object$call$stratamonth) {
     cat(

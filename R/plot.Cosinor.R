@@ -33,9 +33,6 @@
 #' plot(res)
 #' @export
 plot.Cosinor <- function(x, ...) {
-  if (!inherits(x, "Cosinor")) {
-    stop("Object must be of class 'Cosinor'")
-  }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   on.exit(par(op), add = TRUE) # restore graphic settings
   f <- stats::as.formula(x$call$formula)

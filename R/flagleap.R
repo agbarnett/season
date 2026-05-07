@@ -14,7 +14,7 @@
 #' (default=TRUE).
 #' @param matchin expand the result to match the start and end dates, otherwise
 #' only dates in the data will be returned (default=FALSE).
-#' @return a data frame with the following columns:
+#' @returns a data frame with the following columns:
 #'   * year: year (4 digits).
 #'   * month: month (2 digits).
 #'   * ndaysmonth: number of days in the month (either 28, 29, 30 or 31).

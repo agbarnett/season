@@ -21,11 +21,6 @@
 #'
 #' }
 plot.Monthmean <- function(x, ...) {
-  ## Check
-  if (!inherits(x, "Monthmean")) {
-    stop("Object must be of class 'Monthmean'")
-  }
-  ## Plot
   par(lwd = 2)
   plot(
     x$mean,

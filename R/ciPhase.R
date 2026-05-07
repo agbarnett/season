@@ -14,7 +14,7 @@
 #' @param theta chain of Markov chain Monte Carlo (MCMC) samples of the phase.
 #' @param alpha the confidence level (default = 0.05 for a 95\% confidence
 #' interval).
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * mean: the estimated mean phase.
 #'   * lower: the estimated lower limit of the confidence interval.
 #'   * upper: the estimated upper limit of the confidence interval.

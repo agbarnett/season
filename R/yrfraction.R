@@ -14,7 +14,7 @@
 #'   if type="monthly".
 #' @param type One of "daily" (default) for dates, "monthly" for months, or
 #'   "weekly" for weeks.
-#' @return the fraction of the year.
+#' @returns the fraction of the year.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'

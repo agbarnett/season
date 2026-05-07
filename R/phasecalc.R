@@ -13,7 +13,7 @@
 #'
 #' @param cosine estimated cosine value from a cosinor model.
 #' @param sine estimated sine value from a cosinor model.
-#' @return the estimated phase in radians.
+#' @returns the estimated phase in radians.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Fisher, N.I. (1993) *Statistical Analysis of Circular
 #' Data*. Cambridge University Press, Cambridge. Page 31.

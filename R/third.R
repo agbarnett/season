@@ -24,7 +24,7 @@
 #' @param outmax display the (x,y) lag co-ordinates for the maximum and minimum
 #' values (default=TRUE).
 #' @param plot ggplot contour plot of the third order moment (default=TRUE).
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * waxis: the axis from `-n.lag` to `n.lag`.
 #'   * third: the estimated third order moment in the range -n.lag to n.lag,
 #'     including the symmetries.
@@ -116,4 +116,4 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
   to.return$waxis <- waxis
   to.return$third <- XXX
   return(to.return)
-} # end of function
+} 

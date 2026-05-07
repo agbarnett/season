@@ -363,7 +363,7 @@ plotCircular <- function(
       ...
     )
   }
-} # end of function
+} 
 
 # months (dummy data)
 plotCircular(
