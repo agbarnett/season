@@ -166,15 +166,14 @@ cosinor <- function(
     (s$coefficients[cindex, 1] * newdata$cosw) +
     (s$coefficients[sindex, 1] * newdata$sinw)
   # back-transform:
-  if (s$family$link == 'log') {
-    pred <- exp(pred)
-  }
-  if (s$family$link == 'logit') {
-    pred <- exp(pred) / (1 + exp(pred))
-  }
-  if (s$family$link == 'cloglog') {
-    pred <- 1 - exp(-exp(pred))
-  }
+  pred <- switch(
+    s$family$link,
+    log = exp(pred),
+    logit = exp(pred) / (1 + exp(pred)),
+    cloglog = 1 - exp(-exp(pred)),
+    pred # default value
+  )
+
   # return:
   toret <- list()
   toret$call <- call

@@ -78,7 +78,7 @@ monthmean <- function(
   } else {
     adjp <- with(data, eval(offsetpop))
   } # population adjustment
-  xxxx <- subset(data, select = resp)[, 1] # instead of with
+  xxxx <- data[[resp]]
   for (i in 1:12) {
     if (adjmonth != "none") {
       mean[i] <- mean(

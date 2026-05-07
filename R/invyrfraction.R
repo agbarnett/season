@@ -42,48 +42,14 @@ invyrfraction <- function(
   if (sum(frac < 0) + sum(frac > 1) > 0) {
     stop('Fraction must be between 0 and 1')
   }
-  if (type == 'daily') {
-    yrlength <- 365.25
-    day <- (frac * yrlength) + 1
-    day <- day - (365 * as.numeric(day > 365)) # avoid values > 365
-    day <- pmax(day, 1) # avoid values < 1
-    date <- strptime(day, '%j')
-    # Day of the month as decimal number (01?31)
-    daym <- as.numeric(format(date, '%d'))
-    month <- format(date, '%B') # Month name
-    if (text) {
-      daym <- paste('Month =', month, ', day =', daym)
-    }
-    if (!text) {
-      daym <- day
-    }
-  }
-  if (type == 'weekly') {
-    week <- (frac * 52) + 1
-    if (text) {
-      daym <- paste('Week =', round(week, 1))
-    }
-    if (!text) {
-      daym <- week
-    }
-  }
-  if (type == 'monthly') {
-    month <- (frac * 12) + 1
-    if (text) {
-      daym <- paste('Month =', round(month, 1))
-    }
-    if (!text) {
-      daym <- month
-    }
-  }
-  if (type == 'hourly') {
-    month <- (frac * 24) # do not add one for hour, start at 00:00
-    if (text) {
-      daym <- paste('Hour =', round(month, 1))
-    }
-    if (!text) {
-      daym <- month
-    }
-  }
+
+  daym <- switch(
+    type,
+    daily = daym_from_daily(frac, text),
+    weekly = daym_from_weekly(frac, text),
+    monthly = daym_from_monthly(frac, text),
+    hourly = daym_from_hourly(frac, text)
+  )
+
   return(daym)
 }

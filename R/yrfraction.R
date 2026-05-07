@@ -27,29 +27,43 @@
 #' @export yrfraction
 yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
   type <- rlang::arg_match(type)
-  if (type == 'daily') {
-    if (!inherits(date, "Date")) {
-      stop("Date variable for annual data must be in date format, see ?Dates")
-    }
-    year <- as.numeric(format(date, '%Y'))
-    # last day in December
-    lastday <- ISOdate(year, 12, 31)
-    # Day of year as decimal number (001-366)
-    day <- as.numeric(format(date, '%j'))
-    yrlength <- as.numeric(format(lastday, '%j'))
-    yrfrac <- (day - 1) / yrlength
+
+  yrfrac <- switch(
+    type,
+    daily = yrfrac_daily(date),
+    weekly = yrfrac_weekly(date),
+    monthly = yrfrac_monthly(date),
+  )
+
+  yrfrac
+}
+
+yrfrac_daily <- function(date) {
+  if (!inherits(date, "Date")) {
+    stop("Date variable for annual data must be in date format, see ?Dates")
   }
-  if (type == 'weekly') {
-    if (max(date) > 53 || min(date) < 1) {
-      stop("Date variable for weekly data must be month integer (1 to 53)")
-    }
-    yrfrac <- (date - 1) / (365.25 / 7)
+  year <- as.numeric(format(date, '%Y'))
+  # last day in December
+  lastday <- ISOdate(year, 12, 31)
+  # Day of year as decimal number (001-366)
+  day <- as.numeric(format(date, '%j'))
+  yrlength <- as.numeric(format(lastday, '%j'))
+  yrfrac <- (day - 1) / yrlength
+  yrfrac
+}
+
+yrfrac_weekly <- function(date) {
+  if (max(date) > 53 || min(date) < 1) {
+    stop("Date variable for weekly data must be month integer (1 to 53)")
   }
-  if (type == 'monthly') {
-    if (max(date) > 12 || min(date) < 1) {
-      stop("Date variable for monthly data must be month integer (1 to 12)")
-    }
-    yrfrac <- (date - 1) / 12
+  yrfrac <- (date - 1) / (365.25 / 7)
+  yrfrac
+}
+
+yrfrac_monthly <- function(date) {
+  if (max(date) > 12 || min(date) < 1) {
+    stop("Date variable for monthly data must be month integer (1 to 12)")
   }
-  return(yrfrac)
+  yrfrac <- (date - 1) / 12
+  yrfrac
 }
