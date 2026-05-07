@@ -52,14 +52,13 @@ summary.monthglm <- function(object, ...) {
   # Just keep results with months
   index <- grep("months", row.names(out), ignore.case = TRUE, value = FALSE)
   totable <- out[index, ] # Select months
-  effect <- ''
-  if (type == "poisson") {
-    effect <- 'RR'
-  }
-  if (type == "binomial") {
-    effect <- 'OR'
-  }
-  # returns
+  effect <- switch(
+    type,
+    poisson = "RR",
+    binomial = "OR",
+    ""
+  )
+
   ret <- list()
   ret$n <- length(object$residuals)
   ret$month.ests <- totable

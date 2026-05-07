@@ -195,7 +195,8 @@
       print(summary(m))
     Output
       Number of observations = 168 
-      Rate ratios 
+      Rate ratios
+       
                      mean     lower     upper     zvalue        pvalue
       monthsFeb 0.9001334 0.8835557 0.9170223 -11.093389  1.350710e-28
       monthsMar 0.8248895 0.8097153 0.8403480 -20.321628  8.278563e-92
@@ -215,7 +216,8 @@
       print(summary(m))
     Output
       Number of observations = 168 
-      Odds ratios 
+      Odds ratios
+       
                      mean     lower     upper    zvalue        pvalue
       monthsFeb 0.7956431 0.7741639 0.8177182 -16.37211  3.025234e-60
       monthsMar 0.6704909 0.6527854 0.6886767 -29.27641 2.071210e-188
