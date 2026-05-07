@@ -1,3 +1,11 @@
+# inyrfraction fails type is not one of defined set
+
+    Code
+      invyrfraction(frac = c(0, 0.5, 1), type = "minutes", text = TRUE)
+    Condition
+      Error in `invyrfraction()`:
+      ! `type` must be one of "daily", "monthly", "hourly", or "weekly", not "minutes".
+
 # inyrfraction works
 
     Code

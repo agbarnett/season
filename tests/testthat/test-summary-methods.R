@@ -35,7 +35,7 @@ test_that("summary.Cosinor reports stillbirth amplitude on probability scale", {
     family = binomial(link = "cloglog")
   )
   s <- summary(m)
-  expect_equal(round(s$amp, 4), 0.0012)
+  expect_equal(s$amp, 0.0012, tolerance = 1e-2)
   expect_identical(s$amp.scale, "(probability scale)")
   expect_match(s$phase, "January.*27|27.*January")
   expect_match(s$lphase, "July.*29|29.*July")

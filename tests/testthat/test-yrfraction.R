@@ -94,3 +94,10 @@ test_that("yrfraction(type='monthly') refuses values outside 1:12", {
     yrfraction(c(6, 13), type = "monthly")
   )
 })
+
+test_that("yrfraction fails when type is not of defined set", {
+  expect_snapshot(
+    error = TRUE,
+    yrfraction(c(1, 2, 3), type = "minutes")
+  )
+})

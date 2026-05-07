@@ -4,7 +4,11 @@
 \alias{invyrfraction}
 \title{Inverse Fraction of the Year or Hour}
 \usage{
-invyrfraction(frac, type = "daily", text = TRUE)
+invyrfraction(
+  frac,
+  type = c("daily", "monthly", "hourly", "weekly"),
+  text = TRUE
+)
 }
 \arguments{
 \item{frac}{a vector of fractions of the year, all between 0 and 1.}
