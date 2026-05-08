@@ -20,8 +20,8 @@
 #' p = peri(CVD$cvd)
 #' }
 #'
-#' @export peri
-'peri' <- function(data, adjmean = TRUE, plot = TRUE) {
+#' @export
+peri <- function(data, adjmean = TRUE, plot = TRUE) {
   # Setting some variables to NULL first (for R CMD check)
   xaxis <- yaxis <- NULL
 
