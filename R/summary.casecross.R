@@ -36,6 +36,7 @@
 #' }
 #' @export
 summary.casecross <- function(object, ...) {
+  check_if_casecross(object)
   ## output results
   if (!object$call$stratamonth) {
     cat(
@@ -59,10 +60,18 @@ summary.casecross <- function(object, ...) {
       '\n'
     )
   }
-  cat('Total number of cases', object$ncases, '\n')
-  cat('Number of case days with available control days', object$ncasedays, '\n')
-  cat('Average number of control days per case day', object$ncontroldays, '\n')
+  cat('Total number of cases', object$n_cases, '\n')
+  cat(
+    'Number of case days with available control days',
+    object$n_case_days,
+    '\n'
+  )
+  cat(
+    'Average number of control days per case day',
+    object$n_control_days,
+    '\n'
+  )
   cat('\nParameter Estimates:\n')
-  s <- summary(object$c.model)
+  s <- summary(object$cox_model)
   print(s$coef, ...)
 }

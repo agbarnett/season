@@ -28,6 +28,7 @@
 #' summary(mmodel)
 #' @export
 summary.monthglm <- function(object, ...) {
+  check_if_monthglm(object)
   ## Tabulate the monthly data ##
   z <- stats::qnorm(0.975)
   s <- summary(object$glm)

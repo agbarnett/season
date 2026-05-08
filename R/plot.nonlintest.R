@@ -19,6 +19,7 @@
 #' plot(test.res)
 #' }
 plot.nonlintest <- function(x, plot = TRUE, ...) {
+  check_if_nonlintest(x)
   # Setting some variables to NULL first (for R CMD check)
   z <- NULL
 
@@ -53,4 +54,4 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
     #zlab='Area outside the test limits', ...)
     # mtext(side=3,'Points of 3rd order moment that exceed limits');
   } # end of if
-} 
+}

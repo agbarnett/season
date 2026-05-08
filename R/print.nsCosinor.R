@@ -35,6 +35,7 @@
 #' }
 #' @export
 print.nsCosinor <- function(x, ...) {
+  check_if_nscosinor(x)
   ## Statistics ###
   cat("Non-stationary cosinor\n\n")
   cat("Call:\n")

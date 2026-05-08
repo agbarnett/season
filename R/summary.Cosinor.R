@@ -56,6 +56,7 @@
 #' }
 #' @export
 summary.Cosinor <- function(object, digits = 2, ...) {
+  check_if_cosinor(object)
   type <- object$type
 
   s <- summary(object$glm) # create summary
@@ -128,7 +129,7 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   ret$text <- object$call$text # display phase as text (TRUE/FALSE)
   ret$type <- type
   ret$ctable <- s$coefficients # regression table (march 2020)
-  class(ret) <- "summary.Cosinor"
+  class(ret) <- c("summary.Cosinor", class(object))
   ret # uses print.summary.Cosinor
 }
 
@@ -151,6 +152,7 @@ summary.Cosinor <- function(object, digits = 2, ...) {
 #' }
 #' @export
 print.Cosinor <- function(x, ...) {
+  check_if_cosinor(x)
   ## Use GLM function ###
   print(x$glm, ...)
 }
@@ -172,6 +174,7 @@ print.Cosinor <- function(x, ...) {
 #' # to get the p-values for the sine and cosine estimates
 #' summary(res$glm)
 print.summary.Cosinor <- function(x, ...) {
+  check_if_cosinor(x)
   # fix the digits, October 2011
   if (!x$text) {
     x$phase <- round(x$phase, x$digits)

@@ -19,8 +19,9 @@
     Code
       print.Cosinor(list(a = 1))
     Condition
-      Error in `print.Cosinor()`:
-      ! Object must be of class 'Cosinor'
+      Error:
+      ! x must be of class: Cosinor
+      We see class: list
 
 # print.monthglm prints the underlying GLM
 
@@ -45,8 +46,9 @@
     Code
       print.monthglm(list(a = 1))
     Condition
-      Error in `print.monthglm()`:
-      ! Object must be of class 'monthglm'
+      Error:
+      ! x must be of class: monthglm
+      We see class: list
 
 # print.Monthmean prints a named 12-row table
 
@@ -72,8 +74,9 @@
     Code
       print.Monthmean(list(a = 1))
     Condition
-      Error in `print.Monthmean()`:
-      ! Object must be of class 'Monthmean'
+      Error:
+      ! x must be of class: Monthmean
+      We see class: list
 
 # print.nonlintest prints the test statistics block
 
@@ -94,8 +97,9 @@
     Code
       print.nonlintest(list(a = 1))
     Condition
-      Error in `print.nonlintest()`:
-      ! Object must be of class 'nonlintest'
+      Error:
+      ! x must be of class: nonlintest
+      We see class: list
 
 # print.nsCosinor prints model overview and residual stats
 
@@ -122,8 +126,9 @@
     Code
       print.nsCosinor(list(a = 1))
     Condition
-      Error in `print.nsCosinor()`:
-      ! Object must be of class 'nsCosinor'
+      Error:
+      ! x must be of class: nsCosinor
+      We see class: list
 
 # print.casecross prints the underlying coxph fit
 
@@ -131,7 +136,7 @@
       print(m)
     Output
       Call:
-      survival::coxph(formula = finalformula, data = finished, weights = outcome, 
+      survival::coxph(formula = form_final, data = finished, weights = outcome, 
           method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
@@ -152,16 +157,17 @@
     Code
       print.casecross(list(a = 1))
     Condition
-      Error in `print.casecross()`:
-      ! Object must be of class 'casecross'
+      Error:
+      ! x must be of class: casecross
+      We see class: list
 
-# print.casecross errors when c.model is not a coxph fit
+# print.casecross errors when cox_model is not a coxph fit
 
     Code
       print(bad)
     Condition
       Error in `print.casecross()`:
-      ! Conditional logistic regression model object 'c.model' must be of class 'coxph'
+      ! Conditional logistic regression model object 'cox_model' must be of class 'coxph'
 
 # print.summary.Cosinor prints the cosinor test report
 
@@ -186,8 +192,9 @@
     Code
       print.summary.Cosinor(list(a = 1))
     Condition
-      Error in `print.summary.Cosinor()`:
-      ! Object must be of class 'summary.Cosinor'
+      Error:
+      ! x must be of class: Cosinor
+      We see class: list
 
 # print.summary.monthglm prints the month-effect table
 
@@ -231,7 +238,7 @@
       monthsNov 0.6182944 0.6018069 0.6352336 -34.86498 2.525075e-266
       monthsDec 0.8489118 0.8264999 0.8719315 -11.99911  3.591556e-33
 
-# print.summary.nscosinor prints amplitude and phase blocks
+# print.summary.nsCosinor prints amplitude and phase blocks
 
     Code
       print.summary.nsCosinor(summary(m))
@@ -249,15 +256,16 @@
       Amplitude, mean=209.322, 95% CI [169.9456, 242.3682]
       Phase (radians), mean=0.7311538, 95% CI [0.5130923, 0.9835682]
 
-# print.summary.nscosinor errors on non-summary.nsCosinor input
+# print.summary.nsCosinor errors on non-summary.nsCosinor input
 
     Code
       print.summary.nsCosinor(list(a = 1))
     Condition
-      Error in `print.summary.nsCosinor()`:
-      ! Object must be of class 'summary.nsCosinor'
+      Error:
+      ! x must be of class: nsCosinor
+      We see class: list
 
-# print.summary.nscosinor handles multiple seasonal cycles
+# print.summary.nsCosinor handles multiple seasonal cycles
 
     Code
       print.summary.nsCosinor(summary(m))

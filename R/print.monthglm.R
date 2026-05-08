@@ -17,5 +17,6 @@
 #'
 #' @export
 print.monthglm <- function(x, ...) {
+  check_if_monthglm(x)
   print(x$glm, ...)
 }

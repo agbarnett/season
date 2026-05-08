@@ -3,6 +3,7 @@
     Code
       plot.nonlintest(list(a = 1))
     Condition
-      Error in `plot.nonlintest()`:
-      ! Object must be of class 'nonlintest'
+      Error:
+      ! x must be of class: nonlintest
+      We see class: list
 

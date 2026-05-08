@@ -51,6 +51,7 @@
 #' }
 #' @export
 summary.nsCosinor <- function(object, ...) {
+  check_if_nscosinor(object)
   ## basic variables
   k <- length(object$cycles)
   cycles <- object$cycles
@@ -118,6 +119,6 @@ summary.nsCosinor <- function(object, ...) {
   ret$stats$wstats <- wstats
   ret$stats$ampstats <- ampstats
   ret$stats$phasestats <- phasestats
-  class(ret) <- 'summary.nsCosinor'
+  class(ret) <- c("summary.nsCosinor", class(object))
   ret # uses print.summary.nsCosinor
 }

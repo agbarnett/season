@@ -17,6 +17,7 @@
 #' }
 #' }
 print.nonlintest <- function(x, ...) {
+  check_if_nonlintest(x)
   # 1) Stats on third order moment
   diff_l <- x$region * 0
   diff_u <- x$region * 0
@@ -68,4 +69,4 @@ print.nonlintest <- function(x, ...) {
     x$stats$pvalue,
     '\n'
   )
-} 
+}

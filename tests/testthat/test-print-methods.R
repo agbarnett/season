@@ -156,11 +156,11 @@ test_that("print.casecross errors on non-casecross input", {
   )
 })
 
-test_that("print.casecross errors when c.model is not a coxph fit", {
-  # A casecross object's c.model field is the conditional logistic
+test_that("print.casecross errors when cox_model is not a coxph fit", {
+  # A casecross object's cox_model field is the conditional logistic
   # regression returned by survival::coxph. The print method refuses
   # to dispatch if that field has been replaced with something else.
-  bad <- structure(list(c.model = list()), class = "casecross")
+  bad <- structure(list(cox_model = list()), class = "casecross")
   expect_snapshot(
     error = TRUE,
     print(bad)
@@ -226,12 +226,8 @@ test_that("print.summary.monthglm uses 'Odds ratios' for binomial", {
   expect_snapshot(print(summary(m)))
 })
 
-test_that("print.summary.nscosinor prints amplitude and phase blocks", {
+test_that("print.summary.nsCosinor prints amplitude and phase blocks", {
   skip_on_ci()
-  # NOTE: registered as `print.summary.nscosinor` (lowercase 'n') while the
-  # class is `summary.nsCosinor` (capital 'C') — S3 dispatch is case-sensitive
-  # so calling print() falls through to print.default. Calling the function
-  # directly here exercises its body. Worth fixing in the package.
   set.seed(2026 - 04 - 29)
   m <- nscosinor(
     data = head(CVD, 60),
@@ -245,15 +241,15 @@ test_that("print.summary.nscosinor prints amplitude and phase blocks", {
   expect_snapshot(print.summary.nsCosinor(summary(m)))
 })
 
-test_that("print.summary.nscosinor errors on non-summary.nsCosinor input", {
+test_that("print.summary.nsCosinor errors on non-summary.nsCosinor input", {
   expect_snapshot(
     error = TRUE,
     print.summary.nsCosinor(list(a = 1))
   )
 })
 
-test_that("print.summary.nscosinor handles multiple seasonal cycles", {
-  # k >= 2 takes a different branch in print.summary.nscosinor that
+test_that("print.summary.nsCosinor handles multiple seasonal cycles", {
+  # k >= 2 takes a different branch in print.summary.nsCosinor that
   # iterates over each cycle. Same dispatch caveat as the single-cycle
   # case: must be called directly because the @method registration
   # uses lowercase 'nscosinor' rather than 'nsCosinor'.
