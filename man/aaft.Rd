@@ -27,15 +27,16 @@ is useful for testing for non-linearity in a time series, and is used by
 \examples{
 
 \donttest{
-surr <- aaft(CVD$cvd, nsur=1)
-plot(CVD$cvd, type='l')
-lines(surr[,1], col='red')
+surr <- aaft(CVD$cvd, nsur = 1)
+plot(CVD$cvd, type = "l")
+lines(surr[ ,1], col = "red")
 }
 
 }
 \references{
 Kugiumtzis D (2000) Surrogate data test for nonlinearity
-including monotonic transformations, \emph{Phys. Rev. E}, vol 62
+including monotonic transformations, \emph{Phys. Rev. E}, vol 62 no. 1, 2000.
+\doi{doi:10.1103/PhysRevE.62.R25}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}
