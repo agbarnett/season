@@ -49,10 +49,10 @@ fixed strata size when using \code{stratalength}.}
 a list with the following elements:
 \itemize{
 \item call: the original call to the casecross function.
-\item c.model: conditional logistic regression model of class \code{coxph}.
-\item ncases: total number of cases.
-\item ncasedays: number of case days with at least one control day.
-\item ncontroldays: average number of control days per case day.
+\item cox_model: conditional logistic regression model of class \code{coxph}.
+\item n_cases: total number of cases.
+\item n_case_days: number of case days with at least one control day.
+\item n_control_days: average number of control days per case day.
 }
 }
 \description{
@@ -122,7 +122,7 @@ summary(model2)
 model3 <- casecross(
   cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
   data = CVDdaily,
-  matchconf = 'tmpd',
+  matchconf = "tmpd",
   confrange = 1
 )
 summary(model3)
@@ -133,9 +133,10 @@ summary(model3)
 Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
 analyses of air pollution exposure data: Referent selection strategies and
 their implications for bias. \emph{Epidemiology} 16(6), 717--726.
+\doi{doi:10.1097/01.ede.0000181315.18836.9d.}
 
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
-Springer.
+Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \seealso{
 \code{summary.casecross}, \code{coxph}

@@ -4,7 +4,7 @@
       print(m)
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
