@@ -62,10 +62,11 @@ createAdj <- function(matrix, suffix = NULL) {
     }
   }
 
-  toret <- list(
+  ret <- list(
     num = num,
     adj = adj,
     weight = weight
   )
-  return(toret)
+
+  ret
 }
