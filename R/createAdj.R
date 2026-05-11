@@ -4,7 +4,7 @@
 #'   [`nimble`](https://CRAN.R-project.org/package=nimble)
 #'
 #' Adjacency matrices are used by conditional autoregressive (CAR) models to
-#' smooth estimates according to some neighbourhood map.  The basic idea is
+#' smooth estimates according to some neighbourhood map. The basic idea is
 #' that neighbouring areas have more in common than non-neighbouring areas and
 #' so will be positively correlated.
 #'
@@ -34,7 +34,6 @@
 #'
 #' @export createAdj
 createAdj <- function(matrix, suffix = NULL) {
-  # checks
   if (!is.matrix(matrix)) {
     stop('Input must be a matrix')
   }
@@ -44,23 +43,25 @@ createAdj <- function(matrix, suffix = NULL) {
   if (!isSymmetric(matrix)) {
     stop('Matrix must be symmetric')
   }
-  # Vectors from matrix
-  n <- nrow(matrix)
-  num <- rowSums(matrix, na.rm = TRUE)
-  adj <- vector(length = sum(num), mode = 'numeric')
-  weight <- vector(length = sum(num), mode = 'numeric')
-  index <- 1
-  for (i in 1:n) {
-    ind <- !is.na(matrix[i, ])
-    xxx <- as.numeric(ind) * (1:n)
-    if (sum(xxx) > 0) {
-      aaa <- xxx[ind]
-      www <- matrix[i, ind]
-      adj[index:(index + length(aaa) - 1)] <- aaa
-      weight[index:(index + length(aaa) - 1)] <- www
-      index <- index + length(aaa)
-    }
+
+  all_missing <- all(is.na(matrix))
+  # return early
+  if (all_missing) {
+    return(
+      list(
+        num = rep(0, nrow(matrix)),
+        adj = 0,
+        weight = 0
+      )
+    )
   }
+
+  # Vectors from matrix
+  num <- rowSums(matrix, na.rm = TRUE)
+  is_present <- !is.na(matrix)
+  # This is essentially a rowwise which
+  adj <- which(is_present, arr.ind = TRUE, useNames = FALSE)[, 1]
+  weight <- rep(1, sum(is_present))
 
   ret <- list(
     num = num,
