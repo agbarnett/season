@@ -47,8 +47,8 @@ yrfrac_daily <- function(date) {
   lastday <- ISOdate(year, 12, 31)
   # Day of year as decimal number (001-366)
   day <- as.numeric(format(date, '%j'))
-  yrlength <- as.numeric(format(lastday, '%j'))
-  yrfrac <- (day - 1) / yrlength
+  year_length <- as.numeric(format(lastday, '%j'))
+  yrfrac <- (day - 1) / year_length
   yrfrac
 }
 

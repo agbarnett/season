@@ -82,7 +82,7 @@ code_random_month <- nimbleCode({
   for (i in 1:N) {
     # loop through time
     cvd[i] ~ dpois(mu[i])
-    log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta.c[month[i]]
+    log(mu[i]) <- log(offset[i]) + log(n_days_month[i]) + alpha + beta.c[month[i]]
   }
   # priors
   alpha ~ dnorm(0, sd = 100)
@@ -111,7 +111,7 @@ constants <- list(
   # scaled to per 100,000 people
   offset = CVD$pop / 100000,
   # scaled to per 30 days
-  ndaysmonth = (CVD$ndaysmonth) / 30
+  n_days_month = (CVD$n_days_month) / 30
 )
 data <- list(cvd = CVD$cvd)
 
@@ -222,7 +222,7 @@ code_neighbour_month <- nimbleCode({
   for (i in 1:N) {
     # loop through time
     cvd[i] ~ dpois(mu[i])
-    log(mu[i]) <- log(offset[i]) + log(ndaysmonth[i]) + alpha + beta[month[i]]
+    log(mu[i]) <- log(offset[i]) + log(n_days_month[i]) + alpha + beta[month[i]]
   }
   # priors
   alpha ~ dnorm(0, sd = 100)
@@ -256,7 +256,7 @@ constants <- list(
   # scaled to per 100,000 people
   offset = CVD$pop / 100000, 
   # scaled to per 30 days
-  ndaysmonth = (CVD$ndaysmonth) / 30
+  n_days_month = (CVD$n_days_month) / 30
 ) 
 
 ```

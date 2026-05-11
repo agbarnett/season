@@ -152,7 +152,7 @@ cosinor <- function(
     # get the number of days in each month
     days <- flagleap(data = data, report = FALSE, matchin = TRUE)
     # days per month divided by average month length
-    month_offset <- days$ndaysmonth / (365.25 / 12)
+    month_offset <- days$n_days_month / (365.25 / 12)
   }
   offset <- log(pop_offset * month_offset)
   # generalized linear model

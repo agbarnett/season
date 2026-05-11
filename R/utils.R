@@ -13,8 +13,8 @@ keep_month_numbers <- function(x) {
 }
 
 daym_from_daily <- function(frac, text) {
-  yrlength <- 365.25
-  day <- (frac * yrlength) + 1
+  year_length <- 365.25
+  day <- (frac * year_length) + 1
   # avoid values > 365
   day <- day - (365 * as.numeric(day > 365))
   # avoid values < 1

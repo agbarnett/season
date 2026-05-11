@@ -1,11 +1,3 @@
-# invyrfraction.R
-# convert fraction of the year into a date (day and month)
-# month on a scale of [1,13)
-# type =  monthly/weekly/daily
-# Jan 2014 (minor update Aug 2020)
-
-#' Inverse Fraction of the Year or Hour
-#'
 #' Inverts a fraction of the year or hour to a useful time scale.
 #'
 #' Returns the day and month (for "daily") or fraction of the month (for
@@ -25,10 +17,10 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
-#' invyrfraction(c(0, 0.5, 0.99), type='hourly')
-#' invyrfraction(c(0, 0.5, 0.99), type='daily')
-#' invyrfraction(c(0, 0.5, 0.99), type='weekly')
-#' invyrfraction(c(0, 0.5, 0.99), type='monthly')
+#' invyrfraction(c(0, 0.5, 0.99), type = "hourly")
+#' invyrfraction(c(0, 0.5, 0.99), type = "daily")
+#' invyrfraction(c(0, 0.5, 0.99), type = "weekly")
+#' invyrfraction(c(0, 0.5, 0.99), type = "monthly")
 #'
 #' @export invyrfraction
 invyrfraction <- function(

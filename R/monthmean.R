@@ -82,7 +82,7 @@ monthmean <- function(
   for (i in 1:12) {
     if (adjmonth != "none") {
       mean[i] <- mean(
-        xxxx[data$month == i] * (adjf / days$ndaysmonth[i]) / adjp
+        xxxx[data$month == i] * (adjf / days$n_days_month[i]) / adjp
       )
     } else {
       mean[i] <- mean(xxxx[data$month == i] / adjp)

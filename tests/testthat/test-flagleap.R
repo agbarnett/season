@@ -1,8 +1,8 @@
 cvd_flag_leap <- flagleap(CVD, report = FALSE)
 
 test_that("flagleap works", {
-  expect_identical(cvd_flag_leap$ndaysmonth[2], 28) # Feb
-  expect_identical(cvd_flag_leap$ndaysmonth[158], 29) # leap Feb
+  expect_identical(cvd_flag_leap$n_days_month[2], 28) # Feb
+  expect_identical(cvd_flag_leap$n_days_month[158], 29) # leap Feb
   expect_identical(cvd_flag_leap$month[2], 2)
   expect_identical(cvd_flag_leap$month[158], 2)
   expect_identical(cvd_flag_leap$year[2], 1987)
