@@ -93,6 +93,16 @@ The plots are also called rose diagrams, with the segments then called
 \examples{
 \donttest{
 weekfreq <- table(round(runif(100, min = 1, max = 7)))
+# weeks (random data)
+daysoftheweek <- c(
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday'
+)
 plotCircular(area1 = weekfreq, labels = daysoftheweek, dp = 0)
 # Observed number of AFL players with expected values
 plotCircular(
@@ -121,16 +131,6 @@ plotCircular(
   scale = 0.7,
   labels = month.abb,
   dp = 0
-)
-# weeks (random data)
-daysoftheweek = c(
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
 )
 
 }
