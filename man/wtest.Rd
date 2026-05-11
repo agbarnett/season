@@ -50,7 +50,7 @@ events with a variable population at risk. \emph{British Journal of
 Preventive and Social Medicine} 29, 18--21.
 
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
-Springer.
+Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

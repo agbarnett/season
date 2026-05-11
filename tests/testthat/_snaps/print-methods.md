@@ -29,7 +29,7 @@
       print(m)
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = off)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = model_offset)
       
       Coefficients:
       (Intercept)    monthsFeb    monthsMar    monthsApr    monthsMay    monthsJun  

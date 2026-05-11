@@ -2,7 +2,7 @@
 % Please edit documentation in R/invyrfraction.R
 \name{invyrfraction}
 \alias{invyrfraction}
-\title{Inverse Fraction of the Year or Hour}
+\title{Inverts a fraction of the year or hour to a useful time scale.}
 \usage{
 invyrfraction(
   frac,
@@ -24,9 +24,6 @@ the date (day and month for "daily"), fractional month (for
 "monthly"), or fraction of the 24-hour clock (for "hourly").
 }
 \description{
-Inverts a fraction of the year or hour to a useful time scale.
-}
-\details{
 Returns the day and month (for "daily") or fraction of the month (for
 "monthly") given a fraction of the year. Assumes a year length of
 365.25 days for "daily". When using "monthly" the 1st of January
@@ -36,10 +33,10 @@ zero (midnight).
 }
 \examples{
 
-invyrfraction(c(0, 0.5, 0.99), type='hourly')
-invyrfraction(c(0, 0.5, 0.99), type='daily')
-invyrfraction(c(0, 0.5, 0.99), type='weekly')
-invyrfraction(c(0, 0.5, 0.99), type='monthly')
+invyrfraction(c(0, 0.5, 0.99), type = "hourly")
+invyrfraction(c(0, 0.5, 0.99), type = "daily")
+invyrfraction(c(0, 0.5, 0.99), type = "weekly")
+invyrfraction(c(0, 0.5, 0.99), type = "monthly")
 
 }
 \author{

@@ -117,7 +117,7 @@ summary(res$glm)
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-Health Data}. Springer.
+Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \seealso{
 \code{\link[=summary.Cosinor]{summary.Cosinor()}}, \code{\link[=plot.Cosinor]{plot.Cosinor()}}

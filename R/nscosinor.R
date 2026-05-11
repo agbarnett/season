@@ -88,7 +88,7 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `plot.nsCosinor`, `summary.nsCosinor`
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #'
 #' Barnett, A.G., Dobson, A.J. (2004) Estimating trends and seasonality in
 #' coronary heart disease *Statistics in Medicine*. 23(22) 3505--23.
@@ -309,4 +309,4 @@ nscosinor <- function(
   toret$cycles <- cycles
   class(toret) <- 'nsCosinor'
   return(toret)
-} 
+}

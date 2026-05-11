@@ -15,7 +15,7 @@
 #' @returns plot of sinusoidal wave of a given amplitude, frequency, and phase.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #' sinusoid(
 #'   amplitude = 1,

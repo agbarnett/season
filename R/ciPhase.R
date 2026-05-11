@@ -23,7 +23,7 @@
 #' Cambridge University Press. Page 36.
 #'
 #' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
-#' Springer.
+#'   Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #' \donttest{
 #' # 2000 normal samples, centred on zero
