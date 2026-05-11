@@ -73,6 +73,24 @@
 #'   auto.legend = list(labels = c("Obs", "Exp"), title = "# players"),
 #'   main = "Observed and Expected AFL players"
 #' )
+#' # months (dummy data)
+#' plotCircular(
+#'   area1 = seq(1, 12, 1),
+#'   scale = 0.7,
+#'   labels = month.abb,
+#'   dp = 0
+#' )
+#' # weeks (random data)
+#' daysoftheweek = c(
+#'   'Monday',
+#'   'Tuesday',
+#'   'Wednesday',
+#'   'Thursday',
+#'   'Friday',
+#'   'Saturday',
+#'   'Sunday'
+#' )
+#'
 #' }
 #' @export
 plotCircular <- function(
@@ -363,22 +381,4 @@ plotCircular <- function(
       ...
     )
   }
-} 
-
-# months (dummy data)
-plotCircular(
-  area1 = seq(1, 12, 1),
-  scale = 0.7,
-  labels = month.abb,
-  dp = 0
-)
-# weeks (random data)
-daysoftheweek = c(
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
-)
+}
