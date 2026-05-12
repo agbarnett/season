@@ -73,40 +73,21 @@ monthmean <- function(
     adjp <- with(data, eval(offsetpop))
   } # population adjustment
 
-  resp_vec <- data[[resp]]
-
-  mean_adjust <- function(adjf) {
-    mean <- vector(length = 12, mode = 'numeric')
-    for (i in 1:12) {
-      mean[i] <- mean(
-        resp_vec[data$month == i] * (adjf / days$n_days_month[i]) / adjp
-      )
-    }
-    mean
-  }
-
-  if (adjmonth == 'thirty') {
-    mean <- mean_adjust(adjf = 30)
-  }
-  if (adjmonth == 'average') {
-    mean <- mean_adjust(adjf = 365.25 / 12)
-  }
-
-  if (adjmonth == "none") {
-    mean <- stats::aggregate(
-      x = data[[resp]],
-      by = list(data$month),
-      FUN = \(x) {
-        mean(x / adjp)
-      }
-    )[, 2]
-  }
-
-  result <- list(
-    mean = as.vector(mean)
+  day_wt_vec <- switch(
+    adjmonth,
+    none = rep(1, 12),
+    thirty = 30 / days$n_days_month[1:12],
+    average = (365.25 / 12) / days$n_days_month[1:12]
   )
 
-  class(result) <- c('Monthmean', class(result))
+  # lookup expansion of wt by each month
+  adjusted <- data[[resp]] * day_wt_vec[data$month] / adjp
+
+  result <- list(
+    mean = stats::aggregate(adjusted, by = list(data$month), FUN = mean)[, 2]
+  )
+
+  class(result) <- c("Monthmean", class(result))
 
   result
 }
