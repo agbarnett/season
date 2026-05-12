@@ -1,5 +1,3 @@
-# Calculates the periodogram
-
 #' Periodogram
 #'
 #' Estimated periodogram using the fast Fourier transform (`fft`).
@@ -22,7 +20,6 @@
 #'
 #' @export
 peri <- function(data, adjmean = TRUE, plot = TRUE) {
-  # Setting some variables to NULL first (for R CMD check)
   xaxis <- yaxis <- NULL
 
   if (adjmean) {
@@ -31,29 +28,29 @@ peri <- function(data, adjmean = TRUE, plot = TRUE) {
     adjust <- 0
   }
   n <- length(data)
-  nfft <- (n / 2) + 1
+  n_fft <- (n / 2) + 1
   if (n %% 2 != 0) {
     data <- c(data, mean(data))
   } # taper odd length series with mean of data
   first <- stats::fft(data - adjust) / (n / 2) # Fast Fourier Transform
-  realpart <- Re(first[1:nfft])
-  imagpart <- -Im(first[1:nfft])
-  peri <- (n / 2) * (realpart^2 + imagpart^2) # Periodogram
-  f <- (0:(n / 2)) * pi * 2 / n # Frequencies in radians
-  c <- pi * 2 / f # Frequencies in cycles
-  c[1] <- NA
-  amp <- sqrt(realpart^2 + imagpart^2)
-  phase <- vector(mode = "numeric", length = nfft) # phase in scale [0,2pi]
+  real_part <- Re(first[1:n_fft])
+  imaginary_part <- -Im(first[1:n_fft])
+  peri <- (n / 2) * (real_part^2 + imaginary_part^2) # Periodogram
+  freq_radians <- (0:(n / 2)) * pi * 2 / n # Frequencies in radians
+  freq_cycles <- pi * 2 / freq_radians # Frequencies in cycles
+  freq_cycles[1] <- NA
+  amp <- sqrt(real_part^2 + imaginary_part^2)
+  phase <- vector(mode = "numeric", length = n_fft) # phase in scale [0,2pi]
   # phase in [0,2pi]
-  for (j in 2:(nfft - 1)) {
-    ph <- atan(imagpart[j] / realpart[j])
-    if (realpart[j] >= 0) {
+  for (j in 2:(n_fft - 1)) {
+    ph <- atan(imaginary_part[j] / real_part[j])
+    if (real_part[j] >= 0) {
       phase[j] <- ph
     }
-    if (realpart[j] < 0 && imagpart[j] >= 0) {
+    if (real_part[j] < 0 && imaginary_part[j] >= 0) {
       phase[j] <- ph + pi
     }
-    if (realpart[j] < 0 && imagpart[j] < 0) {
+    if (real_part[j] < 0 && imaginary_part[j] < 0) {
       phase[j] <- ph - pi
     }
     # put in 0 to 2pi range
@@ -66,15 +63,19 @@ peri <- function(data, adjmean = TRUE, plot = TRUE) {
   }
   ## Plot
   if (plot) {
-    to.plot.one <- data.frame(xaxis = f, yaxis = peri, type = 'Radians')
-    to.plot.two <- data.frame(
-      xaxis = c[2:nfft],
-      yaxis = peri[2:nfft],
+    df_plot_1 <- data.frame(
+      xaxis = freq_radians,
+      yaxis = peri,
+      type = 'Radians'
+    )
+    df_plot_2 <- data.frame(
+      xaxis = freq_cycles[2:n_fft],
+      yaxis = peri[2:n_fft],
       type = 'Cycles'
     )
-    to.plot <- rbind(to.plot.one, to.plot.two)
+    df_plot <- rbind(df_plot_1, df_plot_2)
     gplot <- ggplot2::ggplot(
-      to.plot,
+      df_plot,
       ggplot2::aes(
         xaxis,
         yaxis,
@@ -90,5 +91,11 @@ peri <- function(data, adjmean = TRUE, plot = TRUE) {
     print(gplot)
   }
   # return
-  return(list(peri = peri, f = f, c = c, amp = amp, phase = phase))
+  return(list(
+    peri = peri,
+    f = freq_radians,
+    c = freq_cycles,
+    amp = amp,
+    phase = phase
+  ))
 }

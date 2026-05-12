@@ -70,7 +70,7 @@ of Nonlinearity, \emph{IEEE Transactions on Signal Processing}, vol 53,
 pages 26--33 \doi{doi: 10.1109/TSP.2004.838942}.
 }
 \seealso{
-\code{print.nonlintest}, \code{plot.nonlintest}
+\code{\link[=print.nonlintest]{print.nonlintest()}} \code{\link[=plot.nonlintest]{plot.nonlintest()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

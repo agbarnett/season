@@ -18,7 +18,8 @@ nscosinor(
 )
 }
 \arguments{
-\item{data}{a data frame.}
+\item{data}{Data frame. Assumes year and month exist in data, and no
+missing data}
 
 \item{response}{response variable.}
 
@@ -121,7 +122,7 @@ Barnett, A.G., Dobson, A.J. (2004) Estimating trends and seasonality in
 coronary heart disease \emph{Statistics in Medicine}. 23(22) 3505--23.
 }
 \seealso{
-\code{plot.nsCosinor}, \code{summary.nsCosinor}
+\code{\link[=plot.nsCosinor]{plot.nsCosinor()}} \code{\link[=summary.nsCosinor]{summary.nsCosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}
