@@ -1,28 +1,5 @@
-##**********************************
-##** Seasonal decomposition macro **
-##**********************************
-##** Adrian Barnett               **
-##** April 2008, updated Dec 2011 **
-##**********************************
-### Inputs
-## data = data
-## cycles = cycles (e.g. in months, f=c(6,12))
-## tau = vector of smoothing parameters, tau[1] for trend, tau[2] for 1st
-## seasonal parameter, tau[2] for 2nd seasonal parameter, etc
-## niters = total number of MCMC samples (default=1000)
-## burnin = number of MCMC samples discarded as a burn-in (default=500)
-## lambda = distance between observations (lambda=1/12 for monthly data)
-## div = divisor at which MCMC sample progress is reported (default=50)
-## monthly = TRUE for monthly data
-### Outputs
-## trend = mean trend and 95% confidence interval
-## season = mean season and 95% confidence interval
-## residuals = residuals (based on mean trend and season)
 ## stats = estimated amplitude, phases and noise
-## chains = MCMC chain of variance estimates (std.error for overall sd(error),
-## std.season for seasonal parts)
 ##
-## assumes year and month exist in data; assumes no missing data
 
 #' Non-stationary Cosinor
 #'
@@ -53,7 +30,8 @@
 #' estimates a reasonably long sample should be used (`niters`), and the
 #' possibly poor initial estimates should be discarded (`burnin`).
 #'
-#' @param data a data frame.
+#' @param data Data frame. Assumes year and month exist in data, and no
+#'   missing data
 #' @param response response variable.
 #' @param cycles vector of cycles in units of time, e.g., for a six and twelve
 #' month pattern `cycles=c(6,12)`.
@@ -86,7 +64,7 @@
 #'     (std.season), phase(s) and amplitude(s).
 #'   * cycles: vector of cycles in units of time.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `plot.nsCosinor`, `summary.nsCosinor`
+#' @seealso [plot.nsCosinor()] [summary.nsCosinor()]
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #'
@@ -125,9 +103,9 @@ nscosinor <- function(
   alpha = 0.05
 ) {
   names <- names(data)
-  yearyes <- sum(names == 'year')
-  monthyes <- sum(names == 'month')
-  if (yearyes < 1 || monthyes < 1) {
+  year_yes <- sum(names == 'year')
+  month_yes <- sum(names == 'month')
+  if (year_yes < 1 || month_yes < 1) {
     stop("Data needs to contain numeric year and month variables")
   }
   if (length(tau) != length(cycles) + 1) {
@@ -136,7 +114,7 @@ nscosinor <- function(
       "plus one for the trend"
     )
   }
-  resp <- subset(data, select = response)[, 1] # instead of attach
+  resp <- subset(data, select = response)[, 1]
   if (anyNA(resp)) {
     stop("Missing data in the dependent variable not allowed")
   }
@@ -146,49 +124,48 @@ nscosinor <- function(
   if (burnin > niters) {
     stop("Number of iterations must be greater than burn-in")
   }
-  ### was    yrmon<-year+((month-1)/12)
-  yrmon <- data$year + ((data$month - 1) / 12) #
+  year_month <- data$year + ((data$month - 1) / 12) #
   n <- length(resp)
   k <- length(cycles)
   kk <- 2 * (k + 1)
   ## Get initial values
-  good.inits <- nscosinor.initial(
+  good_inits <- nscosinor.initial(
     data = data,
     response = response,
     lambda = lambda,
     tau = tau,
     n.season = k
   )
-  vartheta <- sqrt(good.inits[1]) # Initial estimates of var theta
+  var_theta <- sqrt(good_inits[1]) # Initial estimates of var theta
   w <- vector(length = k, mode = "numeric")
   for (index in 1:k) {
-    w[index] <- good.inits[2] # Initial estimate of lambda (w)
+    w[index] <- good_inits[2] # Initial estimate of lambda (w)
   }
   ## Empty chain matrices and assign initial values
-  ampchain <- matrix(0, niters + 1, k)
-  phasechain <- matrix(0, niters + 1, k)
-  alphachain <- array(0, c(kk, n + 1, niters))
-  varthetachain <- matrix(0, niters + 1)
-  lchain <- matrix(0, niters + 1, k)
-  lchain[1, ] <- w
-  varthetachain[1] <- vartheta
-  cmean <- rep(10, kk) # starting value for C_j
+  chain_amp <- matrix(0, niters + 1, k)
+  chain_phase <- matrix(0, niters + 1, k)
+  chain_alpha <- array(0, c(kk, n + 1, niters))
+  chain_var_theta <- matrix(0, niters + 1)
+  chain_lower <- matrix(0, niters + 1, k)
+  chain_lower[1, ] <- w
+  chain_var_theta[1] <- var_theta
+  chain_mean <- rep(10, kk) # starting value for C_j
   for (iter in 1:niters) {
     result <- kalfil(
       resp,
       f = cycles,
-      vartheta = varthetachain[iter], # changed response to resp
-      w = lchain[iter, ],
+      vartheta = chain_var_theta[iter], # changed response to resp
+      w = chain_lower[iter, ],
       tau = tau,
       lambda = lambda,
-      cmean = cmean
+      cmean = chain_mean
     )
-    varthetachain[iter + 1] <- result$vartheta
-    lchain[iter + 1, ] <- result$w
-    alphachain[,, iter] <- result$alpha
-    ampchain[iter + 1, ] <- result$amp
-    phasechain[iter + 1, ] <- result$phase
-    cmean <- result$cmean
+    chain_var_theta[iter + 1] <- result$vartheta
+    chain_lower[iter + 1, ] <- result$w
+    chain_alpha[,, iter] <- result$alpha
+    chain_amp[iter + 1, ] <- result$amp
+    chain_phase[iter + 1, ] <- result$phase
+    chain_mean <- result$cmean
     ## Output iteration progress
     if (iter %% div == 0) {
       cat("Iteration number", iter, "of", niters, "\r", sep = " ")
@@ -198,65 +175,65 @@ nscosinor <- function(
   trend <- as.data.frame(matrix(0, n, 3))
   season <- as.data.frame(matrix(0, n, 3 * k))
   oseason <- as.data.frame(matrix(0, n, 3))
-  new.fitted <- as.data.frame(matrix(0, n, 3))
+  new_fitted <- as.data.frame(matrix(0, n, 3))
   names(trend) <- c('mean', 'lower', 'upper')
   names(oseason) <- c('mean', 'lower', 'upper')
-  names(new.fitted) <- c('mean', 'lower', 'upper')
-  allseasons <- matrix(data = NA, ncol = niters - burnin, nrow = n)
+  names(new_fitted) <- c('mean', 'lower', 'upper')
+  all_seasons <- matrix(data = NA, ncol = niters - burnin, nrow = n)
   snums <- ((1:k) * 2) + 1
   for (i in 1:n) {
     for (j in (burnin + 1):niters) {
-      allseasons[i, j - burnin] <- sum(alphachain[snums, i, j])
+      all_seasons[i, j - burnin] <- sum(chain_alpha[snums, i, j])
     }
   }
-  lprob <- alpha / 2
-  uprob <- 1 - (alpha / 2)
-  lnum <- round((niters - burnin) * lprob)
-  unum <- round((niters - burnin) * uprob)
-  for.fitted <- allseasons + alphachain[1, 1:n, (burnin + 1):niters]
+  prob_lower <- alpha / 2
+  prob_upper <- 1 - (alpha / 2)
+  num_lower <- round((niters - burnin) * prob_lower)
+  num_upper <- round((niters - burnin) * prob_upper)
+  for_fitted <- all_seasons + chain_alpha[1, 1:n, (burnin + 1):niters]
   for (i in 1:n) {
-    trend$mean[i] <- mean(alphachain[1, i, burnin:niters])
+    trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
     trend$lower[i] <- sum(
-      as.numeric(rank(alphachain[1, i, burnin:niters]) == lnum) *
-        alphachain[1, i, burnin:niters]
+      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
+        chain_alpha[1, i, burnin:niters]
     )
     trend$upper[i] <- sum(
-      as.numeric(rank(alphachain[1, i, burnin:niters]) == unum) *
-        alphachain[1, i, burnin:niters]
+      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
+        chain_alpha[1, i, burnin:niters]
     )
     for (j in 2:(k + 1)) {
       snum <- ((j - 1) * 2) + 1
-      season[i, ((j - 1) * 3) - 2] <- mean(alphachain[snum, i, burnin:niters])
+      season[i, ((j - 1) * 3) - 2] <- mean(chain_alpha[snum, i, burnin:niters])
       season[i, ((j - 1) * 3) - 1] <- sum(
-        as.numeric(rank(alphachain[snum, i, burnin:niters]) == lnum) *
-          alphachain[snum, i, burnin:niters]
+        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_lower) *
+          chain_alpha[snum, i, burnin:niters]
       )
       season[i, ((j - 1) * 3)] <- sum(
-        as.numeric(rank(alphachain[snum, i, burnin:niters]) == unum) *
-          alphachain[snum, i, burnin:niters]
+        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_upper) *
+          chain_alpha[snum, i, burnin:niters]
       )
     }
     ## overall season
-    oseason$mean[i] <- mean(allseasons[i, ])
+    oseason$mean[i] <- mean(all_seasons[i, ])
     oseason$lower[i] <- sum(
-      as.numeric(rank(allseasons[i, ]) == lnum) * allseasons[i, ]
+      as.numeric(rank(all_seasons[i, ]) == num_lower) * all_seasons[i, ]
     )
     oseason$upper[i] <- sum(
-      as.numeric(rank(allseasons[i, ]) == unum) * allseasons[i, ]
+      as.numeric(rank(all_seasons[i, ]) == num_upper) * all_seasons[i, ]
     )
     ## fitted values (with CIs)
-    new.fitted$mean[i] <- mean(for.fitted[i])
-    new.fitted$lower[i] <- sum(
-      as.numeric(rank(for.fitted[i, ]) == lnum) * for.fitted[i, ]
+    new_fitted$mean[i] <- mean(for_fitted[i])
+    new_fitted$lower[i] <- sum(
+      as.numeric(rank(for_fitted[i, ]) == num_lower) * for_fitted[i, ]
     )
-    new.fitted$upper[i] <- sum(
-      as.numeric(rank(for.fitted[i, ]) == unum) * for.fitted[i, ]
+    new_fitted$upper[i] <- sum(
+      as.numeric(rank(for_fitted[i, ]) == num_upper) * for_fitted[i, ]
     )
   }
   names(season) <- rep(c('mean', 'lower', 'upper'), k)
   ## Time
   if (monthly) {
-    time <- yrmon
+    time <- year_month
   }
   if (!monthly) {
     time <- 1:n
@@ -269,44 +246,48 @@ nscosinor <- function(
   frmls <- formals(deparse(ans[[1]]))
   add <- which(!(names(frmls) %in% names(ans)))
   call <- as.call(c(ans, frmls[add]))
-  ## Returns
-  toret <- list()
-  toret$call <- call
-  toret$time <- time
-  toret$trend <- trend
-  toret$season <- season
-  toret$oseason <- oseason
-  #   toret$fitted.values<-fitted # over-ride with values below
-  toret$fitted.values <- new.fitted
-  toret$residuals <- res
-  toret$n <- n
-  toret$chains$std.error <- varthetachain
-  toret$chains$std.season <- matrix(data = NA, nrow = niters + 1, ncol = k)
-  toret$chains$phase <- matrix(data = NA, nrow = niters + 1, ncol = k)
-  toret$chains$amplitude <- matrix(data = NA, nrow = niters + 1, ncol = k)
+
+  result <- list(
+    call = call,
+    time = time,
+    trend = trend,
+    season = season,
+    oseason = oseason,
+    fitted.values = new_fitted,
+    residuals = res,
+    n = n,
+    chains = list(
+      std.error = chain_var_theta,
+      std.season = matrix(data = NA, nrow = niters + 1, ncol = k),
+      phase = matrix(data = NA, nrow = niters + 1, ncol = k),
+      amplitude = matrix(data = NA, nrow = niters + 1, ncol = k)
+    )
+  )
   for (i in 1:k) {
     # for multiple cycles
-    toret$chains$std.season[, i] <- lchain[, i]
-    toret$chains$phase[, i] <- phasechain[, i]
-    toret$chains$amplitude[, i] <- ampchain[, i]
+    result$chains$std.season[, i] <- chain_lower[, i]
+    result$chains$phase[, i] <- chain_phase[, i]
+    result$chains$amplitude[, i] <- chain_amp[, i]
   }
-  toret$chains <- coda::mcmc(
+
+  result$chains <- coda::mcmc(
     cbind(
-      toret$chains$std.error[(burnin + 2):(niters + 1)],
-      toret$chains$std.season[(burnin + 2):(niters + 1), ],
-      toret$chains$phase[(burnin + 2):(niters + 1), ],
-      toret$chains$amplitude[(burnin + 2):(niters + 1), ]
+      result$chains$std.error[(burnin + 2):(niters + 1)],
+      result$chains$std.season[(burnin + 2):(niters + 1), ],
+      result$chains$phase[(burnin + 2):(niters + 1), ],
+      result$chains$amplitude[(burnin + 2):(niters + 1), ]
     ),
     start = burnin + 1
   )
   # Add the names
-  colnames(toret$chains) <- c(
+  colnames(result$chains) <- c(
     'std.error',
     paste0('std.season', 1:k),
     paste0('phase', 1:k),
     paste0('amplitude', 1:k)
   )
-  toret$cycles <- cycles
-  class(toret) <- 'nsCosinor'
-  return(toret)
+  result$cycles <- cycles
+  class(result) <- c('nsCosinor', class(result))
+
+  result
 }
