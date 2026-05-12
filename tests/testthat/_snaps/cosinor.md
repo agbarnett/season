@@ -12,7 +12,7 @@
       res_monthly$glm
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
@@ -72,7 +72,7 @@
       cosinor(y ~ 1, date = "date", data = bad, type = "hourly")
     Condition
       Error in `cosinor()`:
-      ! date variable must be of class POSIXct when type='hourly'
+      ! date variable must be of class POSIXct when type = 'hourly'
 
 # cosinor requires Date when type='daily'
 
@@ -80,7 +80,7 @@
       cosinor(y ~ 1, date = "date", data = bad, type = "daily")
     Condition
       Error in `cosinor()`:
-      ! date variable must be of class Date when type='daily'
+      ! date variable must be of class Date when type = 'daily'
 
 # cosinor errors when alpha is outside (0, 1)
 

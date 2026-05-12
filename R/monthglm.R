@@ -32,7 +32,7 @@
 #' should be a variable in the data frame. Do not log-transform the offset as
 #' the log-transform is applied by the function. This should be an expression,
 #' as given in the example below.
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * call: the original call to the monthglm function.
 #'   * fit: GLM model.
 #'   * fitted: fitted values.
@@ -41,17 +41,17 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `summary.monthglm`, `plot.monthglm`
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #'
-#' mmodel <- monthglm(
+#' model <- monthglm(
 #'   formula = cvd~1,
 #'   data = CVD,
 #'   family = poisson(),
 #'   offsetpop = expression(pop/100000),
 #'   offsetmonth = TRUE
 #'   )
-#' summary(mmodel)
+#' summary(model)
 #'
 #' @export monthglm
 monthglm <- function(
@@ -63,7 +63,6 @@ monthglm <- function(
   offsetmonth = FALSE,
   offsetpop = NULL
 ) {
-  ## checks
   if (refmonth < 1 || refmonth > 12) {
     stop("Reference month must be between 1 and 12")
   }
@@ -76,67 +75,79 @@ monthglm <- function(
   frmls <- formals(deparse(ans[[1]]))
   add <- which(!(names(frmls) %in% names(ans)))
   call <- as.call(c(ans, frmls[add]))
-
-  monthvar <- with(data, get(monthvar))
-  cmonthvar <- class(monthvar)
+  monthvar <- data[[monthvar]]
   ## If month is a character, create the numbers
-  if (cmonthvar %in% c('factor', 'character')) {
-    if (cmonthvar == 'character') {
-      if (max(nchar(monthvar)) == 3) {
-        mlevels <- substr(month.name, 1, 3)
-      } else {
-        mlevels <- month.name
-      }
-      monthvar <- factor(monthvar, levels = mlevels)
+  if (inherits(monthvar, "character")) {
+    if (max(nchar(monthvar)) == 3) {
+      month_levels <- substr(month.name, 1, 3)
+    } else {
+      month_levels <- month.name
     }
+    monthvar <- factor(monthvar, levels = month_levels)
+  }
+
+  if (inherits(monthvar, "factor")) {
     months <- as.numeric(monthvar)
-    data$month <- months # add to data for flagleap
+    # add to data for flagleap
+    data$month <- months
     months <- as.factor(months)
     levels(months)[months] <- month.abb[months]
     # set reference month
-    months <- stats::relevel(months.u, ref = month.abb[refmonth])
+    months <- stats::relevel(months, ref = month.abb[refmonth])
   }
+
   ## Transform month numbers to names
-  if (cmonthvar %in% c('integer', 'numeric')) {
-    months.u <- as.factor(monthvar)
+  if (inherits(monthvar, "integer") || inherits(monthvar, "numeric")) {
+    months_u <- as.factor(monthvar)
     # Month numbers; replaced `nochars`
-    nums <- keep_month_numbers(levels(months.u))
-    levels(months.u)[nums] <- month.abb[nums]
+    nums <- keep_month_numbers(levels(months_u))
+    levels(months_u)[nums] <- month.abb[nums]
     # set reference month
-    months <- stats::relevel(months.u, ref = month.abb[refmonth])
+    months <- stats::relevel(months_u, ref = month.abb[refmonth])
   }
+
+  # get the number of days in each month
+  days <- flagleap(data = data, report = FALSE, matchin = TRUE)
+  l <- nrow(data)
+  if (!is.null(offsetpop)) {
+    pop_offset <- with(data, eval(offsetpop))
+  } else {
+    pop_offset <- rep(1, l)
+  } #
+  if (offsetmonth) {
+    month_offset <- days$n_days_month / (365.25 / 12)
+  } else {
+    month_offset <- rep(1, l)
+  } # days per month divided by average month length
+  model_offset <- log(pop_offset * month_offset)
+
   ## prepare data/formula
+  ## A bit of a workaround update.formula(), since this doesn't really
+  ## work how we expect, see
+  ## stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
   parts <- paste(formula)
-  f <- stats::as.formula(paste(
+  form <- stats::as.formula(paste(
     parts[2],
     parts[1],
     parts[3:length(formula)],
     '+months'
   ))
-  # dependent variable
-  dep <- parts[2]
-  # get the number of days in each month
-  days <- flagleap(data = data, report = FALSE, matchin = TRUE)
-  l <- nrow(data)
-  if (!is.null(offsetpop)) {
-    poff <- with(data, eval(offsetpop))
-  } else {
-    poff <- rep(1, l)
-  } #
-  if (offsetmonth) {
-    moff <- days$ndaysmonth / (365.25 / 12)
-  } else {
-    moff <- rep(1, l)
-  } # days per month divided by average month length
-  ### data$off = log(poff*moff)
-  off <- log(poff * moff) #
-  fit <- stats::glm(formula = f, data = data, family = family, offset = off)
-  ## return
-  toret <- list()
-  toret$call <- call
-  toret$glm <- fit
-  toret$fitted.values <- stats::fitted(fit)
-  toret$residuals <- stats::residuals(fit)
-  class(toret) <- 'monthglm'
-  return(toret)
+
+  fit <- stats::glm(
+    formula = form,
+    data = data,
+    family = family,
+    offset = model_offset
+  )
+
+  model_fit <- list(
+    call = call,
+    glm = fit,
+    fitted.values = stats::fitted(fit),
+    residuals = stats::residuals(fit)
+  )
+
+  class(model_fit) <- c("monthglm", class(model_fit))
+
+  model_fit
 }

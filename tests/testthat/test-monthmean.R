@@ -55,6 +55,6 @@ test_that("monthmean adjmonth='thirty'/'average' rescale by a known constant", {
 
 test_that("monthmean without offset returns the raw monthly means", {
   mm <- monthmean(data = CVD, resp = "cvd")
-  cvd_by_month <- aggregate(cvd ~ month, data = CVD, FUN = mean)
+  cvd_by_month <- stats::aggregate(cvd ~ month, data = CVD, FUN = mean)
   expect_identical(mm$mean, cvd_by_month$cvd)
 })

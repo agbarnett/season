@@ -1,5 +1,3 @@
-# April 2009
-
 #' Seasonal Residual Checks
 #'
 #' Tests the residuals for any remaining seasonality.

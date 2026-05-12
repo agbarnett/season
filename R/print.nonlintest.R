@@ -12,15 +12,12 @@
 #' @examples
 #' \donttest{
 #' \dontrun{
-#'   test_res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
-#'   test_res
+#' test_res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' test_res
 #' }
 #' }
 print.nonlintest <- function(x, ...) {
-  if (!inherits(x, "nonlintest")) {
-    stop("Object must be of class 'nonlintest'")
-  }
-
+  check_if_nonlintest(x)
   # 1) Stats on third order moment
   diff_l <- x$region * 0
   diff_u <- x$region * 0
@@ -72,4 +69,4 @@ print.nonlintest <- function(x, ...) {
     x$stats$pvalue,
     '\n'
   )
-} # end of function
+}

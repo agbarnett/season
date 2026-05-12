@@ -1,11 +1,4 @@
-#aaft.R AAFT (Amplitude Adjusted Fourier Transform), copied from Matlab code Jan
-#2012 For more details see: D. Kugiumtzis, Surrogate data test for nonlinearity
-#including monotonic transformations, Phys. Rev. E, vol. 62, no. 1, 2000.
-#generates surrogate data for a given time series data using the AAFT # INPUT:
-# - data        : The original time series (column vector)
-# - nsur      : The number of surrogate data to be generated
-## OUTPUT:
-# - surrogates        : The AAFT surrogate data (matrix of nsur columns)
+# AAFT (Amplitude Adjusted Fourier Transform), copied from Matlab code Jan 2012
 
 #' Amplitude Adjusted Fourier Transform (AAFT)
 #'
@@ -19,55 +12,68 @@
 #'
 #' @param data a vector of equally spaced numeric observations (time series).
 #' @param nsur the number of surrogates to generate (1 or more).
-#' @return a matrix of the `nsur` surrogates.
+#' @returns a matrix of the `nsur` surrogates.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Kugiumtzis D (2000) Surrogate data test for nonlinearity
-#' including monotonic transformations, *Phys. Rev. E*, vol 62
+#' including monotonic transformations, *Phys. Rev. E*, vol 62 no. 1, 2000.
+#' \doi{doi:10.1103/PhysRevE.62.R25}
 #' @examples
 #'
 #' \donttest{
-#' data(CVD)
-#' surr = aaft(CVD$cvd, nsur=1)
-#' plot(CVD$cvd, type='l')
-#' lines(surr[,1], col='red')
+#' surr <- aaft(CVD$cvd, nsur = 1)
+#' plot(CVD$cvd, type = "l")
+#' lines(surr[ ,1], col = "red")
 #' }
 #'
-#' @export aaft
+#' @export
 aaft <- function(data, nsur) {
   n <- length(data)
   # The following gives the rank order, ixV
   ixV <- order(data)
-  rxV <- rank(data) # ranks
-  oxV <- data[ixV] # smallest to largest
+  # ranks
+  rxV <- rank(data)
+  # smallest to largest
+  oxV <- data[ixV]
+
   # ===== AAFT algorithm
   surrogates <- matrix(data = 0, n, nsur)
+
   for (count in 1:nsur) {
     # Rank ordering white noise with respect to data
     # random N(0,1)
     rV <- stats::rnorm(n)
-    orV <- sort(rV) # in order, smallest to largest
-    yV <- orV[rxV] #
+    # in order, smallest to largest
+    orV <- sort(rV)
+    yV <- orV[rxV]
     # cor(yV,data,method='spearman') # Not run, should be one
-    # >>>>> Phase randomisation (Fourier Transform): yV -> yftV
+    # Phase randomisation (Fourier Transform): yV -> yftV ----
     if (n %% 2 == 0) {
       n2 <- n / 2
     } else {
       n2 <- (n - 1) / 2
     }
-    tmpV <- stats::fft(yV, 2 * n2) # FFT
-    magnV <- abs(tmpV) # magnitude
-    fiV <- Arg(tmpV) # phases
-    rfiV <- stats::runif(n2 - 1) * 2 * pi # random phases
+    # FFT
+    tmpV <- stats::fft(yV, 2 * n2)
+    # magnitude
+    magnV <- abs(tmpV)
+    # phases
+    fiV <- Arg(tmpV)
+    # random phases
+    rfiV <- stats::runif(n2 - 1) * 2 * pi
     nfiV <- c(0, rfiV, fiV[n2 + 1], -rev(rfiV))
     # New Fourier transformed data with only the phase changed
     tmpV <- c(magnV[1:(n2 + 1)], rev(magnV[2:n2]))
-    c.exp <- cos(nfiV) + 1i * sin(nfiV) # complex exponential
-    tmpV <- tmpV * c.exp
+    # complex exponential
+    c.exp <- cos(nfiV) + 1i * sin(nfiV)
     # Transform back to time domain;
-    yftV <- Re(stats::fft(tmpV, inverse = TRUE)) # 3-step AAFT;
-    # <<<<<
-    iyftV <- rank(yftV) # Rank ordering data with respect to yftV
-    surrogates[, count] <- oxV[iyftV] # surrogates is the AAFT surrogate of data
+    tmpV <- tmpV * c.exp
+    # 3-step AAFT;
+    yftV <- Re(stats::fft(tmpV, inverse = TRUE))
+    # Rank ordering data with respect to yftV
+    iyftV <- rank(yftV)
+    # surrogates is the AAFT surrogate of data
+    surrogates[, count] <- oxV[iyftV]
   } # end of loop
-  return(surrogates)
-} # end of function
+
+  surrogates
+}

@@ -17,7 +17,7 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #' \donttest{
-#' plotCircle(months=seq(1,12,1),dp=0)
+#' plotCircle(months = seq(1,12,1), dp = 0)
 #' }
 #'
 #' @export
@@ -117,4 +117,4 @@ plotCircle <- function(months, dp = 1, ...) {
     text(2 * width, yref, clabel2)
   }
   par(op) # restore graphic settings
-} # end of function
+}

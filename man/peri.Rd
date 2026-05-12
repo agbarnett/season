@@ -29,7 +29,6 @@ Estimated periodogram using the fast Fourier transform (\code{fft}).
 }
 \examples{
 \donttest{
-data(CVD)
 p = peri(CVD$cvd)
 }
 

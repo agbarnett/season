@@ -23,22 +23,23 @@ a list with the following elements:
 }
 }
 \description{
-Tests for a seasonal pattern in Binomial data.
-}
-\details{
-A test of whether monthly data has a sinusoidal seasonal pattern. The test
-has low power compared with the \code{\link[=cosinor]{cosinor()}} test.
+Tests for a seasonal pattern in Binomial data. A test of whether monthly data
+has a sinusoidal seasonal pattern. The test has low power compared with the
+\code{\link[=cosinor]{cosinor()}} test.
 }
 \examples{
 
-data(stillbirth)
 # tabulate the total number of births and the number of stillbirths
-freqs = table(stillbirth$month,stillbirth$stillborn)
-data = list()
-data$trials = as.numeric(freqs[,1]+freqs[,2])
-data$success = as.numeric(freqs[,2])
+freqs <- table(stillbirth$month, stillbirth$stillborn)
+data <- list()
+data$trials <- as.numeric(freqs[, 1] + freqs[, 2])
+data$success <- as.numeric(freqs[, 2])
 # test for a seasonal pattern in stillbirth
-test = wtest(cases='success', offset='trials', data=data)
+test <- wtest(
+  cases = 'success',
+  offset = 'trials',
+  data = data
+)
 
 }
 \references{
@@ -47,7 +48,7 @@ events with a variable population at risk. \emph{British Journal of
 Preventive and Social Medicine} 29, 18--21.
 
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
-Springer.
+Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

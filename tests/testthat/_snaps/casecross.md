@@ -4,7 +4,7 @@
       model1
     Output
       Call:
-      survival::coxph(formula = finalformula, data = finished, weights = outcome, 
+      survival::coxph(formula = form_final, data = finished, weights = outcome, 
           method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
@@ -25,15 +25,16 @@
     Code
       names(model1)
     Output
-      [1] "call"         "c.model"      "ncases"       "ncasedays"    "ncontroldays"
+      [1] "call"           "cox_model"      "n_cases"        "n_case_days"   
+      [5] "n_control_days"
 
 ---
 
     Code
-      model1$c.model
+      model1$cox_model
     Output
       Call:
-      survival::coxph(formula = finalformula, data = finished, weights = outcome, 
+      survival::coxph(formula = form_final, data = finished, weights = outcome, 
           method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p

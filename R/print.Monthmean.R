@@ -14,20 +14,16 @@
 #' @examples
 #' \donttest{
 #' mmean <- monthmean(
-#'   data=CVD,
-#'   resp='cvd',
-#'   offsetpop = expression(pop/100000),
+#'   data = CVD,
+#'   resp = 'cvd',
+#'   offsetpop = expression(pop / 100000),
 #'   adjmonth = 'average'
-#'   )
+#' )
 #' mmean
 #' }
 print.Monthmean <- function(x, digits = 1, ...) {
-  ## Check
-  if (!inherits(x, "Monthmean")) {
-    stop("Object must be of class 'Monthmean'")
-  }
-  ## Print
+  check_if_monthmean(x)
   toprint <- as.data.frame(cbind(month.name, round(x$mean, digits)))
   names(toprint) <- c('Month', 'Mean')
   print(toprint, row.names = FALSE, ...)
-} # end of function
+}

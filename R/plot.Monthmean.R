@@ -11,20 +11,16 @@
 #' @examples
 #' \donttest{
 #' mmean <- monthmean(
-#'   data=CVD,
-#'   resp='cvd',
-#'   offsetpop = expression(pop/100000),
+#'   data = CVD,
+#'   resp = 'cvd',
+#'   offsetpop = expression(pop / 100000),
 #'   adjmonth = 'average'
-#'   )
-#'   mmean
-#'   plot(mmean)
+#' )
+#' mmean
+#' plot(mmean)
+#'
 #' }
 plot.Monthmean <- function(x, ...) {
-  ## Check
-  if (!inherits(x, "Monthmean")) {
-    stop("Object must be of class 'Monthmean'")
-  }
-  ## Plot
   par(lwd = 2)
   plot(
     x$mean,

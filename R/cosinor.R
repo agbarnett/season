@@ -1,10 +1,4 @@
-# cosinor function using a GLM
-# available link functions = identity, log, logit, cloglog
-# date = date for daily data, month for monthly data
-# type =  monthly/weekly/daily/hourly
-# phase results based on 1 cycle per year
 # Aug 2014
-
 #' Cosinor Regression Model for Detecting Seasonality in Yearly Data or
 #' Circadian Patterns in Hourly Data
 #'
@@ -41,7 +35,7 @@
 #' @inheritParams monthglm
 #' @param text add explanatory text to the returned phase value (TRUE) or
 #' return a number (FALSE). Passed to the [invyrfraction()] function.
-#' @return Returns an object of class "Cosinor" with the following
+#' @returns Returns an object of class "Cosinor" with the following
 #' parts:
 #'   * call: the original call to the cosinor function.
 #'   * glm: an object of class `glm` (see [glm()]).
@@ -54,23 +48,31 @@
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso [summary.Cosinor()], [plot.Cosinor()]
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
-#'
 #' ## cardiovascular disease data (offset based on number of days in...
 #' ## ...the month scaled to an average month length)
-#' res = cosinor(cvd~1, date='month', data=CVD, type='monthly',
-#'               family=poisson(), offsetmonth=TRUE)
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = 'month',
+#'   data = CVD,
+#'   type = 'monthly',
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#' )
 #' summary(res)
 #' seasrescheck(res$residuals) # check the residuals
 #' ## stillbirth data
-#' data(stillbirth)
-#' res = cosinor(stillborn~1, date='dob', data=stillbirth,
-#'               family=binomial(link='cloglog'))
+#' res <- cosinor(
+#'   stillborn ~ 1,
+#'   date = 'dob',
+#'   data = stillbirth,
+#'   family = binomial(link = 'cloglog')
+#' )
 #' summary(res)
 #' plot(res)
 #' ## hourly indoor temperature data
-#' res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
+#' res <- cosinor(bedroom ~ 1, date = 'datetime', type = 'hourly', data = indoor)
 #' summary(res)
 #' # to get the p-values for the sine and cosine estimates
 #' summary(res$glm)
@@ -89,18 +91,16 @@ cosinor <- function(
   offsetpop = NULL,
   text = TRUE
 ) {
-  this.class <- class(data[[date]])
+  type <- rlang::arg_match(type)
+
   if (!is.logical(offsetmonth)) {
     stop("Error: 'offsetmonth' must be of type logical")
   }
-
-  type <- rlang::arg_match(type)
-
   if (type == 'hourly' && !inherits(data[[date]], "POSIXct")) {
-    stop("date variable must be of class POSIXct when type='hourly'")
+    stop("date variable must be of class POSIXct when type = 'hourly'")
   }
   if (type == 'daily' && !inherits(data[[date]], 'Date')) {
-    stop("date variable must be of class Date when type='daily'")
+    stop("date variable must be of class Date when type = 'daily'")
   }
   if (alpha <= 0 || alpha >= 1) {
     stop("alpha must be between 0 and 1")
@@ -118,7 +118,7 @@ cosinor <- function(
 
   ## make the formula
   parts <- paste(formula)
-  f <- stats::as.formula(paste(
+  form <- stats::as.formula(paste(
     parts[2],
     parts[1],
     parts[3:length(formula)],
@@ -126,63 +126,70 @@ cosinor <- function(
   ))
 
   ## get the year/hour fraction
-  to.frac <- subset(data, select = date)[, 1]
+  to_frac <- subset(data, select = date)[, 1]
   if (type == 'hourly') {
-    number <- as.numeric(format(to.frac, '%H')) +
-      (as.numeric(format(to.frac, '%M')) / 60) +
-      (as.numeric(format(to.frac, '%S')) / 60 * 60)
+    number <- as.numeric(format(to_frac, '%H')) +
+      (as.numeric(format(to_frac, '%M')) / 60) +
+      (as.numeric(format(to_frac, '%S')) / 60 * 60)
     frac <- number / 24
   }
+  this_class <- class(data[[date]])
   if (type != 'hourly') {
-    class(to.frac) <- this.class # return to class (needed for date class)
-    frac <- yrfraction(to.frac, type = type) #
+    # return to class (needed for date class)
+    class(to_frac) <- this_class
+    frac <- yrfraction(to_frac, type = type) #
   }
   data$cosw <- cos(frac * 2 * pi * cycles)
   data$sinw <- sin(frac * 2 * pi * cycles)
-  newdata <- data.frame(cosw = data$cosw, sinw = data$sinw) # used later
-  poff <- rep(1, nrow(data))
+  # used later
+  newdata <- data.frame(cosw = data$cosw, sinw = data$sinw)
+  pop_offset <- rep(1, nrow(data))
   if (!is.null(offsetpop)) {
-    poff <- offsetpop
+    pop_offset <- offsetpop
   }
-  moff <- rep(1, nrow(data))
+  month_offset <- rep(1, nrow(data))
   if (offsetmonth) {
     # get the number of days in each month
     days <- flagleap(data = data, report = FALSE, matchin = TRUE)
     # days per month divided by average month length
-    moff <- days$ndaysmonth / (365.25 / 12)
+    month_offset <- days$n_days_month / (365.25 / 12)
   }
-  offset <- log(poff * moff)
+  offset <- log(pop_offset * month_offset)
   # generalized linear model
-  model <- stats::glm(f, data = data, family = family, offset = offset)
+  model <- stats::glm(form, data = data, family = family, offset = offset)
   s <- summary(model)
   res <- stats::residuals(model)
 
   ## create predicted data (intercept + sinusoid)
-  cnames <- row.names(s$coefficients)
-  cindex <- sum(as.numeric(cnames == 'cosw') * (seq_along(cnames)))
-  sindex <- sum(as.numeric(cnames == 'sinw') * (seq_along(cnames)))
+  c_names <- row.names(s$coefficients)
+  c_index <- sum(as.numeric(c_names == 'cosw') * (seq_along(c_names)))
+  s_index <- sum(as.numeric(c_names == 'sinw') * (seq_along(c_names)))
   fitted <- stats::fitted(model) # standard fitted values
   pred <- s$coefficients[1, 1] +
-    (s$coefficients[cindex, 1] * newdata$cosw) +
-    (s$coefficients[sindex, 1] * newdata$sinw)
+    (s$coefficients[c_index, 1] * newdata$cosw) +
+    (s$coefficients[s_index, 1] * newdata$sinw)
   # back-transform:
   pred <- switch(
     s$family$link,
     log = exp(pred),
     logit = exp(pred) / (1 + exp(pred)),
     cloglog = 1 - exp(-exp(pred)),
-    pred # default value
+    # default value
+    pred
   )
 
   # return:
-  toret <- list()
-  toret$call <- call
-  toret$glm <- model # changed to model rather than summary
-  toret$fitted.plus <- fitted
-  toret$fitted.values <- pred
-  toret$residuals <- res
-  toret$date <- date
-  toret$type <- type
-  class(toret) <- 'Cosinor'
-  return(toret)
+  ret <- list(
+    call = call,
+    # changed to model rather than summary
+    glm = model,
+    fitted.plus = fitted,
+    fitted.values = pred,
+    residuals = res,
+    date = date,
+    type = type
+  )
+  class(ret) <- 'Cosinor'
+
+  ret
 }

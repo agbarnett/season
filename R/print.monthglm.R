@@ -17,9 +17,6 @@
 #'
 #' @export
 print.monthglm <- function(x, ...) {
-  if (!inherits(x, "monthglm")) {
-    stop("Object must be of class 'monthglm'")
-  }
-  ## Use GLM function ###
+  check_if_monthglm(x)
   print(x$glm, ...)
-} # end of function
+}

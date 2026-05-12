@@ -67,19 +67,19 @@ accounting for leap years.
 }
 \examples{
 
-mmodel <- monthglm(
+model <- monthglm(
   formula = cvd~1,
   data = CVD,
   family = poisson(),
   offsetpop = expression(pop/100000),
   offsetmonth = TRUE
   )
-summary(mmodel)
+summary(model)
 
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-Health Data}. Springer.
+Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \seealso{
 \code{summary.monthglm}, \code{plot.monthglm}

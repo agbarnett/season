@@ -1,8 +1,3 @@
-# yrfraction.R
-# fraction of the year for a date, includes leap year
-# type = 'monthly', 'weekly' or 'daily' (default)
-# Jan 2014
-
 #' Fraction of the Year
 #'
 #' Calculate the fraction of the year for a date variable (after accounting for
@@ -14,15 +9,15 @@
 #'   if type="monthly".
 #' @param type One of "daily" (default) for dates, "monthly" for months, or
 #'   "weekly" for weeks.
-#' @return the fraction of the year.
+#' @returns the fraction of the year.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
 #' # create fractions for the start, middle and end of the year
-#' date = as.Date(c(0, 181, 364), origin='1991-01-01')
+#' date <- as.Date(c(0, 181, 364), origin = '1991-01-01')
 #' # create fractions based on these dates
 #' yrfraction(date)
-#' yrfraction(1:12, type='monthly')
+#' yrfraction(1:12, type = 'monthly')
 #'
 #' @export yrfraction
 yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
@@ -47,8 +42,8 @@ yrfrac_daily <- function(date) {
   lastday <- ISOdate(year, 12, 31)
   # Day of year as decimal number (001-366)
   day <- as.numeric(format(date, '%j'))
-  yrlength <- as.numeric(format(lastday, '%j'))
-  yrfrac <- (day - 1) / yrlength
+  year_length <- as.numeric(format(lastday, '%j'))
+  yrfrac <- (day - 1) / year_length
   yrfrac
 }
 

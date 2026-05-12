@@ -33,8 +33,13 @@ over in Los Angeles for the years 1987 to 2000.
 }
 \examples{
 
-plot(CVD$yrmon, CVD$cvd, type='o', xlab='Date',
-     ylab='Number of CVD deaths per month')
+plot(
+  CVD$yrmon,
+  CVD$cvd,
+  type = 'o',
+  xlab = 'Date',
+  ylab = 'Number of CVD deaths per month'
+  )
 
 }
 \references{
