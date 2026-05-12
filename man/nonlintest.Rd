@@ -67,7 +67,7 @@ test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
 \references{
 Barnett AG & Wolff RC (2005) A Time-Domain Test for Some Types
 of Nonlinearity, \emph{IEEE Transactions on Signal Processing}, vol 53,
-pages 26--33
+pages 26--33 \doi{doi: 10.1109/TSP.2004.838942}.
 }
 \seealso{
 \code{print.nonlintest}, \code{plot.nonlintest}

@@ -65,3 +65,5 @@ daym_from_hourly <- function(frac, text) {
   }
   daym
 }
+
+quantile_dbl <- function(x, probs) as.numeric(stats::quantile(x, probs = probs))
