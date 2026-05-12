@@ -1,13 +1,8 @@
-# wtest.R
-# Walter's test of seasonality
-# April 2009
-
 #' Walter and Elwood's Test of Seasonality
 #'
-#' Tests for a seasonal pattern in Binomial data.
-#'
-#' A test of whether monthly data has a sinusoidal seasonal pattern. The test
-#' has low power compared with the [cosinor()] test.
+#' Tests for a seasonal pattern in Binomial data. A test of whether monthly data
+#' has a sinusoidal seasonal pattern. The test has low power compared with the
+#' [cosinor()] test.
 #'
 #' @param cases variable name for cases ("successes").
 #' @param offset variable name for at-risk population ("trials").
@@ -37,32 +32,37 @@
 #'   data = data
 #' )
 #'
-#' @export wtest
+#' @export
 wtest <- function(cases, offset, data, alpha = 0.05) {
-  xcases <- with(data, get(cases)) # replace attach
-  xoffset <- with(data, get(offset)) # replace attach
+  xcases <- data[[cases]]
+  xoffset <- data[[offset]]
+
   j <- (0:11) / 12
   N <- sum(xcases)
   M <- sum(xoffset)
   W <- sum(sqrt(xcases))
+
   # observed values
   c <- sqrt(xcases) * cos(j * 2 * pi)
   cbar <- sum(c / W)
   s <- sqrt(xcases) * sin(j * 2 * pi)
   sbar <- sum(s / W)
   d <- sqrt((cbar^2) + (sbar^2))
+
   # expected values
   D <- sum(sqrt(xoffset))
   c <- sqrt(xoffset) * cos(j * 2 * pi)
   Ecbar <- sum(c / D)
   s <- sqrt(xoffset) * sin(j * 2 * pi)
   Esbar <- sum(s / D)
+
   # variance
   D <- sum(sqrt(N * xoffset / M))
   c <- cos(j * 2 * pi) * cos(j * 2 * pi)
   Vc <- 0.25 * sum(c) / (D^2)
   s <- sin(j * 2 * pi) * sin(j * 2 * pi)
   Vs <- 0.25 * sum(s) / (D^2)
+
   # test statistic
   # criti
   test <- (((cbar - Ecbar)^2) / Vc) + (((sbar - Esbar)^2) / Vs)
@@ -71,5 +71,9 @@ wtest <- function(cases, offset, data, alpha = 0.05) {
   pvalue <- 1 - stats::pchisq(test, df = 2)
   cat('Walter`s test\n')
   cat('test statistic', test, 'p-value', pvalue, '\n')
-  return(list(test = test, pvalue = pvalue))
+
+  list(
+    test = test,
+    pvalue = pvalue
+  )
 }

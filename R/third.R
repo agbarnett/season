@@ -1,13 +1,3 @@
-## third.R
-## estimate the third order moment
-## Jan 2014
-# inputs
-#      data       - time-series
-#      n.lag    - number of lags, max = length of time series
-#      centre	  - centre series by subtracting mean (TRUE/FALSE)
-#      outmax  - display lags of maxima and minima (TRUE/FALSE)
-#      plot  - ggplot plot of the third order moment (TRUE/FALSE)
-
 #' Third-order Moment
 #'
 #' Estimated third order moment for a time series.
@@ -38,8 +28,8 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
   # Setting some variables to NULL first (for R CMD check)
   xaxis <- yaxis <- zaxis <- NULL
 
-  nsamp <- length(data)
-  if (nsamp < 10) {
+  n_sample <- length(data)
+  if (n_sample < 10) {
     cat('warning n<10\n')
   }
   # ------------ cumulants in non-redundant region -----------------
@@ -56,11 +46,11 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
     for (k in d:n.lag) {
       large <- max(c(d, k, 0))
       XXX[d + n.lag + 1, k + n.lag + 1] <- sum(
-        centred[1:(nsamp - large)] *
-          centred[(1 + d):(nsamp - large + d)] *
-          centred[(1 + k):(nsamp - large + k)]
+        centred[1:(n_sample - large)] *
+          centred[(1 + d):(n_sample - large + d)] *
+          centred[(1 + k):(n_sample - large + k)]
       ) /
-        nsamp
+        n_sample
       # Symmetry
       XXX[n.lag + 1 + k, n.lag + 1 + d] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
@@ -112,8 +102,10 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
     print(gplot)
   }
 
-  to.return <- list()
-  to.return$waxis <- waxis
-  to.return$third <- XXX
-  return(to.return)
-} 
+  result <- list(
+    waxis = waxis,
+    third = XXX
+  )
+
+  result
+}

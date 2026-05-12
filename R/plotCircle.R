@@ -117,4 +117,4 @@ plotCircle <- function(months, dp = 1, ...) {
     text(2 * width, yref, clabel2)
   }
   par(op) # restore graphic settings
-} 
+}

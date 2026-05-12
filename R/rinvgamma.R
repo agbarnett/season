@@ -1,4 +1,3 @@
-# rinvgamma.R from MCMCpack
 #' Random Inverse Gamma Distribution
 #'
 #' Internal function to simulate a value from an inverse Gamma distribution,

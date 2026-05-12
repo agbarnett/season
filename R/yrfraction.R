@@ -1,8 +1,3 @@
-# yrfraction.R
-# fraction of the year for a date, includes leap year
-# type = 'monthly', 'weekly' or 'daily' (default)
-# Jan 2014
-
 #' Fraction of the Year
 #'
 #' Calculate the fraction of the year for a date variable (after accounting for
