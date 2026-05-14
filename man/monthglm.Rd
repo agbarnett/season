@@ -18,7 +18,8 @@ monthglm(
 \item{formula}{regression model formula, e.g., \code{y~x1+x2}, (do not add
 month to the regression equation, it will be added automatically).}
 
-\item{data}{a data frame.}
+\item{data}{a data frame. Must contain the column "months" as integer, and
+year as a 4 digit number.}
 
 \item{family}{a description of the error distribution and link function to
 be used in the model (default=\code{gaussian()}). (See \code{\link[=family]{family()}}
