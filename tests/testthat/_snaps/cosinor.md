@@ -54,8 +54,9 @@
       cosinor(cvd ~ 1, date = "month", data = CVD, type = "monthly", family = poisson(),
       offsetmonth = "yes")
     Condition
-      Error in `cosinor()`:
-      ! Error: 'offsetmonth' must be of type logical
+      Error:
+      ! x must be of class: logical
+      We see class: character
 
 # cosinor errors when type is not daily/weekly/monthly/hourly
 
@@ -71,7 +72,7 @@
     Code
       cosinor(y ~ 1, date = "date", data = bad, type = "hourly")
     Condition
-      Error in `cosinor()`:
+      Error:
       ! date variable must be of class POSIXct when type = 'hourly'
 
 # cosinor requires Date when type='daily'
@@ -79,7 +80,7 @@
     Code
       cosinor(y ~ 1, date = "date", data = bad, type = "daily")
     Condition
-      Error in `cosinor()`:
+      Error:
       ! date variable must be of class Date when type = 'daily'
 
 # cosinor errors when alpha is outside (0, 1)
@@ -88,8 +89,9 @@
       cosinor(cvd ~ 1, date = "month", data = CVD, type = "monthly", family = poisson(),
       alpha = 0)
     Condition
-      Error in `cosinor()`:
-      ! alpha must be between 0 and 1
+      Error:
+      ! x must be between 0 and 1
+      We see a range of: 0-0
 
 ---
 
@@ -97,8 +99,9 @@
       cosinor(cvd ~ 1, date = "month", data = CVD, type = "monthly", family = poisson(),
       alpha = 1.5)
     Condition
-      Error in `cosinor()`:
-      ! alpha must be between 0 and 1
+      Error:
+      ! x must be between 0 and 1
+      We see a range of: 1.5-1.5
 
 # cosinor refuses offsetmonth=TRUE for hourly data
 

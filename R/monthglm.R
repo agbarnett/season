@@ -63,13 +63,10 @@ monthglm <- function(
   offsetmonth = FALSE,
   offsetpop = NULL
 ) {
-  if (refmonth < 1 || refmonth > 12) {
-    stop("Reference month must be between 1 and 12")
-  }
-  offsetmonth_lgl <- is.logical(offsetmonth)
-  if (!offsetmonth_lgl) {
-    stop("`offsetmonth` must be logical, we see type: ", class(offsetmonth))
-  }
+  # between 1-12
+  check_if_within_values(refmonth, 1, 12)
+  check_if_logical(offsetmonth)
+
   ## original call with defaults (see amer package)
   ans <- as.list(match.call())
   frmls <- formals(deparse(ans[[1]]))
@@ -125,6 +122,7 @@ monthglm <- function(
   ## A bit of a workaround update.formula(), since this doesn't really
   ## work how we expect, see
   ## stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
+
   parts <- paste(formula)
   form <- stats::as.formula(paste(
     parts[2],

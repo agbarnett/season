@@ -25,13 +25,9 @@
 #' flagleap(CVD)
 #' flagleap(CVD, matchin = TRUE)
 flagleap <- function(data, report = TRUE, matchin = FALSE) {
-  year_month <- data$year + ((data$month - 1) / 12)
-  year_start <- min(data$year)
-  year_stop <- max(data$year)
-  # start on 1st Jan
-  date_start <- as.numeric(ISOdate(year_start, 1, 1)) / (60 * 60 * 24)
-  # stop on 31st Dec
-  date_stop <- as.numeric(ISOdate(year_stop, 12, 31)) / (60 * 60 * 24)
+  date_start <- start_date(data$year)
+  date_stop <- end_date(data$year)
+
   n_days <- date_stop - date_start + 1
   if (report) {
     cat("Total number of days = ", n_days, "\n")
@@ -40,20 +36,12 @@ flagleap <- function(data, report = TRUE, matchin = FALSE) {
   z <- (date_start:date_stop) * seconds_in_day
 
   date_converted <- as.POSIXct(z, origin = "1970-01-01")
-  # number of days per year
-  n_days_year <- table(format(date_converted, '%Y'))
   # number of days per month (per year)
-  n_days_month <- table(format(date_converted, '%Y/%m'))
-  year <- as.numeric(substr(names(n_days_month), 1, 4))
-  month <- as.numeric(substr(names(n_days_month), 6, 7))
-  days <- data.frame(
-    year = year,
-    month = month,
-    n_days_month = as.numeric(n_days_month)
-  )
+  days <- n_days_in_year_month(date = date_converted)
 
   # Match start and end times
   if (matchin) {
+    year_month <- data$year + ((data$month - 1) / 12)
     year_month_days <- days$year + ((days$month - 1) / 12)
     index <- year_month_days >= min(year_month) &
       year_month_days <= max(year_month)
