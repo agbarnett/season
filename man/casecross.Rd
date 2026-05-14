@@ -11,7 +11,7 @@ casecross(
   stratalength = 28,
   matchdow = FALSE,
   usefinalwindow = FALSE,
-  matchconf = "",
+  matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
 )
@@ -36,7 +36,8 @@ likely to contain less days than all the other strata (TRUE/default=FALSE).}
 
 \item{matchconf}{match case and control days using an important confounder
 (optional; must be in quotes). \code{matchconf} is the variable to match on.
-This matching is in addition to the strata matching.}
+This matching is in addition to the strata matching. Default is NULL - no
+confounder is used.}
 
 \item{confrange}{range of the confounder within which case and control days
 will be treated as a match (optional). Range = \code{matchconf} (on case

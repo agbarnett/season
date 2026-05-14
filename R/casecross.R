@@ -61,7 +61,8 @@
 #' likely to contain less days than all the other strata (TRUE/default=FALSE).
 #' @param matchconf match case and control days using an important confounder
 #' (optional; must be in quotes). `matchconf` is the variable to match on.
-#' This matching is in addition to the strata matching.
+#' This matching is in addition to the strata matching. Default is NULL - no
+#' confounder is used.
 #' @param confrange range of the confounder within which case and control days
 #' will be treated as a match (optional). Range = `matchconf` (on case
 #' day) \eqn{+/-} `confrange`.
@@ -114,7 +115,7 @@ casecross <- function(
   stratalength = 28,
   matchdow = FALSE,
   usefinalwindow = FALSE,
-  matchconf = "",
+  matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
 ) {
@@ -142,7 +143,7 @@ casecross <- function(
     "+date+dow"
   ))
 
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     parts <- paste(formula)
     dep <- parts[2]
     indep <- parts[3]
@@ -161,7 +162,7 @@ casecross <- function(
   ## Create strata
   if (stratamonth) {
     match_day <- as.numeric(format(data_to_use$date, '%d'))
-    window_num <- window_num_stratamonth(date)
+    window_num <- window_num_stratamonth(data_to_use$date)
   }
 
   # use minimum data in entire sample
@@ -200,13 +201,13 @@ casecross <- function(
   cases$outcome <- data_to_use[, as.character(formula[2])]
 
   # Create a case number for matching
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     cases_to_merge <- subset(
       cases,
       select = c(match_day, time, outcome, window_num, dow)
     )
   }
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     also <- sum(
       as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
     )
@@ -253,7 +254,7 @@ casecross <- function(
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     one <- paste0(matchconf, '.x')
     two <- paste0(matchconf, '.y')
     find_1 <- grep(one, names(controls))
@@ -281,8 +282,10 @@ casecross <- function(
       cases,
       select = c(-dow, -match_day, -window_num, -find_c)
     )
+    # update formula to remove matchconf
+    indep <- gsub(indep, pattern = paste0("\\+ ", matchconf), replacement = '')
   }
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     controls <- subset(
       controls,
       select = c(
