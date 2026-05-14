@@ -189,3 +189,73 @@ end_date <- function(year) {
   date_stop <- as.numeric(ISOdate(year_stop, 12, 31)) / (60 * 60 * 24)
   date_stop
 }
+
+
+shorten_month_name <- function(monthvar) {
+  if (max(nchar(monthvar)) == 3) {
+    month_levels <- substr(month.name, 1, 3)
+  } else {
+    month_levels <- month.name
+  }
+  month_levels
+}
+
+relevel_months_by_ref <- function(monthvar, refmonth) {
+  months <- as.numeric(monthvar)
+  months <- as.factor(months)
+  levels(months)[months] <- month.abb[months]
+  # set reference month
+  months <- stats::relevel(months, ref = month.abb[refmonth])
+  months
+}
+
+relevel_months_by_ref_name <- function(monthvar, refmonth) {
+  months_u <- as.factor(monthvar)
+  # Month numbers; replaced `nochars`
+  nums <- keep_month_numbers(levels(months_u))
+  levels(months_u)[nums] <- month.abb[nums]
+  # set reference month
+  months <- stats::relevel(months_u, ref = month.abb[refmonth])
+  months
+}
+
+check_var_in_data <- function(data, var) {
+  var_in_data <- var %in% names(data)
+
+  if (!var_in_data) {
+    stop(
+      "Data must contain a variable called '",
+      var,
+      "'\n",
+      call. = FALSE
+    )
+  }
+}
+
+check_year_valid <- function(data) {
+  check_var_in_data(data, "year")
+
+  year_valid <- all(nchar(data[["year"]]) == 4)
+
+  if (!year_valid) {
+    stop(
+      "The 'year' variable must have 4 digits\n",
+      "See: `table(nchar(data[['year']]))`",
+      call. = FALSE
+    )
+  }
+}
+
+day_weights <- function(data, adjmonth) {
+  # get the number of days in each month
+  days <- flagleap(data)
+
+  day_wt_vec <- switch(
+    adjmonth,
+    none = rep(1, 12),
+    thirty = 30 / days$n_days_month[1:12],
+    average = (365.25 / 12) / days$n_days_month[1:12]
+  )
+
+  day_wt_vec
+}
