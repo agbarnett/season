@@ -105,7 +105,7 @@ casecross <- function(
   stratalength = 28,
   matchdow = FALSE,
   usefinalwindow = FALSE,
-  matchconf = '',
+  matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
 ) {
@@ -122,7 +122,7 @@ casecross <- function(
   }
   parts <- paste(formula)
   dep <- parts[2] # dependent variable
-  indep <- parts[3] # dependent variable
+  indep <- parts[3] # independent variables
   if (length(formula) <= 2) {
     stop("Must be at least one independent variable")
   }
@@ -134,7 +134,7 @@ casecross <- function(
   thisdata$dow <- as.numeric(format(thisdata$date, '%w'))
   ## Slim down the data
   f <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     f <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
   }
   # remove cases with missing covariates
@@ -196,13 +196,13 @@ casecross <- function(
   cases$outcome <- datatouse[, c(posout)]
   # October 2011, removed nonzerocases
   # Create a case number for matching
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     cases.tomerge <- subset(
       cases,
       select = c(matchday, time, outcome, windownum, dow)
     )
   }
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     also <- sum(
       as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
     )
@@ -246,7 +246,7 @@ casecross <- function(
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     one <- paste0(matchconf, '.x')
     two <- paste0(matchconf, '.y')
     find1 <- grep(one, names(controls))
@@ -274,8 +274,10 @@ casecross <- function(
       cases,
       select = c(-dow, -matchday, -windownum, -findc)
     )
+    # update formula to remove matchconf
+    indep = gsub(indep, pattern = paste0("\\+ ", matchconf), replacement = '')
   }
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     controls <- subset(
       controls,
       select = c(
