@@ -1,7 +1,3 @@
-# Estimate starting values for seasonal variance based on a linear trend and
-# given values for tau
-# Dec 2011
-
 #' Initial Values for Non-stationary Cosinor
 #'
 #' Creates initial values for the non-stationary cosinor decomposition
@@ -31,39 +27,39 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   G[2, 2] <- 1
   # linear model
   time <- 1:n
-  vector.response <- subset(data, select = response)[, 1] # replaced attach
-  model <- stats::glm(vector.response ~ time)
+  response_vec <- subset(data, select = response)[, 1]
+  model <- stats::glm(response_vec ~ time)
   ## put predictions into alpha
   # 1. trend
   alpha_j[1, 2:(n + 1)] <- stats::fitted(model)
   # 2. season
-  sdr <- stats::sd(stats::resid(model))
+  sd_resid <- stats::sd(stats::resid(model))
   # sinusoid with amplitude equal to 10% of standard deviation of residuals
-  alpha_j[3, 2:(n + 1)] <- (sdr / 10) * cos(2 * pi * (1:n + 1) / 12)
+  alpha_j[3, 2:(n + 1)] <- (sd_resid / 10) * cos(2 * pi * (1:n + 1) / 12)
   # estimate initial value for w
   # squared error
   se <- matrix(0, n)
-  alphase <- matrix(0, n - 1, k)
+  alpha_se <- matrix(0, n - 1, k)
   for (t in 2:(n + 1)) {
     #<- time = 1 to n;
-    se[t - 1] <- (vector.response[t - 1] - (t(Fvec) %*% alpha_j[, t]))^2
+    se[t - 1] <- (response_vec[t - 1] - (t(Fvec) %*% alpha_j[, t]))^2
     if (t > 2) {
       # <- 2 to n;
       past <- G %*% alpha_j[, t - 1]
       for (index in 1:k) {
-        alphase[t - 2, 1] <- (alpha_j[(2 * 1) + 1, t] - past[(2 * 1) + 1])^2
+        alpha_se[t - 2, 1] <- (alpha_j[(2 * 1) + 1, t] - past[(2 * 1) + 1])^2
       }
     }
   }
   # variance initial value
   shape <- (n / 2) - 1
   scale <- sum(se) / 2
-  vartheta <- scale / (shape - 1) # based on mean
+  var_theta <- scale / (shape - 1) # based on mean
 
   # seasonal initial values
   shape <- ((n - 1) / 2) - 1
-  scale <- sum(alphase) / 2
+  scale <- sum(alpha_se) / 2
   w <- (scale / (shape - 1)) / (tau[2]^2) # use mean rather than random sampling
-  initial.value <- c(vartheta, rep(w, n.season))
-  return(initial.value)
+  initial_value <- c(var_theta, rep(w, n.season))
+  return(initial_value)
 }

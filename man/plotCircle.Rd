@@ -25,7 +25,7 @@ larger numbers.
 }
 \examples{
 \donttest{
-plotCircle(months=seq(1,12,1),dp=0)
+plotCircle(months = seq(1,12,1), dp = 0)
 }
 
 }

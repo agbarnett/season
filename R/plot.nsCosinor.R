@@ -7,7 +7,7 @@
 #'
 #' @param x a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
-#' @return a plot of class `ggplot`.
+#' @returns a plot of class `ggplot`.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso [nscosinor()]
 #' @export

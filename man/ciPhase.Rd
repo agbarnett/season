@@ -33,8 +33,8 @@ then the estimates are rotated back.
 \examples{
 \donttest{
 # 2000 normal samples, centred on zero
-theta <- rnorm(n=2000, mean=0, sd=pi/50)
-hist(theta, breaks=seq(-pi/8, pi/8, pi/30))
+theta <- rnorm(n = 2000, mean = 0, sd = pi / 50)
+hist(theta, breaks = seq(-pi / 8, pi / 8, pi / 30))
 ciPhase(theta)
 }
 
@@ -44,7 +44,7 @@ Fisher, N. (1993) \emph{Statistical Analysis of Circular Data}.
 Cambridge University Press. Page 36.
 
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
-Springer.
+Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

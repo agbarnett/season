@@ -35,10 +35,7 @@
 #' }
 #' @export
 print.nsCosinor <- function(x, ...) {
-  if (!inherits(x, "nsCosinor")) {
-    stop("Object must be of class 'nsCosinor'")
-  }
-
+  check_if_nscosinor(x)
   ## Statistics ###
   cat("Non-stationary cosinor\n\n")
   cat("Call:\n")
@@ -52,4 +49,4 @@ print.nsCosinor <- function(x, ...) {
   cat("Length of time series = ", x$n, "\n", sep = "")
   cat("\nResidual statistics\n", sep = "")
   print(summary(x$residuals), ...)
-} # end of function
+}

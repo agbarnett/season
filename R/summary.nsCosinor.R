@@ -19,7 +19,7 @@
 #' @aliases summary.nsCosinor
 #' @param object a `nsCosinor` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * cycles: vector of cycles in units of time, e.g., for a six and twelve
 #'     month pattern `cycles=c(6,12)`.
 #'   * niters: total number of MCMC samples.
@@ -51,10 +51,7 @@
 #' }
 #' @export
 summary.nsCosinor <- function(object, ...) {
-  if (!inherits(object, "nsCosinor")) {
-    stop("Object must be of class 'nsCosinor'")
-  }
-
+  check_if_nscosinor(object)
   ## basic variables
   k <- length(object$cycles)
   cycles <- object$cycles
@@ -122,6 +119,6 @@ summary.nsCosinor <- function(object, ...) {
   ret$stats$wstats <- wstats
   ret$stats$ampstats <- ampstats
   ret$stats$phasestats <- phasestats
-  class(ret) <- 'summary.nsCosinor'
+  class(ret) <- c("summary.nsCosinor", class(object))
   ret # uses print.summary.nsCosinor
-} # end of function
+}

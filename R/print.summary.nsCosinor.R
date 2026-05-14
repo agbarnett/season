@@ -1,5 +1,3 @@
-## print.summary.nscosinor.R
-
 #' Print a summary of an [nscosinor()] object
 #'
 #' @param \dots further arguments passed to or from other methods.
@@ -25,10 +23,7 @@
 #' }
 #' }
 print.summary.nsCosinor <- function(x, ...) {
-  if (!inherits(x, "summary.nsCosinor")) {
-    stop("Object must be of class 'summary.nsCosinor'")
-  }
-
+  check_if_nscosinor(x)
   k <- length(x$cycles)
   cat("Statistics for non-stationary cosinor based on MCMC chains\n")
   cat("Number of MCMC samples = ", x$niters - x$burnin + 1, "\n", sep = "", ...)

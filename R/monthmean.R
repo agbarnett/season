@@ -1,8 +1,4 @@
-# Assumes that data contains two variables: month and year
-# November 2009
-#' Monthly Means
-#'
-#' Calculate the monthly mean or adjusted monthly mean for count data.
+#' Calculate monthly mean or adjusted monthly mean for count data.
 #'
 #' For time series recorded at monthly intervals it is often useful to examine
 #' (and plot) the average in each month. When using count data we should adjust
@@ -12,19 +8,18 @@
 #' This function assumes that the data set (`data`) contains variables for
 #' the year and month called year and month, respectively.
 #'
-#' @param data data set as a data frame.
-#' @param resp response variable in the data set for which the means will be
-#' calculated.
+#' @param data Data frame with variables "month" and "year"
+#' @param resp Response variable in data for which the means will be calculated.
 #' @param offsetpop optional population, used as an offset (default=NULL).
 #' @param adjmonth adjust monthly counts and scale to a 30 day month ("thirty")
 #'   or the average month length ("average") (default="none").
-#' @return Returns an object of class "Monthmean" with the following
+#' @returns Returns an object of class "Monthmean" with the following
 #' parts:
 #'   * mean: a vector of length 12 with the monthly means.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso [plot.Monthmean()]
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #' \donttest{
 #' # cardiovascular disease data
@@ -36,6 +31,13 @@
 #'   )
 #' mmean
 #' plot(mmean)
+#'
+#' mmean <- monthmean(
+#'   data=CVD,
+#'   resp='cvd',
+#'   offsetpop = expression(pop/100000),
+#'   adjmonth = 'thirty'
+#'   )
 #' }
 #'
 #' @export monthmean
@@ -45,7 +47,8 @@ monthmean <- function(
   offsetpop = NULL,
   adjmonth = c("none", "thirty", "average")
 ) {
-  # checks
+  adjmonth <- rlang::arg_match(adjmonth)
+
   if (is.null(data)) {
     stop("must have an input data set (data)")
   }
@@ -61,36 +64,30 @@ monthmean <- function(
       "data set must contain a variable with the numeric month called 'month'"
     )
   }
-  # calculations
-  days <- flagleap(data) # get the number of days in each month
-  mean <- vector(length = 12, mode = 'numeric')
+  # get the number of days in each month
+  days <- flagleap(data)
 
-  adjmonth <- rlang::arg_match(adjmonth)
-
-  if (adjmonth == 'thirty') {
-    adjf <- 30
-  }
-  if (adjmonth == 'average') {
-    adjf <- 365.25 / 12
-  }
   if (is.null(offsetpop)) {
     adjp <- 1
   } else {
     adjp <- with(data, eval(offsetpop))
   } # population adjustment
-  xxxx <- data[[resp]]
-  for (i in 1:12) {
-    if (adjmonth != "none") {
-      mean[i] <- mean(
-        xxxx[data$month == i] * (adjf / days$ndaysmonth[i]) / adjp
-      )
-    } else {
-      mean[i] <- mean(xxxx[data$month == i] / adjp)
-    } # no monthly adjustment
-  }
-  # return
-  toret <- list()
-  toret$mean <- as.vector(mean)
-  class(toret) <- 'Monthmean'
-  return(toret)
+
+  day_wt_vec <- switch(
+    adjmonth,
+    none = rep(1, 12),
+    thirty = 30 / days$n_days_month[1:12],
+    average = (365.25 / 12) / days$n_days_month[1:12]
+  )
+
+  # lookup expansion of wt by each month
+  adjusted <- data[[resp]] * day_wt_vec[data$month] / adjp
+
+  result <- list(
+    mean = stats::aggregate(adjusted, by = list(data$month), FUN = mean)[, 2]
+  )
+
+  class(result) <- c("Monthmean", class(result))
+
+  result
 }

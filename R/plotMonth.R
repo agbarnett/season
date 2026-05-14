@@ -16,10 +16,10 @@
 #' @returns Facetted lineplot of response over time, one facet per month.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #' \donttest{
-#'   plotMonth(data=CVD, resp='cvd', panels=12)
+#'   plotMonth(data = CVD, resp = 'cvd', panels = 12)
 #' }
 #'
 #' @export

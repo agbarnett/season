@@ -15,7 +15,7 @@ model1 <- casecross(
 test_that("overall structure of the casecross model is consistent", {
   expect_snapshot(model1)
   expect_snapshot(names(model1))
-  expect_snapshot(model1$c.model)
+  expect_snapshot(model1$cox_model)
 })
 
 # book p.136: time-stratified, 28-day stratum, exclusion = 4 ------------
@@ -32,10 +32,10 @@ test_that("casecross reproduces published 28-day stratum model (p.136)", {
     stratalength = 28,
     exclusion = 4
   )
-  expect_identical(model_28d$ncasedays, 5114L)
-  expect_identical(model_28d$ncontroldays, 19.7)
+  expect_identical(model_28d$n_case_days, 5114L)
+  expect_identical(model_28d$n_control_days, 19.7)
 
-  model_coef <- coef(model_28d$c.model)
+  model_coef <- coef(model_28d$cox_model)
 
   coef_o3 <- model_coef[["o3_mean_10"]] |> round(7)
   coef_o3_exp <- model_coef[["o3_mean_10"]] |> exp() |> round(7)
@@ -62,10 +62,10 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
     exclusion = 4,
     matchdow = TRUE
   )
-  expect_identical(model_dow$ncasedays, 5114L)
-  expect_identical(model_dow$ncontroldays, 3)
+  expect_identical(model_dow$n_case_days, 5114L)
+  expect_identical(model_dow$n_control_days, 3)
 
-  coef_dow <- coef(model_dow$c.model)
+  coef_dow <- coef(model_dow$cox_model)
 
   coef_dow_o3 <- coef_dow[["o3_mean_10"]] |> round(9)
   coef_dow_o3_exp <- coef_dow[["o3_mean_10"]] |> exp() |> round(4)
@@ -98,12 +98,12 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 #  # Tight match on temp reduces controls per case vs
 #  # unmatched 28-day default (19.7).
 #  # On textbook it is 5.1, but here we get 4.8?
-#  expect_equal(model_matchconf$ncontroldays, 4.8)
+#  expect_equal(model_matchconf$n_control_days, 4.8)
 #
-#  coef_match <- coef(model_matchconf$c.model)
+#  coef_match <- coef(model_matchconf$cox_model)
 #
 #  library(broom)
-#  model_tidy <- tidy(model_matchconf$c.model)
+#  model_tidy <- tidy(model_matchconf$cox_model)
 #
 #  coef_match_o3 <- coef_match[["o3mean"]] |> round(9)
 #  coef_match_o3_exp <- coef_match[["o3mean"]] |> exp() |> round(4)

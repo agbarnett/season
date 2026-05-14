@@ -49,10 +49,10 @@ fixed strata size when using \code{stratalength}.}
 a list with the following elements:
 \itemize{
 \item call: the original call to the casecross function.
-\item c.model: conditional logistic regression model of class \code{coxph}.
-\item ncases: total number of cases.
-\item ncasedays: number of case days with at least one control day.
-\item ncontroldays: average number of control days per case day.
+\item cox_model: conditional logistic regression model of class \code{coxph}.
+\item n_cases: total number of cases.
+\item n_case_days: number of case days with at least one control day.
+\item n_control_days: average number of control days per case day.
 }
 }
 \description{
@@ -107,16 +107,24 @@ The code assumes that the data frame contains a date variable (in
 \examples{
 \donttest{
 # cardiovascular disease data
-CVDdaily = subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+# subset for example
+CVDdaily <- subset(CVDdaily, date <= as.Date('1987-12-31'))
 # Effect of ozone on CVD death
-model1 = casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+model1 <- casecross(
+  cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+  data = CVDdaily
+)
 summary(model1)
 # match on day of the week
-model2 = casecross(cvd ~ o3mean+tmpd, matchdow=TRUE, data=CVDdaily)
+model2 <- casecross(cvd ~ o3mean + tmpd, matchdow = TRUE, data = CVDdaily)
 summary(model2)
 # match on temperature to within a degree
-model3 = casecross(cvd ~ o3mean+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily,
-                   matchconf='tmpd', confrange=1)
+model3 <- casecross(
+  cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+  data = CVDdaily,
+  matchconf = "tmpd",
+  confrange = 1
+)
 summary(model3)
 }
 
@@ -125,9 +133,10 @@ summary(model3)
 Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
 analyses of air pollution exposure data: Referent selection strategies and
 their implications for bias. \emph{Epidemiology} 16(6), 717--726.
+\doi{doi:10.1097/01.ede.0000181315.18836.9d.}
 
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal Health Data}.
-Springer.
+Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \seealso{
 \code{summary.casecross}, \code{coxph}

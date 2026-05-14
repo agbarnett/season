@@ -15,16 +15,13 @@
 #' @export
 #' @examples
 #' \donttest{
-#'   test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
-#'   plot(test.res)
+#' test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' plot(test.res)
 #' }
 plot.nonlintest <- function(x, plot = TRUE, ...) {
-  z <- NULL # Setting some variables to NULL first (for R CMD check)
-
-  ## Check
-  if (!inherits(x, "nonlintest")) {
-    stop("Object must be of class 'nonlintest'")
-  }
+  check_if_nonlintest(x)
+  # Setting some variables to NULL first (for R CMD check)
+  z <- NULL
 
   if (max(abs(x$region)) == 0) {
     cat('No points of the third-order moment exceed the test limits\n')
@@ -57,4 +54,4 @@ plot.nonlintest <- function(x, plot = TRUE, ...) {
     #zlab='Area outside the test limits', ...)
     # mtext(side=3,'Points of 3rd order moment that exceed limits');
   } # end of if
-} # end of function
+}

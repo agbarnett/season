@@ -29,12 +29,16 @@ plotted using the equation: \eqn{A\cos(ft-P), t=0,\ldots,2 \pi}, where
 \eqn{P} is the phase.
 }
 \examples{
-sinusoid(amplitude=1, frequency=1, phase=1)
+sinusoid(
+  amplitude = 1,
+  frequency = 1,
+  phase = 1
+  )
 
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-Health Data}. Springer.
+Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

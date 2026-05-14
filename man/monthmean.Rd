@@ -2,7 +2,7 @@
 % Please edit documentation in R/monthmean.R
 \name{monthmean}
 \alias{monthmean}
-\title{Monthly Means}
+\title{Calculate monthly mean or adjusted monthly mean for count data.}
 \usage{
 monthmean(
   data,
@@ -12,10 +12,9 @@ monthmean(
 )
 }
 \arguments{
-\item{data}{data set as a data frame.}
+\item{data}{Data frame with variables "month" and "year"}
 
-\item{resp}{response variable in the data set for which the means will be
-calculated.}
+\item{resp}{Response variable in data for which the means will be calculated.}
 
 \item{offsetpop}{optional population, used as an offset (default=NULL).}
 
@@ -30,14 +29,12 @@ parts:
 }
 }
 \description{
-Calculate the monthly mean or adjusted monthly mean for count data.
-}
-\details{
 For time series recorded at monthly intervals it is often useful to examine
 (and plot) the average in each month. When using count data we should adjust
 the mean to account for the unequal number of days in the month (e.g., 31 in
 January and 28 or 29 in February).
-
+}
+\details{
 This function assumes that the data set (\code{data}) contains variables for
 the year and month called year and month, respectively.
 }
@@ -52,12 +49,19 @@ mmean <- monthmean(
   )
 mmean
 plot(mmean)
+
+mmean <- monthmean(
+  data=CVD,
+  resp='cvd',
+  offsetpop = expression(pop/100000),
+  adjmonth = 'thirty'
+  )
 }
 
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-Health Data}. Springer.
+Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 }
 \seealso{
 \code{\link[=plot.Monthmean]{plot.Monthmean()}}

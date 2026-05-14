@@ -38,8 +38,7 @@ is useful for testing for non-linearity in a time series, and is used by
 }
 \examples{
 
-data(CVD)
-third(CVD$cvd, n.lag=12)
+third(CVD$cvd, n.lag = 12)
 
 }
 \author{

@@ -15,24 +15,28 @@
 #' \donttest{
 #' # cardiovascular disease data
 #' # subset for example
-#' CVDdaily <- subset(CVDdaily, date<=as.Date('1987-12-31'))
+#' CVDdaily <- subset(CVDdaily, date <= as.Date('1987-12-31'))
 #' # Effect of ozone on CVD death
-#' model1 <- casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+#' model1 <- casecross(
+#'   cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+#'   data = CVDdaily
+#' )
 #' summary(model1)
 #' # match on day of the week
-#' model2 <- casecross(cvd ~ o3mean+tmpd, matchdow=TRUE, data=CVDdaily)
+#' model2 <- casecross(cvd ~ o3mean + tmpd, matchdow = TRUE, data = CVDdaily)
 #' summary(model2)
 #' # match on temperature to within a degree
-#' model3 <- casecross(cvd ~ o3mean+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily,
-#'                    matchconf='tmpd', confrange=1)
+#' model3 <- casecross(
+#'   cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+#'   data = CVDdaily,
+#'   matchconf = 'tmpd',
+#'   confrange = 1
+#' )
 #' summary(model3)
 #' }
 #' @export
 summary.casecross <- function(object, ...) {
-  if (!inherits(object, "casecross")) {
-    stop("Object must be of class 'casecross'")
-  }
-
+  check_if_casecross(object)
   ## output results
   if (!object$call$stratamonth) {
     cat(
@@ -56,10 +60,18 @@ summary.casecross <- function(object, ...) {
       '\n'
     )
   }
-  cat('Total number of cases', object$ncases, '\n')
-  cat('Number of case days with available control days', object$ncasedays, '\n')
-  cat('Average number of control days per case day', object$ncontroldays, '\n')
+  cat('Total number of cases', object$n_cases, '\n')
+  cat(
+    'Number of case days with available control days',
+    object$n_case_days,
+    '\n'
+  )
+  cat(
+    'Average number of control days per case day',
+    object$n_control_days,
+    '\n'
+  )
   cat('\nParameter Estimates:\n')
-  s <- summary(object$c.model)
+  s <- summary(object$cox_model)
   print(s$coef, ...)
 }

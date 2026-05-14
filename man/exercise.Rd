@@ -30,7 +30,6 @@ three visits are not available for all subjects.
 }
 \examples{
 
-data(exercise)
 boxplot(exercise$walking ~ exercise$month)
 
 }

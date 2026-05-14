@@ -38,9 +38,12 @@ over in Los Angeles for the years 1987 to 2000.
 }
 \examples{
 \donttest{
-data(CVDdaily)
-plot(CVDdaily$date, CVDdaily$cvd, type='p', xlab='Date',
-     ylab='Number of CVD deaths')
+plot(
+  CVDdaily$date,
+  CVDdaily$cvd,
+  type = 'p',
+  xlab = 'Date',
+  ylab = 'Number of CVD deaths')
 }
 }
 \references{

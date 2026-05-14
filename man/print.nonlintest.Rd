@@ -21,8 +21,8 @@ The default print method for a \code{nonlintest} object produced by
 \examples{
 \donttest{
 \dontrun{
-  test_res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)
-  test_res
+test_res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+test_res
 }
 }
 }

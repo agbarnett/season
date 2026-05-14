@@ -1,23 +1,3 @@
-# nonlintest.R
-# Dec 2011
-# Time domain statistic for non-linearity (copied from Matlab code)
-# Bootstraps using AAFT methods then compares observed third order moment with
-# expected For more details see: Barnett & Wolff, A Time-Domain Test for Some
-# Types of Nonlinearity, IEEE transactions on signal processing, Vol 53, No 1,
-# January 2005
-## Inputs
-# data - series as a column vector
-# n.lag - number of third order moment lags to compute
-# n.boot - number of bootstrap replications
-# alpha - level of test
-## Outputs
-# jackstats - test of null hypothesis using double bootstrap
-#            [outside,standardised,upperlimit,pvalue,H0(accept/reject)]
-# (outside - total area outside of null hypothesis limits)
-## Other functions called
-# third - 3rd order moment
-# aaft - AAFT algorithm
-
 #' Test of Non-linearity of a Time Series
 #'
 #' A bootstrap test of non-linearity in a time series using the third-order
@@ -41,7 +21,7 @@
 #' @param n.boot the number of bootstrap replications (suggested minimum of
 #' 100; 1000 or more would be better).
 #' @param alpha statistical significance level of test (default=0.05).
-#' @return Returns an object of class "nonlintest" with the following
+#' @returns Returns an object of class "nonlintest" with the following
 #' parts:
 #'   * region: the region of the third order moment where the test exceeds
 #'     the limits (up to `n.lag`).
@@ -58,99 +38,90 @@
 #'     * test: reject the null hypothesis that the series is linear
 #'       (TRUE/FALSE).
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `print.nonlintest`, `plot.nonlintest`
+#' @seealso [print.nonlintest()] [plot.nonlintest()]
 #' @references Barnett AG & Wolff RC (2005) A Time-Domain Test for Some Types
 #' of Nonlinearity, *IEEE Transactions on Signal Processing*, vol 53,
-#' pages 26--33
+#' pages 26--33 \doi{doi: 10.1109/TSP.2004.838942}.
 #' @examples
 #' \donttest{
-#' \dontrun{test.res <- nonlintest(data=CVD$cvd, n.lag=4, n.boot=1000)}
+#' \dontrun{
+#' test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' }
 #' }
 #'
 #' @export
 nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
-  # Initial variables;
-  n <- length(data)
+  x_diff <- data - mean(data)
 
-  # Difference the series;
-  Xmean <- mean(data)
-  Xdiff <- data - Xmean
+  reglags <- (n.lag + 1):(n.lag + n.lag + 1)
 
-  # Get the series 3rd order moment for later use;
-  Xtemp <- third(
-    data = Xdiff,
+  x_third <- third(
+    data = x_diff,
     n.lag = n.lag,
     centre = FALSE,
     outmax = FALSE,
     plot = FALSE
-  )
-  reglags <- (n.lag + 1):(n.lag + n.lag + 1)
-  Xthird <- Xtemp$third[reglags, reglags]
-  Xthird[1, 1] <- 0 # Remove skewness;
+  )$third[reglags, reglags]
+
+  x_third[1, 1] <- 0
 
   # Get n.boot*3 surrogates using the AAFT method
   # First n.boot for initial limits 2nd & 3rd n.boot for bootstrap limits
-  aaftsers <- aaft(Xdiff, nsur = n.boot * 3)
+  aaft_sers <- aaft(x_diff, nsur = n.boot * 3)
 
   # Run each series through the third order moment;
-  aaftthird <- array(0, dim = c(n.lag + 1, n.lag + 1, n.boot * 3))
-  for (k in 1:(n.boot * 3)) {
-    sersthird <- third(
-      aaftsers[, k],
-      n.lag,
-      centre = FALSE,
-      outmax = FALSE,
-      plot = FALSE
-    )
-    aaftthird[,, k] <- sersthird$third[reglags, reglags]
-  }
-  aaftthird[1, 1, ] <- 0 # Remove skewness;
+  aaft_third <- vapply(
+    X = seq_len(n.boot * 3),
+    FUN = function(x) {
+      third(
+        aaft_sers[, x],
+        n.lag,
+        centre = FALSE,
+        outmax = FALSE,
+        plot = FALSE
+      )$third[reglags, reglags]
+    },
+    FUN.VALUE = array(0, dim = c(n.lag + 1, n.lag + 1))
+  )
+
+  aaft_third[1, 1, ] <- 0 # Remove skewness;
 
   # Get (1-alpha)th centile at each coordinate and difference from the series;
-  clevel_l <- alpha / 2
-  clevel_u <- 1 - (alpha / 2)
-  mcent_l1 <- matrix(0, n.lag + 1, n.lag + 1)
-  mcent_u1 <- matrix(0, n.lag + 1, n.lag + 1)
-  mcent_l2 <- matrix(0, n.lag + 1, n.lag + 1)
-  mcent_u2 <- matrix(0, n.lag + 1, n.lag + 1)
+  centile_lower <- alpha / 2
+  centile_upper <- 1 - (alpha / 2)
+  centile_l1 <- matrix(0, n.lag + 1, n.lag + 1)
+  centile_u1 <- matrix(0, n.lag + 1, n.lag + 1)
+  centile_l2 <- matrix(0, n.lag + 1, n.lag + 1)
+  centile_u2 <- matrix(0, n.lag + 1, n.lag + 1)
   for (r in 0:n.lag) {
     for (s in r:n.lag) {
       if ((r + s) > 0) {
         # First limits
-        pts1 <- aaftthird[r + 1, s + 1, 1:n.boot]
+        pts1 <- aaft_third[r + 1, s + 1, 1:n.boot]
+        centile_l1[r + 1, s + 1] <- quantile_dbl(pts1, probs = centile_lower)
+        centile_u1[r + 1, s + 1] <- quantile_dbl(pts1, probs = centile_upper)
+
         # Second limits
-        pts2 <- aaftthird[r + 1, s + 1, (n.boot + 1):(2 * n.boot)]
-        mcent_l1[r + 1, s + 1] <- as.numeric(stats::quantile(
-          pts1,
-          probs = clevel_l
-        ))
-        mcent_u1[r + 1, s + 1] <- as.numeric(stats::quantile(
-          pts1,
-          probs = clevel_u
-        ))
-        mcent_l2[r + 1, s + 1] <- as.numeric(stats::quantile(
-          pts2,
-          probs = clevel_l
-        ))
-        mcent_u2[r + 1, s + 1] <- as.numeric(stats::quantile(
-          pts2,
-          probs = clevel_u
-        ))
+        pts2 <- aaft_third[r + 1, s + 1, (n.boot + 1):(2 * n.boot)]
+        centile_l2[r + 1, s + 1] <- quantile_dbl(pts2, probs = centile_lower)
+        centile_u2[r + 1, s + 1] <- quantile_dbl(pts2, probs = centile_upper)
       }
     }
   }
-  uppert <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = TRUE)
-  diff_l <- (Xthird - mcent_l1) * uppert # Just get for s<r;
-  diff_u <- (Xthird - mcent_u1) * uppert # Just get for s<r;
+  upper_tri <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = TRUE)
+  # Just get for s<r;
+  diff_lower <- (x_third - centile_l1) * upper_tri
+  # Just get for s<r;
+  diff_upper <- (x_third - centile_u1) * upper_tri
 
   # Show points significantly higher or lower than limits;
-  region_u <- matrix(0, n.lag + 1, n.lag + 1)
-  region_l <- matrix(0, n.lag + 1, n.lag + 1)
-  index <- diff_u > 0
-  region_u[index] <- diff_u[index]
-  index <- diff_l < 0
-  region_l[index] <- diff_l[index]
-  region <- region_u + region_l
+  region_upper <- matrix(0, n.lag + 1, n.lag + 1)
+  region_lower <- matrix(0, n.lag + 1, n.lag + 1)
+  index <- diff_upper > 0
+  region_upper[index] <- diff_upper[index]
+  index <- diff_lower < 0
+  region_lower[index] <- diff_lower[index]
+  region <- region_upper + region_lower
   # Total area exceeding limits;
   outside <- sum(sum(abs(region)))
   #total=((n.lag+1)*(n.lag+2)/2)-1; # Total number of points tested
@@ -160,44 +131,46 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
   jackstat <- vector(mode = 'numeric', length = n.boot)
   for (jack in ((2 * n.boot) + 1):(n.boot * 3)) {
     ## Percentile statistic;
-    diffjack_u <- (aaftthird[,, jack] - mcent_u2) * uppert
-    diffjack_l <- (aaftthird[,, jack] - mcent_l2) * uppert
-    jregion_u <- matrix(0, n.lag + 1, n.lag + 1)
-    jregion_l <- matrix(0, n.lag + 1, n.lag + 1)
-    jindex <- diffjack_u > 0
-    jregion_u[jindex] <- diffjack_u[jindex]
-    jindex <- diffjack_l < 0
-    jregion_l[jindex] <- diffjack_l[jindex]
-    jregion <- jregion_u + jregion_l
+    diffjack_upper <- (aaft_third[,, jack] - centile_u2) * upper_tri
+    diffjack_lower <- (aaft_third[,, jack] - centile_l2) * upper_tri
+    jregion_upper <- matrix(0, n.lag + 1, n.lag + 1)
+    jregion_lower <- matrix(0, n.lag + 1, n.lag + 1)
+    jindex <- diffjack_upper > 0
+    jregion_upper[jindex] <- diffjack_upper[jindex]
+    jindex <- diffjack_lower < 0
+    jregion_lower[jindex] <- diffjack_lower[jindex]
+    jregion <- jregion_upper + jregion_lower
     # Total area exceeding limits;
     jackstat[jack - (2 * n.boot)] <- sum(sum(abs(jregion)))
   }
 
-  jackstd <- stats::sd(jackstat)
-  stan <- outside / jackstd
-  upperjack <- stats::quantile(jackstat, probs = 1 - alpha)
-  medianjack <- stats::median(jackstat)
-  pjack <- sum(outside < jackstat) / n.boot
+  jack_std <- stats::sd(jackstat)
+  stan <- outside / jack_std
+  jack_upper <- stats::quantile(jackstat, probs = 1 - alpha)
+  jack_median <- stats::median(jackstat)
+  jack_p <- sum(outside < jackstat) / n.boot
 
   # return stats and plot details
-  if (outside > upperjack) {
-    testjack <- TRUE
-  } else {
-    testjack <- FALSE
-  }
-  jackstats <- list()
-  jackstats$outside <- outside
-  jackstats$stan <- stan
-  jackstats$median <- medianjack
-  jackstats$upper <- upperjack
-  jackstats$pvalue <- pjack
-  jackstats$test <- testjack
-  to.return <- list()
-  to.return$stats <- jackstats
-  to.return$region <- region
-  to.return$diff_l <- diff_l
-  to.return$diff_u <- diff_u
-  to.return$n.lag <- n.lag
-  class(to.return) <- 'nonlintest'
-  return(to.return)
-} # end of function
+  testjack <- as.logical(outside > jack_upper)
+
+  jackstats <- list(
+    outside = outside,
+    stan = stan,
+    median = jack_median,
+    upper = jack_upper,
+    pvalue = jack_p,
+    test = testjack
+  )
+
+  results <- list(
+    stats = jackstats,
+    region = region,
+    diff_l = diff_lower,
+    diff_u = diff_upper,
+    n.lag = n.lag
+  )
+
+  class(results) <- c('nonlintest', class(results))
+
+  results
+}

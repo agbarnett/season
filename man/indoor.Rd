@@ -23,7 +23,12 @@ every hour to the nearest 0.5 degrees.
 }
 \examples{
 
-res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
+res <- cosinor(
+ bedroom ~ 1,
+ date = 'datetime',
+ type = 'hourly',
+ data = indoor
+)
 summary(res)
 
 }
