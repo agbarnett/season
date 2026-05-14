@@ -51,7 +51,7 @@ summary.casecross <- function(object, ...) {
   if (object$call$matchdow) {
     cat('Matched on day of the week\n')
   }
-  if (object$call$matchconf != '') {
+  if (!is.null(object$call$matchconf)) {
     cat(
       'Matched on',
       object$call$matchconf,
