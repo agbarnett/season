@@ -114,7 +114,7 @@ casecross <- function(
   stratalength = 28,
   matchdow = FALSE,
   usefinalwindow = FALSE,
-  matchconf = "",
+  matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
 ) {
@@ -130,10 +130,8 @@ casecross <- function(
     stop("Minimum value for exclusion is zero")
   }
   parts <- paste(formula)
-  # dependent variable
-  dep <- parts[2]
-  # independent variable
-  indep <- parts[3]
+  dep <- parts[2] # dependent variable
+  indep <- parts[3] # independent variables
   if (length(formula) <= 2) {
     stop("Must be at least one independent variable")
   }
@@ -146,9 +144,9 @@ casecross <- function(
   this_data$dow <- as.numeric(format(this_data$date, '%w'))
 
   ## Slim down the data
-  form <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
-  if (!startsWith(matchconf, "")) {
-    form <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
+  f <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
+  if (!is.null(matchconf)) {
+    f <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
   }
   # remove cases with missing covariates
   data_to_use <- stats::model.frame(
@@ -213,13 +211,13 @@ casecross <- function(
   cases$outcome <- data_to_use[, c(pos_out)]
   # October 2011, removed nonzerocases
   # Create a case number for matching
-  if (startsWith(matchconf, "")) {
-    cases_to_merge <- subset(
+  if (is.null(matchconf)) {
+    cases.tomerge <- subset(
       cases,
       select = c(match_day, time, outcome, window_num, dow)
     )
   }
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     also <- sum(
       as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
     )
@@ -266,7 +264,7 @@ casecross <- function(
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     one <- paste0(matchconf, '.x')
     two <- paste0(matchconf, '.y')
     find_1 <- grep(one, names(controls))
@@ -294,8 +292,10 @@ casecross <- function(
       cases,
       select = c(-dow, -match_day, -window_num, -find_c)
     )
+    # update formula to remove matchconf
+    indep = gsub(indep, pattern = paste0("\\+ ", matchconf), replacement = '')
   }
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     controls <- subset(
       controls,
       select = c(
