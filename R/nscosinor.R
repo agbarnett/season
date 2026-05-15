@@ -222,7 +222,7 @@ nscosinor <- function(
       as.numeric(rank(all_seasons[i, ]) == num_upper) * all_seasons[i, ]
     )
     ## fitted values (with CIs)
-    new_fitted$mean[i] <- mean(for_fitted[i])
+    new_fitted$mean[i] <- mean(for_fitted[i, ])
     new_fitted$lower[i] <- sum(
       as.numeric(rank(for_fitted[i, ]) == num_lower) * for_fitted[i, ]
     )
