@@ -40,7 +40,8 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
       # <- 2 to n;
       past <- g_mat %*% alpha_j[, t - 1]
       for (index in 1:k) {
-        alpha_se[t - 2, 1] <- (alpha_j[(2 * 1) + 1, t] - past[(2 * 1) + 1])^2
+        alpha_se[t - 2, index] <- (alpha_j[(2 * index) + 1, t] -
+          past[(2 * index) + 1])^2
       }
     }
   }
