@@ -370,3 +370,94 @@ calc_alpha_j <- function(model, n) {
   alpha_j[3, 2:(n + 1)] <- (sd_resid / 10) * cos(2 * pi * (1:n + 1) / 12)
   alpha_j
 }
+
+kalfil_iter <- function(
+  niters,
+  k,
+  kk,
+  n,
+  div,
+  w,
+  var_theta,
+  cycles,
+  resp,
+  tau,
+  lambda
+) {
+  chain_amp <- matrix(0, niters + 1, k)
+  chain_phase <- matrix(0, niters + 1, k)
+  chain_alpha <- array(0, c(kk, n + 1, niters))
+  chain_var_theta <- matrix(0, niters + 1)
+  chain_lower <- matrix(0, niters + 1, k)
+  chain_lower[1, ] <- w
+  chain_var_theta[1] <- var_theta
+  chain_mean <- rep(10, kk) # starting value for C_j
+  for (iter in 1:niters) {
+    result <- kalfil(
+      resp,
+      f = cycles,
+      vartheta = chain_var_theta[iter], # changed response to resp
+      w = chain_lower[iter, ],
+      tau = tau,
+      lambda = lambda,
+      cmean = chain_mean
+    )
+    chain_var_theta[iter + 1] <- result$vartheta
+    chain_lower[iter + 1, ] <- result$w
+    chain_alpha[,, iter] <- result$alpha
+    chain_amp[iter + 1, ] <- result$amp
+    chain_phase[iter + 1, ] <- result$phase
+    chain_mean <- result$cmean
+    ## Output iteration progress
+    if (iter %% div == 0) {
+      cat("Iteration number", iter, "of", niters, "\r", sep = " ")
+    }
+  }
+  list(
+    chain_var_theta = chain_var_theta,
+    chain_lower = chain_lower,
+    chain_alpha = chain_alpha,
+    chain_amp = chain_amp,
+    chain_phase = chain_phase,
+    chain_mean = chain_mean
+  )
+}
+
+
+update_trend <- function(i, chain_alpha, burnin, niters, num_lower, num_upper) {
+  trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
+  trend$lower[i] <- sum(
+    as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
+      chain_alpha[1, i, burnin:niters]
+  )
+  trend$upper[i] <- sum(
+    as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
+      chain_alpha[1, i, burnin:niters]
+  )
+  trend
+}
+
+kalfil_trend <- function(
+  chain_alpha,
+  chain_alpha,
+  burnin,
+  niters,
+  num_lower,
+  num_upper,
+  n
+) {
+  trend <- as.data.frame(matrix(0, n, 3))
+  names(trend) <- c('mean', 'lower', 'upper')
+  for (i in seq_len(n)) {
+    trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
+    trend$lower[i] <- sum(
+      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
+        chain_alpha[1, i, burnin:niters]
+    )
+    trend$upper[i] <- sum(
+      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
+        chain_alpha[1, i, burnin:niters]
+    )
+  }
+  trend
+}

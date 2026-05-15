@@ -157,3 +157,57 @@ check_if_symmetric <- function(matrix) {
     stop('Matrix must be symmetric', call. = FALSE)
   }
 }
+
+check_tau_cycles <- function(tau, cycles) {
+  if (length(tau) != length(cycles) + 1) {
+    stop(
+      "'tau' must be a vector of size 'cycle' + 1\n",
+      "i.e., a smoothing parameter (tau) for each cycle, plus one for trend\n",
+      "We see:\n",
+      "length tau:",
+      length(tau),
+      "\n",
+      "length cycle:",
+      length(cycle),
+      call. = FALSE
+    )
+  }
+}
+
+check_cycles <- function(cycles) {
+  if (any(sum(cycles <= 0))) {
+    stop(
+      "cycles must be > 0\n",
+      "There are ",
+      sum(cycles <= 0),
+      " values below 0",
+      call. = FALSE
+    )
+  }
+}
+
+check_response_na <- function(resp) {
+  if (anyNA(resp)) {
+    stop(
+      "There must be no missing data in the dependent variable\n",
+      "We see: ",
+      sum(is.na(resp)),
+      " missing value(s)",
+      call. = FALSE
+    )
+  }
+}
+
+check_burnin_iters <- function(burnin, niters) {
+  if (burnin > niters) {
+    stop(
+      "Number of iterations must be greater than burn-in\n",
+      "We see:\n",
+      "burnin: ",
+      burnin,
+      "\nniters: ",
+      burnin,
+      call. = FALSE
+    )
+  }
+}
