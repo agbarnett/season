@@ -259,3 +259,100 @@ day_weights <- function(data, adjmonth) {
 
   day_wt_vec
 }
+
+
+aaft_third <- function(x_diff, n.boot, n.lag, reglags) {
+  # Get n.boot*3 surrogates using the AAFT method
+  # First n.boot for initial limits 2nd & 3rd n.boot for bootstrap limits
+  aaft_sers <- aaft(x_diff, nsur = n.boot * 3)
+
+  # Run each series through the third order moment;
+
+  aaft_third <- vapply(
+    X = seq_len(n.boot * 3),
+    FUN = function(x) {
+      third(
+        data = aaft_sers[, x],
+        n.lag = n.lag,
+        centre = FALSE,
+        outmax = FALSE,
+        plot = FALSE
+      )$third[reglags, reglags]
+    },
+    FUN.VALUE = array(0, dim = c(n.lag + 1, n.lag + 1))
+  )
+
+  aaft_third[1, 1, ] <- 0 # Remove skewness;
+
+  aaft_third
+}
+
+
+aaft_centile <- function(
+  lower = alpha / 2,
+  upper = 1 - (alpha / 2),
+  n.lag = n.lag,
+  aaft_third,
+  third_idx
+) {
+  centile_l <- matrix(0, n.lag + 1, n.lag + 1)
+  centile_u <- matrix(0, n.lag + 1, n.lag + 1)
+  for (r in 0:n.lag) {
+    for (s in r:n.lag) {
+      pts <- aaft_third[r + 1, s + 1, third_idx]
+      centile_l[r + 1, s + 1] <- quantile_dbl(pts, probs = lower)
+      centile_u[r + 1, s + 1] <- quantile_dbl(pts, probs = upper)
+    }
+  }
+  list(
+    lower = centile_l,
+    upper = centile_u
+  )
+}
+
+centile_diffs <- function(upper_tri, x_third, centile) {
+  # Just get for s<r;
+  diff_lower <- (x_third - centile$lower) * upper_tri
+  # Just get for s<r;
+  diff_upper <- (x_third - centile$upper) * upper_tri
+
+  list(
+    lower = diff_lower,
+    upper = diff_upper
+  )
+}
+
+calculate_region <- function(n.lag, centile_diff) {
+  diff_upper <- centile_diff$upper
+  diff_lower <- centile_diff$lower
+
+  # Show points significantly higher or lower than limits;
+  region_upper <- matrix(0, n.lag + 1, n.lag + 1)
+  region_lower <- matrix(0, n.lag + 1, n.lag + 1)
+  index <- diff_upper > 0
+  region_upper[index] <- diff_upper[index]
+  index <- diff_lower < 0
+  region_lower[index] <- diff_lower[index]
+  region <- region_upper + region_lower
+  region
+}
+
+jack_bootstrap <- function(n.boot, n.lag, aaft_third, centile_2) {
+  jackstat <- vector(mode = 'numeric', length = n.boot)
+  upper_tri <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = TRUE)
+  for (jack in ((2 * n.boot) + 1):(n.boot * 3)) {
+    ## Percentile statistic;
+    diffjack_upper <- (aaft_third[,, jack] - centile_2$upper) * upper_tri
+    diffjack_lower <- (aaft_third[,, jack] - centile_2$lower) * upper_tri
+    jregion_upper <- matrix(0, n.lag + 1, n.lag + 1)
+    jregion_lower <- matrix(0, n.lag + 1, n.lag + 1)
+    jindex <- diffjack_upper > 0
+    jregion_upper[jindex] <- diffjack_upper[jindex]
+    jindex <- diffjack_lower < 0
+    jregion_lower[jindex] <- diffjack_lower[jindex]
+    jregion <- jregion_upper + jregion_lower
+    # Total area exceeding limits;
+    jackstat[jack - (2 * n.boot)] <- sum(sum(abs(jregion)))
+  }
+  jackstat
+}
