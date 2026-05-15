@@ -20,22 +20,15 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   kk <- 2 * (k + 1)
   n <- nrow(data)
   f_vec <- rep(c(1, 0), k + 1)
-  alpha_j <- matrix(0, kk, n + 1)
   g_mat <- matrix(0, kk, kk)
   g_mat[1, 1] <- 1
   g_mat[1, 2] <- lambda
   g_mat[2, 2] <- 1
   # linear model
   time <- 1:n
-  response_vec <- subset(data, select = response)[, 1]
+  response_vec <- data[[response]]
   model <- stats::glm(response_vec ~ time)
-  ## put predictions into alpha
-  # 1. trend
-  alpha_j[1, 2:(n + 1)] <- stats::fitted(model)
-  # 2. season
-  sd_resid <- stats::sd(stats::resid(model))
-  # sinusoid with amplitude equal to 10% of standard deviation of residuals
-  alpha_j[3, 2:(n + 1)] <- (sd_resid / 10) * cos(2 * pi * (1:n + 1) / 12)
+  alpha_j <- calc_alpha_j(model, n)
   # estimate initial value for w
   # squared error
   se <- matrix(0, n)
