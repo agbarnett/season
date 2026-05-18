@@ -39,6 +39,35 @@ test_that("nscosinor rejects malformed inputs", {
   )
 })
 
+test_that("nscosinor returns mean that is between lower and upper bounds", {
+  set.seed(2026 - 05 - 18)
+  res <- nscosinor(
+    data = head(CVD, 60),
+    response = "adj",
+    cycles = 12,
+    tau = c(10, 50),
+    niters = 60,
+    burnin = 30,
+    div = 1000
+  )
+
+  is_between <- function(x, lower, upper) {
+    (x >= lower) & (x <= upper)
+  }
+
+  fitted_btn <- with(res$fitted.values, is_between(mean, lower, upper))
+  expect_all_true(fitted_btn)
+
+  oseason_btn <- with(res$oseason, is_between(mean, lower, upper))
+  expect_all_true(oseason_btn)
+
+  season_btn <- with(res$season, is_between(mean, lower, upper))
+  expect_all_true(season_btn)
+
+  trend_btn <- with(res$trend, is_between(mean, lower, upper))
+  expect_all_true(trend_btn)
+})
+
 test_that("nscosinor returns an nsCosinor object with the documented fields", {
   set.seed(2026 - 04 - 29)
   res <- nscosinor(
