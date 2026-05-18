@@ -136,4 +136,7 @@ test_that("nscosinor handles two seasonal cycles", {
   expect_identical(res$cycles, cycle_vec)
   expect_identical(ncol(res$chains), as.integer(1 + 3 * 2))
   expect_identical(ncol(res$season), as.integer(3 * 2))
+  # expect that we get back 2 sets of columns
+  expect_identical(ncol(res$season), as.integer(length(cycle_vec) * 3))
+  expect_snapshot(summary(res$season))
 })
