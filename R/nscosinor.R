@@ -80,8 +80,8 @@
 #'     data = CVD,
 #'     response = 'adj',
 #'     cycles = f,
-#'     niters = 5000,
-#'     burnin = 1000,
+#'     niters = 200,
+#'     burnin = 50,
 #'     tau = tau
 #'     )
 #' summary(res12)
@@ -102,29 +102,15 @@ nscosinor <- function(
   monthly = TRUE,
   alpha = 0.05
 ) {
-  names <- names(data)
-  year_yes <- sum(names == 'year')
-  month_yes <- sum(names == 'month')
-  if (year_yes < 1 || month_yes < 1) {
-    stop("Data needs to contain numeric year and month variables")
-  }
-  if (length(tau) != length(cycles) + 1) {
-    stop(
-      "Need to give a smoothing parameter (tau) for each cycle, ",
-      "plus one for the trend"
-    )
-  }
-  resp <- subset(data, select = response)[, 1]
-  if (anyNA(resp)) {
-    stop("Missing data in the dependent variable not allowed")
-  }
-  if (any(sum(cycles <= 0))) {
-    stop("Cycles cannot be <=0")
-  }
-  if (burnin > niters) {
-    stop("Number of iterations must be greater than burn-in")
-  }
-  year_month <- data$year + ((data$month - 1) / 12) #
+  resp <- data[[response]]
+
+  check_year_valid(data)
+  check_var_in_data(data, "month")
+  check_tau_cycles(tau, cycles)
+  check_cycles(cycles)
+  check_response_na(resp)
+  check_burnin_iters(burnin, niters)
+
   n <- length(resp)
   k <- length(cycles)
   kk <- 2 * (k + 1)
@@ -136,107 +122,76 @@ nscosinor <- function(
     tau = tau,
     n.season = k
   )
-  var_theta <- sqrt(good_inits[1]) # Initial estimates of var theta
-  w <- vector(length = k, mode = "numeric")
-  for (index in 1:k) {
-    w[index] <- good_inits[2] # Initial estimate of lambda (w)
-  }
+  # Initial estimates of var theta
+  var_theta <- sqrt(good_inits[1])
+
+  # Initial estimate of lambda (w)
+  w <- rep(good_inits[2], k)
+
   ## Empty chain matrices and assign initial values
-  chain_amp <- matrix(0, niters + 1, k)
-  chain_phase <- matrix(0, niters + 1, k)
-  chain_alpha <- array(0, c(kk, n + 1, niters))
-  chain_var_theta <- matrix(0, niters + 1)
-  chain_lower <- matrix(0, niters + 1, k)
-  chain_lower[1, ] <- w
-  chain_var_theta[1] <- var_theta
-  chain_mean <- rep(10, kk) # starting value for C_j
-  for (iter in 1:niters) {
-    result <- kalfil(
-      resp,
-      f = cycles,
-      vartheta = chain_var_theta[iter], # changed response to resp
-      w = chain_lower[iter, ],
-      tau = tau,
-      lambda = lambda,
-      cmean = chain_mean
-    )
-    chain_var_theta[iter + 1] <- result$vartheta
-    chain_lower[iter + 1, ] <- result$w
-    chain_alpha[,, iter] <- result$alpha
-    chain_amp[iter + 1, ] <- result$amp
-    chain_phase[iter + 1, ] <- result$phase
-    chain_mean <- result$cmean
-    ## Output iteration progress
-    if (iter %% div == 0) {
-      cat("Iteration number", iter, "of", niters, "\r", sep = " ")
-    }
-  }
+  kalfil_results <- kalfil_iter(
+    niters = niters,
+    k = k,
+    kk = kk,
+    n = n,
+    div = div,
+    w = w,
+    var_theta = var_theta,
+    cycles = cycles,
+    resp = resp,
+    tau = tau,
+    lambda = lambda
+  )
+
+  chain_var_theta <- kalfil_results$chain_var_theta
+  chain_lower <- kalfil_results$chain_lower
+  chain_alpha <- kalfil_results$chain_alpha
+  chain_amp <- kalfil_results$chain_amp
+  chain_phase <- kalfil_results$chain_phase
+  chain_mean <- kalfil_results$chain_mean
+
   ## Get mean & percentiles of alpha (trend & season), & overall fitted values
-  trend <- as.data.frame(matrix(0, n, 3))
-  season <- as.data.frame(matrix(0, n, 3 * k))
-  oseason <- as.data.frame(matrix(0, n, 3))
-  new_fitted <- as.data.frame(matrix(0, n, 3))
-  names(trend) <- c('mean', 'lower', 'upper')
-  names(oseason) <- c('mean', 'lower', 'upper')
-  names(new_fitted) <- c('mean', 'lower', 'upper')
-  all_seasons <- matrix(data = NA, ncol = niters - burnin, nrow = n)
-  snums <- ((1:k) * 2) + 1
-  for (i in 1:n) {
-    for (j in (burnin + 1):niters) {
-      all_seasons[i, j - burnin] <- sum(chain_alpha[snums, i, j])
-    }
-  }
+  season_slots <- 2 * seq_len(k) + 1
+  iters <- (burnin + 1):niters
+  all_seasons <- colSums(chain_alpha[
+    season_slots,
+    seq_len(n),
+    iters,
+    drop = FALSE
+  ])
+
   prob_lower <- alpha / 2
   prob_upper <- 1 - (alpha / 2)
   num_lower <- round((niters - burnin) * prob_lower)
   num_upper <- round((niters - burnin) * prob_upper)
-  for_fitted <- all_seasons + chain_alpha[1, 1:n, (burnin + 1):niters]
-  for (i in 1:n) {
-    trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
-    trend$lower[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
-        chain_alpha[1, i, burnin:niters]
-    )
-    trend$upper[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
-        chain_alpha[1, i, burnin:niters]
-    )
-    for (j in 2:(k + 1)) {
-      snum <- ((j - 1) * 2) + 1
-      season[i, ((j - 1) * 3) - 2] <- mean(chain_alpha[snum, i, burnin:niters])
-      season[i, ((j - 1) * 3) - 1] <- sum(
-        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_lower) *
-          chain_alpha[snum, i, burnin:niters]
-      )
-      season[i, ((j - 1) * 3)] <- sum(
-        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_upper) *
-          chain_alpha[snum, i, burnin:niters]
+  for_fitted <- all_seasons + chain_alpha[1, seq_len(n), (burnin + 1):niters]
+
+  alpha_draws <- chain_alpha[1, seq_len(n), burnin:niters]
+  trend <- draws_trend(alpha_draws, num_lower, num_upper)
+  oseason <- draws_trend(all_seasons, num_lower, num_upper)
+  new_fitted <- draws_trend(for_fitted, num_lower, num_upper)
+
+  # get the right index out for the season, e.g., cycle = c(6, 12)
+  snum <- (((2:(k + 1)) - 1) * 2) + 1
+  season_nd <- lapply(
+    snum,
+    \(x) {
+      draws_trend(
+        chain_alpha[x, seq_len(n), burnin:niters],
+        num_lower,
+        num_upper
       )
     }
-    ## overall season
-    oseason$mean[i] <- mean(all_seasons[i, ])
-    oseason$lower[i] <- sum(
-      as.numeric(rank(all_seasons[i, ]) == num_lower) * all_seasons[i, ]
-    )
-    oseason$upper[i] <- sum(
-      as.numeric(rank(all_seasons[i, ]) == num_upper) * all_seasons[i, ]
-    )
-    ## fitted values (with CIs)
-    new_fitted$mean[i] <- mean(for_fitted[i])
-    new_fitted$lower[i] <- sum(
-      as.numeric(rank(for_fitted[i, ]) == num_lower) * for_fitted[i, ]
-    )
-    new_fitted$upper[i] <- sum(
-      as.numeric(rank(for_fitted[i, ]) == num_upper) * for_fitted[i, ]
-    )
-  }
-  names(season) <- rep(c('mean', 'lower', 'upper'), k)
-  ## Time
+  )
+
+  season <- do.call(cbind, season_nd)
+
   if (monthly) {
+    year_month <- data$year + ((data$month - 1) / 12)
     time <- year_month
   }
   if (!monthly) {
-    time <- 1:n
+    time <- seq_len(n)
   }
   ## Calculated fitted values and residuals
   fitted <- trend$mean + oseason$mean
@@ -263,7 +218,8 @@ nscosinor <- function(
       amplitude = matrix(data = NA, nrow = niters + 1, ncol = k)
     )
   )
-  for (i in 1:k) {
+
+  for (i in seq_len(k)) {
     # for multiple cycles
     result$chains$std.season[, i] <- chain_lower[, i]
     result$chains$phase[, i] <- chain_phase[, i]
@@ -282,9 +238,9 @@ nscosinor <- function(
   # Add the names
   colnames(result$chains) <- c(
     'std.error',
-    paste0('std.season', 1:k),
-    paste0('phase', 1:k),
-    paste0('amplitude', 1:k)
+    paste0('std.season', seq_len(k)),
+    paste0('phase', seq_len(k)),
+    paste0('amplitude', seq_len(k))
   )
   result$cycles <- cycles
   class(result) <- c('nsCosinor', class(result))

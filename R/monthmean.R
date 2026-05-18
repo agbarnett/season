@@ -40,7 +40,7 @@
 #'   )
 #' }
 #'
-#' @export monthmean
+#' @export
 monthmean <- function(
   data,
   resp,
@@ -49,23 +49,8 @@ monthmean <- function(
 ) {
   adjmonth <- rlang::arg_match(adjmonth)
 
-  if (is.null(data)) {
-    stop("must have an input data set (data)")
-  }
-  if (is.null(resp)) {
-    stop("must have an input variable (resp)")
-  }
-  nnn <- names(data)
-  if (!any(nnn == 'year')) {
-    stop("data set must contain a variable with the 4 digit year called 'year'")
-  }
-  if (!any(nnn == 'month')) {
-    stop(
-      "data set must contain a variable with the numeric month called 'month'"
-    )
-  }
-  # get the number of days in each month
-  days <- flagleap(data)
+  check_year_valid(data)
+  check_var_in_data(data, "month")
 
   if (is.null(offsetpop)) {
     adjp <- 1
@@ -73,12 +58,7 @@ monthmean <- function(
     adjp <- with(data, eval(offsetpop))
   } # population adjustment
 
-  day_wt_vec <- switch(
-    adjmonth,
-    none = rep(1, 12),
-    thirty = 30 / days$n_days_month[1:12],
-    average = (365.25 / 12) / days$n_days_month[1:12]
-  )
+  day_wt_vec <- day_weights(data, adjmonth)
 
   # lookup expansion of wt by each month
   adjusted <- data[[resp]] * day_wt_vec[data$month] / adjp

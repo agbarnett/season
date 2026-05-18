@@ -19,7 +19,7 @@
 #' yrfraction(date)
 #' yrfraction(1:12, type = 'monthly')
 #'
-#' @export yrfraction
+#' @export
 yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
   type <- rlang::arg_match(type)
 

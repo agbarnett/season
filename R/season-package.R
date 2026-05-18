@@ -40,6 +40,7 @@ NULL
 
 utils::globalVariables(
   c(
-    "time"
+    "time",
+    "terms"
   )
 )

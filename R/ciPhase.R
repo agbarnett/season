@@ -1,6 +1,3 @@
-# ciPhase.R
-# Confidence interval for circular phase
-
 #' Mean and Confidence Interval for Circular Phase
 #'
 #' Calculates the mean and confidence interval for the phase based on a chain
@@ -32,7 +29,7 @@
 #' ciPhase(theta)
 #' }
 #'
-#' @export ciPhase
+#' @export
 ciPhase <- function(theta, alpha = 0.05) {
   # proposed centres
   theta_c <- seq(
@@ -61,11 +58,11 @@ ciPhase <- function(theta, alpha = 0.05) {
     ideal <- theta + diff * (theta < pi) + diff_neg * (theta > pi)
   }
 
-  ret <- list(
+  result <- list(
     mean = mean(ideal) - diff,
-    lower = as.numeric(stats::quantile(ideal, prob = alpha / 2) - diff),
-    upper = as.numeric(stats::quantile(ideal, prob = 1 - (alpha / 2)) - diff)
+    lower = quantile_dbl(ideal, probs = alpha / 2) - diff,
+    upper = quantile_dbl(ideal, probs = 1 - (alpha / 2)) - diff
   )
 
-  ret
+  result
 }

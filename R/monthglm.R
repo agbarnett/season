@@ -1,4 +1,3 @@
-## Jan 2014
 #' Fit a GLM with Month
 #'
 #' Fit a generalized linear model with a categorical variable of month.
@@ -16,7 +15,8 @@
 #'
 #' @param formula regression model formula, e.g., `y~x1+x2`, (do not add
 #' month to the regression equation, it will be added automatically).
-#' @param data a data frame.
+#' @param data a data frame. Must contain the column "months" as integer, and
+#'   year as a 4 digit number.
 #' @param family a description of the error distribution and link function to
 #' be used in the model (default=`gaussian()`). (See [family()]
 #' for details of family functions.).
@@ -63,13 +63,10 @@ monthglm <- function(
   offsetmonth = FALSE,
   offsetpop = NULL
 ) {
-  if (refmonth < 1 || refmonth > 12) {
-    stop("Reference month must be between 1 and 12")
-  }
-  offsetmonth_lgl <- is.logical(offsetmonth)
-  if (!offsetmonth_lgl) {
-    stop("`offsetmonth` must be logical, we see type: ", class(offsetmonth))
-  }
+  # between 1-12
+  check_if_within_values(refmonth, 1, 12)
+  check_if_logical(offsetmonth)
+
   ## original call with defaults (see amer package)
   ans <- as.list(match.call())
   frmls <- formals(deparse(ans[[1]]))
@@ -78,32 +75,19 @@ monthglm <- function(
   monthvar <- data[[monthvar]]
   ## If month is a character, create the numbers
   if (inherits(monthvar, "character")) {
-    if (max(nchar(monthvar)) == 3) {
-      month_levels <- substr(month.name, 1, 3)
-    } else {
-      month_levels <- month.name
-    }
+    month_levels <- shorten_month_name(monthvar)
     monthvar <- factor(monthvar, levels = month_levels)
   }
 
   if (inherits(monthvar, "factor")) {
-    months <- as.numeric(monthvar)
     # add to data for flagleap
-    data$month <- months
-    months <- as.factor(months)
-    levels(months)[months] <- month.abb[months]
-    # set reference month
-    months <- stats::relevel(months, ref = month.abb[refmonth])
+    data$month <- as.numeric(monthvar)
+    months <- relevel_months_by_ref(monthvar, refmonth)
   }
 
   ## Transform month numbers to names
   if (inherits(monthvar, "integer") || inherits(monthvar, "numeric")) {
-    months_u <- as.factor(monthvar)
-    # Month numbers; replaced `nochars`
-    nums <- keep_month_numbers(levels(months_u))
-    levels(months_u)[nums] <- month.abb[nums]
-    # set reference month
-    months <- stats::relevel(months_u, ref = month.abb[refmonth])
+    months <- relevel_months_by_ref_name(monthvar, refmonth)
   }
 
   # get the number of days in each month
@@ -125,6 +109,7 @@ monthglm <- function(
   ## A bit of a workaround update.formula(), since this doesn't really
   ## work how we expect, see
   ## stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
+
   parts <- paste(formula)
   form <- stats::as.formula(paste(
     parts[2],

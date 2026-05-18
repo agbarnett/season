@@ -60,38 +60,39 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   type <- object$type
 
   s <- summary(object$glm) # create summary
-  cnames <- row.names(s$coefficients)
-  cindex <- sum(as.numeric(cnames == 'cosw') * (seq_along(cnames)))
-  sindex <- sum(as.numeric(cnames == 'sinw') * (seq_along(cnames)))
+
+  summary_df <- as.data.frame(s$coefficients, row.names = "")
+  summary_df$terms <- rownames(s$coefficients)
+  cosw_terms <- subset(summary_df, subset = terms == "cosw")
+  sinw_terms <- subset(summary_df, subset = terms == "sinw")
+  intercept_terms <- subset(summary_df, subset = terms == "(Intercept)")
   # amplitude and phase
-  amp <- sqrt((s$coefficients[cindex, 1]^2) + (s$coefficients[sindex, 1]^2))
+  amp <- sqrt(cosw_terms$Estimate^2 + sinw_terms$Estimate^2)
   addition <- ''
-  link <- s$family$link
-  if (is.null(s$family$link)) {
-    link <- ' '
-  }
+  link <- s$family$link %||% " "
+  intercept_est <- intercept_terms$Estimate
   if (link == 'logit') {
     # back-transform amp
-    p1 <- exp(s$coefficients[1, 1]) / (1 + exp(s$coefficients[1, 1]))
+    p1 <- exp(intercept_est) / (1 + exp(intercept_est))
     # back-transform amp
-    p2 <- exp(s$coefficients[1, 1] + amp) /
-      (1 + exp(s$coefficients[1, 1] + amp))
+    p2 <- exp(intercept_est + amp) /
+      (1 + exp(intercept_est + amp))
     amp <- p2 - p1
     addition <- "(probability scale)"
   }
   if (link == 'cloglog') {
-    p1 <- 1 - exp(-exp(s$coefficients[1, 1]))
-    p2 <- 1 - exp(-exp(s$coefficients[1, 1] + amp))
+    p1 <- 1 - exp(-exp(intercept_est))
+    p2 <- 1 - exp(-exp(intercept_est + amp))
     amp <- p2 - p1
     addition <- "(probability scale)"
   }
   if (link == 'log') {
-    amp <- exp(s$coefficients[1, 1] + amp) - exp(s$coefficients[1, 1])
+    amp <- exp(intercept_est + amp) - exp(intercept_est)
     addition <- "(absolute scale)"
   }
   phaser <- phasecalc(
-    cosine = s$coefficients[cindex, 1],
-    sine = s$coefficients[sindex, 1]
+    cosine = cosw_terms$Estimate,
+    sine = sinw_terms$Estimate
   )
   # convert radian phase to a date
   phase <- invyrfraction(
@@ -113,24 +114,30 @@ summary.Cosinor <- function(object, digits = 2, ...) {
     text = object$call$text
   )
   # statistical signficance
-  toreport <- rbind(s$coefficients[cindex, ], s$coefficients[sindex, ])
+  toreport <- rbind(cosw_terms, sinw_terms)
   adjusted <- eval(object$call$alpha) / 2
-  significant <- as.logical(sum(toreport[, 4] < adjusted))
+  names(toreport) <- c("estimate", "std_error", "t_value", "p_value", "terms")
+  significant <- any(toreport$p_value < adjusted)
   # returns
-  ret <- list()
-  ret$n <- length(object$residuals)
-  ret$amp <- amp
-  ret$amp.scale <- addition
-  ret$phase <- phase
-  ret$lphase <- lphase
-  ret$significant <- significant
-  ret$alpha <- object$call$alpha
-  ret$digits <- digits
-  ret$text <- object$call$text # display phase as text (TRUE/FALSE)
-  ret$type <- type
-  ret$ctable <- s$coefficients # regression table (march 2020)
-  class(ret) <- c("summary.Cosinor", class(object))
-  ret # uses print.summary.Cosinor
+  result <- list(
+    n = length(object$residuals),
+    amp = amp,
+    amp.scale = addition,
+    phase = phase,
+    lphase = lphase,
+    significant = significant,
+    alpha = object$call$alpha,
+    digits = digits,
+    # display phase as text (TRUE/FALSE)
+    text = object$call$text,
+    type = type,
+    # regression table (march 2020)
+    ctable = s$coefficients
+  )
+
+  class(result) <- c("summary.Cosinor", class(result))
+  # uses print.summary.Cosinor
+  result
 }
 
 #' @describeIn summary.Cosinor Print basic results from [cosinor()] using the
@@ -174,7 +181,7 @@ print.Cosinor <- function(x, ...) {
 #' # to get the p-values for the sine and cosine estimates
 #' summary(res$glm)
 print.summary.Cosinor <- function(x, ...) {
-  check_if_cosinor(x)
+  check_if_class(x, "summary.Cosinor")
   # fix the digits, October 2011
   if (!x$text) {
     x$phase <- round(x$phase, x$digits)

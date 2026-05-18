@@ -13,16 +13,18 @@
     Code
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 0)
     Condition
-      Error in `monthglm()`:
-      ! Reference month must be between 1 and 12
+      Error:
+      ! x must be within 1 and 12
+      We see a range of: 0-0
 
 ---
 
     Code
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 13)
     Condition
-      Error in `monthglm()`:
-      ! Reference month must be between 1 and 12
+      Error:
+      ! x must be within 1 and 12
+      We see a range of: 13-13
 
 # monthglm fails when invalid family used
 
@@ -73,6 +75,7 @@
     Code
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 1, offsetmonth = "January")
     Condition
-      Error in `monthglm()`:
-      ! `offsetmonth` must be logical, we see type: character
+      Error:
+      ! x must be of class: logical
+      We see class: character
 

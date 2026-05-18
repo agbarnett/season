@@ -166,8 +166,9 @@
     Code
       print(bad)
     Condition
-      Error in `print.casecross()`:
-      ! Conditional logistic regression model object 'cox_model' must be of class 'coxph'
+      Error:
+      ! x must be of class: coxph
+      We see class: list
 
 # print.summary.Cosinor prints the cosinor test report
 
@@ -193,7 +194,7 @@
       print.summary.Cosinor(list(a = 1))
     Condition
       Error:
-      ! x must be of class: Cosinor
+      ! x must be of class: summary.Cosinor
       We see class: list
 
 # print.summary.monthglm prints the month-effect table

@@ -61,7 +61,8 @@
 #' likely to contain less days than all the other strata (TRUE/default=FALSE).
 #' @param matchconf match case and control days using an important confounder
 #' (optional; must be in quotes). `matchconf` is the variable to match on.
-#' This matching is in addition to the strata matching.
+#' This matching is in addition to the strata matching. Default is NULL - no
+#' confounder is used.
 #' @param confrange range of the confounder within which case and control days
 #' will be treated as a match (optional). Range = `matchconf` (on case
 #' day) \eqn{+/-} `confrange`.
@@ -114,7 +115,7 @@ casecross <- function(
   stratalength = 28,
   matchdow = FALSE,
   usefinalwindow = FALSE,
-  matchconf = "",
+  matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
 ) {
@@ -123,20 +124,9 @@ casecross <- function(
   match_day.y <- window_num.x <- window_num.y <- NULL
   this_data <- data
 
-  if (!inherits(this_data$date, "Date")) {
-    stop("date variable must be in date format, see ?Dates")
-  }
-  if (exclusion < 0) {
-    stop("Minimum value for exclusion is zero")
-  }
-  parts <- paste(formula)
-  # dependent variable
-  dep <- parts[2]
-  # independent variable
-  indep <- parts[3]
-  if (length(formula) <= 2) {
-    stop("Must be at least one independent variable")
-  }
+  check_if_date(this_data$date)
+  check_if_exclusion_lt_0(exclusion)
+  check_formula_has_iv(formula)
 
   ## original call with defaults (see amer package)
   ans <- as.list(match.call())
@@ -145,11 +135,21 @@ casecross <- function(
   call <- as.call(c(ans, frmls[add]))
   this_data$dow <- as.numeric(format(this_data$date, '%w'))
 
-  ## Slim down the data
-  form <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
-  if (!startsWith(matchconf, "")) {
+  parts <- paste(formula)
+  form <- stats::as.formula(paste(
+    parts[2],
+    parts[1],
+    parts[3:length(formula)],
+    "+date+dow"
+  ))
+
+  if (!is.null(matchconf)) {
+    parts <- paste(formula)
+    dep <- parts[2]
+    indep <- parts[3]
     form <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
   }
+
   # remove cases with missing covariates
   data_to_use <- stats::model.frame(
     form,
@@ -157,25 +157,18 @@ casecross <- function(
     na.action = stats::na.omit
   )
 
-  ## Check for irregularly spaced data
-  if (any(diff(data_to_use$date) > 1)) {
-    cat('Note, irregularly spaced data...\n')
-    cat('...check your data for missing days\n')
+  inform_irregularly_spaced(data_to_use$date)
+
+  ## Create strata
+  if (stratamonth) {
+    match_day <- as.numeric(format(data_to_use$date, '%d'))
+    window_num <- window_num_stratamonth(data_to_use$date)
   }
 
   # use minimum data in entire sample
   date_diff <- as.numeric(data_to_use$date) - min(as.numeric(data_to_use$date))
   # used as strata number
   time <- as.numeric(date_diff) + 1
-
-  ## Create strata
-  if (stratamonth) {
-    month <- as.numeric(format(data_to_use$date, '%m'))
-    year <- as.numeric(format(data_to_use$date, '%Y'))
-    match_day <- as.numeric(format(data_to_use$date, '%d'))
-    year_diff <- year - min(year)
-    window_num <- (year_diff * 12) + month
-  }
   if (!stratamonth) {
     ## Get the earliest time and difference all dates from this time
     ## Increase strata windows in jumps of 'stratalength'
@@ -196,7 +189,6 @@ casecross <- function(
     }
   }
   ## Create the case data
-  n <- nrow(data_to_use)
   cases <- data_to_use
   # binary indicator of case
   cases$case <- 1
@@ -206,20 +198,16 @@ casecross <- function(
   cases$time <- time
   cases$diff_days <- NA
   cases$match_day <- match_day
-  pos_out <- sum(
-    as.numeric(names(data_to_use) == as.character(form[2])) *
-      (seq_len(ncol(data_to_use)))
-  ) # get the position of the dependent variable
-  cases$outcome <- data_to_use[, c(pos_out)]
-  # October 2011, removed nonzerocases
+  cases$outcome <- data_to_use[, as.character(formula[2])]
+
   # Create a case number for matching
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     cases_to_merge <- subset(
       cases,
       select = c(match_day, time, outcome, window_num, dow)
     )
   }
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     also <- sum(
       as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
     )
@@ -266,7 +254,7 @@ casecross <- function(
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!startsWith(matchconf, "")) {
+  if (!is.null(matchconf)) {
     one <- paste0(matchconf, '.x')
     two <- paste0(matchconf, '.y')
     find_1 <- grep(one, names(controls))
@@ -294,8 +282,10 @@ casecross <- function(
       cases,
       select = c(-dow, -match_day, -window_num, -find_c)
     )
+    # update formula to remove matchconf
+    indep <- gsub(indep, pattern = paste0("\\+ ", matchconf), replacement = '')
   }
-  if (startsWith(matchconf, "")) {
+  if (is.null(matchconf)) {
     controls <- subset(
       controls,
       select = c(
@@ -321,6 +311,9 @@ casecross <- function(
   extra_only <- final_cases[final_cases$time %in% which_times, ]
   n_controls <- round(mean(as.numeric(table(only_control$time))), 1)
   ## Run the conditional logistic regression
+
+  indep <- parse_indep(formula)
+
   form_final <- stats::as.formula(paste(
     'Surv(timex,case)~',
     indep,
@@ -343,7 +336,7 @@ casecross <- function(
   )
 
   class(result$cox_model) <- c("coxph", class(cox_model))
-  class(result) <- "casecross"
+  class(result) <- c("casecross", class(result))
 
   result
 }

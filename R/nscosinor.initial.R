@@ -19,35 +19,29 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   k <- 1 # Assume just one season
   kk <- 2 * (k + 1)
   n <- nrow(data)
-  Fvec <- rep(c(1, 0), k + 1)
-  alpha_j <- matrix(0, kk, n + 1)
-  G <- matrix(0, kk, kk)
-  G[1, 1] <- 1
-  G[1, 2] <- lambda
-  G[2, 2] <- 1
+  f_vec <- rep(c(1, 0), k + 1)
+  g_mat <- matrix(0, kk, kk)
+  g_mat[1, 1] <- 1
+  g_mat[1, 2] <- lambda
+  g_mat[2, 2] <- 1
   # linear model
   time <- 1:n
-  response_vec <- subset(data, select = response)[, 1]
+  response_vec <- data[[response]]
   model <- stats::glm(response_vec ~ time)
-  ## put predictions into alpha
-  # 1. trend
-  alpha_j[1, 2:(n + 1)] <- stats::fitted(model)
-  # 2. season
-  sd_resid <- stats::sd(stats::resid(model))
-  # sinusoid with amplitude equal to 10% of standard deviation of residuals
-  alpha_j[3, 2:(n + 1)] <- (sd_resid / 10) * cos(2 * pi * (1:n + 1) / 12)
+  alpha_j <- calc_alpha_j(model, n)
   # estimate initial value for w
   # squared error
   se <- matrix(0, n)
   alpha_se <- matrix(0, n - 1, k)
   for (t in 2:(n + 1)) {
     #<- time = 1 to n;
-    se[t - 1] <- (response_vec[t - 1] - (t(Fvec) %*% alpha_j[, t]))^2
+    se[t - 1] <- (response_vec[t - 1] - (t(f_vec) %*% alpha_j[, t]))^2
     if (t > 2) {
       # <- 2 to n;
-      past <- G %*% alpha_j[, t - 1]
+      past <- g_mat %*% alpha_j[, t - 1]
       for (index in 1:k) {
-        alpha_se[t - 2, 1] <- (alpha_j[(2 * 1) + 1, t] - past[(2 * 1) + 1])^2
+        alpha_se[t - 2, index] <- (alpha_j[(2 * index) + 1, t] -
+          past[(2 * index) + 1])^2
       }
     }
   }
@@ -61,5 +55,5 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   scale <- sum(alpha_se) / 2
   w <- (scale / (shape - 1)) / (tau[2]^2) # use mean rather than random sampling
   initial_value <- c(var_theta, rep(w, n.season))
-  return(initial_value)
+  initial_value
 }

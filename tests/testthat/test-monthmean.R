@@ -15,11 +15,15 @@ test_that("monthmean reproduces the published Fig 2.11 CVD rates", {
 test_that("monthmean errors when required variables are missing", {
   expect_snapshot(
     error = TRUE,
+    monthmean()
+  )
+  expect_snapshot(
+    error = TRUE,
     monthmean(data = NULL, resp = "x")
   )
   expect_snapshot(
     error = TRUE,
-    monthmean(data = CVD, resp = NULL)
+    monthmean(data = CVD)
   )
   expect_snapshot(
     error = TRUE,
@@ -57,4 +61,13 @@ test_that("monthmean without offset returns the raw monthly means", {
   mm <- monthmean(data = CVD, resp = "cvd")
   cvd_by_month <- stats::aggregate(cvd ~ month, data = CVD, FUN = mean)
   expect_identical(mm$mean, cvd_by_month$cvd)
+})
+
+test_that("monthmean works", {
+  expect_snapshot(
+    monthmean(
+      data = data.frame(month = 1:12, x = 1:12, year = rep(1999, 12)),
+      resp = "x"
+    )
+  )
 })

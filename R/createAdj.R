@@ -34,15 +34,9 @@
 #'
 #' @export createAdj
 createAdj <- function(matrix, suffix = NULL) {
-  if (!is.matrix(matrix)) {
-    stop('Input must be a matrix')
-  }
-  if (dim(matrix)[1] != dim(matrix)[2]) {
-    stop('Matrix must be square')
-  }
-  if (!isSymmetric(matrix)) {
-    stop('Matrix must be symmetric')
-  }
+  check_if_matrix(matrix)
+  check_if_square(matrix)
+  check_if_symmetric(matrix)
 
   all_missing <- all(is.na(matrix))
   # return early
