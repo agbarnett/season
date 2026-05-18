@@ -168,7 +168,7 @@ check_tau_cycles <- function(tau, cycles) {
       length(tau),
       "\n",
       "length cycle:",
-      length(cycle),
+      length(cycles),
       call. = FALSE
     )
   }
