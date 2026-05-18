@@ -289,9 +289,9 @@ aaft_third <- function(x_diff, n.boot, n.lag, reglags) {
 
 
 aaft_centile <- function(
-  lower = alpha / 2,
-  upper = 1 - (alpha / 2),
-  n.lag = n.lag,
+  lower,
+  upper,
+  n.lag,
   aaft_third,
   third_idx
 ) {
@@ -437,27 +437,19 @@ update_trend <- function(i, chain_alpha, burnin, niters, num_lower, num_upper) {
   trend
 }
 
-kalfil_trend <- function(
-  chain_alpha,
-  chain_alpha,
-  burnin,
-  niters,
+draws_trend <- function(
+  draws,
   num_lower,
-  num_upper,
-  n
+  num_upper
 ) {
-  trend <- as.data.frame(matrix(0, n, 3))
-  names(trend) <- c('mean', 'lower', 'upper')
-  for (i in seq_len(n)) {
-    trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
-    trend$lower[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
-        chain_alpha[1, i, burnin:niters]
-    )
-    trend$upper[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
-        chain_alpha[1, i, burnin:niters]
-    )
-  }
-  trend
+  sorted <- apply(draws, 1, sort)
+  trend_lower <- sorted[num_lower, ]
+  trend_upper <- sorted[num_upper, ]
+  trend_mean <- rowMeans(draws)
+  mean_upper_lower <- data.frame(
+    mean = trend_mean,
+    lower = trend_lower,
+    upper = trend_upper
+  )
+  mean_upper_lower
 }
