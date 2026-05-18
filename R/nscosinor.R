@@ -151,49 +151,47 @@ nscosinor <- function(
   chain_mean <- kalfil_results$chain_mean
 
   ## Get mean & percentiles of alpha (trend & season), & overall fitted values
+  season_slots <- 2 * seq_len(k) + 1
+  iters <- (burnin + 1):niters
+  all_seasons <- colSums(chain_alpha[
+    season_slots,
+    seq_len(n),
+    iters,
+    drop = FALSE
+  ])
 
-  all_seasons <- matrix(data = NA, ncol = niters - burnin, nrow = n)
-  snums <- ((1:k) * 2) + 1
-  for (i in 1:n) {
-    for (j in (burnin + 1):niters) {
-      all_seasons[i, j - burnin] <- sum(chain_alpha[snums, i, j])
-    }
-  }
   prob_lower <- alpha / 2
   prob_upper <- 1 - (alpha / 2)
   num_lower <- round((niters - burnin) * prob_lower)
   num_upper <- round((niters - burnin) * prob_upper)
-  for_fitted <- all_seasons + chain_alpha[1, 1:n, (burnin + 1):niters]
+  for_fitted <- all_seasons + chain_alpha[1, seq_len(n), (burnin + 1):niters]
 
   alpha_draws <- chain_alpha[1, seq_len(n), burnin:niters]
   trend <- draws_trend(alpha_draws, num_lower, num_upper)
   oseason <- draws_trend(all_seasons, num_lower, num_upper)
   new_fitted <- draws_trend(for_fitted, num_lower, num_upper)
 
-  season <- as.data.frame(matrix(0, n, 3 * k))
-  names(season) <- rep(c('mean', 'lower', 'upper'), k)
-
-  for (i in 1:n) {
-    for (j in 2:(k + 1)) {
-      snum <- ((j - 1) * 2) + 1
-      draws <- chain_alpha[snum, i, burnin:niters]
-      season[i, ((j - 1) * 3) - 2] <- mean(draws)
-      season[i, ((j - 1) * 3) - 1] <- sum(
-        as.numeric(rank(draws) == num_lower) * draws
-      )
-      season[i, ((j - 1) * 3)] <- sum(
-        as.numeric(rank(draws) == num_upper) * draws
+  # get the right index out for the season, e.g., cycle = c(6, 12)
+  snum <- (((2:(k + 1)) - 1) * 2) + 1
+  season_nd <- lapply(
+    snum,
+    \(x) {
+      draws_trend(
+        chain_alpha[x, seq_len(n), burnin:niters],
+        num_lower,
+        num_upper
       )
     }
-  }
+  )
 
-  ## Time
+  season <- do.call(cbind, season_nd)
+
   if (monthly) {
     year_month <- data$year + ((data$month - 1) / 12)
     time <- year_month
   }
   if (!monthly) {
-    time <- 1:n
+    time <- seq_len(n)
   }
   ## Calculated fitted values and residuals
   fitted <- trend$mean + oseason$mean
@@ -221,7 +219,7 @@ nscosinor <- function(
     )
   )
 
-  for (i in 1:k) {
+  for (i in seq_len(k)) {
     # for multiple cycles
     result$chains$std.season[, i] <- chain_lower[, i]
     result$chains$phase[, i] <- chain_phase[, i]
@@ -240,9 +238,9 @@ nscosinor <- function(
   # Add the names
   colnames(result$chains) <- c(
     'std.error',
-    paste0('std.season', 1:k),
-    paste0('phase', 1:k),
-    paste0('amplitude', 1:k)
+    paste0('std.season', seq_len(k)),
+    paste0('phase', seq_len(k)),
+    paste0('amplitude', seq_len(k))
   )
   result$cycles <- cycles
   class(result) <- c('nsCosinor', class(result))
