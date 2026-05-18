@@ -166,16 +166,13 @@ nscosinor <- function(
   for_fitted <- all_seasons + chain_alpha[1, 1:n, (burnin + 1):niters]
 
   alpha_draws <- chain_alpha[1, seq_len(n), burnin:niters]
-  trend <- draws_trend(draws = alpha_draws, num_lower, num_upper)
+  trend <- draws_trend(alpha_draws, num_lower, num_upper)
   oseason <- draws_trend(all_seasons, num_lower, num_upper)
+  new_fitted <- draws_trend(for_fitted, num_lower, num_upper)
 
   season <- as.data.frame(matrix(0, n, 3 * k))
   names(season) <- rep(c('mean', 'lower', 'upper'), k)
 
-  new_fitted <- as.data.frame(matrix(0, n, 3))
-  names(new_fitted) <- c('mean', 'lower', 'upper')
-
-  # new_fitted2 <- draws_trend(for_fitted, num_lower, num_upper)
   for (i in 1:n) {
     for (j in 2:(k + 1)) {
       snum <- ((j - 1) * 2) + 1
@@ -188,12 +185,6 @@ nscosinor <- function(
         as.numeric(rank(draws) == num_upper) * draws
       )
     }
-
-    ## fitted values (with CIs)
-    new_fitted$mean[i] <- mean(for_fitted[i, ])
-    draws <- for_fitted[i, ]
-    new_fitted$lower[i] <- sum(as.numeric(rank(draws) == num_lower) * draws)
-    new_fitted$upper[i] <- sum(as.numeric(rank(draws) == num_upper) * draws)
   }
 
   ## Time
