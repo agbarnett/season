@@ -80,8 +80,8 @@
 #'     data = CVD,
 #'     response = 'adj',
 #'     cycles = f,
-#'     niters = 5000,
-#'     burnin = 1000,
+#'     niters = 200,
+#'     burnin = 50,
 #'     tau = tau
 #'     )
 #' summary(res12)
@@ -152,9 +152,6 @@ nscosinor <- function(
 
   ## Get mean & percentiles of alpha (trend & season), & overall fitted values
 
-  new_fitted <- as.data.frame(matrix(0, n, 3))
-  names(new_fitted) <- c('mean', 'lower', 'upper')
-
   all_seasons <- matrix(data = NA, ncol = niters - burnin, nrow = n)
   snums <- ((1:k) * 2) + 1
   for (i in 1:n) {
@@ -168,62 +165,37 @@ nscosinor <- function(
   num_upper <- round((niters - burnin) * prob_upper)
   for_fitted <- all_seasons + chain_alpha[1, 1:n, (burnin + 1):niters]
 
-  trend <- as.data.frame(matrix(0, n, 3))
-  names(trend) <- c('mean', 'lower', 'upper')
+  alpha_draws <- chain_alpha[1, seq_len(n), burnin:niters]
+  trend <- draws_trend(draws = alpha_draws, num_lower, num_upper)
+  oseason <- draws_trend(all_seasons, num_lower, num_upper)
 
   season <- as.data.frame(matrix(0, n, 3 * k))
-  oseason <- as.data.frame(matrix(0, n, 3))
-  names(oseason) <- c('mean', 'lower', 'upper')
+  names(season) <- rep(c('mean', 'lower', 'upper'), k)
 
-  browser()
-  trend2 <- kalfil_trend(
-    chain_alpha,
-    burnin,
-    niters,
-    num_lower,
-    num_upper,
-    n
-  )
+  new_fitted <- as.data.frame(matrix(0, n, 3))
+  names(new_fitted) <- c('mean', 'lower', 'upper')
+
+  # new_fitted2 <- draws_trend(for_fitted, num_lower, num_upper)
   for (i in 1:n) {
-    trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
-    trend$lower[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
-        chain_alpha[1, i, burnin:niters]
-    )
-    trend$upper[i] <- sum(
-      as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
-        chain_alpha[1, i, burnin:niters]
-    )
     for (j in 2:(k + 1)) {
       snum <- ((j - 1) * 2) + 1
-      season[i, ((j - 1) * 3) - 2] <- mean(chain_alpha[snum, i, burnin:niters])
+      draws <- chain_alpha[snum, i, burnin:niters]
+      season[i, ((j - 1) * 3) - 2] <- mean(draws)
       season[i, ((j - 1) * 3) - 1] <- sum(
-        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_lower) *
-          chain_alpha[snum, i, burnin:niters]
+        as.numeric(rank(draws) == num_lower) * draws
       )
       season[i, ((j - 1) * 3)] <- sum(
-        as.numeric(rank(chain_alpha[snum, i, burnin:niters]) == num_upper) *
-          chain_alpha[snum, i, burnin:niters]
+        as.numeric(rank(draws) == num_upper) * draws
       )
     }
-    ## overall season
-    oseason$mean[i] <- mean(all_seasons[i, ])
-    oseason$lower[i] <- sum(
-      as.numeric(rank(all_seasons[i, ]) == num_lower) * all_seasons[i, ]
-    )
-    oseason$upper[i] <- sum(
-      as.numeric(rank(all_seasons[i, ]) == num_upper) * all_seasons[i, ]
-    )
+
     ## fitted values (with CIs)
-    new_fitted$mean[i] <- mean(for_fitted[i])
-    new_fitted$lower[i] <- sum(
-      as.numeric(rank(for_fitted[i, ]) == num_lower) * for_fitted[i, ]
-    )
-    new_fitted$upper[i] <- sum(
-      as.numeric(rank(for_fitted[i, ]) == num_upper) * for_fitted[i, ]
-    )
+    new_fitted$mean[i] <- mean(for_fitted[i, ])
+    draws <- for_fitted[i, ]
+    new_fitted$lower[i] <- sum(as.numeric(rank(draws) == num_lower) * draws)
+    new_fitted$upper[i] <- sum(as.numeric(rank(draws) == num_upper) * draws)
   }
-  names(season) <- rep(c('mean', 'lower', 'upper'), k)
+
   ## Time
   if (monthly) {
     year_month <- data$year + ((data$month - 1) / 12)
