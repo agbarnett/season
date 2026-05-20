@@ -386,7 +386,12 @@ kalfil_iter <- function(
 ) {
   chain_amp <- matrix(0, niters + 1, k)
   chain_phase <- matrix(0, niters + 1, k)
-  chain_alpha <- array(0, c(kk, n + 1, niters))
+  # chain_alpha <- array(0, c(kk, n + 1, niters))
+  chain_alpha <- list(
+    trend = matrix(0, n + 1, niters),
+    seasons = replicate(k, matrix(0, n + 1, niters), simplify = FALSE),
+    season_total = matrix(0, n + 1, niters)
+  )
   chain_var_theta <- matrix(0, niters + 1)
   chain_lower <- matrix(0, niters + 1, k)
   chain_lower[1, ] <- w
@@ -404,7 +409,15 @@ kalfil_iter <- function(
     )
     chain_var_theta[iter + 1] <- result$vartheta
     chain_lower[iter + 1, ] <- result$w
-    chain_alpha[,, iter] <- result$alpha
+    # chain_alpha[,, iter] <- result$alpha
+    chain_alpha$trend[, iter] <- result$alpha[1, ]
+    total <- numeric(n + 1)
+    for (j in seq_len(k)) {
+      s <- result$alpha[2 * j + 1, ]
+      chain_alpha$seasons[[j]][, iter] <- s
+      total <- total + s
+    }
+    chain_alpha$season_total[, iter] <- total
     chain_amp[iter + 1, ] <- result$amp
     chain_phase[iter + 1, ] <- result$phase
     chain_mean <- result$cmean
@@ -421,20 +434,6 @@ kalfil_iter <- function(
     chain_phase = chain_phase,
     chain_mean = chain_mean
   )
-}
-
-
-update_trend <- function(i, chain_alpha, burnin, niters, num_lower, num_upper) {
-  trend$mean[i] <- mean(chain_alpha[1, i, burnin:niters])
-  trend$lower[i] <- sum(
-    as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_lower) *
-      chain_alpha[1, i, burnin:niters]
-  )
-  trend$upper[i] <- sum(
-    as.numeric(rank(chain_alpha[1, i, burnin:niters]) == num_upper) *
-      chain_alpha[1, i, burnin:niters]
-  )
-  trend
 }
 
 draws_trend <- function(

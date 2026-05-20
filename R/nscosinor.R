@@ -150,39 +150,25 @@ nscosinor <- function(
   chain_phase <- kalfil_results$chain_phase
   chain_mean <- kalfil_results$chain_mean
 
-  ## Get mean & percentiles of alpha (trend & season), & overall fitted values
-  season_slots <- 2 * seq_len(k) + 1
   iters <- (burnin + 1):niters
-  all_seasons <- colSums(chain_alpha[
-    season_slots,
-    seq_len(n),
-    iters,
-    drop = FALSE
-  ])
+  ## Get mean & percentiles of alpha (trend & season), & overall fitted values
+  all_seasons <- chain_alpha$season_total[seq_len(n), iters]
 
   prob_lower <- alpha / 2
   prob_upper <- 1 - (alpha / 2)
   num_lower <- round((niters - burnin) * prob_lower)
   num_upper <- round((niters - burnin) * prob_upper)
-  for_fitted <- all_seasons + chain_alpha[1, seq_len(n), (burnin + 1):niters]
+  for_fitted <- all_seasons + chain_alpha$trend[seq_len(n), iters]
 
-  alpha_draws <- chain_alpha[1, seq_len(n), burnin:niters]
+  alpha_draws <- chain_alpha$trend[seq_len(n), burnin:niters]
   trend <- draws_trend(alpha_draws, num_lower, num_upper)
   oseason <- draws_trend(all_seasons, num_lower, num_upper)
   new_fitted <- draws_trend(for_fitted, num_lower, num_upper)
 
   # get the right index out for the season, e.g., cycle = c(6, 12)
-  snum <- (((2:(k + 1)) - 1) * 2) + 1
-  season_nd <- lapply(
-    snum,
-    \(x) {
-      draws_trend(
-        chain_alpha[x, seq_len(n), burnin:niters],
-        num_lower,
-        num_upper
-      )
-    }
-  )
+  season_nd <- lapply(chain_alpha$seasons, \(s) {
+    draws_trend(s[seq_len(n), burnin:niters], num_lower, num_upper)
+  })
 
   season <- do.call(cbind, season_nd)
 
@@ -213,25 +199,19 @@ nscosinor <- function(
     n = n,
     chains = list(
       std.error = chain_var_theta,
-      std.season = matrix(data = NA, nrow = niters + 1, ncol = k),
-      phase = matrix(data = NA, nrow = niters + 1, ncol = k),
-      amplitude = matrix(data = NA, nrow = niters + 1, ncol = k)
+      std.season = chain_lower,
+      phase = chain_phase,
+      amplitude = chain_amp
     )
   )
 
-  for (i in seq_len(k)) {
-    # for multiple cycles
-    result$chains$std.season[, i] <- chain_lower[, i]
-    result$chains$phase[, i] <- chain_phase[, i]
-    result$chains$amplitude[, i] <- chain_amp[, i]
-  }
-
+  chain_iters <- (burnin + 2):(niters + 1)
   result$chains <- coda::mcmc(
     cbind(
-      result$chains$std.error[(burnin + 2):(niters + 1)],
-      result$chains$std.season[(burnin + 2):(niters + 1), ],
-      result$chains$phase[(burnin + 2):(niters + 1), ],
-      result$chains$amplitude[(burnin + 2):(niters + 1), ]
+      result$chains$std.error[chain_iters],
+      result$chains$std.season[chain_iters, ],
+      result$chains$phase[chain_iters, ],
+      result$chains$amplitude[chain_iters, ]
     ),
     start = burnin + 1
   )
