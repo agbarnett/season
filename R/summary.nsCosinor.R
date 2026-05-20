@@ -1,6 +1,3 @@
-## summary.nsCosinor.R
-## Summarise results from nsCosinor
-
 #' Summary for a Non-stationary Cosinor
 #'
 #' The default summary method for a `nsCosinor` object produced by
@@ -67,6 +64,7 @@ summary.nsCosinor <- function(object, ...) {
   u <- as.numeric(s.std.error$quantiles[5])
   m <- as.numeric(s.std.error$statistics[1])
   errorstats <- c(m, l, u)
+  ## TODO potential refactor into  summary function
   if (k == 1) {
     s.std.season <- summary(new$chains$std.season)
     wstats <- matrix(ncol = 1, nrow = k)
@@ -86,6 +84,7 @@ summary.nsCosinor <- function(object, ...) {
     pstat <- ciPhase(as.vector(new$chains$phase))
     phasestats <- c(pstat$mean, pstat$lower, pstat$upper)
   } # end of k=1
+  ## TODO potential refactor
   if (k >= 2) {
     wstats <- matrix(ncol = 3, nrow = k)
     for (index in 1:k) {
@@ -110,15 +109,20 @@ summary.nsCosinor <- function(object, ...) {
   } # end of k>=2
 
   ## store the statistics
-  ret <- list()
-  ret$cycles <- cycles
-  ret$niters <- object$call$niters
-  ret$burnin <- object$call$burnin
-  ret$tau <- object$call$tau
-  ret$stats$errorstats <- errorstats
-  ret$stats$wstats <- wstats
-  ret$stats$ampstats <- ampstats
-  ret$stats$phasestats <- phasestats
-  class(ret) <- c("summary.nsCosinor", class(object))
-  ret # uses print.summary.nsCosinor
+  result <- list(
+    cycles = cycles,
+    niters = object$call$niters,
+    burnin = object$call$burnin,
+    tau = object$call$tau,
+    stats = list(
+      errorstats = errorstats,
+      wstats = wstats,
+      ampstats = ampstats,
+      phasestats = phasestats
+    )
+  )
+
+  class(result) <- c("summary.nsCosinor", class(result))
+  # uses print.summary.nsCosinor
+  result
 }
