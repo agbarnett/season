@@ -23,7 +23,7 @@
 #' }
 #' }
 print.summary.nsCosinor <- function(x, ...) {
-  check_if_nscosinor(x)
+  check_if_class(x, "summary.nsCosinor")
   k <- length(x$cycles)
   cat("Statistics for non-stationary cosinor based on MCMC chains\n")
   cat("Number of MCMC samples = ", x$niters - x$burnin + 1, "\n", sep = "", ...)
