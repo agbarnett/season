@@ -34,9 +34,7 @@ yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
 }
 
 yrfrac_daily <- function(date) {
-  if (!inherits(date, "Date")) {
-    stop("Date variable for annual data must be in date format, see ?Dates")
-  }
+  check_if_date(date)
   year <- as.numeric(format(date, '%Y'))
   # last day in December
   lastday <- ISOdate(year, 12, 31)
