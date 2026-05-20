@@ -68,9 +68,17 @@ summary.Cosinor <- function(object, digits = 2, ...) {
   intercept_terms <- subset(summary_df, subset = terms == "(Intercept)")
   # amplitude and phase
   amp <- sqrt(cosw_terms$Estimate^2 + sinw_terms$Estimate^2)
-  addition <- ''
   link <- s$family$link %||% " "
   intercept_est <- intercept_terms$Estimate
+  addition <- switch(
+    link,
+    logit = "(probability scale)",
+    cloglog = "(probability scale)",
+    log = "(absolute scale)",
+    # otherwise, just blank
+    ""
+  )
+  ## TODO refactor into switch with functions
   if (link == 'logit') {
     # back-transform amp
     p1 <- exp(intercept_est) / (1 + exp(intercept_est))
@@ -78,17 +86,14 @@ summary.Cosinor <- function(object, digits = 2, ...) {
     p2 <- exp(intercept_est + amp) /
       (1 + exp(intercept_est + amp))
     amp <- p2 - p1
-    addition <- "(probability scale)"
   }
   if (link == 'cloglog') {
     p1 <- 1 - exp(-exp(intercept_est))
     p2 <- 1 - exp(-exp(intercept_est + amp))
     amp <- p2 - p1
-    addition <- "(probability scale)"
   }
   if (link == 'log') {
     amp <- exp(intercept_est + amp) - exp(intercept_est)
-    addition <- "(absolute scale)"
   }
   phaser <- phasecalc(
     cosine = cosw_terms$Estimate,
