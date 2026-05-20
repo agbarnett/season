@@ -263,7 +263,7 @@
       print.summary.nsCosinor(list(a = 1))
     Condition
       Error:
-      ! x must be of class: nsCosinor
+      ! x must be of class: summary.nsCosinor
       We see class: list
 
 # print.summary.nsCosinor handles multiple seasonal cycles
