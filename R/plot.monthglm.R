@@ -64,11 +64,8 @@ plot.monthglm <- function(
   toplot <- out[index, ] # Select months
 
   ## Get month names
-  compress <- gsub('months', '', row.names(toplot), fixed = TRUE)
-  order <- vector(length = nrow(toplot), mode = 'numeric')
-  for (i in seq_len(nrow(toplot))) {
-    order[i] <- sum(as.numeric(month.abb == compress[i]) * (1:12))
-  }
+  compress <- gsub("months", "", row.names(toplot), fixed = TRUE)
+  order <- match(compress, month.abb)
 
   ## plot
   ymin <- min(c(toplot$lower, refer), na.rm = TRUE) # include reference
