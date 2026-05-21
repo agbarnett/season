@@ -248,14 +248,14 @@
       Number of MCMC samples = 31
       
       Standard deviations
-      Residual, mean=122.9904, 95% CI [106.5995, 143.7953]
+      Residual, mean=122.99, 95% CI [106.599, 143.795]
       Cycle=12
-      Season, mean=0.2085109, 95% CI [0.1733934, 0.2707067]
+      Season, mean=0.208511, 95% CI [0.173393, 0.270707]
       
       Phase and amplitude
       Cycle=12
-      Amplitude, mean=209.322, 95% CI [169.9456, 242.3682]
-      Phase (radians), mean=0.7311538, 95% CI [0.5130923, 0.9835682]
+      Amplitude, mean=209.322, 95% CI [169.946, 242.368]
+      Phase (radians), mean=0.731154, 95% CI [0.513092, 0.983568]
 
 # print.summary.nsCosinor errors on non-summary.nsCosinor input
 
@@ -275,17 +275,17 @@
       Number of MCMC samples = 31
       
       Standard deviations
-      Residual, mean=102.8497, 95% CI [81.49613, 122.9949]
+      Residual, mean=102.85, 95% CI [81.4961, 122.995]
       Cycle=6
-      Season, mean=0.1359504, 95% CI [0.08590661, 0.2021593]
+      Season, mean=0.13595, 95% CI [0.0859066, 0.202159]
       Cycle=12
-      Season, mean=0.1859972, 95% CI [0.1413316, 0.262306]
+      Season, mean=0.185997, 95% CI [0.141332, 0.262306]
       
       Phase and amplitude
       Cycle=6
-      Amplitude, mean=96.1238, 95% CI [68.79918, 136.6394]
-      Phase (radians), mean=1.190498, 95% CI [0.7148488, 1.628128]
+      Amplitude, mean=96.1238, 95% CI [68.7992, 136.639]
+      Phase (radians), mean=1.1905, 95% CI [0.714849, 1.62813]
       Cycle=12
-      Amplitude, mean=215.3999, 95% CI [169.8538, 245.6512]
-      Phase (radians), mean=0.7427375, 95% CI [0.5959092, 0.9045558]
+      Amplitude, mean=215.4, 95% CI [169.854, 245.651]
+      Phase (radians), mean=0.742737, 95% CI [0.595909, 0.904556]
 
