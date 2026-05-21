@@ -105,14 +105,7 @@ summary.Cosinor <- function(object, digits = 2, ...) {
     type = type,
     text = object$call$text
   )
-  # reverse phase (low)
-  lphaser <- phaser + pi
-  if (lphaser < 0) {
-    lphaser <- lphaser + (2 * pi)
-  } # first put in 0 to 2pi range
-  if (lphaser > (2 * pi)) {
-    lphaser <- lphaser - (2 * pi)
-  }
+  lphaser <- (phaser + pi) %% (2 * pi)
   lphase <- invyrfraction(
     frac = lphaser / (2 * pi),
     type = type,
