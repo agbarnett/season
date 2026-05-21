@@ -107,14 +107,7 @@ monthglm <- function(
   ## A bit of a workaround update.formula(), since this doesn't really
   ## work how we expect, see
   ## stackoverflow.com/questions/40308944/removing-offset-terms-from-a-formula
-
-  parts <- paste(formula)
-  form <- stats::as.formula(paste(
-    parts[2],
-    parts[1],
-    parts[3:length(formula)],
-    '+months'
-  ))
+  form <- append_terms_to_formula(formula, "months")
 
   fit <- stats::glm(
     formula = form,

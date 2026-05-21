@@ -115,13 +115,7 @@ cosinor <- function(
 
   offset <- create_offset(data, offsetpop, offsetmonth)
 
-  parts <- paste(formula)
-  form <- stats::as.formula(paste(
-    parts[2],
-    parts[1],
-    parts[3:length(formula)],
-    '+cosw+sinw'
-  ))
+  form <- append_terms_to_formula(formula, "cosw + sinw")
 
   model <- stats::glm(form, data = data, family = family, offset = offset)
 

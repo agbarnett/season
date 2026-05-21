@@ -463,3 +463,16 @@ match_call_with_defaults <- function(call, fn) {
   add <- which(!(names(frmls) %in% names(ans)))
   as.call(c(ans, frmls[add]))
 }
+
+
+# Build `lhs ~ rhs + extras`. This formula must carry input function's env
+# (cosinor / monthglm / casecross), and not the user's formula env.
+# glm() resolves its `offset = offset` argument via the formula's env, and
+# only the inp;ut function's frame holds the local numeric offset.
+append_terms_to_formula <- function(formula, extras, env = parent.frame()) {
+  parts <- paste(formula)
+  stats::as.formula(
+    paste(parts[2], parts[1], parts[3:length(formula)], "+", extras),
+    env = env
+  )
+}

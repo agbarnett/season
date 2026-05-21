@@ -132,13 +132,7 @@ casecross <- function(
   ## original call with defaults (see amer package)
   call <- match_call_with_defaults(match.call(), sys.function())
 
-  parts <- paste(formula)
-  form <- stats::as.formula(paste(
-    parts[2],
-    parts[1],
-    parts[3:length(formula)],
-    "+date+dow"
-  ))
+  form <- append_terms_to_formula(formula, "date + dow")
 
   if (!is.null(matchconf)) {
     parts <- paste(formula)
