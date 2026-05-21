@@ -119,4 +119,5 @@ print.summary.nsCosinor <- function(x, ...) {
       )
     }
   } # end of k>=2
+  invisible(x)
 }

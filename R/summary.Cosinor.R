@@ -160,6 +160,7 @@ print.Cosinor <- function(x, ...) {
   check_if_cosinor(x)
   ## Use GLM function ###
   print(x$glm, ...)
+  invisible(x)
 }
 
 # October 2011
@@ -215,4 +216,5 @@ print.summary.Cosinor <- function(x, ...) {
   # Added March 2020
   cat('\nRegression coefficients:\n')
   print(data.frame(x$ctable))
+  invisible(x)
 }

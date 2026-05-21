@@ -31,4 +31,5 @@ print.casecross <- function(x, ...) {
   check_if_casecross(x)
   check_if_class(x$cox_model, "coxph")
   print(x$cox_model, ...)
+  invisible(x)
 }

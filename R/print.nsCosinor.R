@@ -49,4 +49,5 @@ print.nsCosinor <- function(x, ...) {
   cat("Length of time series = ", x$n, "\n", sep = "")
   cat("\nResidual statistics\n", sep = "")
   print(summary(x$residuals), ...)
+  invisible(x)
 }

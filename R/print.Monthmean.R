@@ -28,4 +28,5 @@ print.Monthmean <- function(x, digits = 1, ...) {
     Mean = round(x$mean, digits)
   )
   print(toprint, row.names = FALSE, ...)
+  invisible(x)
 }
