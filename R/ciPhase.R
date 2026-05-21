@@ -43,10 +43,7 @@ ciPhase <- function(theta, alpha = 0.05) {
     # Fisher page 36
     d_theta[i] <- pi - mean(abs(pi - abs(theta - theta_c[i])))
   }
-  centre <- theta_c[d_theta == min(d_theta)]
-  if (length(centre) > 1) {
-    centre <- centre[1]
-  }
+  centre <- theta_c[which.min(d_theta)]
   # rotate data to be centred on pi
   # only rotate if centre is in top-half of the circle
   ideal <- theta
