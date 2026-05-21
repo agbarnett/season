@@ -476,3 +476,14 @@ append_terms_to_formula <- function(formula, extras, env = parent.frame()) {
     env = env
   )
 }
+
+# Extract mean & symmetric quantile-based confidence bounds from an MCMC chain.
+# Returns numeric(3) = c(mean, lower, upper).
+mcmc_summary_stats <- function(chain) {
+  s <- summary(chain)
+  c(
+    mean = as.numeric(s$statistics[1]),
+    lower = as.numeric(s$quantiles[1]),
+    upper = as.numeric(s$quantiles[5])
+  )
+}
