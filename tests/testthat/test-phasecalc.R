@@ -15,25 +15,30 @@ test_that("phasecalc returns 0 when the peak is at the start of the cycle", {
   # cos has coefficient 1, sin has coefficient 0 -> the model is just
   # cos(omega t) which peaks at t = 0 -> phase = 0.
   expect_identical(phasecalc(cosine = 1, sine = 0), 0)
+  expect_snapshot(phasecalc(cosine = 1, sine = 0))
 })
 
 test_that("phasecalc returns pi/2 when the peak is a quarter cycle in", {
   # cos has coefficient 0, sin has coefficient 1 -> the model is sin(omega t),
   # which equals cos(omega t − pi/2) -> phase = pi/2.
   expect_equal(phasecalc(cosine = 0, sine = 1), pi / 2, tolerance = 1e-6)
+  expect_snapshot(phasecalc(cosine = 0, sine = 1))
 })
 
 test_that("phasecalc returns pi when the peak is half a cycle in", {
   # cos has coefficient -1, sin has coefficient 0 -> -cos(omega t) =
   # cos(omega t − pi) -> phase = pi.
   expect_identical(phasecalc(cosine = -1, sine = 0), pi)
+  expect_snapshot(phasecalc(cosine = -1, sine = 0))
 })
 
 test_that("phasecalc returns 3pi/2 when the peak is three-quarters in", {
   # cos has coefficient 0, sin has coefficient -1 -> -sin(omega t) =
   # cos(omega t − 3pi/2) -> phase = 3pi/2.
   expect_equal(phasecalc(cosine = 0, sine = -1), 3 * pi / 2, tolerance = 1e-6)
+  expect_snapshot(phasecalc(cosine = 0, sine = -1))
 })
+
 
 # range invariant ----------------------------------------------------
 
@@ -45,7 +50,7 @@ test_that("phasecalc always returns a value in [0, 2pi)", {
     cos_seq = cos(cs),
     sin_seq = sin(cs),
     phase = purrr::map2_dbl(cos_seq, sin_seq, \(x, y) phasecalc(x, y)),
-    within_2pi = purrr::map_lgl(phase, \(p) p >= 0 && p < 2 * p + 1e-9)
+    within_2pi = purrr::map_lgl(phase, \(p) p >= 0 && p < 2 * pi + 1e-9)
   )
 
   expect_all_true(dat_phase$within_2pi)
@@ -80,4 +85,53 @@ test_that("phasecalc handles cosine = 0 without dividing by zero", {
   # must remain very close to the mathematically correct pi/2 or 3pi/2.
   expect_equal(phasecalc(0, 1), pi / 2, tolerance = 1e-6)
   expect_equal(phasecalc(0, -1), 3 * pi / 2, tolerance = 1e-6)
+})
+
+test_that("phasecalc returns 0 for the (0, 0) degenerate case", {
+  # Both coefficients are zero — there is no sinusoid to phase. The
+  # implementation falls through to atan(0) = 0; pinning the answer
+  # here so any rewrite of the function preserves it.
+  expect_identical(phasecalc(0, 0), 0)
+})
+
+# non-cardinal quadrants ---------------------------------------------
+# The cardinal tests above (1,0), (0,1), (-1,0), (0,-1) each leave one
+# coefficient at zero — so they don't exercise the quadrant decision.
+# These four tests put the point in the middle of each quadrant where
+# both signs matter.
+
+test_that("phasecalc returns pi/4 in quadrant I (both coefficients positive)", {
+  expect_equal(phasecalc(cosine = 1, sine = 1), pi / 4, tolerance = 1e-8)
+})
+
+test_that("phasecalc returns 3pi/4 in quadrant II (cos < 0, sin > 0)", {
+  expect_equal(phasecalc(cosine = -1, sine = 1), 3 * pi / 4, tolerance = 1e-8)
+})
+
+test_that("phasecalc returns 5pi/4 in quadrant III (both coefficients negative)", {
+  # The current branch is `atan(div) - pi` and then `+ 2*pi` for the
+  # negative result. The rewrite (atan2 + modulo) should land in the
+  # same place.
+  expect_equal(phasecalc(cosine = -1, sine = -1), 5 * pi / 4, tolerance = 1e-8)
+})
+
+test_that("phasecalc returns 7pi/4 in quadrant IV (cos > 0, sin < 0)", {
+  # atan2(-1, 1) returns -pi/4; %% (2*pi) shifts it to 7*pi/4. This
+  # is the case the current code handles with `if (phaser < 0)`.
+  expect_equal(phasecalc(cosine = 1, sine = -1), 7 * pi / 4, tolerance = 1e-8)
+})
+
+# wrap-around boundary -----------------------------------------------
+
+test_that("phasecalc returns a value just below 2pi (not 0) for a tiny clockwise angle", {
+  # A point a hair below the positive x-axis is mathematically at
+  # an angle of (2*pi - eps), not at 0. atan2 returns -eps; the
+  # `%% (2*pi)` step is what shifts it up. Without that step, the
+  # rewrite would silently snap to ~0 here.
+  eps <- 1e-3
+  expect_equal(
+    phasecalc(cosine = cos(-eps), sine = sin(-eps)),
+    2 * pi - eps,
+    tolerance = 1e-6
+  )
 })
