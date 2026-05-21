@@ -108,11 +108,8 @@ cosinor <- function(
   }
 
   ## original call with defaults (see amer package)
-  link <- family$link
-  ans <- as.list(match.call())
-  frmls <- formals(deparse(ans[[1]]))
-  add <- which(!(names(frmls) %in% names(ans)))
-  call <- as.call(c(ans, frmls[add], link = link))
+  call <- match_call_with_defaults(match.call(), sys.function())
+  call$link <- family$link
 
   data <- add_cosw_sinw(data, date, type, cycles)
 

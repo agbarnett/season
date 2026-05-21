@@ -452,3 +452,14 @@ draws_trend <- function(
   )
   mean_upper_lower
 }
+
+
+# Reconstruct user's call to calling function, filling arguments left at their
+# default. `call` and `fn` must be supplied by the
+# caller because match.call() / sys.function() are frame-sensitive.
+match_call_with_defaults <- function(call, fn) {
+  ans <- as.list(call)
+  frmls <- formals(fn)
+  add <- which(!(names(frmls) %in% names(ans)))
+  as.call(c(ans, frmls[add]))
+}

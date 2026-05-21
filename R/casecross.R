@@ -123,17 +123,14 @@ casecross <- function(
   outcome <- dow <- case <- timex <- dow.x <- dow.y <- match_day.x <- NULL
   match_day.y <- window_num.x <- window_num.y <- NULL
   this_data <- data
+  this_data$dow <- as.numeric(format(this_data$date, '%w'))
 
   check_if_date(this_data$date)
   check_if_exclusion_lt_0(exclusion)
   check_formula_has_iv(formula)
 
   ## original call with defaults (see amer package)
-  ans <- as.list(match.call())
-  frmls <- formals(deparse(ans[[1]]))
-  add <- which(!(names(frmls) %in% names(ans)))
-  call <- as.call(c(ans, frmls[add]))
-  this_data$dow <- as.numeric(format(this_data$date, '%w'))
+  call <- match_call_with_defaults(match.call(), sys.function())
 
   parts <- paste(formula)
   form <- stats::as.formula(paste(

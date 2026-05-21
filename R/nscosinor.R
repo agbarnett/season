@@ -183,10 +183,7 @@ nscosinor <- function(
   fitted <- trend$mean + oseason$mean
   res <- resp - fitted # calculate the residuals
   ## original call with defaults (see amer package)
-  ans <- as.list(match.call())
-  frmls <- formals(deparse(ans[[1]]))
-  add <- which(!(names(frmls) %in% names(ans)))
-  call <- as.call(c(ans, frmls[add]))
+  call <- match_call_with_defaults(match.call(), sys.function())
 
   result <- list(
     call = call,

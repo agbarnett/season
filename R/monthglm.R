@@ -68,10 +68,8 @@ monthglm <- function(
   check_if_logical(offsetmonth)
 
   ## original call with defaults (see amer package)
-  ans <- as.list(match.call())
-  frmls <- formals(deparse(ans[[1]]))
-  add <- which(!(names(frmls) %in% names(ans)))
-  call <- as.call(c(ans, frmls[add]))
+  call <- match_call_with_defaults(match.call(), sys.function())
+
   monthvar <- data[[monthvar]]
   ## If month is a character, create the numbers
   if (inherits(monthvar, "character")) {
