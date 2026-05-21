@@ -131,8 +131,8 @@ get_fitted_sinusoid <- function(model, newdata) {
   ## create predicted data (intercept + sinusoid)
   s <- summary(model)
   c_names <- row.names(s$coefficients)
-  c_index <- sum(as.numeric(c_names == 'cosw') * (seq_along(c_names)))
-  s_index <- sum(as.numeric(c_names == 'sinw') * (seq_along(c_names)))
+  c_index <- match("cosw", c_names)
+  s_index <- match("sinw", c_names)
   pred <- s$coefficients[1, 1] +
     (s$coefficients[c_index, 1] * newdata$cosw) +
     (s$coefficients[s_index, 1] * newdata$sinw)

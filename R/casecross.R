@@ -199,9 +199,7 @@ casecross <- function(
     )
   }
   if (!is.null(matchconf)) {
-    also <- sum(
-      as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
-    )
+    also <- match(matchconf, names(cases))
     cases_to_merge <- subset(
       cases,
       select = c(match_day, time, outcome, window_num, dow, also)
@@ -266,9 +264,8 @@ casecross <- function(
         -find_2
       )
     )
-    find_c <- sum(
-      as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
-    )
+    find_c <- match(matchconf, names(cases))
+
     final_cases <- subset(
       cases,
       select = c(-dow, -match_day, -window_num, -find_c)
