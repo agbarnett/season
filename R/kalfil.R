@@ -125,9 +125,7 @@ kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
   for (index in 1:k) {
     s <- alpha_j[(2 * index) + 1, 1:n]
     peri <- peri(s, plot = FALSE)
-    loc <- sum(
-      as.numeric(rank(abs(peri$c - f[index])) == 1) * (seq_along(peri$c))
-    ) # Get closest frequency
+    loc <- which.min(abs(peri$c - f[index]))
     amp[index] <- peri$amp[loc]
     phase[index] <- peri$phase[loc]
   }
