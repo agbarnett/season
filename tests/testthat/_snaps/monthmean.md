@@ -37,8 +37,8 @@
 
     Code
       monthmean(data = CVD)
-    Output
-      Total number of days =  5114 
+    Message
+      Total number of days: 5114
     Condition
       Error in `monthmean()`:
       ! argument "resp" is missing, with no default
@@ -64,8 +64,9 @@
     Code
       monthmean(data = data.frame(month = 1:12, x = 1:12, year = rep(1999, 12)),
       resp = "x")
+    Message
+      Total number of days: 365
     Output
-      Total number of days =  365 
            Month Mean
          January    1
         February    2
