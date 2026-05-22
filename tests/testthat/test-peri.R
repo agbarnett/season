@@ -112,6 +112,7 @@ test_that("peri accepts odd-length input", {
   # adding it so a future rewrite can't silently break the odd path.
   set.seed(2026 - 04 - 30)
   x <- stats::rnorm(63)
-  expect_no_error(out <- peri(x, plot = FALSE))
+  expect_no_error(peri(x, plot = FALSE))
+  out <- peri(x, plot = FALSE)
   expect_length(out$peri, floor(length(x) / 2) + 1)
 })
