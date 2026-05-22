@@ -203,7 +203,9 @@ kalfil_update_params <- function(alpha_j, fwd, setup) {
   # propagate into the next iteration's prior and drift the MCMC chain.
   kk <- setup$kk
   cmean <- numeric(kk)
-  for (j in seq_len(kk)) cmean[j] <- mean(C_j[j, j, ])
+  for (j in seq_len(kk)) {
+    cmean[j] <- mean(C_j[j, j, ])
+  }
 
   list(vartheta = vartheta, w = w, amp = amp, phase = phase, cmean = cmean)
 }
