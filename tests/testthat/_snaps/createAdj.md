@@ -93,24 +93,24 @@
     Code
       createAdj(matrix = as.data.frame(V))
     Condition
-      Error:
-      ! Input must be a matrix
-      We see class: data.frame
+      Error in `createAdj()`:
+      ! `matrix` must be a <matrix>.
+      i We see class <data.frame>.
 
 ---
 
     Code
       createAdj(matrix = rbind(V, c(rep(0, 5))))
     Condition
-      Error:
-      ! Matrix must be square
-      We see dim: 6x5
+      Error in `createAdj()`:
+      ! `matrix` must be a square matrix.
+      i We see dimensions 6 x 5.
 
 ---
 
     Code
       createAdj(matrix = V)
     Condition
-      Error:
-      ! Matrix must be symmetric
+      Error in `createAdj()`:
+      ! `matrix` must be a symmetric matrix.
 

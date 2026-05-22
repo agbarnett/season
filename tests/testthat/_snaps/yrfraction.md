@@ -3,8 +3,9 @@
     Code
       yrfraction("2020-01-01", type = "daily")
     Condition
-      Error:
-      ! date variable must be in date format, see ?Dates
+      Error in `yrfrac_daily()`:
+      ! `date` must be in <Date> format.
+      i See `?Dates()`.
 
 # yrfraction(type='weekly') refuses values outside 1:53
 
