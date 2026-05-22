@@ -31,8 +31,13 @@ invyrfraction <- function(
   type <- rlang::arg_match(type)
 
   n <- length(frac)
-  if (sum(frac < 0) + sum(frac > 1) > 0) {
-    stop('Fraction must be between 0 and 1')
+  if (any(frac < 0 | frac > 1)) {
+    cli::cli_abort(
+      c(
+        "{.arg frac} must be between {.val 0} and {.val 1}.",
+        "i" = "We see a range of {.val {min(frac)}} to {.val {max(frac)}}."
+      )
+    )
   }
 
   daym <- switch(

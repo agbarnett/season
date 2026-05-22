@@ -104,7 +104,9 @@ cosinor <- function(
   check_if_daily_date(type, data[[date]])
   check_if_btn_0_1(alpha)
   if (type == 'hourly' && offsetmonth) {
-    stop("do not use monthly offset for hourly data")
+    cli::cli_abort(
+      "Cannot use {.arg offsetmonth = TRUE} with {.code type = \"hourly\"}."
+    )
   }
 
   ## original call with defaults (see amer package)

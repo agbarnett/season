@@ -30,8 +30,8 @@
     Code
       monthmean(data = NULL, resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 
@@ -48,16 +48,16 @@
     Code
       monthmean(data = data.frame(month = 1:12, x = 1:12), resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 
     Code
       monthmean(data = data.frame(year = rep(2000, 12), x = 1:12), resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'month'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `month`.
 
 # monthmean works
 

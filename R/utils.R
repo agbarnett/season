@@ -70,13 +70,15 @@ quantile_dbl <- function(x, probs) as.numeric(stats::quantile(x, probs = probs))
 
 
 inform_irregularly_spaced <- function(x) {
-  ## Check for irregularly spaced data
   if (any(diff(x) > 1)) {
-    cat('Note, irregularly spaced data...\n')
-    cat('...check your data for missing days\n')
+    cli::cli_inform(
+      c(
+        "Note: irregularly spaced data.",
+        "i" = "Check your data for missing days."
+      )
+    )
   }
 }
-
 
 window_num_stratamonth <- function(date) {
   year <- as.numeric(format(date, '%Y'))
@@ -217,33 +219,6 @@ relevel_months_by_ref_name <- function(monthvar, refmonth) {
   # set reference month
   months <- stats::relevel(months_u, ref = month.abb[refmonth])
   months
-}
-
-check_var_in_data <- function(data, var) {
-  var_in_data <- var %in% names(data)
-
-  if (!var_in_data) {
-    stop(
-      "Data must contain a variable called '",
-      var,
-      "'\n",
-      call. = FALSE
-    )
-  }
-}
-
-check_year_valid <- function(data) {
-  check_var_in_data(data, "year")
-
-  year_valid <- all(nchar(data[["year"]]) == 4)
-
-  if (!year_valid) {
-    stop(
-      "The 'year' variable must have 4 digits\n",
-      "See: `table(nchar(data[['year']]))`",
-      call. = FALSE
-    )
-  }
 }
 
 day_weights <- function(data, adjmonth) {

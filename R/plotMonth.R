@@ -27,8 +27,10 @@ plotMonth <- function(data, resp, panels = 12, ...) {
   # Setting some variables to NULL first (for R CMD check)
   year <- yaxis <- Month <- NULL
 
-  if (panels != 1 && panels != 12) {
-    stop("panels must be 1 or 12")
+  if (!panels %in% c(1, 12)) {
+    cli::cli_abort(
+      "{.arg panels} must be {.val 1} or {.val 12}, not {.val {panels}}."
+    )
   }
   data$yaxis <- subset(data, select = resp)[, 1]
 

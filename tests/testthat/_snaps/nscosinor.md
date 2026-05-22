@@ -4,8 +4,8 @@
       nscosinor(data = data.frame(adj = 1:24), response = "adj", cycles = 12, tau = c(
         10, 50))
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `nscosinor()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 

@@ -307,3 +307,35 @@ check_burnin_iters <- function(
     )
   }
 }
+
+
+check_var_in_data <- function(
+  data,
+  var,
+  arg = rlang::caller_arg(data),
+  call = rlang::caller_env()
+) {
+  if (!var %in% names(data)) {
+    cli::cli_abort(
+      "{.arg {arg}} must contain a variable called {.var {var}}.",
+      call = call
+    )
+  }
+}
+check_year_valid <- function(
+  data,
+  arg = rlang::caller_arg(data),
+  call = rlang::caller_env()
+) {
+  check_var_in_data(data, "year", arg = arg, call = call)
+
+  if (!all(nchar(data[["year"]]) == 4)) {
+    cli::cli_abort(
+      c(
+        "The {.var year} variable in {.arg {arg}} must have 4 digits.",
+        "i" = "See {.code table(nchar(data[['year']]))}."
+      ),
+      call = call
+    )
+  }
+}

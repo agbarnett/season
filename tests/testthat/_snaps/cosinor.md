@@ -110,5 +110,5 @@
       offsetmonth = TRUE)
     Condition
       Error in `cosinor()`:
-      ! do not use monthly offset for hourly data
+      ! Cannot use `offsetmonth = TRUE` with `type = "hourly"`.
 
