@@ -151,7 +151,7 @@ test_that("nscosinor handles two seasonal cycles", {
   # `season` columns repeat (mean, lower, upper) per cycle, so every
   # 3rd column starting at 1/2/3 is a mean/lower/upper. Flatten and
   # check all means are bracketed by their CI in one expectation.
-  means  <- unlist(season[, seq(1, ncol(season), by = 3)])
+  means <- unlist(season[, seq(1, ncol(season), by = 3)])
   lowers <- unlist(season[, seq(2, ncol(season), by = 3)])
   uppers <- unlist(season[, seq(3, ncol(season), by = 3)])
   expect_all_true(means >= lowers & means <= uppers)
