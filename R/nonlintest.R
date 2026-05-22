@@ -45,7 +45,7 @@
 #' @examples
 #' \donttest{
 #' \dontrun{
-#' test.res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+#' test_res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
 #' }
 #' }
 #'
@@ -67,82 +67,55 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
 
   # Get n.boot*3 surrogates using the AAFT method
   # First n.boot for initial limits 2nd & 3rd n.boot for bootstrap limits
-  aaft_sers <- aaft(x_diff, nsur = n.boot * 3)
-
   # Run each series through the third order moment;
-  aaft_third <- vapply(
-    X = seq_len(n.boot * 3),
-    FUN = function(x) {
-      third(
-        aaft_sers[, x],
-        n.lag,
-        centre = FALSE,
-        outmax = FALSE,
-        plot = FALSE
-      )$third[reglags, reglags]
-    },
-    FUN.VALUE = array(0, dim = c(n.lag + 1, n.lag + 1))
+  aaft_third <- aaft_third(
+    x_diff = x_diff,
+    n.boot = n.boot,
+    n.lag = n.lag,
+    reglags = reglags
   )
 
-  aaft_third[1, 1, ] <- 0 # Remove skewness;
+  # Get (1-alpha)th centile at each coordinate, then difference from the series;
+  centile_1 <- aaft_centile(
+    lower = alpha / 2,
+    upper = 1 - (alpha / 2),
+    n.lag = n.lag,
+    aaft_third = aaft_third,
+    third_idx = 1:n.boot
+  )
 
-  # Get (1-alpha)th centile at each coordinate and difference from the series;
-  centile_lower <- alpha / 2
-  centile_upper <- 1 - (alpha / 2)
-  centile_l1 <- matrix(0, n.lag + 1, n.lag + 1)
-  centile_u1 <- matrix(0, n.lag + 1, n.lag + 1)
-  centile_l2 <- matrix(0, n.lag + 1, n.lag + 1)
-  centile_u2 <- matrix(0, n.lag + 1, n.lag + 1)
-  for (r in 0:n.lag) {
-    for (s in r:n.lag) {
-      if ((r + s) > 0) {
-        # First limits
-        pts1 <- aaft_third[r + 1, s + 1, 1:n.boot]
-        centile_l1[r + 1, s + 1] <- quantile_dbl(pts1, probs = centile_lower)
-        centile_u1[r + 1, s + 1] <- quantile_dbl(pts1, probs = centile_upper)
+  centile_2 <- aaft_centile(
+    lower = alpha / 2,
+    upper = 1 - (alpha / 2),
+    n.lag = n.lag,
+    aaft_third = aaft_third,
+    third_idx = (n.boot + 1):(2 * n.boot)
+  )
 
-        # Second limits
-        pts2 <- aaft_third[r + 1, s + 1, (n.boot + 1):(2 * n.boot)]
-        centile_l2[r + 1, s + 1] <- quantile_dbl(pts2, probs = centile_lower)
-        centile_u2[r + 1, s + 1] <- quantile_dbl(pts2, probs = centile_upper)
-      }
-    }
-  }
   upper_tri <- upper.tri(matrix(0, n.lag + 1, n.lag + 1), diag = TRUE)
-  # Just get for s<r;
-  diff_lower <- (x_third - centile_l1) * upper_tri
-  # Just get for s<r;
-  diff_upper <- (x_third - centile_u1) * upper_tri
+  centile_diff <- centile_diffs(
+    upper_tri = upper_tri,
+    x_third = x_third,
+    centile = centile_1
+  )
 
-  # Show points significantly higher or lower than limits;
-  region_upper <- matrix(0, n.lag + 1, n.lag + 1)
-  region_lower <- matrix(0, n.lag + 1, n.lag + 1)
-  index <- diff_upper > 0
-  region_upper[index] <- diff_upper[index]
-  index <- diff_lower < 0
-  region_lower[index] <- diff_lower[index]
-  region <- region_upper + region_lower
+  region <- calculate_region(
+    n.lag = n.lag,
+    centile_diff = centile_diff
+  )
+
   # Total area exceeding limits;
   outside <- sum(sum(abs(region)))
   #total=((n.lag+1)*(n.lag+2)/2)-1; # Total number of points tested
 
   # Double bootstrap statistic using 2nd set of limits on first set of data;
   # 3rd series - limits from 2nd;
-  jackstat <- vector(mode = 'numeric', length = n.boot)
-  for (jack in ((2 * n.boot) + 1):(n.boot * 3)) {
-    ## Percentile statistic;
-    diffjack_upper <- (aaft_third[,, jack] - centile_u2) * upper_tri
-    diffjack_lower <- (aaft_third[,, jack] - centile_l2) * upper_tri
-    jregion_upper <- matrix(0, n.lag + 1, n.lag + 1)
-    jregion_lower <- matrix(0, n.lag + 1, n.lag + 1)
-    jindex <- diffjack_upper > 0
-    jregion_upper[jindex] <- diffjack_upper[jindex]
-    jindex <- diffjack_lower < 0
-    jregion_lower[jindex] <- diffjack_lower[jindex]
-    jregion <- jregion_upper + jregion_lower
-    # Total area exceeding limits;
-    jackstat[jack - (2 * n.boot)] <- sum(sum(abs(jregion)))
-  }
+  jackstat <- jack_bootstrap(
+    n.boot = n.boot,
+    n.lag = n.lag,
+    aaft_third = aaft_third,
+    centile_2 = centile_2
+  )
 
   jack_std <- stats::sd(jackstat)
   stan <- outside / jack_std
@@ -165,8 +138,8 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
   results <- list(
     stats = jackstats,
     region = region,
-    diff_l = diff_lower,
-    diff_u = diff_upper,
+    diff_l = centile_diff$lower,
+    diff_u = centile_diff$upper,
     n.lag = n.lag
   )
 

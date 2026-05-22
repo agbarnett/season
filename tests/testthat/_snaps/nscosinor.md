@@ -4,24 +4,29 @@
       nscosinor(data = data.frame(adj = 1:24), response = "adj", cycles = 12, tau = c(
         10, 50))
     Condition
-      Error in `nscosinor()`:
-      ! Data needs to contain numeric year and month variables
+      Error:
+      ! Data must contain a variable called 'year'
 
 ---
 
     Code
       nscosinor(data = CVD, response = "adj", cycles = 12, tau = 10)
     Condition
-      Error in `nscosinor()`:
-      ! Need to give a smoothing parameter (tau) for each cycle, plus one for the trend
+      Error:
+      ! 'tau' must be a vector of size 'cycle' + 1
+      i.e., a smoothing parameter (tau) for each cycle, plus one for trend
+      We see:
+      length tau:1
+      length cycle:1
 
 ---
 
     Code
       nscosinor(data = CVD, response = "adj", cycles = 0, tau = c(10, 50))
     Condition
-      Error in `nscosinor()`:
-      ! Cycles cannot be <=0
+      Error:
+      ! cycles must be > 0
+      There are 1 values below 0
 
 ---
 
@@ -29,14 +34,18 @@
       nscosinor(data = CVD, response = "adj", cycles = 12, tau = c(10, 50), niters = 10,
       burnin = 100)
     Condition
-      Error in `nscosinor()`:
+      Error:
       ! Number of iterations must be greater than burn-in
+      We see:
+      burnin: 100
+      niters: 100
 
 ---
 
     Code
       nscosinor(data = cvd_na, response = "adj", cycles = 12, tau = c(10, 50))
     Condition
-      Error in `nscosinor()`:
-      ! Missing data in the dependent variable not allowed
+      Error:
+      ! There must be no missing data in the dependent variable
+      We see: 1 missing value(s)
 

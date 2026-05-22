@@ -29,4 +29,5 @@ print.summary.monthglm <- function(x, ...) {
     "\n"
   )
   print(x$month.ests, ...)
+  invisible(x)
 }

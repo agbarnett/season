@@ -57,10 +57,13 @@ summary.monthglm <- function(object, ...) {
     ""
   )
 
-  ret <- list()
-  ret$n <- length(object$residuals)
-  ret$month.ests <- totable
-  ret$month.effect <- effect
-  class(ret) <- "summary.monthglm"
-  ret # uses print.summary.monthglm
+  result <- list(
+    n = length(object$residuals),
+    month.ests = totable,
+    month.effect = effect
+  )
+
+  class(result) <- c("summary.monthglm", class(result))
+  # uses print.summary.monthglm
+  result
 }

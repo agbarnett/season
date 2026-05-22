@@ -104,8 +104,8 @@ tau <- c(10,50)
     data = CVD,
     response = 'adj',
     cycles = f,
-    niters = 5000,
-    burnin = 1000,
+    niters = 200,
+    burnin = 50,
     tau = tau
     )
 summary(res12)

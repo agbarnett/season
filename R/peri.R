@@ -41,26 +41,8 @@ peri <- function(data, adjmean = TRUE, plot = TRUE) {
   freq_cycles[1] <- NA
   amp <- sqrt(real_part^2 + imaginary_part^2)
   phase <- vector(mode = "numeric", length = n_fft) # phase in scale [0,2pi]
-  # phase in [0,2pi]
-  for (j in 2:(n_fft - 1)) {
-    ph <- atan(imaginary_part[j] / real_part[j])
-    if (real_part[j] >= 0) {
-      phase[j] <- ph
-    }
-    if (real_part[j] < 0 && imaginary_part[j] >= 0) {
-      phase[j] <- ph + pi
-    }
-    if (real_part[j] < 0 && imaginary_part[j] < 0) {
-      phase[j] <- ph - pi
-    }
-    # put in 0 to 2pi range
-    if (phase[j] < 0) {
-      phase[j] <- phase[j] + (2 * pi)
-    }
-    if (phase[j] > (2 * pi)) {
-      phase[j] <- phase[j] - (2 * pi)
-    }
-  }
+  inner <- 2:(n_fft - 1)
+  phase[inner] <- atan2(imaginary_part[inner], real_part[inner]) %% (2 * pi)
   ## Plot
   if (plot) {
     df_plot_1 <- data.frame(

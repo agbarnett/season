@@ -69,4 +69,5 @@ print.nonlintest <- function(x, ...) {
     x$stats$pvalue,
     '\n'
   )
+  invisible(x)
 }

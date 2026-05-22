@@ -16,133 +16,196 @@
 #' @noRd
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 kalfil <- function(data, f, vartheta, w, tau, lambda, cmean) {
-  # Setting up matrices
-  # Number of frequencies
+  setup <- kalfil_setup(data, f, vartheta, w, tau, lambda, cmean)
+  fwd <- kalfil_forward(setup)
+  alpha_j <- kalfil_backward(fwd, setup)
+  upd <- kalfil_update_params(alpha_j, fwd, setup)
+  list(
+    vartheta = upd$vartheta,
+    w = upd$w,
+    alpha = alpha_j,
+    amp = upd$amp,
+    phase = upd$phase,
+    cmean = upd$cmean
+  )
+}
+
+
+# Build the DLM matrices for the Kalman filter:
+#   G: state-transition matrix (trend block + one rotation block per cycle)
+#   V: process-noise covariance
+#   Fvec: observation vector (picks the trend + each season's first state)
+#   C_j_init: initial state covariance (diagonal cmean)
+# Also: pad `data` with a leading 0 (the t=0 placeholder the sweeps expect).
+kalfil_setup <- function(data, f, vartheta, w, tau, lambda, cmean) {
   k <- length(f)
   kk <- 2 * (k + 1)
   n <- length(data)
-  # Add zero to start of data
   data <- c(0, data)
   Fvec <- rep(c(1, 0), k + 1)
+
   G <- matrix(0, kk, kk)
   G[1, 1] <- 1
   G[1, 2] <- lambda
   G[2, 2] <- 1
+
   V <- matrix(0, kk, kk)
   V[1, 1] <- (tau[1]^2) * (lambda^3) / 3
   V[1, 2] <- (tau[1]^2) * (lambda^2) / 2
   V[2, 1] <- (tau[1]^2) * (lambda^2) / 2
-  # Trend variance
   V[2, 2] <- (tau[1]^2) * lambda
-  for (index in 1:k) {
-    G[(2 * index) + 1, (2 * index) + 1] <- 2 * cos(2 * pi / f[index])
-    G[(2 * index) + 1, (2 * index) + 2] <- -1
-    # Seasonal component
-    G[(2 * index) + 2, (2 * index) + 1] <- 1
-    # w = Seasonal variance, lambda in paper
-    V[(2 * index) + 1, (2 * index) + 1] <- (tau[index + 1]^2) * w[index]^2
+
+  for (j in seq_len(k)) {
+    G[2 * j + 1, 2 * j + 1] <- 2 * cos(2 * pi / f[j])
+    G[2 * j + 1, 2 * j + 2] <- -1
+    G[2 * j + 2, 2 * j + 1] <- 1
+    V[2 * j + 1, 2 * j + 1] <- (tau[j + 1]^2) * w[j]^2
   }
-  C_j <- array(0, c(kk, kk, n + 1))
-  for (index in 1:kk) {
-    # Gives a vague prior for alpha_0
-    C_j[index, index, 1] <- cmean[index]
+
+  C_j_init <- array(0, c(kk, kk, n + 1))
+  for (j in seq_len(kk)) {
+    C_j_init[j, j, 1] <- cmean[j]
   }
+
+  list(
+    data = data,
+    k = k,
+    kk = kk,
+    n = n,
+    f = f,
+    Fvec = Fvec,
+    G = G,
+    V = V,
+    C_j_init = C_j_init,
+    vartheta = vartheta,
+    w = w,
+    tau = tau
+  )
+}
+
+# Forward sweep of the Kalman filter. Returns the predictive mean
+# `a_j`, filtered mean `p_j`, residuals `e_j`, predictive covariance
+# `R_j`, and filtered covariance `C_j` at every timestep.
+kalfil_forward <- function(setup) {
+  n <- setup$n
+  kk <- setup$kk
+  data <- setup$data
+  Fvec <- setup$Fvec
+  G <- setup$G
+  V <- setup$V
+  vartheta <- setup$vartheta
+
+  C_j <- setup$C_j_init
   a_j <- matrix(0, kk, n + 1)
   p_j <- matrix(0, kk, n + 1)
   e_j <- matrix(0, 1, n + 1)
   R_j <- array(0, c(kk, kk, n + 1))
-  # Forward sweep of Kalman filter
-  # first obs=mean(p_0);
   p_j[1, 1] <- mean(data[2:(n + 1)])
-  ind <- t(0:n)
+
   for (t in 1:n) {
-    # prediction eqn
     a_j[, t + 1] <- G %*% p_j[, t]
-    # prediction eqn
     R_j[,, t + 1] <- (G %*% C_j[,, t] %*% t(G)) + V
-    # residual
     e_j[, t + 1] <- data[t + 1] - (t(Fvec) %*% a_j[, t + 1])
-    # fitted value variance
     Q_j <- t(Fvec) %*% R_j[,, t + 1] %*% Fvec + (vartheta^2)
-    # Kalman filter:
     p_j[, t + 1] <- a_j[, t + 1] +
-      (R_j[,, t + 1] %*% Fvec %*% (qr.solve(Q_j)) %*% e_j[, t + 1])
+      (R_j[,, t + 1] %*% Fvec %*% qr.solve(Q_j) %*% e_j[, t + 1])
     C_j[,, t + 1] <- R_j[,, t + 1] -
       (R_j[,, t + 1] %*%
         Fvec %*%
-        (qr.solve(Q_j)) %*%
+        qr.solve(Q_j) %*%
         t(Fvec) %*%
         t(R_j[,, t + 1]))
   }
-  ## Backward sweep of Kalman filter
-  # DLM matrices
-  h_j <- matrix(0, kk, n + 1)
+
+  list(
+    a_j = a_j,
+    p_j = p_j,
+    e_j = e_j,
+    R_j = R_j,
+    C_j = C_j
+  )
+}
+
+# Backward sweep: sample alpha_j from the joint smoothing distribution,
+# working from t = n+1 backwards to t = 1. Consumes (n + 1) draws from
+# MASS::mvrnorm — preserving that count is required for bit-identical
+# RNG state across the refactor.
+kalfil_backward <- function(fwd, setup) {
+  n <- setup$n
+  kk <- setup$kk
+  G <- setup$G
+  p_j <- fwd$p_j
+  C_j <- fwd$C_j
+  a_j <- fwd$a_j
+  R_j <- fwd$R_j
+
   alpha_j <- matrix(0, kk, n + 1)
-  B_j <- matrix(0, kk, kk)
-  HH_j <- matrix(0, kk, kk)
-  # Initial alpha sample;
   alpha_j[, n + 1] <- MASS::mvrnorm(
     n = 1,
     mu = p_j[, n + 1],
     Sigma = C_j[,, n + 1]
   )
-  # Iterate backwards in time;
   for (t in n:1) {
     B_j <- C_j[,, t] %*% t(G) %*% qr.solve(R_j[,, t + 1])
     HH_j <- C_j[,, t] - (B_j %*% R_j[,, t + 1] %*% t(B_j))
-    h_j[, t] <- p_j[, t] + (B_j %*% (alpha_j[, t + 1] - a_j[, t + 1]))
-    ## Sample alpha_j from a multivariate Normal (mvrnorm from MASS library)
-    alpha_j[, t] <- MASS::mvrnorm(n = 1, mu = h_j[, t], Sigma = t(HH_j))
+    h_j <- p_j[, t] + (B_j %*% (alpha_j[, t + 1] - a_j[, t + 1]))
+    alpha_j[, t] <- MASS::mvrnorm(n = 1, mu = h_j, Sigma = t(HH_j))
   }
-  # Estimate vartheta and lambdas (labelled 'w')
-  se <- matrix(0, n) # squared error
-  alphase <- matrix(0, n - 1, k)
-  for (t in 2:(n + 1)) {
-    #<- time = 1 to n;
-    se[t - 1] <- (data[t] - (t(Fvec) %*% alpha_j[, t]))^2
-    if (t > 2) {
-      # <- 2 to n;
-      past <- G %*% alpha_j[, t - 1]
-      for (index in 1:k) {
-        alphase[t - 2, index] <- (alpha_j[(2 * index) + 1, t] -
-          past[(2 * index) + 1])^2
-      }
-    }
-  }
+
+  alpha_j
+}
+
+# Posterior updates and per-cycle summaries. Consumes 1 + k draws from
+# rinvgamma (one for vartheta, one per cycle for w) — preserve count
+# and order to keep RNG state bit-identical.
+kalfil_update_params <- function(alpha_j, fwd, setup) {
+  n <- setup$n
+  k <- setup$k
+  data <- setup$data
+  Fvec <- setup$Fvec
+  G <- setup$G
+  tau <- setup$tau
+  f <- setup$f
+  C_j <- fwd$C_j
+  w <- setup$w
+
+  errors <- compute_squared_errors(
+    data_vec = data,
+    alpha_j = alpha_j,
+    f_vec = Fvec,
+    g_mat = G,
+    k = k,
+    n = n
+  )
+
   shape <- (n / 2) - 1
-  scale <- sum(se) / 2
-  # Update vartheta from inverse gamma;
+  scale <- sum(errors$se) / 2
   vartheta <- sqrt(rinvgamma(1, shape, scale))
+
   shape <- ((n - 1) / 2) - 1
-  for (index in 1:k) {
-    scale <- sum(alphase[, index]) / 2
-    # Update lambda from inverse gamma (divide by tau);
-    w[index] <- sqrt(rinvgamma(1, shape, scale) / (tau[index + 1]^2))
+  for (j in seq_len(k)) {
+    scale <- sum(errors$alpha_se[, j]) / 2
+    w[j] <- sqrt(rinvgamma(1, shape, scale) / (tau[j + 1]^2))
   }
-  # Estimate amplitude and phase using the periodogram
-  amp <- vector(mode = "numeric", length = k)
-  phase <- vector(mode = "numeric", length = k)
-  for (index in 1:k) {
-    s <- alpha_j[(2 * index) + 1, 1:n]
-    peri <- peri(s, plot = FALSE)
-    loc <- sum(
-      as.numeric(rank(abs(peri$c - f[index])) == 1) * (seq_along(peri$c))
-    ) # Get closest frequency
-    amp[index] <- peri$amp[loc]
-    phase[index] <- peri$phase[loc]
+
+  amp <- numeric(k)
+  phase <- numeric(k)
+  for (j in seq_len(k)) {
+    s <- alpha_j[2 * j + 1, 1:n]
+    pgr <- peri(s, plot = FALSE)
+    loc <- which.min(abs(pgr$c - f[j]))
+    amp[j] <- pgr$amp[loc]
+    phase[j] <- pgr$phase[loc]
   }
-  # Get mean values of C for better starting values
-  cmean <- vector(length = kk, mode = 'numeric')
-  for (index in 1:kk) {
-    cmean[index] <- mean(C_j[index, index, ])
+
+  # NB: this loop is *not* equivalent to `rowMeans(apply(C_j, 3, diag))`.
+  # The two summation orders differ by ~2^-53 per element, which would
+  # propagate into the next iteration's prior and drift the MCMC chain.
+  kk <- setup$kk
+  cmean <- numeric(kk)
+  for (j in seq_len(kk)) {
+    cmean[j] <- mean(C_j[j, j, ])
   }
-  # Returns
-  return(list(
-    vartheta = vartheta,
-    w = w,
-    alpha = alpha_j,
-    amp = amp,
-    phase = phase,
-    cmean = cmean
-  ))
-} # End of function
+
+  list(vartheta = vartheta, w = w, amp = amp, phase = phase, cmean = cmean)
+}

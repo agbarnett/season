@@ -18,6 +18,30 @@ test_that("overall structure of the casecross model is consistent", {
   expect_snapshot(model1$cox_model)
 })
 
+
+test_that("'matchconf' argument of `casecross()` works as expected", {
+  model3 <- casecross(
+    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+    matchconf = "tmpd",
+    confrange = 1
+  )
+  expect_snapshot(model3)
+  expect_snapshot(names(model3))
+  expect_snapshot(model3$cox_model)
+})
+
+test_that("'stratamonth' argument of `casecross()` works as expected", {
+  model4 <- casecross(
+    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+    stratamonth = TRUE
+  )
+  expect_snapshot(model4)
+  expect_snapshot(names(model4))
+  expect_snapshot(model4$cox_model)
+})
+
 # book p.136: time-stratified, 28-day stratum, exclusion = 4 ------------
 # Book scales ozone to 10 ppb, and temp 5F before fitting.
 # Expected: 5114 case days, 19.7 controls/case day,
@@ -151,3 +175,5 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 #  expect_s3_class(m, "casecross")
 #  expect_output(summary(m), "months as strata")
 # })
+
+# match on temperature to within a degree

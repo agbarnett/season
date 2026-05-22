@@ -23,7 +23,10 @@
 #' }
 print.Monthmean <- function(x, digits = 1, ...) {
   check_if_monthmean(x)
-  toprint <- as.data.frame(cbind(month.name, round(x$mean, digits)))
-  names(toprint) <- c('Month', 'Mean')
+  toprint <- data.frame(
+    Month = month.name,
+    Mean = round(x$mean, digits)
+  )
   print(toprint, row.names = FALSE, ...)
+  invisible(x)
 }

@@ -2,7 +2,9 @@
 #'
 #' Calculate the phase given the estimated sine and cosine values from a
 #' cosinor model. Returns the phase in radians, in the range \eqn{[0,2\pi)}.
-#' The phase is the peak in the sinusoid.
+#' The phase is the peak in the sinusoid. Applies [atan2()] over a branching
+#' workflow for each coordinate. See \url{https://en.wikipedia.org/wiki/Atan2}
+#' for more information.
 #'
 #' @param cosine estimated cosine value from a cosinor model.
 #' @param sine estimated sine value from a cosinor model.
@@ -16,27 +18,5 @@
 #'
 #' @export phasecalc
 phasecalc <- function(cosine, sine) {
-  if (cosine == 0) {
-    cosine <- cosine + 0.000000001
-  }
-
-  div <- sine / cosine
-
-  if (cosine >= 0) {
-    phaser <- atan(div)
-  }
-  if (cosine < 0 && sine >= 0) {
-    phaser <- atan(div) + pi
-  }
-  if (cosine < 0 && sine < 0) {
-    phaser <- atan(div) - pi
-  }
-  # put in 0 to 2pi range
-  if (phaser < 0) {
-    phaser <- phaser + (2 * pi)
-  }
-  if (phaser > (2 * pi)) {
-    phaser <- phaser - (2 * pi)
-  }
-  return(phaser)
+  atan2(sine, cosine) %% (2 * pi)
 }
