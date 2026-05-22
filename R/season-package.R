@@ -41,6 +41,16 @@ NULL
 utils::globalVariables(
   c(
     "time",
-    "terms"
+    "terms",
+    "case_num",
+    "dow",
+    "dow.x",
+    "dow.y",
+    "match_day",
+    "match_day.x",
+    "match_day.y",
+    "window_num",
+    "window_num.x",
+    "window_num.y"
   )
 )
