@@ -138,5 +138,21 @@ test_that("nscosinor handles two seasonal cycles", {
   expect_identical(ncol(res$season), as.integer(3 * 2))
   # expect that we get back 2 sets of columns
   expect_identical(ncol(res$season), as.integer(length(cycle_vec) * 3))
-  expect_snapshot(summary(res$season))
+
+  # Don't snapshot the MCMC trajectory itself — BLAS/LAPACK varies by
+  # platform (Accelerate on mac, OpenBLAS on Linux, Rblas on Windows)
+  # and tiny per-operation differences compound through ~50 iterations
+  # of mvrnorm/qr.solve/%*% into visibly different summary quantiles.
+  # Verify structure and well-formedness instead.
+  season <- res$season
+  expect_identical(dim(season), c(nrow(head(CVD, 48)), 6L))
+  expect_true(all(is.finite(unlist(season))))
+
+  # `season` columns repeat (mean, lower, upper) per cycle, so every
+  # 3rd column starting at 1/2/3 is a mean/lower/upper. Flatten and
+  # check all means are bracketed by their CI in one expectation.
+  means  <- unlist(season[, seq(1, ncol(season), by = 3)])
+  lowers <- unlist(season[, seq(2, ncol(season), by = 3)])
+  uppers <- unlist(season[, seq(3, ncol(season), by = 3)])
+  expect_all_true(means >= lowers & means <= uppers)
 })
