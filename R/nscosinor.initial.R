@@ -31,20 +31,16 @@ nscosinor.initial <- function(data, response, tau, lambda = 1 / 12, n.season) {
   alpha_j <- calc_alpha_j(model, n)
   # estimate initial value for w
   # squared error
-  se <- matrix(0, n)
-  alpha_se <- matrix(0, n - 1, k)
-  for (t in 2:(n + 1)) {
-    #<- time = 1 to n;
-    se[t - 1] <- (response_vec[t - 1] - (t(f_vec) %*% alpha_j[, t]))^2
-    if (t > 2) {
-      # <- 2 to n;
-      past <- g_mat %*% alpha_j[, t - 1]
-      for (index in 1:k) {
-        alpha_se[t - 2, index] <- (alpha_j[(2 * index) + 1, t] -
-          past[(2 * index) + 1])^2
-      }
-    }
-  }
+  errors <- compute_squared_errors(
+    data_vec = c(0, response_vec),
+    alpha_j = alpha_j,
+    f_vec = f_vec,
+    g_mat = g_mat,
+    k = k,
+    n = n
+  )
+  se <- errors$se
+  alpha_se <- errors$alpha_se
   # variance initial value
   shape <- (n / 2) - 1
   scale <- sum(se) / 2

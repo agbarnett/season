@@ -487,3 +487,141 @@ mcmc_summary_stats <- function(chain) {
     upper = as.numeric(s$quantiles[5])
   )
 }
+
+# Decide (match_day, window_num, time) for each row of `data_to_use`.
+# `stratamonth = TRUE`: one stratum per calendar month, match_day is
+#   day-of-month, window_num spans years.
+# `stratamonth = FALSE`: fixed-width strata of `stratalength` days,
+#   with the final (short) window optionally pruned.
+# `n_rows_original` is nrow(data) *before* model.frame dropped NAs —
+#   it controls n_windows and must come from the original frame.
+create_strata <- function(
+  data_to_use,
+  n_rows_original,
+  stratalength,
+  stratamonth,
+  usefinalwindow
+) {
+  date_diff <- as.numeric(data_to_use$date) - min(as.numeric(data_to_use$date))
+  time <- date_diff + 1
+
+  if (stratamonth) {
+    return(list(
+      match_day = as.numeric(format(data_to_use$date, "%d")),
+      window_num = window_num_stratamonth(data_to_use$date),
+      time = time,
+      data_to_use = data_to_use
+    ))
+  }
+
+  window_num <- floor(date_diff / stratalength) + 1
+  match_day <- date_diff - ((window_num - 1) * stratalength) + 1
+  n_windows <- floor(n_rows_original / stratalength) + 1
+
+  # Note NULL from non-existing column: data_to_use$window_num == n_windows`
+  # https://github.com/agbarnett/season/issues/70
+  last_window <- data_to_use[data_to_use$window_num == n_windows, ]
+  if (nrow(last_window) > 0) {
+    last_length <- max(time[window_num == n_windows]) -
+      min(time[window_num == n_windows]) +
+      1
+    if (last_length < stratalength && !usefinalwindow) {
+      keep <- window_num < n_windows
+      data_to_use <- data_to_use[keep, ]
+      window_num <- window_num[keep]
+      match_day <- match_day[keep]
+      time <- time[keep]
+    }
+  }
+
+  list(
+    match_day = match_day,
+    window_num = window_num,
+    time = time,
+    data_to_use = data_to_use
+  )
+}
+
+
+# Expand each case row into one control row per other day in the same
+# window. Returns parallel index vectors:
+#   rows_to_rep: which case-row to copy for each control row
+#   case_num   : which case (1..n_cases) each control row matches
+# Replaces a `c()`-in-loop antipattern with one allocation per window.
+build_control_rows <- function(cases, windowrange) {
+  per_window <- lapply(windowrange, function(k) {
+    in_window <- cases$window_num == k
+    small <- min(cases$time[in_window])
+    large <- max(cases$time[in_window])
+    these <- rep(small:large, large - small + 1)
+    list(rows = these, case_num = sort(these))
+  })
+  list(
+    rows_to_rep = unlist(lapply(per_window, `[[`, "rows")),
+    case_num = unlist(lapply(per_window, `[[`, "case_num"))
+  )
+}
+
+# Restrict `controls` to those whose confounder is within +/- `confrange`
+# of the matched case, then drop the merge-helper columns from both
+# `controls` and `cases`. Returns the trimmed pair as a list.
+filter_by_confounder <- function(controls, cases, matchconf, confrange) {
+  one <- paste0(matchconf, ".x")
+  two <- paste0(matchconf, ".y")
+  find_1 <- grep(one, names(controls))
+  find_2 <- grep(two, names(controls))
+
+  match_diff <- abs(controls[, find_1] - controls[, find_2])
+  controls <- controls[match_diff <= confrange, ]
+  controls <- subset(
+    controls,
+    select = c(
+      -case_num,
+      -dow.x,
+      -dow.y,
+      -match_day.x,
+      -match_day.y,
+      -window_num.x,
+      -window_num.y,
+      -find_1,
+      -find_2
+    )
+  )
+
+  find_c <- match(matchconf, names(cases))
+  final_cases <- subset(
+    cases,
+    select = c(
+      -dow,
+      -match_day,
+      -window_num,
+      -find_c
+    )
+  )
+
+  list(
+    controls = controls,
+    final_cases = final_cases
+  )
+}
+
+
+# Squared errors used by both kalfil() and nscosinor.initial() when
+# updating variance parameters. `data_vec` must already be padded with
+# a leading 0 (length n + 1), so that data_vec[t] for t = 2..n+1
+# corresponds to the t-th original observation. Both callers prepare
+# `data_vec` accordingly before calling.
+compute_squared_errors <- function(data_vec, alpha_j, f_vec, g_mat, k, n) {
+  se <- numeric(n)
+  alpha_se <- matrix(0, n - 1, k)
+  for (t in 2:(n + 1)) {
+    se[t - 1] <- (data_vec[t] - (t(f_vec) %*% alpha_j[, t]))^2
+    if (t > 2) {
+      past <- g_mat %*% alpha_j[, t - 1]
+      for (j in seq_len(k)) {
+        alpha_se[t - 2, j] <- (alpha_j[2 * j + 1, t] - past[2 * j + 1])^2
+      }
+    }
+  }
+  list(se = se, alpha_se = alpha_se)
+}

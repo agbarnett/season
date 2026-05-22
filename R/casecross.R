@@ -120,8 +120,10 @@ casecross <- function(
   stratamonth = FALSE
 ) {
   # Setting some variables to NULL first (for R CMD check)
-  outcome <- dow <- case <- timex <- dow.x <- dow.y <- match_day.x <- NULL
-  match_day.y <- window_num.x <- window_num.y <- NULL
+  outcome <- case <- timex <- NULL
+  case_num <- dow.x <- dow.y <- match_day.x <- match_day.y <- NULL
+  window_num.x <- window_num.y <- dow <- match_day <- window_num <- NULL
+
   this_data <- data
   this_data$dow <- as.numeric(format(this_data$date, '%w'))
 
@@ -150,35 +152,19 @@ casecross <- function(
 
   inform_irregularly_spaced(data_to_use$date)
 
-  ## Create strata
-  if (stratamonth) {
-    match_day <- as.numeric(format(data_to_use$date, '%d'))
-    window_num <- window_num_stratamonth(data_to_use$date)
-  }
+  strata <- create_strata(
+    data_to_use,
+    n_rows_original = nrow(this_data),
+    stratalength = stratalength,
+    stratamonth = stratamonth,
+    usefinalwindow = usefinalwindow
+  )
 
-  # use minimum data in entire sample
-  date_diff <- as.numeric(data_to_use$date) - min(as.numeric(data_to_use$date))
-  # used as strata number
-  time <- as.numeric(date_diff) + 1
-  if (!stratamonth) {
-    ## Get the earliest time and difference all dates from this time
-    ## Increase strata windows in jumps of 'stratalength'
-    window_num <- floor(date_diff / stratalength) + 1
-    n_windows <- floor(nrow(this_data) / stratalength) + 1
-    # Day number in strata
-    match_day <- date_diff - ((window_num - 1) * stratalength) + 1
-    ## Exclude the last window if it is less than 'stratalength'
-    last_window <- data_to_use[data_to_use$window_num == n_windows, ]
-    if (nrow(last_window) > 0) {
-      # only apply to data sets with some data in the final window
-      last_length <- max(time[window_num == n_windows]) -
-        min(time[window_num == n_windows]) +
-        1
-      if (last_length < stratalength && !usefinalwindow) {
-        data_to_use <- data_to_use[window_num < n_windows, ]
-      }
-    }
-  }
+  match_day <- strata$match_day
+  window_num <- strata$window_num
+  time <- strata$time
+  data_to_use <- strata$data_to_use
+
   ## Create the case data
   cases <- data_to_use
   # binary indicator of case
@@ -209,18 +195,11 @@ casecross <- function(
   cases_to_merge$case_num <- 1:n_cases
   # Duplicate case series to make controls
   max_windows <- max(cases$window_num)
-  rows_to_rep <- NULL
-  case_num <- NULL
   # Fix for missing windows (thanks to Yuming)
   windowrange <- as.numeric(levels(as.factor(window_num)))
-  for (k in windowrange) {
-    # loop through every window
-    small <- min(cases$time[cases$window_num == k])
-    large <- max(cases$time[cases$window_num == k])
-    these <- rep(small:large, large - small + 1)
-    rows_to_rep <- c(rows_to_rep, these)
-    case_num <- c(case_num, sort(these))
-  }
+  ctrl_idx <- build_control_rows(cases, windowrange)
+  rows_to_rep <- ctrl_idx$rows_to_rep
+  case_num <- ctrl_idx$case_num
   # create controls from cases
   # can fall over if there's missing data
   controls <- cases[rows_to_rep, ]
@@ -243,51 +222,28 @@ casecross <- function(
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!is.null(matchconf)) {
-    one <- paste0(matchconf, '.x')
-    two <- paste0(matchconf, '.y')
-    find_1 <- grep(one, names(controls))
-    find_2 <- grep(two, names(controls))
-    match_diff <- abs(controls[, find_1] - controls[, find_2])
-    controls <- controls[match_diff <= confrange, ]
-    controls <- subset(
-      controls,
-      select = c(
-        -case_num,
-        -dow.x,
-        -dow.y,
-        -match_day.x,
-        -match_day.y,
-        -window_num.x,
-        -window_num.y,
-        -find_1,
-        -find_2
-      )
-    )
-    find_c <- match(matchconf, names(cases))
-
-    final_cases <- subset(
-      cases,
-      select = c(-dow, -match_day, -window_num, -find_c)
-    )
-    # update formula to remove matchconf
-    indep <- gsub(indep, pattern = paste0("\\+ ", matchconf), replacement = '')
-  }
   if (is.null(matchconf)) {
-    controls <- subset(
-      controls,
-      select = c(
-        -case_num,
-        -dow.x,
-        -dow.y,
-        -match_day.x,
-        -match_day.y,
-        -window_num.x,
-        -window_num.y
-      )
+    trimmed <- list(
+      controls = subset(
+        controls,
+        select = c(
+          -case_num,
+          -dow.x,
+          -dow.y,
+          -match_day.x,
+          -match_day.y,
+          -window_num.x,
+          -window_num.y
+        )
+      ),
+      final_cases = subset(cases, select = c(-dow, -match_day, -window_num))
     )
-    final_cases <- subset(cases, select = c(-dow, -match_day, -window_num))
+  } else {
+    trimmed <- filter_by_confounder(controls, cases, matchconf, confrange)
   }
+  controls <- trimmed$controls
+  final_cases <- trimmed$final_cases
+
   finished <- rbind(final_cases, controls)
   ## Remove empty controls
   finished <- finished[finished$outcome > 0, ]
