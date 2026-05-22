@@ -21,9 +21,9 @@
     Code
       summary.Cosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: Cosinor
-      We see class: list
+      Error in `summary.Cosinor()`:
+      ! `object` must be of class <Cosinor>.
+      i We see class <list>.
 
 # summary.monthglm builds the documented summary.monthglm object
 
@@ -48,18 +48,18 @@
     Code
       summary.monthglm(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: monthglm
-      We see class: list
+      Error in `summary.monthglm()`:
+      ! `object` must be of class <monthglm>.
+      i We see class <list>.
 
 # summary.nsCosinor errors on non-nsCosinor input
 
     Code
       summary.nsCosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: nsCosinor
-      We see class: list
+      Error in `summary.nsCosinor()`:
+      ! `object` must be of class <nsCosinor>.
+      i We see class <list>.
 
 # summary.casecross prints a structured report
 
@@ -87,7 +87,7 @@
     Code
       summary.casecross(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: casecross
-      We see class: list
+      Error in `summary.casecross()`:
+      ! `object` must be of class <casecross>.
+      i We see class <list>.
 

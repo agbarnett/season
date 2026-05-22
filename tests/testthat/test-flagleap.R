@@ -8,9 +8,8 @@ test_that("flagleap works", {
   expect_identical(cvd_flag_leap$year[2], 1987)
   expect_identical(cvd_flag_leap$year[158], 2000)
 
-  expect_output(
-    print(flagleap(CVD, report = TRUE)),
-    "Total number of days =  5114"
+  expect_snapshot(
+    flagleap(CVD, report = TRUE),
   )
 })
 # that flagleap can distinguish leap months from regular months (Feb),

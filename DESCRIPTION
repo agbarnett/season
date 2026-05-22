@@ -19,6 +19,7 @@ License: GPL (>= 3)
 Depends:
     R (>= 4.2.0)
 Imports: 
+    cli,
     coda,
     ggplot2 (>= 4.0.3),
     MASS (>= 7.3.65),

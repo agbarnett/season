@@ -47,7 +47,12 @@ yrfrac_daily <- function(date) {
 
 yrfrac_weekly <- function(date) {
   if (max(date) > 53 || min(date) < 1) {
-    stop("Date variable for weekly data must be month integer (1 to 53)")
+    cli::cli_abort(
+      c(
+        "{.arg date} must be an integer in {.val 1:53} for {.val weekly} data.",
+        "i" = "We see a range of {.val {min(date)}} to {.val {max(date)}}."
+      )
+    )
   }
   yrfrac <- (date - 1) / (365.25 / 7)
   yrfrac
@@ -55,7 +60,12 @@ yrfrac_weekly <- function(date) {
 
 yrfrac_monthly <- function(date) {
   if (max(date) > 12 || min(date) < 1) {
-    stop("Date variable for monthly data must be month integer (1 to 12)")
+    cli::cli_abort(
+      c(
+        "{.arg date} must be an integer in {.val 1:12} for {.val monthly} data.",
+        "i" = "We see a range of {.val {min(date)}} to {.val {max(date)}}."
+      )
+    )
   }
   yrfrac <- (date - 1) / 12
   yrfrac

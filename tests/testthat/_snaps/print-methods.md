@@ -19,9 +19,9 @@
     Code
       print.Cosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: Cosinor
-      We see class: list
+      Error in `print.Cosinor()`:
+      ! `x` must be of class <Cosinor>.
+      i We see class <list>.
 
 # print.monthglm prints the underlying GLM
 
@@ -46,9 +46,9 @@
     Code
       print.monthglm(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: monthglm
-      We see class: list
+      Error in `print.monthglm()`:
+      ! `x` must be of class <monthglm>.
+      i We see class <list>.
 
 # print.Monthmean prints a named 12-row table
 
@@ -74,9 +74,9 @@
     Code
       print.Monthmean(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: Monthmean
-      We see class: list
+      Error in `print.Monthmean()`:
+      ! `x` must be of class <Monthmean>.
+      i We see class <list>.
 
 # print.nonlintest prints the test statistics block
 
@@ -97,9 +97,9 @@
     Code
       print.nonlintest(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: nonlintest
-      We see class: list
+      Error in `print.nonlintest()`:
+      ! `x` must be of class <nonlintest>.
+      i We see class <list>.
 
 # print.nsCosinor prints model overview and residual stats
 
@@ -126,9 +126,9 @@
     Code
       print.nsCosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: nsCosinor
-      We see class: list
+      Error in `print.nsCosinor()`:
+      ! `x` must be of class <nsCosinor>.
+      i We see class <list>.
 
 # print.casecross prints the underlying coxph fit
 
@@ -157,18 +157,18 @@
     Code
       print.casecross(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: casecross
-      We see class: list
+      Error in `print.casecross()`:
+      ! `x` must be of class <casecross>.
+      i We see class <list>.
 
 # print.casecross errors when cox_model is not a coxph fit
 
     Code
       print(bad)
     Condition
-      Error:
-      ! x must be of class: coxph
-      We see class: list
+      Error in `print()`:
+      ! `x$cox_model` must be of class <coxph>.
+      i We see class <list>.
 
 # print.summary.Cosinor prints the cosinor test report
 
@@ -193,9 +193,9 @@
     Code
       print.summary.Cosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: summary.Cosinor
-      We see class: list
+      Error in `print.summary.Cosinor()`:
+      ! `x` must be of class <summary.Cosinor>.
+      i We see class <list>.
 
 # print.summary.monthglm prints the month-effect table
 
@@ -262,9 +262,9 @@
     Code
       print.summary.nsCosinor(list(a = 1))
     Condition
-      Error:
-      ! x must be of class: summary.nsCosinor
-      We see class: list
+      Error in `print.summary.nsCosinor()`:
+      ! `x` must be of class <summary.nsCosinor>.
+      i We see class <list>.
 
 # print.summary.nsCosinor handles multiple seasonal cycles
 

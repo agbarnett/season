@@ -30,7 +30,7 @@ flagleap <- function(data, report = TRUE, matchin = FALSE) {
 
   n_days <- date_stop - date_start + 1
   if (report) {
-    cat("Total number of days = ", n_days, "\n")
+    cli::cli_inform("Total number of days: {n_days}")
   }
   seconds_in_day <- 60 * 60 * 24
   z <- (date_start:date_stop) * seconds_in_day
@@ -46,7 +46,7 @@ flagleap <- function(data, report = TRUE, matchin = FALSE) {
     index <- year_month_days >= min(year_month) &
       year_month_days <= max(year_month)
     if (report) {
-      cat('Number of index times ', sum(index), '\n')
+      cli::cli_inform("Number of index times: {sum(index)}")
     }
     days <- days[index, ]
   }

@@ -277,9 +277,9 @@ test_that("plotMonth - single panel", {
 })
 
 test_that("plotMonth errors when panels is not 1 or 12", {
-  expect_error(
-    plotMonth(data = CVD, resp = "cvd", panels = 4),
-    "panels must be 1 or 12"
+  expect_snapshot(
+    error = TRUE,
+    plotMonth(data = CVD, resp = "cvd", panels = 4)
   )
 })
 

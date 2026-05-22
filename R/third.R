@@ -30,7 +30,12 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
 
   n_sample <- length(data)
   if (n_sample < 10) {
-    cat('warning n<10\n')
+    cli::cli_warn(
+      c(
+        "Sample size is small ({.code n = {n_sample}} < 10)",
+        "Results may be unreliable."
+      )
+    )
   }
   # ------------ cumulants in non-redundant region -----------------
   XXX <- matrix(data = 0, n.lag + n.lag + 1, n.lag + n.lag + 1)
@@ -81,10 +86,14 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
 
   # Lags of minima and maxima
   if (outmax) {
-    cat('Maximum at (including symmetries)\n')
-    cat(which(XXX == max(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
-    cat('Minimum at (including symmetries)\n')
-    cat(which(XXX == min(XXX), arr.ind = TRUE) - n.lag - 1, '\n')
+    max_idx <- which(XXX == max(XXX), arr.ind = TRUE) - n.lag - 1
+    min_idx <- which(XXX == min(XXX), arr.ind = TRUE) - n.lag - 1
+    cli::cli_inform(c(
+      "Maximum at (including symmetries):",
+      " " = "{paste(max_idx, collapse = ' ')}",
+      "Minimum at (including symmetries):",
+      " " = "{paste(min_idx, collapse = ' ')}"
+    ))
   }
 
   # Lags of minima and maxima

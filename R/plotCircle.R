@@ -23,7 +23,12 @@
 #' @export
 plotCircle <- function(months, dp = 1, ...) {
   if (length(months) != 12) {
-    stop('Length of monthly estimates must be 12')
+    cli::cli_abort(
+      c(
+        "{.arg months} must have length {.val 12}.",
+        "i" = "Got length {length(months)}."
+      )
+    )
   }
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   # create grey scale, standardise results to [0.2,1]

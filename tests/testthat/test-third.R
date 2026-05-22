@@ -4,13 +4,20 @@ c[2, ] <- c(26, 34, 18, 7.6, 2)
 c[3, ] <- c(12.8, 18, 23.2, 10.4, 3)
 c[4, ] <- c(4.8, 7.6, 10.4, 13.2, 4)
 c[5, ] <- c(1, 2, 3, 4, 5)
-d <- third(1:5, n.lag = 5, centre = FALSE, plot = FALSE)
+
+test_that("Moment estimation matrix warns appropriately", {
+  expect_snapshot(
+    third(1:5, n.lag = 5, centre = FALSE, plot = FALSE)
+  )
+})
 
 test_that("Moment estimation matrix is correct", {
+  d <- suppressWarnings(third(1:5, n.lag = 5, centre = FALSE, plot = FALSE))
   expect_identical(d$third[6:10, 6:10], c)
 })
 
 test_that("structure is correct", {
+  d <- suppressWarnings(third(1:5, n.lag = 5, centre = FALSE, plot = FALSE))
   expect_snapshot(d$waxis)
   expect_snapshot(d$third)
 })

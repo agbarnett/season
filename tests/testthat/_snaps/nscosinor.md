@@ -4,29 +4,27 @@
       nscosinor(data = data.frame(adj = 1:24), response = "adj", cycles = 12, tau = c(
         10, 50))
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `nscosinor()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 
     Code
       nscosinor(data = CVD, response = "adj", cycles = 12, tau = 10)
     Condition
-      Error:
-      ! 'tau' must be a vector of size 'cycle' + 1
-      i.e., a smoothing parameter (tau) for each cycle, plus one for trend
-      We see:
-      length tau:1
-      length cycle:1
+      Error in `nscosinor()`:
+      ! `tau` must have length 2.
+      i One smoothing parameter per cycle, plus one for trend.
+      x We see length(`tau`) = 1, length(`cycles`) = 1.
 
 ---
 
     Code
       nscosinor(data = CVD, response = "adj", cycles = 0, tau = c(10, 50))
     Condition
-      Error:
-      ! cycles must be > 0
-      There are 1 values below 0
+      Error in `nscosinor()`:
+      ! `cycles` must be greater than "0".
+      x We see 1 value <= 0.
 
 ---
 
@@ -34,18 +32,16 @@
       nscosinor(data = CVD, response = "adj", cycles = 12, tau = c(10, 50), niters = 10,
       burnin = 100)
     Condition
-      Error:
-      ! Number of iterations must be greater than burn-in
-      We see:
-      burnin: 100
-      niters: 100
+      Error in `nscosinor()`:
+      ! `niters` must be greater than `burnin`.
+      x We see `burnin` = 100, `niters` = 10.
 
 ---
 
     Code
       nscosinor(data = cvd_na, response = "adj", cycles = 12, tau = c(10, 50))
     Condition
-      Error:
-      ! There must be no missing data in the dependent variable
-      We see: 1 missing value(s)
+      Error in `nscosinor()`:
+      ! `resp` must not contain missing values.
+      x We see 1 missing value.
 

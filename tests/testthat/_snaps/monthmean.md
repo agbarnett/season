@@ -30,15 +30,15 @@
     Code
       monthmean(data = NULL, resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 
     Code
       monthmean(data = CVD)
-    Output
-      Total number of days =  5114 
+    Message
+      Total number of days: 5114
     Condition
       Error in `monthmean()`:
       ! argument "resp" is missing, with no default
@@ -48,24 +48,25 @@
     Code
       monthmean(data = data.frame(month = 1:12, x = 1:12), resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'year'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `year`.
 
 ---
 
     Code
       monthmean(data = data.frame(year = rep(2000, 12), x = 1:12), resp = "x")
     Condition
-      Error:
-      ! Data must contain a variable called 'month'
+      Error in `monthmean()`:
+      ! `data` must contain a variable called `month`.
 
 # monthmean works
 
     Code
       monthmean(data = data.frame(month = 1:12, x = 1:12, year = rep(1999, 12)),
       resp = "x")
+    Message
+      Total number of days: 365
     Output
-      Total number of days =  365 
            Month Mean
          January    1
         February    2
