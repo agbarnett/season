@@ -492,9 +492,8 @@ create_strata <- function(
   match_day <- date_diff - ((window_num - 1) * stratalength) + 1
   n_windows <- floor(n_rows_original / stratalength) + 1
 
-  # Note NULL from non-existing column: data_to_use$window_num == n_windows`
-  # https://github.com/agbarnett/season/issues/70
-  last_window <- data_to_use[data_to_use$window_num == n_windows, ]
+  # add last window or not
+  last_window <- data_to_use[window_num == n_windows, ]
   if (nrow(last_window) > 0) {
     last_length <- max(time[window_num == n_windows]) -
       min(time[window_num == n_windows]) +
