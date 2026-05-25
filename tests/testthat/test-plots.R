@@ -310,7 +310,9 @@ test_that("plotMonth - 12 panels CVD", {
   lifecycle::expect_deprecated(plotMonth(data = CVD, resp = "cvd", panels = 12))
   vdiffr::expect_doppelganger(
     "plotMonth-12-panels",
-    function() suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 12))
+    function() {
+      suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 12))
+    }
   )
 })
 
