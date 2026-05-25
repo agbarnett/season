@@ -1,9 +1,10 @@
 #' Plot of Monthly Estimates
 #'
-#' Plots the estimated from a generalized linear model with a categorical
-#' variable of month.
+#' `r lifecycle::badge("deprecated")` Soft-deprecated in favour of
+#' [autoplot.monthglm()], which returns a ggplot object. The base R [plot()]
+#' will still work, but we recommend using [autoplot.monthglm()].
 #'
-#' @param x a `monthglm` object produced by `monthglm`.
+#' @param x a `monthglm` object produced by [monthglm()].
 #' @param alpha statistical significance level of confidence intervals.
 #' @param ylim y coordinates ranges (the default is NULL, and the limits are
 #' automatically calculated).
@@ -12,7 +13,7 @@
 #' @returns Plot of the estimated from a generalized linear model with a
 #'   categorical variable of month.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso `monthglm`
+#' @seealso [autoplot.monthglm()], [monthglm()]
 #' @examples
 #' \donttest{
 #' mmodel <- monthglm(
@@ -23,6 +24,9 @@
 #'   offsetmonth = TRUE,
 #'   refmonth = 6
 #' )
+#' # Recommended:
+#' autoplot(mmodel)
+#' # Still works, but deprecated:
 #' plot(mmodel)
 #' }
 #'
@@ -35,6 +39,14 @@ plot.monthglm <- function(
   ylab = "",
   ...
 ) {
+  lifecycle::deprecate_warn(
+    when = "0.3.17",
+    what = "plot.monthglm()",
+    details = c(
+      "Use `autoplot()` for a ggplot object you can extend:",
+      i = "  autoplot(x) + ggplot2::labs(x = ..., y = ...)"
+    )
+  )
   # the whole list of settable par's.
   op <- par(no.readonly = TRUE)
   ## y-axis limits
@@ -96,4 +108,102 @@ plot.monthglm <- function(
     points(x$call$refmonth, 1) # reference point
   }
   par(op) # restore graphic settings
+}
+
+#' Plot the monthly estimates from [monthglm()]
+#'
+#' Returns a ggplot of the per-month coefficient estimates from a
+#' [monthglm()] fit, with a confidence interval per month and (for
+#' Poisson/binomial families) a horizontal reference line at the rate /
+#' odds ratio of 1.
+#'
+#' @param object a `monthglm` object produced by [monthglm()].
+#' @param alpha statistical significance level for the confidence
+#'   intervals (default 0.05).
+#' @param ... unused, for S3 generic compatibility.
+#' @returns a ggplot object.
+#' @author Nicholas Tierney
+#' @seealso [monthglm()]
+#' @examples
+#' \donttest{
+#' mmodel <- monthglm(
+#'   formula = cvd ~ 1,
+#'   data = CVD,
+#'   family = poisson(),
+#'   offsetpop = expression(pop / 100000),
+#'   offsetmonth = TRUE,
+#'   refmonth = 6
+#' )
+#' autoplot(mmodel)
+#' autoplot(mmodel) + ggplot2::labs(x = "Month", y = "Rate ratio")
+#' }
+#' @export
+autoplot.monthglm <- function(object, alpha = 0.05, ...) {
+  term <- NULL
+  check_if_monthglm(object)
+  month_num <- mean <- lower <- upper <- NULL
+  glm_summary <- summary(object$glm)
+  coefs <- as.data.frame(glm_summary$coefficients)
+  estimate_mean <- coefs$Estimate
+  estimate_std_err <- coefs$`Std. Error`
+  z_stat <- stats::qnorm(1 - alpha / 2)
+  z_stat_std_err <- z_stat * estimate_std_err
+
+  type <- as.character(object$call$family)[1]
+
+  out <- data.frame(
+    term = rownames(coefs),
+    mean = estimate_mean,
+    lower = estimate_mean - z_stat_std_err,
+    upper = estimate_mean + z_stat_std_err
+  ) |>
+    subset(
+      subset = grepl("months", term)
+    ) |>
+    transform(
+      month_num = match(gsub("months", "", term, fixed = TRUE), month.abb)
+    )
+
+  exp_family <- type %in% c("poisson", "quasipoisson", "binomial")
+  if (exp_family) {
+    out <- transform(
+      out,
+      mean = exp(mean),
+      lower = exp(lower),
+      upper = exp(upper)
+    )
+  }
+
+  p <- ggplot2::ggplot(
+    out,
+    ggplot2::aes(
+      x = month_num,
+      y = mean,
+      ymin = lower,
+      ymax = upper
+    )
+  ) +
+    ggplot2::geom_pointrange() +
+    ggplot2::scale_x_continuous(
+      breaks = 1:12,
+      labels = substr(month.abb, 1, 1),
+      limits = c(1, 12)
+    ) +
+    ggplot2::labs(
+      x = "Month",
+      y = ""
+    ) +
+    ggplot2::theme_bw()
+
+  if (exp_family) {
+    p <- p +
+      ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+      ggplot2::annotate(
+        "point",
+        x = object$call$refmonth,
+        y = 1,
+        shape = 1
+      )
+  }
+  p
 }

@@ -8,6 +8,10 @@
 #' estimates of an annual seasonal pattern. Darker shades of grey correspond to
 #' larger numbers.
 #'
+#' `r lifecycle::badge("deprecated")` Soft-deprecated in favour of
+#' [plot_circle()], which returns a ggplot object you can extend with `+`.
+#' The base R plot below still works.
+#'
 #' @param months monthly variable to plot, the shades of grey of the 12
 #' segments are proportional to this variable. The first result is assumed to
 #' be January, the second February, and so on.
@@ -15,13 +19,22 @@
 #' @param \dots additional arguments to [plot()]
 #' @returns a donut-type plot of a monthly variable
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
+#' @seealso [plot_circle()]
 #' @examples
 #' \donttest{
-#' plotCircle(months = seq(1,12,1), dp = 0)
+#' # Recommended:
+#' plot_circle(months = seq(1, 12, 1), dp = 0)
+#' # Still works, but deprecated:
+#' plotCircle(months = seq(1, 12, 1), dp = 0)
 #' }
 #'
 #' @export
 plotCircle <- function(months, dp = 1, ...) {
+  lifecycle::deprecate_warn(
+    when = "0.3.17",
+    what = "plotCircle()",
+    with = "plot_circle()"
+  )
   if (length(months) != 12) {
     cli::cli_abort(
       c(
@@ -122,4 +135,61 @@ plotCircle <- function(months, dp = 1, ...) {
     text(2 * width, yref, clabel2)
   }
   par(op) # restore graphic settings
+}
+
+#' Circular plot of monthly values (ggplot2)
+#'
+#'
+#' Circular plot of a monthly variable. This circular plot can be useful for
+#' estimates of an annual seasonal pattern. Darker shades of grey correspond to
+#' larger numbers.
+#' Pie chart where each segment is one month and the fill is shaded
+#' to indicate the value (darker = larger). The first value is assumed to
+#' be January.
+#' This circular plot can be useful for
+#' estimates of an annual seasonal pattern. Darker shades of grey correspond to
+#' larger numbers.
+#'
+#' @param months a length-12 numeric vector of monthly values, January first.
+#' @param dp decimal places for the per-month label, default 1.
+#' @returns a ggplot object.
+#' @author Nicholas Tierney
+#' @seealso [plotCircle()] (deprecated base R version)
+#' @export
+#' @examples
+#' \donttest{
+#' plot_circle(months = seq(1, 12, 1), dp = 0)
+#' plot_circle(months = c(1, 3, 5, 7, 9, 11, 12, 10, 8, 6, 4, 2)) +
+#'   ggplot2::labs(title = "Example monthly pattern")
+#' }
+plot_circle <- function(months, dp = 1) {
+  if (length(months) != 12) {
+    cli::cli_abort(
+      c(
+        "{.arg months} must have length {.val 12}.",
+        "i" = "Got length {length(months)}."
+      )
+    )
+  }
+  month_num <- value <- label <- NULL
+  dat <- data.frame(
+    month_num = factor(month.abb, levels = month.abb),
+    value = months,
+    label = formatC(months, format = "f", digits = dp)
+  )
+  ggplot2::ggplot(
+    data = dat,
+    ggplot2::aes(
+      x = month_num,
+      y = 1,
+      fill = value
+    )
+  ) +
+    ggplot2::geom_col(width = 1, colour = "black") +
+    ggplot2::coord_polar(start = 0) +
+    ggplot2::scale_y_continuous(limits = c(-1, 1)) + # <-- donut hole
+    ggplot2::scale_fill_gradient(low = "white", high = "grey30") +
+    ggplot2::geom_text(ggplot2::aes(y = 0.5, label = month_num), size = 3) +
+    ggplot2::theme_void() +
+    ggplot2::labs(fill = NULL)
 }

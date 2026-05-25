@@ -5,6 +5,10 @@
 ## mockable bindings: end
 NULL
 
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot
+
 #' season: Tools for Uncovering and Estimating Seasonal Patterns.
 #'
 #' The package contains graphical methods for displaying seasonal data and

@@ -250,8 +250,7 @@ aaft_third <- function(x_diff, n.boot, n.lag, reglags) {
         data = aaft_sers[, x],
         n.lag = n.lag,
         centre = FALSE,
-        outmax = FALSE,
-        plot = FALSE
+        outmax = FALSE
       )$third[reglags, reglags]
     },
     FUN.VALUE = array(0, dim = c(n.lag + 1, n.lag + 1))

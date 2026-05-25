@@ -15,8 +15,9 @@
 a plot of class \code{ggplot}.
 }
 \description{
-Plots the trend and season(s) from a \code{nsCosinor} object produced by
-\code{\link[=nscosinor]{nscosinor()}}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=autoplot.nsCosinor]{autoplot.nsCosinor()}}, which is the same ggplot — just nudges the
+recommended idiom so users can \code{+ theme_bw()} etc.
 }
 \details{
 The code produces the season(s) and trend estimates.
@@ -35,12 +36,15 @@ tau <- c(10,50)
     burnin = 100,
     tau = tau
     )
+# Recommended:
+autoplot(res12)
+# Still works, but deprecated:
 plot(res12)
 }
 }
 }
 \seealso{
-\code{\link[=nscosinor]{nscosinor()}}
+\code{\link[=autoplot.nsCosinor]{autoplot.nsCosinor()}}, \code{\link[=nscosinor]{nscosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

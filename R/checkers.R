@@ -55,6 +55,22 @@ check_if_nscosinor <- function(
   check_if_class(x, "nsCosinor", arg = arg, call = call)
 }
 
+check_if_peri <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  check_if_class(x, "peri", arg = arg, call = call)
+}
+
+check_if_third <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  check_if_class(x, "third", arg = arg, call = call)
+}
+
 check_if_casecross <- function(
   x,
   arg = rlang::caller_arg(x),

@@ -59,8 +59,7 @@ nonlintest <- function(data, n.lag, n.boot, alpha = 0.05) {
     data = x_diff,
     n.lag = n.lag,
     centre = FALSE,
-    outmax = FALSE,
-    plot = FALSE
+    outmax = FALSE
   )$third[reglags, reglags]
 
   x_third[1, 1] <- 0

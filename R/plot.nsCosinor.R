@@ -1,7 +1,8 @@
 #' Plot the Results of a Non-stationary Cosinor
 #'
-#' Plots the trend and season(s) from a `nsCosinor` object produced by
-#' [nscosinor()].
+#' `r lifecycle::badge("deprecated")` Soft-deprecated in favour of
+#' [autoplot.nsCosinor()], which is the same ggplot — just nudges the
+#' recommended idiom so users can `+ theme_bw()` etc.
 #'
 #' The code produces the season(s) and trend estimates.
 #'
@@ -9,7 +10,7 @@
 #' @param \dots further arguments passed to or from other methods.
 #' @returns a plot of class `ggplot`.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso [nscosinor()]
+#' @seealso [autoplot.nsCosinor()], [nscosinor()]
 #' @export
 #' @examples
 #' \donttest{
@@ -25,51 +26,78 @@
 #'     burnin = 100,
 #'     tau = tau
 #'     )
+#' # Recommended:
+#' autoplot(res12)
+#' # Still works, but deprecated:
 #' plot(res12)
 #' }
 #' }
 plot.nsCosinor <- function(x, ...) {
-  ## basic variables
-  cycles <- x$cycles
-  k <- length(cycles)
-  month <- (12 * (x$time - floor(x$time))) + 1
-
-  # season
-  smat <- as.matrix(x$season)
-  # loop through seasons
-  for (index in 1:k) {
-    mean <- smat[, (index * 3) - 2]
-    lower <- smat[, (index * 3) - 1]
-    upper <- smat[, (index * 3)]
-    type <- paste0("Season, cycle=", cycles[index])
-    this.frame <- data.frame(
-      time = x$time,
-      mean = mean,
-      lower = lower,
-      upper = upper,
-      type = type
+  lifecycle::deprecate_warn(
+    when = "0.3.17",
+    what = "plot.nsCosinor()",
+    details = c(
+      "Use `autoplot()` for a ggplot object you can extend:",
+      i = "  autoplot(x) + ggplot2::theme_minimal()"
     )
-    if (index == 1) {
-      season.frame <- this.frame
-    } else {
-      season.frame <- rbind(season.frame, this.frame)
-    }
-  }
-
-  # trend
-  trend.frame <- data.frame(
-    time = x$time,
-    mean = x$trend$mean,
-    lower = x$trend$lower,
-    upper = x$trend$upper,
-    type = 'Trend'
   )
-  plot.frame <- rbind(trend.frame, season.frame)
+  autoplot(x, ...)
+}
 
-  # plot with ribbon
-  gplot <- ggplot2::ggplot(
-    plot.frame,
-    ggplot2::aes(time, mean)
+#' Plot the trend and seasonal estimates from [nscosinor()]
+#'
+#' Returns a ggplot of the trend and seasonal components estimated by
+#' [nscosinor()], faceted by component and with a ribbon for the
+#' confidence interval.
+#'
+#' @param object an `nsCosinor` object produced by [nscosinor()].
+#' @param ... unused, for S3 generic compatibility.
+#' @returns a ggplot object faceted by trend / season(s).
+#' @author Nicholas Tierney
+#' @seealso [nscosinor()]
+#' @examples
+#' \donttest{
+#' \dontrun{
+#' res <- nscosinor(
+#'   data = CVD, response = "adj", cycles = 12,
+#'   niters = 200, burnin = 100, tau = c(10, 50)
+#' )
+#' autoplot(res)
+#' autoplot(res) + ggplot2::theme_minimal()
+#' }
+#' }
+#' @export
+autoplot.nsCosinor <- function(object, ...) {
+  check_if_nscosinor(object)
+  mean <- lower <- upper <- type <- NULL
+  cycles <- object$cycles
+  k <- length(cycles)
+  smat <- as.matrix(object$season)
+  season_frames <- lapply(seq_len(k), function(index) {
+    data.frame(
+      time = object$time,
+      mean = smat[, (index * 3) - 2],
+      lower = smat[, (index * 3) - 1],
+      upper = smat[, (index * 3)],
+      type = paste0("Season, cycle=", cycles[index])
+    )
+  })
+  season_frame <- do.call(rbind, season_frames)
+  trend_frame <- data.frame(
+    time = object$time,
+    mean = object$trend$mean,
+    lower = object$trend$lower,
+    upper = object$trend$upper,
+    type = "Trend"
+  )
+  plot_frame <- rbind(trend_frame, season_frame)
+
+  ggplot2::ggplot(
+    plot_frame,
+    ggplot2::aes(
+      x = time,
+      y = mean
+    )
   ) +
     ggplot2::geom_ribbon(
       ggplot2::aes(
@@ -81,14 +109,12 @@ plot.nsCosinor <- function(x, ...) {
     ) +
     ggplot2::geom_line() +
     ggplot2::theme_bw() +
-    ggplot2::xlab('Time') +
-    ggplot2::ylab(' ') +
+    ggplot2::labs(
+      x = "Time",
+      y = ""
+    ) +
     ggplot2::facet_grid(
       type ~ .,
-      scales = 'free_y'
+      scales = "free_y"
     )
-  # print(gplot)
-
-  # return
-  return(gplot)
 }

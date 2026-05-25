@@ -6,27 +6,51 @@
 #' (essentially the autocovariance). The equation for the third order moment at
 #' lags (j,k) is: \eqn{n^{-1}\sum X_t X_{t+j} X_{t+k}}. The third-order moment
 #' is useful for testing for non-linearity in a time series, and is used by
-#' `nonlintest`.
+#' [nonlintest()].
 #'
 #' @param data a vector of equally spaced numeric observations (time series).
 #' @param n.lag the number of lags, maximum = length of time series.
 #' @param centre centre series by subtracting mean (default=TRUE).
 #' @param outmax display the (x,y) lag co-ordinates for the maximum and minimum
 #' values (default=TRUE).
-#' @param plot ggplot contour plot of the third order moment (default=TRUE).
-#' @returns a list with the following elements:
+#' @param plot `r lifecycle::badge("deprecated")` Use [autoplot.third()] on the
+#'   returned object instead. See examples.
+#' @returns an object of class `"third"` (a list) with the following elements:
 #'   * waxis: the axis from `-n.lag` to `n.lag`.
 #'   * third: the estimated third order moment in the range -n.lag to n.lag,
 #'     including the symmetries.
-#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @examples
+#'   * n.lag: the maximum lag.
 #'
-#' third(CVD$cvd, n.lag = 12)
+#'   Pass the result to [autoplot()][autoplot.third()] to draw the contour
+#'   plot.
+#' @author Adrian Barnett \email{a.barnett@qut.edu.au}
+#' @seealso [autoplot.third()]
+#' @examples
+#' \donttest{
+#' t <- third(CVD$cvd, n.lag = 12)
+#' autoplot(t)
+#' }
 #'
 #' @export third
-third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
-  # Setting some variables to NULL first (for R CMD check)
-  xaxis <- yaxis <- zaxis <- NULL
+third <- function(
+  data,
+  n.lag,
+  centre = TRUE,
+  outmax = TRUE,
+  plot = lifecycle::deprecated()
+) {
+  if (lifecycle::is_present(plot)) {
+    lifecycle::deprecate_warn(
+      when = "0.3.17",
+      what = "third(plot)",
+      details = c(
+        "`third()` now returns a classed object you can pass to `autoplot()`.",
+        i = "Use `autoplot(third(data, n.lag))` to draw the contour plot."
+      )
+    )
+  } else {
+    plot <- FALSE
+  }
 
   n_sample <- length(data)
   if (n_sample < 10) {
@@ -43,9 +67,6 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
     centred <- data - mean(data)
   } else {
     centred <- data
-  }
-  if (plot) {
-    count <- 0
   }
   for (d in 0:n.lag) {
     for (k in d:n.lag) {
@@ -66,19 +87,6 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
       XXX[n.lag + 1 + d - k, n.lag + 1 - k] <- XXX[d + n.lag + 1, k + n.lag + 1]
       # Symmetry
       XXX[n.lag + 1 - k, n.lag + 1 + d - k] <- XXX[d + n.lag + 1, k + n.lag + 1]
-      if (plot) {
-        frame <- data.frame(
-          xaxis = d,
-          yaxis = k,
-          zaxis = XXX[d + n.lag + 1, k + n.lag + 1]
-        )
-        if (count == 0) {
-          for.plot <- frame
-        } else {
-          for.plot <- rbind(for.plot, frame)
-        }
-        count <- count + 1
-      }
     }
   }
 
@@ -96,25 +104,60 @@ third <- function(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE) {
     ))
   }
 
-  # Lags of minima and maxima
-  if (plot) {
-    gplot <- ggplot2::ggplot(
-      for.plot,
-      ggplot2::aes(
-        xaxis,
-        yaxis,
-        z = zaxis
-      )
-    ) +
-      ggplot2::stat_contour() +
-      ggplot2::geom_tile(ggplot2::aes(fill = zaxis))
-    print(gplot)
-  }
-
   result <- list(
     waxis = waxis,
-    third = XXX
+    third = XXX,
+    n.lag = n.lag
   )
+  class(result) <- c("third", "list")
+
+  ## Deprecated side-effect: still respect `plot = TRUE` if user passed it
+  if (isTRUE(plot)) {
+    print(autoplot(result))
+  }
 
   result
+}
+
+#' Plot the third-order moment from [third()]
+#'
+#' Produce a ggplot contour of the third-order moment over its
+#' non-redundant region.
+#'
+#' @param object a `"third"` object produced by [third()].
+#' @param ... unused, for S3 generic compatibility.
+#' @returns a ggplot contour plot.
+#' @author Nicholas Tierney
+#' @seealso [third()]
+#' @examples
+#' \donttest{
+#' t <- third(CVD$cvd, n.lag = 4)
+#' autoplot(t)
+#' }
+#' @export
+autoplot.third <- function(object, ...) {
+  k <- d <- NULL
+  check_if_third(object)
+  xaxis <- yaxis <- zaxis <- NULL
+  XXX <- object$third
+  n_lag <- object$n.lag
+  coords <- expand.grid(d = 0:n_lag, k = 0:n_lag) |>
+    subset(subset = k >= d)
+  dat <- data.frame(
+    xaxis = coords$d,
+    yaxis = coords$k,
+    zaxis = XXX[cbind(coords$d + n_lag + 1, coords$k + n_lag + 1)]
+  )
+  ggplot2::ggplot(
+    dat,
+    ggplot2::aes(
+      x = xaxis,
+      y = yaxis,
+      z = zaxis
+    )
+  ) +
+    ggplot2::geom_tile(ggplot2::aes(
+      fill = zaxis
+    )) +
+    ggplot2::stat_contour()
 }
