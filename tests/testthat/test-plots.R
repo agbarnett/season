@@ -1,5 +1,3 @@
-# Base R plots are wrapped in function() so vdiffr can render them onto its
-
 # plot.Cosinor ----------------------------------------------------------
 test_that("plot.Cosinor - monthly Poisson", {
   skip_on_ci()
@@ -12,17 +10,27 @@ test_that("plot.Cosinor - monthly Poisson", {
     family = poisson(),
     offsetmonth = TRUE
   )
+  lifecycle::expect_deprecated(plot(m))
   vdiffr::expect_doppelganger(
     "plot-Cosinor-monthly-poisson",
-    function() plot(m)
+    function() suppressWarnings(plot(m))
   )
 })
 
 test_that("plot.Cosinor - daily identity", {
   skip_on_ci()
   skip_on_cran()
-  m <- cosinor(cvd ~ 1, date = "date", data = CVDdaily, type = "daily")
-  vdiffr::expect_doppelganger("plot-Cosinor-daily-identity", function() plot(m))
+  m <- cosinor(
+    cvd ~ 1,
+    date = "date",
+    data = CVDdaily,
+    type = "daily"
+  )
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-Cosinor-daily-identity",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 test_that("plot.Cosinor - binomial cloglog (probability scale)", {
@@ -34,9 +42,10 @@ test_that("plot.Cosinor - binomial cloglog (probability scale)", {
     data = stillbirth,
     family = binomial(link = "cloglog")
   )
+  lifecycle::expect_deprecated(plot(m))
   vdiffr::expect_doppelganger(
     "plot-Cosinor-binomial-cloglog",
-    function() plot(m)
+    function() suppressWarnings(plot(m))
   )
 })
 
@@ -44,7 +53,11 @@ test_that("plot.Cosinor - hourly indoor temperature", {
   skip_on_ci()
   skip_on_cran()
   m <- cosinor(bedroom ~ 1, date = "datetime", data = indoor, type = "hourly")
-  vdiffr::expect_doppelganger("plot-Cosinor-hourly", function() plot(m))
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-Cosinor-hourly",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 # plot.monthglm ---------------------------------------------------------
@@ -59,23 +72,32 @@ test_that("plot.monthglm - Poisson rate ratios", {
     offsetpop = expression(pop / 100000),
     offsetmonth = TRUE
   )
-  vdiffr::expect_doppelganger("plot-monthglm-poisson", function() plot(m))
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-monthglm-poisson",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 test_that("plot.monthglm - Gaussian", {
   skip_on_ci()
   skip_on_cran()
   m <- monthglm(adj ~ 1, data = CVD, family = stats::gaussian())
-  vdiffr::expect_doppelganger("plot-monthglm-gaussian", function() plot(m))
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-monthglm-gaussian",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 test_that("plot.monthglm - user-supplied ylim", {
   skip_on_ci()
   skip_on_cran()
   m <- monthglm(cvd ~ 1, data = CVD, family = poisson(), offsetmonth = TRUE)
+  lifecycle::expect_deprecated(plot(m))
   vdiffr::expect_doppelganger(
     "plot-monthglm-ylim",
-    function() plot(m, ylim = c(0.5, 1.5))
+    function() suppressWarnings(plot(m, ylim = c(0.5, 1.5)))
   )
 })
 
@@ -90,7 +112,11 @@ test_that("plot.Monthmean - adjusted CVD rates", {
     offsetpop = expression(pop / 100000),
     adjmonth = "average"
   )
-  vdiffr::expect_doppelganger("plot-Monthmean", function() plot(mm))
+  lifecycle::expect_deprecated(plot(mm))
+  vdiffr::expect_doppelganger(
+    "plot-Monthmean",
+    function() suppressWarnings(plot(mm))
+  )
 })
 
 # plot.nonlintest -------------------------------------------------------
@@ -106,7 +132,13 @@ test_that("plot.nonlintest reports when no points exceed the test limits", {
   if (max(abs(res$region)) != 0) {
     skip("input triggered exceedances; can't test 'none' branch")
   }
-  expect_output(plot(res), "No points of the third-order moment exceed")
+  # plot.nonlintest is deprecated and now emits its "no exceedance"
+  # message via cli::cli_inform() (message channel, not stdout). Suppress
+  # the deprecation warning and check the message.
+  expect_message(
+    suppressWarnings(plot(res)),
+    "No points of the third-order moment exceed"
+  )
 })
 
 test_that("plot.nonlintest errors on non-nonlintest input", {
@@ -131,7 +163,12 @@ test_that("plot.nonlintest - region of significance", {
     .init = 0
   )
   res <- nonlintest(data = x, n.lag = 3, n.boot = 25)
-  vdiffr::expect_doppelganger("plot-nonlintest", plot(res, plot = TRUE))
+  # `plot.nonlintest()` is deprecated — suppress the warning here so the
+  # vdiffr snapshot stays clean. New autoplot-based tests in
+  # test-autoplot.R cover the recommended path.
+  suppressWarnings(
+    vdiffr::expect_doppelganger("plot-nonlintest", plot(res))
+  )
 })
 
 # plot.nsCosinor --------------------------------------------------------
@@ -149,7 +186,11 @@ test_that("plot.nsCosinor - single cycle", {
     burnin = 30,
     div = 1000
   )
-  vdiffr::expect_doppelganger("plot-nsCosinor-one-cycle", plot(m))
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-nsCosinor-one-cycle",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 test_that("plot.nsCosinor - two cycles", {
@@ -165,7 +206,11 @@ test_that("plot.nsCosinor - two cycles", {
     burnin = 20,
     div = 1000
   )
-  vdiffr::expect_doppelganger("plot-nsCosinor-two-cycles", plot(m))
+  lifecycle::expect_deprecated(plot(m))
+  vdiffr::expect_doppelganger(
+    "plot-nsCosinor-two-cycles",
+    function() suppressWarnings(plot(m))
+  )
 })
 
 # plotCircle ------------------------------------------------------------
@@ -173,9 +218,10 @@ test_that("plot.nsCosinor - two cycles", {
 test_that("plotCircle - 12 monthly values", {
   skip_on_ci()
   skip_on_cran()
+  lifecycle::expect_deprecated(plotCircle(months = 1:12, dp = 0))
   vdiffr::expect_doppelganger(
     "plotCircle",
-    function() plotCircle(months = 1:12, dp = 0)
+    function() suppressWarnings(plotCircle(months = 1:12, dp = 0))
   )
 })
 
@@ -261,18 +307,22 @@ test_that("plotCircular - two areas with auto legend", {
 test_that("plotMonth - 12 panels CVD", {
   skip_on_ci()
   skip_on_cran()
+  lifecycle::expect_deprecated(plotMonth(data = CVD, resp = "cvd", panels = 12))
   vdiffr::expect_doppelganger(
     "plotMonth-12-panels",
-    function() plotMonth(data = CVD, resp = "cvd", panels = 12)
+    function() {
+      suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 12))
+    }
   )
 })
 
 test_that("plotMonth - single panel", {
   skip_on_ci()
   skip_on_cran()
+  lifecycle::expect_deprecated(plotMonth(data = CVD, resp = "cvd", panels = 1))
   vdiffr::expect_doppelganger(
     "plotMonth-one-panel",
-    function() plotMonth(data = CVD, resp = "cvd", panels = 1)
+    function() suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 1))
   )
 })
 
@@ -283,25 +333,6 @@ test_that("plotMonth errors when panels is not 1 or 12", {
   )
 })
 
-# peri() (built-in plot = TRUE branch) ----------------------------------
-
-test_that("peri renders the periodogram when plot = TRUE", {
-  skip_on_ci()
-  skip_on_cran()
-  vdiffr::expect_doppelganger(
-    "peri-plot",
-    function() peri(CVD$cvd, plot = TRUE)
-  )
-})
-
-# third() (built-in plot = TRUE branch) ---------------------------------
-
-test_that("third renders the third-order moment when plot = TRUE", {
-  skip_on_ci()
-  skip_on_cran()
-  # outmax = FALSE silences the cat() message; we only want the plot here.
-  vdiffr::expect_doppelganger(
-    "third-plot",
-    function() third(CVD$cvd, n.lag = 12, outmax = FALSE, plot = TRUE)
-  )
-})
+# peri() and third() built-in plot = TRUE branches are deprecated.
+# Their visual output is covered by autoplot-peri / autoplot-third
+# snapshots in test-autoplot.R.

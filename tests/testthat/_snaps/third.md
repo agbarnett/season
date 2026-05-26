@@ -1,7 +1,7 @@
 # Moment estimation matrix warns appropriately
 
     Code
-      third(1:5, n.lag = 5, centre = FALSE, plot = FALSE)
+      third(1:5, n.lag = 5, centre = FALSE)
     Condition
       Warning:
       Sample size is small (`n = 5` < 10)
@@ -29,6 +29,11 @@
       [10,]    0    0  0.0  0.0   NA  1.0  2.0  3.0  4.0     5    NA
       [11,]    0    0  0.0  0.0  0.0   NA   NA   NA   NA    NA    NA
       
+      $n.lag
+      [1] 5
+      
+      attr(,"class")
+      [1] "third" "list" 
 
 # structure is correct
 

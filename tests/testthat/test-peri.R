@@ -1,5 +1,5 @@
 test_that("peri returns the documented periodogram outputs", {
-  peri_output <- peri(CVD$cvd, plot = FALSE)
+  peri_output <- peri(CVD$cvd)
   expect_named(peri_output, c("peri", "f", "c", "amp", "phase"))
 
   # Each output vector has length n/2 + 1; the first cycle is undefined.
@@ -14,7 +14,7 @@ test_that("peri's largest periodogram peak lands on the seeded cycle length", {
   # at the index where the cycle column equals 12.
   period_12 <- 12
   x <- 5 * cos(2 * pi * seq_len(288) / period_12)
-  peri_output <- peri(x, plot = FALSE)
+  peri_output <- peri(x)
   non_na <- which(!is.na(peri_output$c))
   peri_non_missing <- peri_output$peri[non_na]
   peri_max_idx <- which.max(peri_non_missing)
@@ -30,12 +30,12 @@ test_that("peri keeps the DC component when adjmean = FALSE", {
   # avoids the all-zero bins that trip up peri()'s phase loop.
   set.seed(2026 - 04 - 29)
   x <- 10 + stats::rnorm(64, sd = 0.5)
-  expect_lt(peri(x, adjmean = TRUE, plot = FALSE)$peri[1], 1e-8)
-  expect_gt(peri(x, adjmean = FALSE, plot = FALSE)$peri[1], 0)
+  expect_lt(peri(x, adjmean = TRUE)$peri[1], 1e-8)
+  expect_gt(peri(x, adjmean = FALSE)$peri[1], 0)
 })
 
 test_that("peri output is numerically stable for a known input", {
-  peri_output <- peri(CVD$cvd, plot = FALSE)$peri |> round(4)
+  peri_output <- peri(CVD$cvd)$peri |> round(4)
   expect_snapshot(peri_output)
 })
 
@@ -48,7 +48,7 @@ test_that("peri leaves the boundary phase bins at zero", {
   # The inner loop runs for j in 2:(n_fft - 1), so phase[1] and phase[n_fft]
   # are left at their initialised value of 0.
   # Pin this so any rewrite preserves the boundary behaviour exactly.
-  peri_output <- peri(CVD$cvd, plot = FALSE)
+  peri_output <- peri(CVD$cvd)
   n_fft <- length(peri_output$phase)
   expect_identical(peri_output$phase[1], 0)
   expect_identical(peri_output$phase[n_fft], 0)
@@ -63,7 +63,7 @@ test_that("peri recovers the phase of a pure cosine at its peak frequency", {
   n <- 288
   period <- 12
   x <- 5 * cos(2 * pi * seq_len(n) / period)
-  peri_output <- peri(x, plot = FALSE)
+  peri_output <- peri(x)
   peak <- which.max(peri_output$peri)
   expect_identical(peri_output$c[peak], period)
   expect_equal(peri_output$phase[peak], 11 * pi / 6, tolerance = 1e-6)
@@ -76,7 +76,7 @@ test_that("peri recovers the phase of a pure sine at its peak frequency", {
   n <- 288
   period <- 12
   x <- 5 * sin(2 * pi * seq_len(n) / period)
-  peri_output <- peri(x, plot = FALSE)
+  peri_output <- peri(x)
   peak <- which.max(peri_output$peri)
   expect_identical(peri_output$c[peak], period)
   expect_equal(peri_output$phase[peak], pi / 3, tolerance = 1e-6)
@@ -84,7 +84,7 @@ test_that("peri recovers the phase of a pure sine at its peak frequency", {
 
 test_that("peri's phase output is in [0, 2pi) at every bin", {
   # Catches any rewrite that drops the wrap-around step.
-  peri_output <- peri(CVD$cvd, plot = FALSE)
+  peri_output <- peri(CVD$cvd)
   expect_true(all(peri_output$phase >= 0))
   expect_true(all(peri_output$phase < 2 * pi + 1e-9))
 })
@@ -92,7 +92,7 @@ test_that("peri's phase output is in [0, 2pi) at every bin", {
 test_that("peri's phase output is numerically stable for a known input", {
   # Regression-catch for the full phase vector. If the rewrite drifts
   # at any frequency bin, this snapshot will flag it.
-  peri_phase <- peri(CVD$cvd, plot = FALSE)$phase |> round(4)
+  peri_phase <- peri(CVD$cvd)$phase |> round(4)
   expect_snapshot(peri_phase)
 })
 
@@ -100,7 +100,7 @@ test_that("peri's amplitude output is numerically stable for a known input", {
   # The amp field isn't touched by the phase rewrite, but pinning it
   # gives a cheap regression check against any drift in the FFT path
   # that feeds into both amp and phase.
-  peri_amp <- peri(CVD$cvd, plot = FALSE)$amp |> round(4)
+  peri_amp <- peri(CVD$cvd)$amp |> round(4)
   expect_snapshot(peri_amp)
 })
 
@@ -112,7 +112,7 @@ test_that("peri accepts odd-length input", {
   # adding it so a future rewrite can't silently break the odd path.
   set.seed(2026 - 04 - 30)
   x <- stats::rnorm(63)
-  expect_no_error(peri(x, plot = FALSE))
-  out <- peri(x, plot = FALSE)
+  expect_no_error(peri(x))
+  out <- peri(x)
   expect_length(out$peri, floor(length(x) / 2) + 1)
 })

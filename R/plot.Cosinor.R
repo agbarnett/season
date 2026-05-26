@@ -1,12 +1,8 @@
-## plot.Cosinor.R
-## Aug 2014
-## NB: Needs a rewrite at some stage - ... is not used so
-##    plot not as flexible as it might be
-
 #' Plot the Results of a Cosinor
 #'
-#' Plots the fitted sinusoid from a `Cosinor` object produced by
-#' [cosinor()].
+#' `r lifecycle::badge("deprecated")` Soft-deprecated in favour of
+#' [autoplot.Cosinor()], which returns a ggplot object you can extend with
+#' `+`. The base R plot below still works.
 #'
 #' The code produces the fitted sinusoid based on the intercept and sinusoid.
 #' The y-axis is on the scale of probability if the link function is
@@ -18,7 +14,8 @@
 #' @param \dots additional arguments passed to the sinusoid plot.
 #' @returns connected line plot of fitted sinusoid object produced by [cosinor].
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
-#' @seealso [cosinor()], [summary.Cosinor()], [seasrescheck()]
+#' @seealso [autoplot.Cosinor()], [cosinor()], [summary.Cosinor()],
+#'   [seasrescheck()]
 #' @examples
 #' ## cardiovascular disease data (offset based on number of days in...
 #' ## ...the month scaled to an average month length)
@@ -30,9 +27,20 @@
 #'   family = poisson(),
 #'   offsetmonth = TRUE
 #'   )
+#' # Recommended:
+#' autoplot(res)
+#' # Still works, but deprecated:
 #' plot(res)
 #' @export
 plot.Cosinor <- function(x, ...) {
+  lifecycle::deprecate_warn(
+    when = "0.3.17",
+    what = "plot.Cosinor()",
+    details = c(
+      "Use `autoplot()` for a ggplot object you can extend:",
+      i = "  autoplot(x) + ggplot2::theme_bw()"
+    )
+  )
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   on.exit(par(op), add = TRUE) # restore graphic settings
   f <- stats::as.formula(x$call$formula)
@@ -99,4 +107,79 @@ plot.Cosinor <- function(x, ...) {
       rug(time[o])
     }
   }
+}
+
+#' Plot the fitted sinusoid from a [cosinor()] model
+#'
+#' Returns a ggplot of the fitted sinusoid. The y-axis is on the
+#' probability scale for `logit` and `cloglog` link functions; the
+#' x-axis switches between month, year, and hour depending on the
+#' `type` of the model.
+#'
+#' @param object a `Cosinor` object produced by [cosinor()].
+#' @param ... unused, for S3 generic compatibility.
+#' @returns a ggplot object.
+#' @author Nicholas Tierney
+#' @seealso [cosinor()], [summary.Cosinor()], [seasrescheck()]
+#' @examples
+#' res <- cosinor(
+#'   cvd ~ 1,
+#'   date = "month",
+#'   data = CVD,
+#'   type = "monthly",
+#'   family = poisson(),
+#'   offsetmonth = TRUE
+#' )
+#' autoplot(res)
+#' autoplot(res) + ggplot2::theme_minimal()
+#' @export
+autoplot.Cosinor <- function(object, ...) {
+  check_if_cosinor(object)
+  fitted <- NULL
+  time <- object$glm$data[[object$date]]
+  time_ordered <- order(time)
+  dat <- data.frame(
+    time = time[time_ordered],
+    fitted = object$fitted.values[time_ordered]
+  )
+
+  on_prob_scale <- object$call$link %in% c("logit", "cloglog")
+  ylab <- paste(object$call$formula)[2]
+  if (on_prob_scale) {
+    ylab <- paste0("Probability(", ylab, ")")
+  }
+
+  p <- ggplot2::ggplot(
+    dat,
+    ggplot2::aes(time, fitted)
+  ) +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      x = tools::toTitleCase(object$date),
+      y = tools::toTitleCase(ylab)
+    ) +
+    ggplot2::theme_bw()
+
+  p_time <- switch(
+    object$type,
+    monthly = p +
+      ggplot2::geom_point() +
+      ggplot2::scale_x_continuous(
+        breaks = 1:12,
+        labels = substr(month.abb, 1, 1)
+      ),
+    daily = p +
+      ggplot2::scale_x_date(
+        date_breaks = "1 year",
+        date_labels = "%Y"
+      ),
+    hourly = p +
+      ggplot2::scale_x_datetime(
+        date_breaks = "1 hour",
+        date_labels = "%H"
+      ),
+    p
+  )
+
+  p_time
 }

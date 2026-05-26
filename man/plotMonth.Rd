@@ -23,15 +23,26 @@ Facetted lineplot of response over time, one facet per month.
 Plots results by month. Assumes the data frame contains variables called
 year and month.
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=plot_month]{plot_month()}}, which returns a ggplot object you can extend with \code{+}.
+The existing function still works.
+}
 \examples{
 \donttest{
-  plotMonth(data = CVD, resp = 'cvd', panels = 12)
+  # Recommended:
+  plot_month(data = CVD, resp = "cvd", panels = 12)
+  # Still works, but deprecated:
+  plotMonth(data = CVD, resp = "cvd", panels = 12)
 }
 
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
 Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
+}
+\seealso{
+\code{\link[=plot_month]{plot_month()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

@@ -23,11 +23,22 @@ Circular plot of a monthly variable. This circular plot can be useful for
 estimates of an annual seasonal pattern. Darker shades of grey correspond to
 larger numbers.
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=plot_circle]{plot_circle()}}, which returns a ggplot object you can extend with \code{+}.
+The base R plot below still works.
+}
 \examples{
 \donttest{
-plotCircle(months = seq(1,12,1), dp = 0)
+# Recommended:
+plot_circle(months = seq(1, 12, 1), dp = 0)
+# Still works, but deprecated:
+plotCircle(months = seq(1, 12, 1), dp = 0)
 }
 
+}
+\seealso{
+\code{\link[=plot_circle]{plot_circle()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

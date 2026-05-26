@@ -4,7 +4,7 @@
 \alias{peri}
 \title{Periodogram}
 \usage{
-peri(data, adjmean = TRUE, plot = TRUE)
+peri(data, adjmean = TRUE, plot = lifecycle::deprecated())
 }
 \arguments{
 \item{data}{a data frame.}
@@ -12,10 +12,11 @@ peri(data, adjmean = TRUE, plot = TRUE)
 \item{adjmean}{subtract the mean from the series before calculating the
 periodogram (default=TRUE).}
 
-\item{plot}{plot the estimated periodogram (default=TRUE).}
+\item{plot}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[=autoplot.peri]{autoplot.peri()}} on the
+returned object instead.}
 }
 \value{
-a list with the following elements:
+an object of class \code{"peri"} (a list) with the following elements:
 \itemize{
 \item peri: periodogram, I(\eqn{\omega}).
 \item f: frequencies in radians, \eqn{\omega}.
@@ -23,15 +24,21 @@ a list with the following elements:
 \item amp: amplitude periodogram.
 \item phase: phase periodogram.
 }
+
+Pass the result to \link[=autoplot.peri]{autoplot()} to draw the plot.
 }
 \description{
 Estimated periodogram using the fast Fourier transform (\code{fft}).
 }
 \examples{
 \donttest{
-p = peri(CVD$cvd)
+p <- peri(CVD$cvd)
+autoplot(p)
 }
 
+}
+\seealso{
+\code{\link[=autoplot.peri]{autoplot.peri()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

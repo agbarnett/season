@@ -4,7 +4,13 @@
 \alias{third}
 \title{Third-order Moment}
 \usage{
-third(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE)
+third(
+  data,
+  n.lag,
+  centre = TRUE,
+  outmax = TRUE,
+  plot = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{data}{a vector of equally spaced numeric observations (time series).}
@@ -16,15 +22,20 @@ third(data, n.lag, centre = TRUE, outmax = TRUE, plot = TRUE)
 \item{outmax}{display the (x,y) lag co-ordinates for the maximum and minimum
 values (default=TRUE).}
 
-\item{plot}{ggplot contour plot of the third order moment (default=TRUE).}
+\item{plot}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{\link[=autoplot.third]{autoplot.third()}} on the
+returned object instead. See examples.}
 }
 \value{
-a list with the following elements:
+an object of class \code{"third"} (a list) with the following elements:
 \itemize{
 \item waxis: the axis from \code{-n.lag} to \code{n.lag}.
 \item third: the estimated third order moment in the range -n.lag to n.lag,
 including the symmetries.
+\item n.lag: the maximum lag.
 }
+
+Pass the result to \link[=autoplot.third]{autoplot()} to draw the contour
+plot.
 }
 \description{
 Estimated third order moment for a time series.
@@ -34,12 +45,17 @@ The third-order moment is the extension of the second-order moment
 (essentially the autocovariance). The equation for the third order moment at
 lags (j,k) is: \eqn{n^{-1}\sum X_t X_{t+j} X_{t+k}}. The third-order moment
 is useful for testing for non-linearity in a time series, and is used by
-\code{nonlintest}.
+\code{\link[=nonlintest]{nonlintest()}}.
 }
 \examples{
+\donttest{
+t <- third(CVD$cvd, n.lag = 12)
+autoplot(t)
+}
 
-third(CVD$cvd, n.lag = 12)
-
+}
+\seealso{
+\code{\link[=autoplot.third]{autoplot.third()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}
