@@ -18,7 +18,7 @@
       Sat     0.001856  1.001858  0.028900  0.064 0.9488
       
       Likelihood ratio test=20.37  on 8 df, p=0.009011
-      n= 8815, number of events= 365 
+      n= 8814, number of events= 364 
 
 ---
 
@@ -48,7 +48,7 @@
       Sat     0.001856  1.001858  0.028900  0.064 0.9488
       
       Likelihood ratio test=20.37  on 8 df, p=0.009011
-      n= 8815, number of events= 365 
+      n= 8814, number of events= 364 
 
 # 'matchconf' argument of `casecross()` works as expected
 
@@ -69,7 +69,7 @@
       Sat     0.023660  1.023942  0.035252  0.671  0.50211
       
       Likelihood ratio test=51.19  on 7 df, p=8.436e-09
-      n= 1915, number of events= 365 
+      n= 1914, number of events= 364 
 
 ---
 
@@ -98,7 +98,7 @@
       Sat     0.023660  1.023942  0.035252  0.671  0.50211
       
       Likelihood ratio test=51.19  on 7 df, p=8.436e-09
-      n= 1915, number of events= 365 
+      n= 1914, number of events= 364 
 
 # 'stratamonth' argument of `casecross()` works as expected
 
