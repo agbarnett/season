@@ -21,3 +21,4 @@ All deprecated paths emit a one-time warning per session pointing at the replace
 
 * `monthmean()` argument, `adjmonth` must be one of "none" (default), "thirty", or "average", rather than: FALSE, "thirty", or "average".
 * `createAdj()` argument, `filepath` has been removed, as it is no longer required.
+* `casecross()` argument, `usefinalwindow` now defaults to TRUE, not FALSE.
