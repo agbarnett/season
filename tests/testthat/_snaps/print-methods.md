@@ -150,7 +150,7 @@
       Sat     0.001856  1.001858  0.028900  0.064 0.9488
       
       Likelihood ratio test=20.37  on 8 df, p=0.009011
-      n= 8814, number of events= 364 
+      n= 8815, number of events= 365 
 
 # print.casecross errors on non-casecross input
 

@@ -114,7 +114,7 @@ casecross <- function(
   exclusion = 2,
   stratalength = 28,
   matchdow = FALSE,
-  usefinalwindow = FALSE,
+  usefinalwindow = TRUE,
   matchconf = NULL,
   confrange = 0,
   stratamonth = FALSE
