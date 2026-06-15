@@ -2,6 +2,12 @@
 #' @export
 generics::tidy
 
+#' @export
+generics::glance
+
+#' @export
+generics::augment
+
 #' Tidy a casecross object
 #'
 #' This implements the tidy method for [broom::tidy.coxph()].
@@ -41,11 +47,14 @@ generics::tidy
 #' # change confidence interval amount
 #' tidy(model1, conf.int = TRUE)
 #' @export
-tidy.casecross <- function(x, ...) {
+tidy.casecross <- function(x, exponentiate, conf.int, conf.level, ...) {
   broom::tidy(x$cox_model, ...)
 }
 
 #' Construct a single row summary "glance" of a model, fit, or other object
+#'
+#' @param x model or other R object to convert to single-row data frame.
+#' @param ... other arguments passed to methods.
 #'
 #' @examples
 #' # subset for example
@@ -65,7 +74,11 @@ glance.casecross <- function(x, ...) {
 
 #' Augment
 #'
-#' @inherit broom::glance description
+#' @inherit broom::augment description
+#'
+#' @param x Model object or other R object with information to append to
+#'  observations.
+#' @param ... Addition arguments to augment method.
 #'
 #' @export
 augment.casecross <- function(x, ...) {

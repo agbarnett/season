@@ -6,6 +6,12 @@
 \usage{
 \method{augment}{casecross}(x, ...)
 }
+\arguments{
+\item{x}{Model object or other R object with information to append to
+observations.}
+
+\item{...}{Addition arguments to augment method.}
+}
 \description{
 These objects are imported from other packages. Follow the links
 below to see their documentation.

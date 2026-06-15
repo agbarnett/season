@@ -4,13 +4,10 @@
 \alias{tidy.casecross}
 \title{Tidy a casecross object}
 \usage{
-\method{tidy}{casecross}(x, ...)
+\method{tidy}{casecross}(x, exponentiate, conf.int, conf.level, ...)
 }
 \arguments{
 \item{x}{A \code{casecross} object returned from \code{\link[survival:coxph]{survival::coxph()}}.}
-
-\item{...}{For \code{tidy()}, additional arguments passed to \code{summary(x, ...)}.
-Otherwise ignored.}
 
 \item{exponentiate}{Logical indicating whether or not to exponentiate the
 coefficient estimates. This is typical for logistic and multinomial
@@ -23,6 +20,9 @@ interval in the tidied output. Defaults to FALSE.}
 \item{conf.level}{The confidence level to use for the confidence interval
 if conf.int = TRUE. Must be strictly greater than 0 and less than 1.
 Defaults to 0.95, which corresponds to a 95 percent confidence interval.}
+
+\item{...}{For \code{tidy()}, additional arguments passed to \code{summary(x, ...)}.
+Otherwise ignored.}
 }
 \description{
 This implements the tidy method for \code{\link[broom:tidy.coxph]{broom::tidy.coxph()}}.

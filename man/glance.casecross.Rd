@@ -6,6 +6,11 @@
 \usage{
 \method{glance}{casecross}(x, ...)
 }
+\arguments{
+\item{x}{model or other R object to convert to single-row data frame.}
+
+\item{...}{other arguments passed to methods.}
+}
 \description{
 Construct a single row summary "glance" of a model, fit, or other object
 }

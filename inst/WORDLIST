@@ -22,13 +22,13 @@ NBirths
 NMMAPS
 Poisson
 Prev
+R's
 RC
 SEIFA
 SL
 Samet
 SczBroad
 WAIC
-WinBUGS
 Yuming
 Zeger
 adj
@@ -37,6 +37,7 @@ bmi
 burnin
 casecross
 cloglog
+conf
 confounder
 cosinor
 ctable
@@ -49,13 +50,11 @@ ests
 etc
 ggplot
 glm
+int
 lineplot
 lphase
 mcmc
 monthglm
-ncasedays
-ncases
-ncontroldays
 nd
 ndaysmonth
 niters
