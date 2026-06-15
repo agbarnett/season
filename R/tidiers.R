@@ -103,7 +103,7 @@ tidy.monthglm <- function(x, ...) {
 tidy.nsCosinor <- function(x, ...) {
   data.frame(
     term = colnames(x$chains),
-    mean = apply(x$chains, 2, mean),
+    mean = colMeans(x$chains),
     lower = apply(x$chains, 2, stats::quantile, probs = 0.025),
     upper = apply(x$chains, 2, stats::quantile, probs = 0.975)
   )
