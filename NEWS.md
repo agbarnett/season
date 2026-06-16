@@ -14,8 +14,10 @@
 * Made `peri()` return a list with columns peri, freq_radians (formerly `f`) and freq_cycles
 * made `sinusoid()` return a tibble(), and made an autoplot method
 * removed cat() print in `wtest()` and return a `tibble` not a `list()`
-* For `nscosinor`, now optionally specify year and month column name, so you don't need to have columns specifically named "year" or "month" - they could be "yr", or "mn" even.
-
+* For `nscosinor`, now optionally specify year and month column name, so you don't need to have columns specifically named "year" or "month" - they could be "yr", or "mn" even. #44
+* For `casecross`, now optionally specify date column name, so you don't need 
+  to have columns specifically named "date". #44
+  
 ## Deprecations
 
 * The `plot` argument of `peri()` and `third()` is soft-deprecated. These functions now always return a classed object (`"peri"`, `"third"`); use `autoplot()` to draw the plot. Passing `plot = FALSE` is also deprecated — just drop the argument (#33).

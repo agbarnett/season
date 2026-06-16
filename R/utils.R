@@ -474,15 +474,17 @@ create_strata <- function(
   n_rows_original,
   stratalength,
   stratamonth,
-  usefinalwindow
+  usefinalwindow,
+  date_col = "date"
 ) {
-  date_diff <- as.numeric(data_to_use$date) - min(as.numeric(data_to_use$date))
+  date_numeric <- as.numeric(data_to_use[[date_col]])
+  date_diff <- date_numeric - min(date_numeric)
   time <- date_diff + 1
 
   if (stratamonth) {
     return(list(
-      match_day = as.numeric(format(data_to_use$date, "%d")),
-      window_num = window_num_stratamonth(data_to_use$date),
+      match_day = as.numeric(format(data_to_use[[date_col]], "%d")),
+      window_num = window_num_stratamonth(data_to_use[[date_col]]),
       time = time,
       data_to_use = data_to_use
     ))
