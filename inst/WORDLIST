@@ -55,6 +55,7 @@ int
 lineplot
 lphase
 mcmc
+mn
 monthglm
 nd
 ndaysmonth

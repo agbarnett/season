@@ -180,8 +180,8 @@ test_that("nscosinor works appropriately for different year/month columns", {
     niters = 60,
     burnin = 30,
     div = 1000,
-    year_var = "yr",
-    month_var = "mn"
+    year_col = "yr",
+    month_col = "mn"
   )
 
   set.seed(2026 - 06 - 16)
@@ -212,8 +212,8 @@ test_that("nscosinor fails when year/month columns don't exist", {
       niters = 60,
       burnin = 30,
       div = 1000,
-      year_var = "yr",
-      month_var = "mn"
+      year_col = "yr",
+      month_col = "mn"
     )
   )
 })

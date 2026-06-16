@@ -49,7 +49,7 @@
 
     Code
       nscosinor(data = head(CVD, 60), response = "adj", cycles = 12, tau = c(10, 50),
-      niters = 60, burnin = 30, div = 1000, year_var = "yr", month_var = "mn")
+      niters = 60, burnin = 30, div = 1000, year_col = "yr", month_col = "mn")
     Condition
       Error in `nscosinor()`:
       ! `data` must contain a variable called `yr`.

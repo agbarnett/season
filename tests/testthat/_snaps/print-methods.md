@@ -111,7 +111,7 @@
       Call:
       nscosinor(data = head(CVD, 60), response = "adj", cycles = 12, 
           niters = 60, burnin = 30, tau = c(10, 50), div = 1000, lambda = 1/12, 
-          monthly = TRUE, alpha = 0.05, year_var = "year", month_var = "month")
+          monthly = TRUE, alpha = 0.05, year_col = "year", month_col = "month")
       
       Number of MCMC samples = 31
       
