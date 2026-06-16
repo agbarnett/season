@@ -11,7 +11,7 @@
 #' @param theta chain of Markov chain Monte Carlo (MCMC) samples of the phase.
 #' @param alpha the confidence level (default = 0.05 for a 95\% confidence
 #' interval).
-#' @returns a list with the following elements:
+#' @returns a tibble with the following columns:
 #'   * mean: the estimated mean phase.
 #'   * lower: the estimated lower limit of the confidence interval.
 #'   * upper: the estimated upper limit of the confidence interval.
@@ -55,7 +55,7 @@ ciPhase <- function(theta, alpha = 0.05) {
     ideal <- theta + diff * (theta < pi) + diff_neg * (theta > pi)
   }
 
-  result <- list(
+  result <- tibble::tibble(
     mean = mean(ideal) - diff,
     lower = quantile_dbl(ideal, probs = alpha / 2) - diff,
     upper = quantile_dbl(ideal, probs = 1 - (alpha / 2)) - diff

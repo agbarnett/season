@@ -4,7 +4,7 @@
 \alias{sinusoid}
 \title{Plot a Sinusoid}
 \usage{
-sinusoid(amplitude, frequency, phase, ...)
+sinusoid(amplitude, frequency, phase)
 }
 \arguments{
 \item{amplitude}{the amplitude of the sinusoid (its maximum value).}
@@ -13,11 +13,9 @@ sinusoid(amplitude, frequency, phase, ...)
 cycles).}
 
 \item{phase}{the phase of the sinusoid (location of the peak).}
-
-\item{\dots}{additional arguments passed to the plot.}
 }
 \value{
-plot of sinusoidal wave of a given amplitude, frequency, and phase.
+tibble of sinusoidal wave of given amplitude, frequency, and phase.
 }
 \description{
 Plots a sinusoid over 0 to 2\eqn{\pi}.
@@ -29,12 +27,14 @@ plotted using the equation: \eqn{A\cos(ft-P), t=0,\ldots,2 \pi}, where
 \eqn{P} is the phase.
 }
 \examples{
-sinusoid(
+s_n <- sinusoid(
   amplitude = 1,
   frequency = 1,
   phase = 1
   )
-
+s_n
+# plot it
+autoplot(s_n)
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal

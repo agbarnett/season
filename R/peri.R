@@ -7,10 +7,10 @@
 #' periodogram (default=TRUE).
 #' @param plot `r lifecycle::badge("deprecated")` Use [autoplot.peri()] on the
 #'   returned object instead.
-#' @returns an object of class `"peri"` (a list) with the following elements:
+#' @returns an object of class `"peri"` (a tibble) with the columns:
 #'   * peri: periodogram, I(\eqn{\omega}).
-#'   * f: frequencies in radians, \eqn{\omega}.
-#'   * c: frequencies in cycles of time, \eqn{2\pi/\omega}.
+#'   * freq_radians: frequencies in radians, \eqn{\omega}.
+#'   * freq_cycles: frequencies in cycles of time, \eqn{2\pi/\omega}.
 #'   * amp: amplitude periodogram.
 #'   * phase: phase periodogram.
 #'
@@ -62,14 +62,18 @@ peri <- function(data, adjmean = TRUE, plot = lifecycle::deprecated()) {
   inner <- 2:(n_fft - 1)
   phase[inner] <- atan2(imaginary_part[inner], real_part[inner]) %% (2 * pi)
 
-  result <- list(
+  result <- tibble::tibble(
     peri = peri,
-    f = freq_radians,
-    c = freq_cycles,
+    freq_radians = freq_radians,
+    freq_cycles = freq_cycles,
     amp = amp,
     phase = phase
   )
-  class(result) <- c("peri", "list")
+
+  result <- tibble::new_tibble(
+    x = result,
+    class = "peri"
+  )
 
   ## Deprecated side-effect: still respect `plot = TRUE` if user passed it
   if (isTRUE(plot)) {
@@ -102,12 +106,12 @@ autoplot.peri <- function(object, ...) {
   n_fft <- length(object$peri)
   df_plot <- rbind(
     data.frame(
-      xaxis = object$f,
+      xaxis = object$freq_radians,
       yaxis = object$peri,
       type = "Radians"
     ),
     data.frame(
-      xaxis = object$c[2:n_fft],
+      xaxis = object$freq_cycles[2:n_fft],
       yaxis = object$peri[2:n_fft],
       type = "Cycles"
     )

@@ -11,33 +11,60 @@
 #' @param frequency the frequency of the sinusoid in 0 to 2\eqn{\pi} (number of
 #' cycles).
 #' @param phase the phase of the sinusoid (location of the peak).
-#' @param \dots additional arguments passed to the plot.
-#' @returns plot of sinusoidal wave of a given amplitude, frequency, and phase.
+#' @returns tibble of sinusoidal wave of given amplitude, frequency, and phase.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
 #' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
-#' sinusoid(
+#' s_n <- sinusoid(
 #'   amplitude = 1,
 #'   frequency = 1,
 #'   phase = 1
 #'   )
-#'
-#' @export sinusoid
-sinusoid <- function(amplitude, frequency, phase, ...) {
-  time <- seq(0, 2 * pi, pi / 1000)
+#' s_n
+#' # plot it
+#' autoplot(s_n)
+#' @export
+sinusoid <- function(amplitude, frequency, phase) {
+  time <- seq(from = 0, to = 2 * pi, by = pi / 1000)
   sinusoid <- amplitude * cos(time * frequency - phase)
-  par(las = 1)
-  plot(
-    time,
-    sinusoid,
-    type = 'l',
-    xaxt = 'n',
-    xlab = 'Time (radians)',
-    ylab = '',
-    ...
+  result <- tibble::tibble(
+    time = time,
+    sinusoid = sinusoid
   )
-  lines(range(time), c(0, 0), lty = 2)
-  axis(side = 1, at = c(0, pi, 2 * pi), font = 5, labels = c('0', 'p', '2p'))
+  tibble::new_tibble(
+    x = result,
+    class = "sinusoid"
+  )
 }
-#sinusoid(amplitude=1,frequency=1,phase=1)
+
+#' @export
+autoplot.sinusoid <- function(object, ...) {
+  ggplot2::ggplot(
+    object,
+    ggplot2::aes(
+      x = time,
+      y = sinusoid
+    )
+  ) +
+    ggplot2::geom_line() +
+    ggplot2::geom_hline(
+      yintercept = 0,
+      lty = 2
+    ) +
+    ggplot2::scale_x_continuous(
+      breaks = c(0, pi, 2 * pi),
+      labels = c("0", expression(pi), expression(2 * pi))
+    ) +
+    ggplot2::labs(
+      x = "Time (radians)",
+      y = NULL
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::theme_sub_panel(
+      grid.minor = ggplot2::element_blank()
+    ) +
+    ggplot2::theme_sub_axis(
+      text = ggplot2::element_text(size = 13)
+    )
+}

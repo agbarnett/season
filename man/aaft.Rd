@@ -27,6 +27,7 @@ is useful for testing for non-linearity in a time series, and is used by
 \examples{
 
 \donttest{
+aaft(CVD$cvd, nsur = 1)
 surr <- aaft(CVD$cvd, nsur = 1)
 plot(CVD$cvd, type = "l")
 lines(surr[ ,1], col = "red")
