@@ -32,6 +32,7 @@ WAIC
 Yuming
 Zeger
 adj
+autoplot
 barnett
 bmi
 burnin
@@ -73,6 +74,8 @@ st
 stan
 std
 th
+tibble
+tidiers
 tmean
 tmpd
 vol

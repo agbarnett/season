@@ -13,7 +13,7 @@ ciPhase(theta, alpha = 0.05)
 interval).}
 }
 \value{
-a list with the following elements:
+a tibble with the following columns:
 \itemize{
 \item mean: the estimated mean phase.
 \item lower: the estimated lower limit of the confidence interval.

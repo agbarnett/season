@@ -16,11 +16,11 @@ periodogram (default=TRUE).}
 returned object instead.}
 }
 \value{
-an object of class \code{"peri"} (a list) with the following elements:
+an object of class \code{"peri"} (a tibble) with the columns:
 \itemize{
 \item peri: periodogram, I(\eqn{\omega}).
-\item f: frequencies in radians, \eqn{\omega}.
-\item c: frequencies in cycles of time, \eqn{2\pi/\omega}.
+\item freq_radians: frequencies in radians, \eqn{\omega}.
+\item freq_cycles: frequencies in cycles of time, \eqn{2\pi/\omega}.
 \item amp: amplitude periodogram.
 \item phase: phase periodogram.
 }
