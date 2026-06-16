@@ -156,3 +156,64 @@ test_that("nscosinor handles two seasonal cycles", {
   uppers <- unlist(season[, seq(3, ncol(season), by = 3)])
   expect_all_true(means >= lowers & means <= uppers)
 })
+
+
+test_that("nscosinor works appropriately for different year/month columns", {
+  CVD_diff <- CVD
+  names(CVD_diff) <- c(
+    "yr",
+    "mn",
+    "yrmon",
+    "cvd",
+    "tmpd",
+    "pop",
+    "ndaysmonth",
+    "adj"
+  )
+
+  set.seed(2026 - 06 - 16)
+  res_yrmn <- nscosinor(
+    data = head(CVD_diff, 60),
+    response = "adj",
+    cycles = 12,
+    tau = c(10, 50),
+    niters = 60,
+    burnin = 30,
+    div = 1000,
+    year_var = "yr",
+    month_var = "mn"
+  )
+
+  set.seed(2026 - 06 - 16)
+  res_og <- nscosinor(
+    data = head(CVD, 60),
+    response = "adj",
+    cycles = 12,
+    tau = c(10, 50),
+    niters = 60,
+    burnin = 30,
+    div = 1000
+  )
+
+  expect_equal(res_yrmn$trend, res_og$trend)
+  expect_equal(res_yrmn$season, res_og$season)
+  expect_equal(res_yrmn$oseason, res_og$oseason)
+  expect_equal(res_yrmn$fitted.values, res_og$fitted.values)
+})
+
+test_that("nscosinor fails when year/month columns don't exist", {
+  expect_snapshot(
+    error = TRUE,
+    nscosinor(
+      data = head(CVD, 60),
+      response = "adj",
+      cycles = 12,
+      tau = c(10, 50),
+      niters = 60,
+      burnin = 30,
+      div = 1000,
+      year_var = "yr",
+      month_var = "mn"
+    )
+  )
+})

@@ -14,14 +14,17 @@ nscosinor(
   lambda = 1/12,
   div = 50,
   monthly = TRUE,
-  alpha = 0.05
+  alpha = 0.05,
+  year_col = "year",
+  month_col = "month"
 )
 }
 \arguments{
-\item{data}{Data frame. Assumes year and month exist in data, and no
-missing data}
+\item{data}{Data frame. Assumes no missing data. Year and month columns are
+by default assumed to be "year", and "month", respectively. These can be
+specified with arguments \code{year_col} and \code{month_col}.}
 
-\item{response}{response variable.}
+\item{response}{character. Response variable.}
 
 \item{cycles}{vector of cycles in units of time, e.g., for a six and twelve
 month pattern \code{cycles=c(6,12)}.}
@@ -44,6 +47,10 @@ default).}
 
 \item{alpha}{Statistical significance level used by the confidence
 intervals.}
+
+\item{year_col}{character. column referring to year. Default is "year".}
+
+\item{month_col}{character. column referring to month. Default is "month".}
 }
 \value{
 Returns an object of class "nsCosinor" with the following

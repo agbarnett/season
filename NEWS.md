@@ -14,6 +14,7 @@
 * Made `peri()` return a list with columns peri, freq_radians (formerly `f`) and freq_cycles
 * made `sinusoid()` return a tibble(), and made an autoplot method
 * removed cat() print in `wtest()` and return a `tibble` not a `list()`
+* For `nscosinor`, now optionally specify year and month column name, so you don't need to have columns specifically named "year" or "month" - they could be "yr", or "mn" even.
 
 ## Deprecations
 
