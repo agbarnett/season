@@ -244,4 +244,5 @@ autoplot(p)
 
 ![](reference/figures/README-peri-demo-1.png)
 
-For full details see the [season website]().
+For full details see the [season
+website](https://agbarnett.github.io/season/index.html).

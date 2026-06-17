@@ -737,14 +737,14 @@ summary(ns.season)
 #> Number of MCMC samples = 1501
 #> 
 #> Standard deviations
-#> Residual, mean=113.402, 95% CI [100.492, 127.221]
+#> Residual, mean=113.222, 95% CI [100.011, 127.35]
 #> Cycle=12
-#> Season, mean=0.157644, 95% CI [0.0446635, 0.319579]
+#> Season, mean=0.16226, 95% CI [0.0431868, 0.328013]
 #> 
 #> Phase and amplitude
 #> Cycle=12
-#> Amplitude, mean=205.995, 95% CI [180.267, 233.145]
-#> Phase (radians), mean=0.69756, 95% CI [0.579905, 0.829052]
+#> Amplitude, mean=206.162, 95% CI [181.312, 232.455]
+#> Phase (radians), mean=0.698927, 95% CI [0.582044, 0.819806]
 plot(ns.season)
 ```
 
@@ -814,16 +814,16 @@ ntest.residuals
 #> Largest positive difference at lags:
 #> 4 4 
 #> Size of largest largest difference:
-#> 402602.8 
+#> 383557.2 
 #> Largest negative difference at lags:
 #> 0 2 
 #> Size of largest negative difference:
-#> -689838.6 
+#> -678481.3 
 #> 
 #> Bootstrap test of non-linearity using the third-order moment
 #> Statistics for areas outside test limits:
 #> observed     obs/SD     median-null    95%-null    p-value
-#> 2961568 7.056636 283627.3 1253176 0
+#> 2823883 6.827263 287239 1214638 0
 ```
 
 There is evidence of remaining non-linearity in the residuals at lags of
