@@ -116,7 +116,8 @@ tau <- c(10,50)
     tau = tau
     )
 summary(res12)
-plot(res12)
+# autoplot replaces plot method - plot(res12)
+autoplot(res12)
 }
 }
 

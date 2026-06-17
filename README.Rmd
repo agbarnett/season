@@ -1,0 +1,142 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# season <img src="man/figures/logo.png" align="right" height="139" alt="" />
+
+<!-- badges: start -->
+![CRAN
+Status
+Badge](http://www.r-pkg.org/badges/version/season)
+![CRAN Downloads Each
+Month](http://cranlogs.r-pkg.org/badges/season)
+[![R-CMD-check](https://github.com/agbarnett/season/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/agbarnett/season/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/agbarnett/season/graph/badge.svg)](https://app.codecov.io/gh/agbarnett/season)
+<!-- badges: end -->
+
+R package to run seasonal analyses in time series. For details see our book "Analysing Seasonal Health Data" (2010) https://www.springer.com/gp/book/9783642107474.
+
+# Installation
+
+You can install `season` via the [R-Universe](https://agbarnett.r-universe.dev/season)
+
+```r
+install.packages('season', repos = c('https://agbarnett.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+# Example usage
+
+```{r}
+#| label: load
+library(season)
+```
+
+
+Useful functions of `season` are:
+
+* `casecross()` for case-crossover analysis 
+* `nscosinor()` to estimate non-stationary seasonal patterns using the Kalman filter
+* `nonlintest()` for a time domain test of non-linearity 
+
+Accompanying each of these functions are [broom](https://broom.tidymodels.org/) tidiers (`tidy()`, `glance()`, `augment()`), and some of the models have summary plots that you can see using `autoplot()`
+
+Let's run a quick demonstration of these
+
+## `casecross()`: case-crossover analysis
+
+```{r}
+#| label: casecross-demo
+
+CVDdaily <- subset(CVDdaily, date <= as.Date('1987-12-31'))
+
+head(CVDdaily)
+
+# Effect of ozone on CVD death
+casecross_cvd <- casecross(
+  cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+  data = CVDdaily
+)
+summary(casecross_cvd)
+
+# broom tidiers
+# tidy - one row per term, similar to `summary()`
+tidy(casecross_cvd)
+# glance - one row summary of model
+glance(casecross_cvd)
+
+# augment - add model predictions back on to data
+augment(casecross_cvd)
+
+```
+
+## `nscosinor()` to estimate non-stationary seasonal patterns using the Kalman filter
+
+```{r}
+#| label: nscosinor-demo
+
+f <- c(12)
+tau <- c(10, 50)
+res12 <- nscosinor(
+  data = CVD,
+  response = 'adj',
+  cycles = f,
+  niters = 200,
+  burnin = 50,
+  tau = tau
+)
+summary(res12)
+
+# broom tidiers
+tidy(res12)
+
+autoplot(res12)
+```
+
+## `nonlintest()` for a time domain test of non-linearity 
+
+```{r}
+#| label: nonlintest-demo
+test_res <- nonlintest(data = CVD$cvd, n.lag = 4, n.boot = 1000)
+test_res
+autoplot(test_res)
+```
+
+
+## Other helper functions
+
+use `invyrfraction_num/chr` to invert a fraction of the year or hour to a useful time scale:
+
+```{r}
+#| label: inverse-frac-demo
+year_frac <- c(0, 0.5, 0.99)
+invyrfraction_num(year_frac, type = "weekly")
+invyrfraction_chr(year_frac, type = "weekly")
+
+invyrfraction_num(year_frac, type = "daily")
+invyrfraction_chr(year_frac, type = "daily")
+
+invyrfraction_num(year_frac, type = "monthly")
+invyrfraction_chr(year_frac, type = "monthly")
+```
+
+Estimate a periodogram using the fast Fourier transform (`fft`).
+
+```{r}
+#| label: peri-demo
+p <- peri(CVD$cvd)
+p
+autoplot(p)
+```
+
+For full details see the [season website]().
