@@ -7,3 +7,6 @@
 ^\.positai$
 ^\.claude$
 ^\.pre-commit-config\.yaml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

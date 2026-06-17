@@ -16,7 +16,7 @@ Description: Routines for the seasonal analysis of health data, including
     978-3-642-10748-1. Thanks to Yuming Guo for checking the
     case-crossover code.
 License: GPL (>= 3)
-URL: https://github.com/agbarnett/season
+URL: https://github.com/agbarnett/season, https://agbarnett.github.io/season/
 BugReports: https://github.com/agbarnett/season/issues
 Depends:
     R (>= 4.2.0)
