@@ -97,11 +97,11 @@ tidy.monthglm <- function(x, ...) {
   generics::tidy(x$glm, ...)
 }
 
-# … glance, augment for monthglm
+# glance, augment for monthglm
 
 #' @export
 tidy.nsCosinor <- function(x, ...) {
-  data.frame(
+  tibble::tibble(
     term = colnames(x$chains),
     mean = colMeans(x$chains),
     lower = apply(x$chains, 2, stats::quantile, probs = 0.025),

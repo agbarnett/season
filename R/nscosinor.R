@@ -85,7 +85,8 @@
 #'     tau = tau
 #'     )
 #' summary(res12)
-#' plot(res12)
+#' # autoplot replaces plot method - plot(res12)
+#' autoplot(res12)
 #' }
 #' }
 #'
