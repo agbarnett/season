@@ -245,4 +245,4 @@ autoplot(p)
 
 <img src="man/figures/README-peri-demo-1.png" alt="" width="100%" />
 
-For full details see the [season website]().
+For full details see the [season website](https://agbarnett.github.io/season/index.html).
