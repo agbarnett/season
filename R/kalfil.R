@@ -193,7 +193,7 @@ kalfil_update_params <- function(alpha_j, fwd, setup) {
   for (j in seq_len(k)) {
     s <- alpha_j[2 * j + 1, 1:n]
     pgr <- peri(s)
-    loc <- which.min(abs(pgr$c - f[j]))
+    loc <- which.min(abs(pgr$freq_cycles - f[j]))
     amp[j] <- pgr$amp[loc]
     phase[j] <- pgr$phase[loc]
   }

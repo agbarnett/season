@@ -474,15 +474,17 @@ create_strata <- function(
   n_rows_original,
   stratalength,
   stratamonth,
-  usefinalwindow
+  usefinalwindow,
+  date_col = "date"
 ) {
-  date_diff <- as.numeric(data_to_use$date) - min(as.numeric(data_to_use$date))
+  date_numeric <- as.numeric(data_to_use[[date_col]])
+  date_diff <- date_numeric - min(date_numeric)
   time <- date_diff + 1
 
   if (stratamonth) {
     return(list(
-      match_day = as.numeric(format(data_to_use$date, "%d")),
-      window_num = window_num_stratamonth(data_to_use$date),
+      match_day = as.numeric(format(data_to_use[[date_col]], "%d")),
+      window_num = window_num_stratamonth(data_to_use[[date_col]]),
       time = time,
       data_to_use = data_to_use
     ))
@@ -492,9 +494,8 @@ create_strata <- function(
   match_day <- date_diff - ((window_num - 1) * stratalength) + 1
   n_windows <- floor(n_rows_original / stratalength) + 1
 
-  # Note NULL from non-existing column: data_to_use$window_num == n_windows`
-  # https://github.com/agbarnett/season/issues/70
-  last_window <- data_to_use[data_to_use$window_num == n_windows, ]
+  # add last window or not
+  last_window <- data_to_use[window_num == n_windows, ]
   if (nrow(last_window) > 0) {
     last_length <- max(time[window_num == n_windows]) -
       min(time[window_num == n_windows]) +

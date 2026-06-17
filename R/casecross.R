@@ -68,6 +68,7 @@
 #' day) \eqn{+/-} `confrange`.
 #' @param stratamonth use strata based on months, default=FALSE. Instead of a
 #' fixed strata size when using `stratalength`.
+#' @param date_col Character. column name for date variable. Default is "date".
 #' @returns a list with the following elements:
 #'   * call: the original call to the casecross function.
 #'   * cox_model: conditional logistic regression model of class `coxph`.
@@ -114,10 +115,11 @@ casecross <- function(
   exclusion = 2,
   stratalength = 28,
   matchdow = FALSE,
-  usefinalwindow = FALSE,
+  usefinalwindow = TRUE,
   matchconf = NULL,
   confrange = 0,
-  stratamonth = FALSE
+  stratamonth = FALSE,
+  date_col = "date"
 ) {
   # Setting some variables to NULL first (for R CMD check)
   outcome <- case <- timex <- NULL
@@ -125,22 +127,24 @@ casecross <- function(
   window_num.x <- window_num.y <- dow <- match_day <- window_num <- NULL
 
   this_data <- data
-  this_data$dow <- as.numeric(format(this_data$date, '%w'))
+  check_var_in_data(data = this_data, var = date_col)
+  this_data$dow <- as.numeric(format(this_data[[date_col]], '%w'))
 
-  check_if_date(this_data$date)
+  check_if_date(this_data[[date_col]])
   check_if_exclusion_lt_0(exclusion)
   check_formula_has_iv(formula)
 
   ## original call with defaults (see amer package)
   call <- match_call_with_defaults(match.call(), sys.function())
 
-  form <- append_terms_to_formula(formula, "date + dow")
+  form <- append_terms_to_formula(formula, paste0(date_col, " + dow"))
 
   if (!is.null(matchconf)) {
     parts <- paste(formula)
     dep <- parts[2]
     indep <- parts[3]
-    form <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
+    new_form <- paste(dep, "~", indep, "+", date_col, "+dow+", matchconf)
+    form <- stats::as.formula(new_form)
   }
 
   # remove cases with missing covariates
@@ -150,14 +154,15 @@ casecross <- function(
     na.action = stats::na.omit
   )
 
-  inform_irregularly_spaced(data_to_use$date)
+  inform_irregularly_spaced(data_to_use[[date_col]])
 
   strata <- create_strata(
     data_to_use,
     n_rows_original = nrow(this_data),
     stratalength = stratalength,
     stratamonth = stratamonth,
-    usefinalwindow = usefinalwindow
+    usefinalwindow = usefinalwindow,
+    date_col = date_col
   )
 
   match_day <- strata$match_day

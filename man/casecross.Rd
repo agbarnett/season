@@ -10,10 +10,11 @@ casecross(
   exclusion = 2,
   stratalength = 28,
   matchdow = FALSE,
-  usefinalwindow = FALSE,
+  usefinalwindow = TRUE,
   matchconf = NULL,
   confrange = 0,
-  stratamonth = FALSE
+  stratamonth = FALSE,
+  date_col = "date"
 )
 }
 \arguments{
@@ -45,6 +46,8 @@ day) \eqn{+/-} \code{confrange}.}
 
 \item{stratamonth}{use strata based on months, default=FALSE. Instead of a
 fixed strata size when using \code{stratalength}.}
+
+\item{date_col}{Character. column name for date variable. Default is "date".}
 }
 \value{
 a list with the following elements:

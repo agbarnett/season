@@ -340,16 +340,17 @@ check_var_in_data <- function(
 }
 check_year_valid <- function(
   data,
+  year_var = "year",
   arg = rlang::caller_arg(data),
   call = rlang::caller_env()
 ) {
-  check_var_in_data(data, "year", arg = arg, call = call)
+  check_var_in_data(data, year_var, arg = arg, call = call)
 
-  if (!all(nchar(data[["year"]]) == 4)) {
+  if (!all(nchar(data[[year_var]]) == 4)) {
     cli::cli_abort(
       c(
-        "The {.var year} variable in {.arg {arg}} must have 4 digits.",
-        "i" = "See {.code table(nchar(data[['year']]))}."
+        "The {.var {year_var}} variable in {.arg {arg}} must have 4 digits.",
+        "i" = "See {.code table(nchar(data[[{year_var}]]))}."
       ),
       call = call
     )

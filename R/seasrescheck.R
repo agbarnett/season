@@ -26,7 +26,7 @@
 #' seasrescheck(resid(model))
 #' }
 #'
-#' @export seasrescheck
+#' @export
 seasrescheck <- function(res) {
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   par(mfrow = c(2, 2), lwd = 1)

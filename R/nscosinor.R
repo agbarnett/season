@@ -1,6 +1,3 @@
-## stats = estimated amplitude, phases and noise
-##
-
 #' Non-stationary Cosinor
 #'
 #' Decompose a time series using a non-stationary cosinor for the seasonal
@@ -30,9 +27,10 @@
 #' estimates a reasonably long sample should be used (`niters`), and the
 #' possibly poor initial estimates should be discarded (`burnin`).
 #'
-#' @param data Data frame. Assumes year and month exist in data, and no
-#'   missing data
-#' @param response response variable.
+#' @param data Data frame. Assumes no missing data. Year and month columns are
+#'  by default assumed to be "year", and "month", respectively. These can be
+#'  specified with arguments `year_col` and `month_col`.
+#' @param response character. Response variable.
 #' @param cycles vector of cycles in units of time, e.g., for a six and twelve
 #' month pattern `cycles=c(6,12)`.
 #' @param niters total number of MCMC samples (default=1000).
@@ -47,6 +45,8 @@
 #' @param monthly TRUE for monthly data.
 #' @param alpha Statistical significance level used by the confidence
 #' intervals.
+#' @param year_col character. column referring to year. Default is "year".
+#' @param month_col character. column referring to month. Default is "month".
 #' @returns Returns an object of class "nsCosinor" with the following
 #' parts:
 #'   * call: the original call to the nscosinor function.
@@ -85,7 +85,8 @@
 #'     tau = tau
 #'     )
 #' summary(res12)
-#' plot(res12)
+#' # autoplot replaces plot method - plot(res12)
+#' autoplot(res12)
 #' }
 #' }
 #'
@@ -100,12 +101,18 @@ nscosinor <- function(
   lambda = 1 / 12,
   div = 50,
   monthly = TRUE,
-  alpha = 0.05
+  alpha = 0.05,
+  year_col = "year",
+  month_col = "month"
 ) {
   resp <- data[[response]]
 
-  check_year_valid(data)
-  check_var_in_data(data, "month")
+  if (monthly) {
+    check_var_in_data(data, year_col)
+    check_var_in_data(data, month_col)
+    check_year_valid(data, year_col)
+  }
+
   check_tau_cycles(tau, cycles)
   check_cycles(cycles)
   check_response_na(resp)
@@ -173,12 +180,11 @@ nscosinor <- function(
   season <- do.call(cbind, season_nd)
 
   if (monthly) {
-    year_month <- data$year + ((data$month - 1) / 12)
-    time <- year_month
-  }
-  if (!monthly) {
+    time <- data[[year_col]] + (data[[month_col]] - 1) / 12
+  } else {
     time <- seq_len(n)
   }
+
   ## Calculated fitted values and residuals
   fitted <- trend$mean + oseason$mean
   res <- resp - fitted # calculate the residuals

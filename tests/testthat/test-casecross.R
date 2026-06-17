@@ -104,6 +104,40 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
   expect_equal(coef_dow_temp_exp, 1.0095425)
 })
 
+test_that("casecross works with differetn date columns", {
+  new_names <- sub("date", "dt", names(CVDdaily_1987))
+  CVDdaily_1987_new <- CVDdaily_1987
+  names(CVDdaily_1987_new) <- new_names
+
+  set.seed(2026 - 06 - 16)
+  change_date_dt <- casecross(
+    cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987_new,
+    date_col = "dt"
+  )
+
+  set.seed(2026 - 06 - 16)
+  change_date_og <- casecross(
+    cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+  )
+
+  expect_equal(change_date_dt$n_control_days, change_date_og$n_control_days)
+  expect_equal(change_date_dt$n_case_days, change_date_og$n_case_days)
+  expect_equal(change_date_dt$n_cases, change_date_og$n_cases)
+  expect_equal(change_date_dt$cox_model$var, change_date_og$cox_model$var)
+  expect_equal(change_date_dt$cox_model$loglik, change_date_og$cox_model$loglik)
+  expect_equal(change_date_dt$cox_model$score, change_date_og$cox_model$score)
+  expect_equal(
+    change_date_dt$cox_model$linear.predictors,
+    change_date_og$cox_model$linear.predictors
+  )
+  expect_equal(
+    change_date_dt$cox_model$coefficients,
+    change_date_og$cox_model$coefficients
+  )
+})
+
 # TODO need to revisit this and check if code matches textbook for these pages
 # matchconf: continuous confounder matching ---------------------------
 # Anchored structurally rather than by exact OR (published vals on p.138 differ

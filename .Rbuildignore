@@ -7,6 +7,10 @@
 ^\.positai$
 ^\.claude$
 ^\.pre-commit-config\.yaml$
+<<<<<<< HEAD
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+=======
+^README\.Rmd$
+>>>>>>> 0fe806803558cfa90324c231d42d116d4c2f14ae

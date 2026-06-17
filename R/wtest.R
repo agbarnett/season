@@ -69,10 +69,8 @@ wtest <- function(cases, offset, data, alpha = 0.05) {
   q <- 1 - alpha
   xnull <- stats::qchisq(q, df = 2) # null limit (critical value)
   pvalue <- 1 - stats::pchisq(test, df = 2)
-  cat('Walter`s test\n')
-  cat('test statistic', test, 'p-value', pvalue, '\n')
 
-  list(
+  tibble::tibble(
     test = test,
     pvalue = pvalue
   )

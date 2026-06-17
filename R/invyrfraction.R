@@ -22,7 +22,12 @@
 #' invyrfraction(c(0, 0.5, 0.99), type = "weekly")
 #' invyrfraction(c(0, 0.5, 0.99), type = "monthly")
 #'
-#' @export invyrfraction
+#' # Also provide _chr and _num functions that mean you don't specify arg,
+#' # `text = TRUE` or `text = FALSE`
+#' invyrfraction_num(c(0, 0.5, 0.99), type = "weekly")
+#' invyrfraction_chr(c(0, 0.5, 0.99), type = "weekly")
+#'
+#' @export
 invyrfraction <- function(
   frac,
   type = c("daily", "monthly", "hourly", "weekly"),
@@ -49,4 +54,30 @@ invyrfraction <- function(
   )
 
   return(daym)
+}
+
+#' @rdname invyrfraction
+#' @export
+invyrfraction_chr <- function(
+  frac,
+  type = c("daily", "monthly", "hourly", "weekly")
+) {
+  invyrfraction(
+    frac = frac,
+    type = type,
+    text = TRUE
+  )
+}
+
+#' @rdname invyrfraction
+#' @export
+invyrfraction_num <- function(
+  frac,
+  type = c("daily", "monthly", "hourly", "weekly")
+) {
+  invyrfraction(
+    frac = frac,
+    type = type,
+    text = FALSE
+  )
 }

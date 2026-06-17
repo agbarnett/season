@@ -2,6 +2,8 @@
 % Please edit documentation in R/invyrfraction.R
 \name{invyrfraction}
 \alias{invyrfraction}
+\alias{invyrfraction_chr}
+\alias{invyrfraction_num}
 \title{Inverts a fraction of the year or hour to a useful time scale.}
 \usage{
 invyrfraction(
@@ -9,6 +11,10 @@ invyrfraction(
   type = c("daily", "monthly", "hourly", "weekly"),
   text = TRUE
 )
+
+invyrfraction_chr(frac, type = c("daily", "monthly", "hourly", "weekly"))
+
+invyrfraction_num(frac, type = c("daily", "monthly", "hourly", "weekly"))
 }
 \arguments{
 \item{frac}{a vector of fractions of the year, all between 0 and 1.}
@@ -37,6 +43,11 @@ invyrfraction(c(0, 0.5, 0.99), type = "hourly")
 invyrfraction(c(0, 0.5, 0.99), type = "daily")
 invyrfraction(c(0, 0.5, 0.99), type = "weekly")
 invyrfraction(c(0, 0.5, 0.99), type = "monthly")
+
+# Also provide _chr and _num functions that mean you don't specify arg,
+# `text = TRUE` or `text = FALSE`
+invyrfraction_num(c(0, 0.5, 0.99), type = "weekly")
+invyrfraction_chr(c(0, 0.5, 0.99), type = "weekly")
 
 }
 \author{
