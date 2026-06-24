@@ -79,7 +79,7 @@ plotCircular = function(
   names(data)[index] = "id"
 
   # convert to long for multiple areas
-  long <- pivot_longer(data, cols = all_of(areas), names_to = "group") %>%
+  long <- pivot_longer(data, cols = all_of(areas), names_to = "group") |>
     mutate(
       id = id - 1, # make January zero
       group = factor(group)
