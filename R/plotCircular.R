@@ -71,12 +71,9 @@ plotCircular = function(
   pieces.col = NULL
 ) {
   # colours
-  if (is.null(pieces.col)) {
-    pieces.col = c('white', 'grey')
-  }
-  if (is.null(spoke.col)) {
-    spoke.col = 'black'
-  }
+  pieces.col <- pieces.col %||% c("white", "grey")
+
+  spoke.col <- spoke.col %||% "black"
 
   # rename time variable
   index <- names(data) == time
