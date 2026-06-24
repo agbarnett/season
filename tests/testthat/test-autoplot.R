@@ -55,6 +55,7 @@ test_that("autoplot.Cosinor - binomial cloglog matches snapshot", {
 test_that("autoplot.Cosinor - hourly matches snapshot", {
   skip_on_ci()
   skip_on_cran()
+  set.seed(2026 - 06 - 24)
   m <- cosinor(
     bedroom ~ 1,
     date = "datetime",
