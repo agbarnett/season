@@ -79,11 +79,11 @@ plotCircular = function(
   }
 
   # rename time variable
-  index = names(data) == time
+  index <- names(data) == time
   names(data)[index] = 'id'
 
   # convert to long for multiple areas
-  long = pivot_longer(data, cols = all_of(areas), names_to = 'group') %>%
+  long <- pivot_longer(data, cols = all_of(areas), names_to = 'group') %>%
     mutate(
       id = id - 1, # make January zero
       group = factor(group)
@@ -107,26 +107,26 @@ plotCircular = function(
 
   # if monthly
   if (type == 'monthly') {
-    circle = circle +
+    circle <- circle +
       scale_x_continuous(breaks = 0:11, labels = month.abb) +
       coord_polar(theta = 'x', start = -2 * pi / 24) # offset
   }
 
   # if weekly
   if (type == 'weekly') {
-    days = c('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
-    circle = circle +
+    days <- c('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
+    circle <- circle +
       scale_x_continuous(breaks = 0:6, labels = days) +
       coord_polar(theta = 'x', start = -2 * pi / 14) # offset
   }
 
   # reverse direction option
   if (clockwise == FALSE) {
-    circle = circle + coord_polar(theta = 'x', direction = -1)
+    circle <- circle + coord_polar(theta = 'x', direction = -1)
   }
   # legend
   if (legend == FALSE) {
-    circle = circle + theme(legend.position = 'none')
+    circle <- circle + theme(legend.position = 'none')
   }
   return(circle)
 }
