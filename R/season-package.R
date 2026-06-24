@@ -50,11 +50,14 @@ utils::globalVariables(
     "dow",
     "dow.x",
     "dow.y",
+    "group",
+    "id",
     "match_day",
     "match_day.x",
     "match_day.y",
     "window_num",
     "window_num.x",
-    "window_num.y"
+    "window_num.y",
+    "value"
   )
 )
