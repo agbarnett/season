@@ -78,7 +78,7 @@ plotCircular <- function(
   )
   # rename time variable
   index <- names(data) == time
-  names(data)[index] = "id"
+  names(data)[index] <- "id"
 
   # convert to long for multiple areas
   long <- tidyr::pivot_longer(
