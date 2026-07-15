@@ -55,7 +55,7 @@
 #'  legend = "none")
 #'
 #' @export
-plotCircular = function(
+plotCircular <- function(
   data = NULL,
   type = "monthly",
   time = NULL,
