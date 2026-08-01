@@ -27,3 +27,7 @@ Useful functions are:
 * `casecross` for case-crossover analysis 
 * `nscosinor` to estimate non-stationary seasonal patterns using the Kalman filter
 * `nonlintest` for a time domain test of non-linearity 
+
+# Acknowledgement
+
+Thanks to Beth Barnett for the artwork for the hex badge.
