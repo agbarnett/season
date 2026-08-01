@@ -14,7 +14,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/agbarnett/season/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/agbarnett/season/blob/master/inst/CITATION)
 
 Adrian G Barnett and Annette J Dobson (2010) Analysing Seasonal Health
 Data. Springer. Berlin, Heidelberg.
