@@ -226,79 +226,49 @@ test_that("plotCircle - 12 monthly values", {
 })
 
 # plotCircular ----------------------------------------------------------
-
+afl_frame <- data.frame(AFL[c("month", "players", "expected")])
 test_that("plotCircular - single area", {
   skip_on_ci()
   skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotCircular-one-area",
-    function() plotCircular(area1 = 1:12, labels = month.abb, dp = 0)
+    plotCircular(
+      data = afl_frame,
+      time = "month",
+      areas = "players",
+      legend = "none"
+    )
   )
 })
 
-test_that("plotCircular accepts spokes, length, stats=FALSE, clockwise=FALSE", {
+test_that("plotCircular accepts clockwise=FALSE", {
   skip_on_ci()
   skip_on_cran()
-  # Coverage for the optional features documented in roxygen but not
-  # exercised by the two visual snapshots above. We only assert that
-  # rendering doesn't error; visual fidelity is covered by the
-  # doppelgangers.
-  pdf(file = tempfile(fileext = ".pdf"))
-  on.exit(dev.off())
-
-  expect_no_error(plotCircular(
-    area1 = AFL$players,
-    spokes = sqrt(AFL$players), # uncertainty bars
-    labels = month.abb,
-    dp = 0
-  ))
-  expect_no_error(plotCircular(
-    area1 = 1:12,
-    labels = month.abb,
-    dp = 0,
-    length = TRUE # length proportional to area1
-  ))
-  expect_no_error(plotCircular(
-    area1 = 1:12,
-    labels = month.abb,
-    dp = 0,
-    stats = FALSE # labels only, no numeric annotations
-  ))
-  expect_no_error(plotCircular(
-    area1 = 1:12,
-    labels = month.abb,
-    dp = 0,
-    clockwise = FALSE # counter-clockwise direction
-  ))
-})
-
-test_that("plotCircular warns when area1 and area2 have different lengths", {
-  pdf(file = tempfile(fileext = ".pdf"))
-  on.exit(dev.off())
-  # Mismatch should print a warning via cat() rather than error out.
-  expect_output(
-    plotCircular(area1 = 1:12, area2 = 1:6, labels = month.abb, dp = 0),
-    "not equal"
+  expect_no_error(
+    plotCircular(
+      data = afl_frame,
+      time = "month",
+      areas = "players",
+      legend = "none",
+      clockwise = FALSE
+    )
   )
 })
 
-test_that("plotCircular - two areas with auto legend", {
+test_that("plotCircular - two areas", {
   skip_on_ci()
   skip_on_cran()
   vdiffr::expect_doppelganger(
     "plotCircular-two-areas",
-    function() {
-      plotCircular(
-        area1 = AFL$players,
-        area2 = AFL$expected,
-        scale = 0.72,
-        labels = month.abb,
-        dp = 0,
-        lines = TRUE,
-        pieces.col = c("seagreen", "purple2"),
-        auto.legend = list(labels = c("Obs", "Exp"), title = "# players")
-      )
-    }
+    plotCircular(
+      data = afl_frame,
+      time = "month",
+      areas = "players",
+      pieces.col = c("seagreen", "purple2"),
+      main = "# players",
+      xlab = "Obs",
+      ylab = "Exp"
+    )
   )
 })
 
@@ -310,9 +280,7 @@ test_that("plotMonth - 12 panels CVD", {
   lifecycle::expect_deprecated(plotMonth(data = CVD, resp = "cvd", panels = 12))
   vdiffr::expect_doppelganger(
     "plotMonth-12-panels",
-    function() {
-      suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 12))
-    }
+    suppressWarnings(plotMonth(data = CVD, resp = "cvd", panels = 12))
   )
 })
 

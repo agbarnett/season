@@ -30,7 +30,8 @@ Imports:
     MASS (>= 7.3.65),
     rlang,
     stats,
-    survival (>= 3.8.6)
+    survival (>= 3.8.6),
+    tidyr
 Suggests:
     dlnm,
     dplyr,

@@ -32,6 +32,7 @@ Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 Useful links:
 \itemize{
   \item \url{https://github.com/agbarnett/season}
+  \item \url{https://agbarnett.github.io/season/}
   \item Report bugs at \url{https://github.com/agbarnett/season/issues}
 }
 
