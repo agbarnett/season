@@ -33,6 +33,8 @@ Useful links:
 
 - <https://github.com/agbarnett/season>
 
+- <https://agbarnett.github.io/season/>
+
 - Report bugs at <https://github.com/agbarnett/season/issues>
 
 ## Author
