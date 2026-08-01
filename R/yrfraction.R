@@ -1,8 +1,3 @@
-# yrfraction.R
-# fraction of the year for a date, includes leap year
-# type = 'monthly', 'weekly' or 'daily' (default)
-# Jan 2014
-
 #' Fraction of the Year
 #'
 #' Calculate the fraction of the year for a date variable (after accounting for
@@ -14,17 +9,17 @@
 #'   if type="monthly".
 #' @param type One of "daily" (default) for dates, "monthly" for months, or
 #'   "weekly" for weeks.
-#' @return the fraction of the year.
+#' @returns the fraction of the year.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @examples
 #'
 #' # create fractions for the start, middle and end of the year
-#' date = as.Date(c(0, 181, 364), origin='1991-01-01')
+#' date <- as.Date(c(0, 181, 364), origin = '1991-01-01')
 #' # create fractions based on these dates
 #' yrfraction(date)
-#' yrfraction(1:12, type='monthly')
+#' yrfraction(1:12, type = 'monthly')
 #'
-#' @export yrfraction
+#' @export
 yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
   type <- rlang::arg_match(type)
 
@@ -39,22 +34,25 @@ yrfraction <- function(date, type = c("daily", "weekly", "monthly")) {
 }
 
 yrfrac_daily <- function(date) {
-  if (!inherits(date, "Date")) {
-    stop("Date variable for annual data must be in date format, see ?Dates")
-  }
+  check_if_date(date)
   year <- as.numeric(format(date, '%Y'))
   # last day in December
   lastday <- ISOdate(year, 12, 31)
   # Day of year as decimal number (001-366)
   day <- as.numeric(format(date, '%j'))
-  yrlength <- as.numeric(format(lastday, '%j'))
-  yrfrac <- (day - 1) / yrlength
+  year_length <- as.numeric(format(lastday, '%j'))
+  yrfrac <- (day - 1) / year_length
   yrfrac
 }
 
 yrfrac_weekly <- function(date) {
   if (max(date) > 53 || min(date) < 1) {
-    stop("Date variable for weekly data must be month integer (1 to 53)")
+    cli::cli_abort(
+      c(
+        "{.arg date} must be an integer in {.val 1:53} for {.val weekly} data.",
+        "i" = "We see a range of {.val {min(date)}} to {.val {max(date)}}."
+      )
+    )
   }
   yrfrac <- (date - 1) / (365.25 / 7)
   yrfrac
@@ -62,7 +60,12 @@ yrfrac_weekly <- function(date) {
 
 yrfrac_monthly <- function(date) {
   if (max(date) > 12 || min(date) < 1) {
-    stop("Date variable for monthly data must be month integer (1 to 12)")
+    cli::cli_abort(
+      c(
+        "{.arg date} must be an integer in {.val 1:12} for {.val monthly} data.",
+        "i" = "We see a range of {.val {min(date)}} to {.val {max(date)}}."
+      )
+    )
   }
   yrfrac <- (date - 1) / 12
   yrfrac

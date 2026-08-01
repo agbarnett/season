@@ -28,16 +28,8 @@
 #' }
 #' @export
 print.casecross <- function(x, ...) {
-  ## Check
-  if (!inherits(x, "casecross")) {
-    stop("Object must be of class 'casecross'")
-  }
-  ## Use print.coxph
-  if (!inherits(x$c.model, "coxph")) {
-    stop(
-      "Conditional logistic regression model object 'c.model'",
-      " must be of class 'coxph'"
-    )
-  }
-  print(x$c.model, ...)
-} # end of function
+  check_if_casecross(x)
+  check_if_class(x$cox_model, "coxph")
+  print(x$cox_model, ...)
+  invisible(x)
+}

@@ -30,7 +30,6 @@ confidentiality the day of birth has been randomly re-ordered.
 }
 \examples{
 
-data(stillbirth)
 table(stillbirth$month, stillbirth$stillborn)
 
 }

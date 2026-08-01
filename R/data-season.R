@@ -50,8 +50,13 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' plot(CVD$yrmon, CVD$cvd, type='o', xlab='Date',
-#'      ylab='Number of CVD deaths per month')
+#' plot(
+#'   CVD$yrmon,
+#'   CVD$cvd,
+#'   type = 'o',
+#'   xlab = 'Date',
+#'   ylab = 'Number of CVD deaths per month'
+#'   )
 #'
 "CVD"
 NULL
@@ -91,9 +96,12 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
-#' data(CVDdaily)
-#' plot(CVDdaily$date, CVDdaily$cvd, type='p', xlab='Date',
-#'      ylab='Number of CVD deaths')
+#' plot(
+#'   CVDdaily$date,
+#'   CVDdaily$cvd,
+#'   type = 'p',
+#'   xlab = 'Date',
+#'   ylab = 'Number of CVD deaths')
 #' }
 "CVDdaily"
 NULL
@@ -122,7 +130,6 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(exercise)
 #' boxplot(exercise$walking ~ exercise$month)
 #'
 "exercise"
@@ -147,8 +154,13 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' res = cosinor(bedroom~1, date='datetime', type='hourly', data=indoor)
-#' summary(res)
+#'res <- cosinor(
+#'  bedroom ~ 1,
+#'  date = 'datetime',
+#'  type = 'hourly',
+#'  data = indoor
+#')
+#'summary(res)
 #'
 NULL
 
@@ -174,9 +186,13 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(schz)
-#' plot(schz$yrmon, schz$SczBroad, type='o', xlab='Date',
-#'      ylab='Number of schizophrenia births')
+#' plot(
+#'   schz$yrmon,
+#'   schz$SczBroad,
+#'   type = 'o',
+#'   xlab = 'Date',
+#'   ylab = 'Number of schizophrenia births'
+#' )
 #'
 "schz"
 NULL
@@ -202,7 +218,6 @@ NULL
 #' @source From Queensland Health.
 #' @examples
 #'
-#' data(stillbirth)
 #' table(stillbirth$month, stillbirth$stillborn)
 #'
 "stillbirth"

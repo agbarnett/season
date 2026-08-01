@@ -2,11 +2,38 @@ test_that("adjacency matrix works", {
   # Nearest neighbour matrix for 5 time points
   x <- c(NA, 1, NA, NA, NA)
   V <- toeplitz(x)
-  adj_mat <- createAdj(matrix = V)
+  adj_mat <- createAdj(V)
+  expect_snapshot(adj_mat)
+
+  # try out a few different patterns
+  x <- c(1, 1, 1, NA, NA)
+  V <- toeplitz(x)
+  createAdj(V)
+  adj_mat <- createAdj(V)
+  expect_snapshot(adj_mat)
+
+  x <- c(NA, NA, NA, NA, 1)
+  V <- toeplitz(x)
+  adj_mat <- createAdj(V)
+  expect_snapshot(adj_mat)
+
+  x <- c(NA, NA, NA, 1, 1)
+  V <- toeplitz(x)
+  adj_mat <- createAdj(V)
+  expect_snapshot(adj_mat)
+
+  x <- rep(1, 5)
+  V <- toeplitz(x)
+  adj_mat <- createAdj(V)
+  expect_snapshot(adj_mat)
+
+  x <- rep(NA, 5)
+  V <- toeplitz(x)
+  adj_mat <- createAdj(V)
   expect_snapshot(adj_mat)
 })
 
-test_that("adjacency matrix errors as expectd", {
+test_that("adjacency matrix errors as expected", {
   # Nearest neighbour matrix for 5 time points
   x <- c(NA, 1, NA, NA, NA)
   V <- toeplitz(x)

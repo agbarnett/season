@@ -23,11 +23,11 @@ Print the monthly mean estimates from a \code{Monthmean} object produced by
 \examples{
 \donttest{
 mmean <- monthmean(
-  data=CVD,
-  resp='cvd',
-  offsetpop = expression(pop/100000),
+  data = CVD,
+  resp = 'cvd',
+  offsetpop = expression(pop / 100000),
   adjmonth = 'average'
-  )
+)
 mmean
 }
 }

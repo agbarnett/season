@@ -15,7 +15,31 @@ model1 <- casecross(
 test_that("overall structure of the casecross model is consistent", {
   expect_snapshot(model1)
   expect_snapshot(names(model1))
-  expect_snapshot(model1$c.model)
+  expect_snapshot(model1$cox_model)
+})
+
+
+test_that("'matchconf' argument of `casecross()` works as expected", {
+  model3 <- casecross(
+    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+    matchconf = "tmpd",
+    confrange = 1
+  )
+  expect_snapshot(model3)
+  expect_snapshot(names(model3))
+  expect_snapshot(model3$cox_model)
+})
+
+test_that("'stratamonth' argument of `casecross()` works as expected", {
+  model4 <- casecross(
+    cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+    stratamonth = TRUE
+  )
+  expect_snapshot(model4)
+  expect_snapshot(names(model4))
+  expect_snapshot(model4$cox_model)
 })
 
 # book p.136: time-stratified, 28-day stratum, exclusion = 4 ------------
@@ -32,10 +56,10 @@ test_that("casecross reproduces published 28-day stratum model (p.136)", {
     stratalength = 28,
     exclusion = 4
   )
-  expect_identical(model_28d$ncasedays, 5114L)
-  expect_identical(model_28d$ncontroldays, 19.7)
+  expect_identical(model_28d$n_case_days, 5114L)
+  expect_identical(model_28d$n_control_days, 19.7)
 
-  model_coef <- coef(model_28d$c.model)
+  model_coef <- coef(model_28d$cox_model)
 
   coef_o3 <- model_coef[["o3_mean_10"]] |> round(7)
   coef_o3_exp <- model_coef[["o3_mean_10"]] |> exp() |> round(7)
@@ -62,10 +86,10 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
     exclusion = 4,
     matchdow = TRUE
   )
-  expect_identical(model_dow$ncasedays, 5114L)
-  expect_identical(model_dow$ncontroldays, 3)
+  expect_identical(model_dow$n_case_days, 5114L)
+  expect_identical(model_dow$n_control_days, 3)
 
-  coef_dow <- coef(model_dow$c.model)
+  coef_dow <- coef(model_dow$cox_model)
 
   coef_dow_o3 <- coef_dow[["o3_mean_10"]] |> round(9)
   coef_dow_o3_exp <- coef_dow[["o3_mean_10"]] |> exp() |> round(4)
@@ -78,6 +102,40 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 
   expect_equal(coef_dow_temp, 0.009497229)
   expect_equal(coef_dow_temp_exp, 1.0095425)
+})
+
+test_that("casecross works with differetn date columns", {
+  new_names <- sub("date", "dt", names(CVDdaily_1987))
+  CVDdaily_1987_new <- CVDdaily_1987
+  names(CVDdaily_1987_new) <- new_names
+
+  set.seed(2026 - 06 - 16)
+  change_date_dt <- casecross(
+    cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987_new,
+    date_col = "dt"
+  )
+
+  set.seed(2026 - 06 - 16)
+  change_date_og <- casecross(
+    cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+    data = CVDdaily_1987,
+  )
+
+  expect_equal(change_date_dt$n_control_days, change_date_og$n_control_days)
+  expect_equal(change_date_dt$n_case_days, change_date_og$n_case_days)
+  expect_equal(change_date_dt$n_cases, change_date_og$n_cases)
+  expect_equal(change_date_dt$cox_model$var, change_date_og$cox_model$var)
+  expect_equal(change_date_dt$cox_model$loglik, change_date_og$cox_model$loglik)
+  expect_equal(change_date_dt$cox_model$score, change_date_og$cox_model$score)
+  expect_equal(
+    change_date_dt$cox_model$linear.predictors,
+    change_date_og$cox_model$linear.predictors
+  )
+  expect_equal(
+    change_date_dt$cox_model$coefficients,
+    change_date_og$cox_model$coefficients
+  )
 })
 
 # TODO need to revisit this and check if code matches textbook for these pages
@@ -98,12 +156,12 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 #  # Tight match on temp reduces controls per case vs
 #  # unmatched 28-day default (19.7).
 #  # On textbook it is 5.1, but here we get 4.8?
-#  expect_equal(model_matchconf$ncontroldays, 4.8)
+#  expect_equal(model_matchconf$n_control_days, 4.8)
 #
-#  coef_match <- coef(model_matchconf$c.model)
+#  coef_match <- coef(model_matchconf$cox_model)
 #
 #  library(broom)
-#  model_tidy <- tidy(model_matchconf$c.model)
+#  model_tidy <- tidy(model_matchconf$cox_model)
 #
 #  coef_match_o3 <- coef_match[["o3mean"]] |> round(9)
 #  coef_match_o3_exp <- coef_match[["o3mean"]] |> exp() |> round(4)
@@ -151,3 +209,5 @@ test_that("casecross matchdow=TRUE reproduces published model (p.136)", {
 #  expect_s3_class(m, "casecross")
 #  expect_output(summary(m), "months as strata")
 # })
+
+# match on temperature to within a degree

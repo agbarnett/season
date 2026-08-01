@@ -14,13 +14,17 @@ nscosinor(
   lambda = 1/12,
   div = 50,
   monthly = TRUE,
-  alpha = 0.05
+  alpha = 0.05,
+  year_col = "year",
+  month_col = "month"
 )
 }
 \arguments{
-\item{data}{a data frame.}
+\item{data}{Data frame. Assumes no missing data. Year and month columns are
+by default assumed to be "year", and "month", respectively. These can be
+specified with arguments \code{year_col} and \code{month_col}.}
 
-\item{response}{response variable.}
+\item{response}{character. Response variable.}
 
 \item{cycles}{vector of cycles in units of time, e.g., for a six and twelve
 month pattern \code{cycles=c(6,12)}.}
@@ -43,6 +47,10 @@ default).}
 
 \item{alpha}{Statistical significance level used by the confidence
 intervals.}
+
+\item{year_col}{character. column referring to year. Default is "year".}
+
+\item{month_col}{character. column referring to month. Default is "month".}
 }
 \value{
 Returns an object of class "nsCosinor" with the following
@@ -103,25 +111,26 @@ tau <- c(10,50)
     data = CVD,
     response = 'adj',
     cycles = f,
-    niters = 5000,
-    burnin = 1000,
+    niters = 200,
+    burnin = 50,
     tau = tau
     )
 summary(res12)
-plot(res12)
+# autoplot replaces plot method - plot(res12)
+autoplot(res12)
 }
 }
 
 }
 \references{
 Barnett, A.G., Dobson, A.J. (2010) \emph{Analysing Seasonal
-Health Data}. Springer.
+Health Data}. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 
 Barnett, A.G., Dobson, A.J. (2004) Estimating trends and seasonality in
 coronary heart disease \emph{Statistics in Medicine}. 23(22) 3505--23.
 }
 \seealso{
-\code{plot.nsCosinor}, \code{summary.nsCosinor}
+\code{\link[=plot.nsCosinor]{plot.nsCosinor()}} \code{\link[=summary.nsCosinor]{summary.nsCosinor()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

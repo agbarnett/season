@@ -3,22 +3,18 @@
     Code
       res
     Output
-      $test
-      [1] 6.900638
-      
-      $pvalue
-      [1] 0.03173551
-      
+      # A tibble: 1 x 2
+         test pvalue
+        <dbl>  <dbl>
+      1  6.90 0.0317
 
 # wtest reproduces the published stillbirth result
 
     Code
       res
     Output
-      $test
-      [1] 6.900638
-      
-      $pvalue
-      [1] 0.03173551
-      
+      # A tibble: 1 x 2
+         test pvalue
+        <dbl>  <dbl>
+      1  6.90 0.0317
 

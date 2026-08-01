@@ -7,7 +7,7 @@
 \method{plot}{monthglm}(x, alpha = 0.05, ylim = NULL, xlab = "", ylab = "", ...)
 }
 \arguments{
-\item{x}{a \code{monthglm} object produced by \code{monthglm}.}
+\item{x}{a \code{monthglm} object produced by \code{\link[=monthglm]{monthglm()}}.}
 
 \item{alpha}{statistical significance level of confidence intervals.}
 
@@ -23,8 +23,9 @@ Plot of the estimated from a generalized linear model with a
 categorical variable of month.
 }
 \description{
-Plots the estimated from a generalized linear model with a categorical
-variable of month.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=autoplot.monthglm]{autoplot.monthglm()}}, which returns a ggplot object. The base R \code{\link[=plot]{plot()}}
+will still work, but we recommend using \code{\link[=autoplot.monthglm]{autoplot.monthglm()}}.
 }
 \examples{
 \donttest{
@@ -36,12 +37,15 @@ mmodel <- monthglm(
   offsetmonth = TRUE,
   refmonth = 6
 )
+# Recommended:
+autoplot(mmodel)
+# Still works, but deprecated:
 plot(mmodel)
 }
 
 }
 \seealso{
-\code{monthglm}
+\code{\link[=autoplot.monthglm]{autoplot.monthglm()}}, \code{\link[=monthglm]{monthglm()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

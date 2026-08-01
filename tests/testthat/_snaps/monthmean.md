@@ -20,18 +20,28 @@
 # monthmean errors when required variables are missing
 
     Code
-      monthmean(data = NULL, resp = "x")
+      monthmean()
     Condition
       Error in `monthmean()`:
-      ! must have an input data set (data)
+      ! argument "data" is missing, with no default
 
 ---
 
     Code
-      monthmean(data = CVD, resp = NULL)
+      monthmean(data = NULL, resp = "x")
     Condition
       Error in `monthmean()`:
-      ! must have an input variable (resp)
+      ! `data` must contain a variable called `year`.
+
+---
+
+    Code
+      monthmean(data = CVD)
+    Message
+      Total number of days: 5114
+    Condition
+      Error in `monthmean()`:
+      ! argument "resp" is missing, with no default
 
 ---
 
@@ -39,7 +49,7 @@
       monthmean(data = data.frame(month = 1:12, x = 1:12), resp = "x")
     Condition
       Error in `monthmean()`:
-      ! data set must contain a variable with the 4 digit year called 'year'
+      ! `data` must contain a variable called `year`.
 
 ---
 
@@ -47,5 +57,27 @@
       monthmean(data = data.frame(year = rep(2000, 12), x = 1:12), resp = "x")
     Condition
       Error in `monthmean()`:
-      ! data set must contain a variable with the numeric month called 'month'
+      ! `data` must contain a variable called `month`.
+
+# monthmean works
+
+    Code
+      monthmean(data = data.frame(month = 1:12, x = 1:12, year = rep(1999, 12)),
+      resp = "x")
+    Message
+      Total number of days: 365
+    Output
+           Month Mean
+         January    1
+        February    2
+           March    3
+           April    4
+             May    5
+            June    6
+            July    7
+          August    8
+       September    9
+         October   10
+        November   11
+        December   12
 

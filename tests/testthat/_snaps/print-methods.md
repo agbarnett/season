@@ -4,7 +4,7 @@
       print(m)
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
@@ -20,7 +20,8 @@
       print.Cosinor(list(a = 1))
     Condition
       Error in `print.Cosinor()`:
-      ! Object must be of class 'Cosinor'
+      ! `x` must be of class <Cosinor>.
+      i We see class <list>.
 
 # print.monthglm prints the underlying GLM
 
@@ -28,7 +29,7 @@
       print(m)
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = off)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = model_offset)
       
       Coefficients:
       (Intercept)    monthsFeb    monthsMar    monthsApr    monthsMay    monthsJun  
@@ -46,7 +47,8 @@
       print.monthglm(list(a = 1))
     Condition
       Error in `print.monthglm()`:
-      ! Object must be of class 'monthglm'
+      ! `x` must be of class <monthglm>.
+      i We see class <list>.
 
 # print.Monthmean prints a named 12-row table
 
@@ -73,7 +75,8 @@
       print.Monthmean(list(a = 1))
     Condition
       Error in `print.Monthmean()`:
-      ! Object must be of class 'Monthmean'
+      ! `x` must be of class <Monthmean>.
+      i We see class <list>.
 
 # print.nonlintest prints the test statistics block
 
@@ -95,7 +98,8 @@
       print.nonlintest(list(a = 1))
     Condition
       Error in `print.nonlintest()`:
-      ! Object must be of class 'nonlintest'
+      ! `x` must be of class <nonlintest>.
+      i We see class <list>.
 
 # print.nsCosinor prints model overview and residual stats
 
@@ -107,7 +111,7 @@
       Call:
       nscosinor(data = head(CVD, 60), response = "adj", cycles = 12, 
           niters = 60, burnin = 30, tau = c(10, 50), div = 1000, lambda = 1/12, 
-          monthly = TRUE, alpha = 0.05)
+          monthly = TRUE, alpha = 0.05, year_col = "year", month_col = "month")
       
       Number of MCMC samples = 31
       
@@ -123,7 +127,8 @@
       print.nsCosinor(list(a = 1))
     Condition
       Error in `print.nsCosinor()`:
-      ! Object must be of class 'nsCosinor'
+      ! `x` must be of class <nsCosinor>.
+      i We see class <list>.
 
 # print.casecross prints the underlying coxph fit
 
@@ -131,7 +136,7 @@
       print(m)
     Output
       Call:
-      survival::coxph(formula = finalformula, data = finished, weights = outcome, 
+      survival::coxph(formula = form_final, data = finished, weights = outcome, 
           method = "breslow")
       
                   coef exp(coef)  se(coef)      z      p
@@ -153,15 +158,17 @@
       print.casecross(list(a = 1))
     Condition
       Error in `print.casecross()`:
-      ! Object must be of class 'casecross'
+      ! `x` must be of class <casecross>.
+      i We see class <list>.
 
-# print.casecross errors when c.model is not a coxph fit
+# print.casecross errors when cox_model is not a coxph fit
 
     Code
       print(bad)
     Condition
-      Error in `print.casecross()`:
-      ! Conditional logistic regression model object 'c.model' must be of class 'coxph'
+      Error in `print()`:
+      ! `x$cox_model` must be of class <coxph>.
+      i We see class <list>.
 
 # print.summary.Cosinor prints the cosinor test report
 
@@ -187,7 +194,8 @@
       print.summary.Cosinor(list(a = 1))
     Condition
       Error in `print.summary.Cosinor()`:
-      ! Object must be of class 'summary.Cosinor'
+      ! `x` must be of class <summary.Cosinor>.
+      i We see class <list>.
 
 # print.summary.monthglm prints the month-effect table
 
@@ -231,7 +239,7 @@
       monthsNov 0.6182944 0.6018069 0.6352336 -34.86498 2.525075e-266
       monthsDec 0.8489118 0.8264999 0.8719315 -11.99911  3.591556e-33
 
-# print.summary.nscosinor prints amplitude and phase blocks
+# print.summary.nsCosinor prints amplitude and phase blocks
 
     Code
       print.summary.nsCosinor(summary(m))
@@ -240,24 +248,25 @@
       Number of MCMC samples = 31
       
       Standard deviations
-      Residual, mean=122.9904, 95% CI [106.5995, 143.7953]
+      Residual, mean=122.99, 95% CI [106.599, 143.795]
       Cycle=12
-      Season, mean=0.2085109, 95% CI [0.1733934, 0.2707067]
+      Season, mean=0.208511, 95% CI [0.173393, 0.270707]
       
       Phase and amplitude
       Cycle=12
-      Amplitude, mean=209.322, 95% CI [169.9456, 242.3682]
-      Phase (radians), mean=0.7311538, 95% CI [0.5130923, 0.9835682]
+      Amplitude, mean=209.322, 95% CI [169.946, 242.368]
+      Phase (radians), mean=0.731154, 95% CI [0.513092, 0.983568]
 
-# print.summary.nscosinor errors on non-summary.nsCosinor input
+# print.summary.nsCosinor errors on non-summary.nsCosinor input
 
     Code
       print.summary.nsCosinor(list(a = 1))
     Condition
       Error in `print.summary.nsCosinor()`:
-      ! Object must be of class 'summary.nsCosinor'
+      ! `x` must be of class <summary.nsCosinor>.
+      i We see class <list>.
 
-# print.summary.nscosinor handles multiple seasonal cycles
+# print.summary.nsCosinor handles multiple seasonal cycles
 
     Code
       print.summary.nsCosinor(summary(m))
@@ -266,17 +275,17 @@
       Number of MCMC samples = 31
       
       Standard deviations
-      Residual, mean=102.8497, 95% CI [81.49613, 122.9949]
+      Residual, mean=102.85, 95% CI [81.4961, 122.995]
       Cycle=6
-      Season, mean=0.1359504, 95% CI [0.08590661, 0.2021593]
+      Season, mean=0.13595, 95% CI [0.0859066, 0.202159]
       Cycle=12
-      Season, mean=0.1859972, 95% CI [0.1413316, 0.262306]
+      Season, mean=0.185997, 95% CI [0.141332, 0.262306]
       
       Phase and amplitude
       Cycle=6
-      Amplitude, mean=96.1238, 95% CI [68.79918, 136.6394]
-      Phase (radians), mean=1.190498, 95% CI [0.7148488, 1.628128]
+      Amplitude, mean=96.1238, 95% CI [68.7992, 136.639]
+      Phase (radians), mean=1.1905, 95% CI [0.714849, 1.62813]
       Cycle=12
-      Amplitude, mean=215.3999, 95% CI [169.8538, 245.6512]
-      Phase (radians), mean=0.7427375, 95% CI [0.5959092, 0.9045558]
+      Amplitude, mean=215.4, 95% CI [169.854, 245.651]
+      Phase (radians), mean=0.742737, 95% CI [0.595909, 0.904556]
 

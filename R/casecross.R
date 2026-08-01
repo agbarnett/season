@@ -61,264 +61,231 @@
 #' likely to contain less days than all the other strata (TRUE/default=FALSE).
 #' @param matchconf match case and control days using an important confounder
 #' (optional; must be in quotes). `matchconf` is the variable to match on.
-#' This matching is in addition to the strata matching.
+#' This matching is in addition to the strata matching. Default is NULL - no
+#' confounder is used.
 #' @param confrange range of the confounder within which case and control days
 #' will be treated as a match (optional). Range = `matchconf` (on case
 #' day) \eqn{+/-} `confrange`.
 #' @param stratamonth use strata based on months, default=FALSE. Instead of a
 #' fixed strata size when using `stratalength`.
-#' @return a list with the following elements:
+#' @param date_col Character. column name for date variable. Default is "date".
+#' @returns a list with the following elements:
 #'   * call: the original call to the casecross function.
-#'   * c.model: conditional logistic regression model of class `coxph`.
-#'   * ncases: total number of cases.
-#'   * ncasedays: number of case days with at least one control day.
-#'   * ncontroldays: average number of control days per case day.
+#'   * cox_model: conditional logistic regression model of class `coxph`.
+#'   * n_cases: total number of cases.
+#'   * n_case_days: number of case days with at least one control day.
+#'   * n_control_days: average number of control days per case day.
 #' @author Adrian Barnett \email{a.barnett@qut.edu.au}
 #' @seealso `summary.casecross`, `coxph`
 #' @references Janes, H., Sheppard, L., Lumley, T. (2005) Case-crossover
 #' analyses of air pollution exposure data: Referent selection strategies and
 #' their implications for bias. *Epidemiology* 16(6), 717--726.
+#' \doi{doi:10.1097/01.ede.0000181315.18836.9d.}
 #'
 #' Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal Health Data*.
-#' Springer.
+#' Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @examples
 #' \donttest{
 #' # cardiovascular disease data
-#' CVDdaily = subset(CVDdaily, date<=as.Date('1987-12-31')) # subset for example
+#' # subset for example
+#' CVDdaily <- subset(CVDdaily, date <= as.Date('1987-12-31'))
 #' # Effect of ozone on CVD death
-#' model1 = casecross(cvd ~ o3mean+tmpd+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily)
+#' model1 <- casecross(
+#'   cvd ~ o3mean + tmpd + Mon + Tue + Wed + Thu + Fri + Sat,
+#'   data = CVDdaily
+#' )
 #' summary(model1)
 #' # match on day of the week
-#' model2 = casecross(cvd ~ o3mean+tmpd, matchdow=TRUE, data=CVDdaily)
+#' model2 <- casecross(cvd ~ o3mean + tmpd, matchdow = TRUE, data = CVDdaily)
 #' summary(model2)
 #' # match on temperature to within a degree
-#' model3 = casecross(cvd ~ o3mean+Mon+Tue+Wed+Thu+Fri+Sat, data=CVDdaily,
-#'                    matchconf='tmpd', confrange=1)
+#' model3 <- casecross(
+#'   cvd ~ o3mean + Mon + Tue + Wed + Thu + Fri + Sat,
+#'   data = CVDdaily,
+#'   matchconf = "tmpd",
+#'   confrange = 1
+#' )
 #' summary(model3)
 #' }
 #'
-#' @export casecross
+#' @export
 casecross <- function(
   formula,
   data,
   exclusion = 2,
   stratalength = 28,
   matchdow = FALSE,
-  usefinalwindow = FALSE,
-  matchconf = '',
+  usefinalwindow = TRUE,
+  matchconf = NULL,
   confrange = 0,
-  stratamonth = FALSE
+  stratamonth = FALSE,
+  date_col = "date"
 ) {
   # Setting some variables to NULL first (for R CMD check)
-  outcome <- dow <- case <- timex <- dow.x <- dow.y <- matchday.x <- NULL
-  matchday.y <- windownum.x <- windownum.y <- NULL
-  thisdata <- data
+  outcome <- case <- timex <- NULL
+  case_num <- dow.x <- dow.y <- match_day.x <- match_day.y <- NULL
+  window_num.x <- window_num.y <- dow <- match_day <- window_num <- NULL
 
-  if (!inherits(thisdata$date, "Date")) {
-    stop("date variable must be in date format, see ?Dates")
-  }
-  if (exclusion < 0) {
-    stop("Minimum value for exclusion is zero")
-  }
-  parts <- paste(formula)
-  dep <- parts[2] # dependent variable
-  indep <- parts[3] # dependent variable
-  if (length(formula) <= 2) {
-    stop("Must be at least one independent variable")
-  }
+  this_data <- data
+  check_var_in_data(data = this_data, var = date_col)
+  this_data$dow <- as.numeric(format(this_data[[date_col]], '%w'))
+
+  check_if_date(this_data[[date_col]])
+  check_if_exclusion_lt_0(exclusion)
+  check_formula_has_iv(formula)
+
   ## original call with defaults (see amer package)
-  ans <- as.list(match.call())
-  frmls <- formals(deparse(ans[[1]]))
-  add <- which(!(names(frmls) %in% names(ans)))
-  call <- as.call(c(ans, frmls[add]))
-  thisdata$dow <- as.numeric(format(thisdata$date, '%w'))
-  ## Slim down the data
-  f <- stats::as.formula(paste(parts[2], parts[1], parts[3], '+date+dow'))
-  if (!startsWith(matchconf, "")) {
-    f <- stats::as.formula(paste(dep, "~", indep, '+date+dow+', matchconf))
+  call <- match_call_with_defaults(match.call(), sys.function())
+
+  form <- append_terms_to_formula(formula, paste0(date_col, " + dow"))
+
+  if (!is.null(matchconf)) {
+    parts <- paste(formula)
+    dep <- parts[2]
+    indep <- parts[3]
+    new_form <- paste(dep, "~", indep, "+", date_col, "+dow+", matchconf)
+    form <- stats::as.formula(new_form)
   }
+
   # remove cases with missing covariates
-  datatouse <- stats::model.frame(
-    f,
-    data = thisdata,
+  data_to_use <- stats::model.frame(
+    form,
+    data = this_data,
     na.action = stats::na.omit
   )
-  ## Check for irregularly spaced data
-  if (any(diff(datatouse$date) > 1)) {
-    cat('Note, irregularly spaced data...\n')
-    cat('...check your data for missing days\n')
-  }
-  # use minimum data in entire sample (error fixed 2 September 2018
-  # second data was not 'datatouse')
-  datediff <- as.numeric(datatouse$date) - min(as.numeric(datatouse$date))
-  time <- as.numeric(datediff) + 1 # used as strata number
 
-  ## Create strata
-  if (stratamonth) {
-    month <- as.numeric(format(datatouse$date, '%m'))
-    year <- as.numeric(format(datatouse$date, '%Y'))
-    matchday <- as.numeric(format(datatouse$date, '%d'))
-    yrdiff <- year - min(year)
-    windownum <- (yrdiff * 12) + month
-  }
-  if (!stratamonth) {
-    ## Get the earliest time and difference all dates from this time
-    ## Increase strata windows in jumps of 'stratalength'
-    windownum <- floor(datediff / stratalength) + 1
-    nwindows <- floor(nrow(thisdata) / stratalength) + 1
-    # Day number in strata
-    matchday <- datediff - ((windownum - 1) * stratalength) + 1
-    ## Exclude the last window if it is less than 'stratalength'
-    lastwindow <- datatouse[datatouse$windownum == nwindows, ]
-    if (nrow(lastwindow) > 0) {
-      # only apply to data sets with some data in the final window
-      lastlength <- max(time[windownum == nwindows]) -
-        min(time[windownum == nwindows]) +
-        1
-      if (lastlength < stratalength && !usefinalwindow) {
-        datatouse <- datatouse[windownum < nwindows, ]
-      }
-    }
-  }
+  inform_irregularly_spaced(data_to_use[[date_col]])
+
+  strata <- create_strata(
+    data_to_use,
+    n_rows_original = nrow(this_data),
+    stratalength = stratalength,
+    stratamonth = stratamonth,
+    usefinalwindow = usefinalwindow,
+    date_col = date_col
+  )
+
+  match_day <- strata$match_day
+  window_num <- strata$window_num
+  time <- strata$time
+  data_to_use <- strata$data_to_use
+
   ## Create the case data
-  n <- nrow(datatouse)
-  cases <- datatouse
-  cases$case <- 1 # binary indicator of case
-  cases$timex <- 1 # Needed for conditional logistic regression
-  cases$windownum <- windownum
+  cases <- data_to_use
+  # binary indicator of case
+  cases$case <- 1
+  # Needed for conditional logistic regression
+  cases$timex <- 1
+  cases$window_num <- window_num
   cases$time <- time
-  cases$diffdays <- NA
-  cases$matchday <- matchday
-  posout <- sum(
-    as.numeric(names(datatouse) == as.character(f[2])) *
-      (seq_len(ncol(datatouse)))
-  ) # get the position of the dependent variable
-  cases$outcome <- datatouse[, c(posout)]
-  # October 2011, removed nonzerocases
+  cases$diff_days <- NA
+  cases$match_day <- match_day
+  cases$outcome <- data_to_use[, as.character(formula[2])]
+
   # Create a case number for matching
-  if (startsWith(matchconf, "")) {
-    cases.tomerge <- subset(
+  if (is.null(matchconf)) {
+    cases_to_merge <- subset(
       cases,
-      select = c(matchday, time, outcome, windownum, dow)
+      select = c(match_day, time, outcome, window_num, dow)
     )
   }
-  if (!startsWith(matchconf, "")) {
-    also <- sum(
-      as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
-    )
-    cases.tomerge <- subset(
+  if (!is.null(matchconf)) {
+    also <- match(matchconf, names(cases))
+    cases_to_merge <- subset(
       cases,
-      select = c(matchday, time, outcome, windownum, dow, also)
+      select = c(match_day, time, outcome, window_num, dow, also)
     )
   }
-  ncases <- nrow(cases)
-  cases.tomerge$casenum <- 1:ncases
+  n_cases <- nrow(cases)
+  cases_to_merge$case_num <- 1:n_cases
   # Duplicate case series to make controls
-  maxwindows <- max(cases$windownum)
-  rowstorep <- NULL
-  casenum <- NULL
+  max_windows <- max(cases$window_num)
   # Fix for missing windows (thanks to Yuming)
-  windowrange <- as.numeric(levels(as.factor(windownum)))
-  for (k in windowrange) {
-    # loop through every window
-    small <- min(cases$time[cases$windownum == k])
-    large <- max(cases$time[cases$windownum == k])
-    these <- rep(small:large, large - small + 1)
-    rowstorep <- c(rowstorep, these)
-    casenum <- c(casenum, sort(these))
-  }
+  windowrange <- as.numeric(levels(as.factor(window_num)))
+  ctrl_idx <- build_control_rows(cases, windowrange)
+  rows_to_rep <- ctrl_idx$rows_to_rep
+  case_num <- ctrl_idx$case_num
   # create controls from cases
-  controls <- cases[rowstorep, ] # can fall over if there's missing data
+  # can fall over if there's missing data
+  controls <- cases[rows_to_rep, ]
   controls <- subset(controls, select = c(-case, -timex, -time, -outcome))
   # Replace case number
-  controls$casenum <- casenum
+  controls$case_num <- case_num
   # Merge cases with controls by case number
-  controls <- merge(controls, cases.tomerge, by = 'casenum')
+  controls <- merge(controls, cases_to_merge, by = 'case_num')
   # must be in same stratum window
-  controls <- controls[controls$windownum.x == controls$windownum.y, ]
-  controls$case <- 0 # binary indicator of case
-  controls$timex <- 2 # Needed for conditional logistic regression
-  controls$diffdays <- abs(controls$matchday.x - controls$matchday.y)
+  controls <- controls[controls$window_num.x == controls$window_num.y, ]
+  # binary indicator of case
+  controls$case <- 0
+  # Needed for conditional logistic regression
+  controls$timex <- 2
+  controls$diff_days <- abs(controls$match_day.x - controls$match_day.y)
   # remove the exclusion window
-  controls <- controls[controls$diffdays > exclusion, ]
+  controls <- controls[controls$diff_days > exclusion, ]
   # match on day of the week
   if (matchdow) {
     controls <- controls[controls$dow.x == controls$dow.y, ]
   }
   # match on a confounder
-  if (!startsWith(matchconf, "")) {
-    one <- paste0(matchconf, '.x')
-    two <- paste0(matchconf, '.y')
-    find1 <- grep(one, names(controls))
-    find2 <- grep(two, names(controls))
-    matchdiff <- abs(controls[, find1] - controls[, find2])
-    controls <- controls[matchdiff <= confrange, ]
-    controls <- subset(
-      controls,
-      select = c(
-        -casenum,
-        -dow.x,
-        -dow.y,
-        -matchday.x,
-        -matchday.y,
-        -windownum.x,
-        -windownum.y,
-        -find1,
-        -find2
-      )
+  if (is.null(matchconf)) {
+    trimmed <- list(
+      controls = subset(
+        controls,
+        select = c(
+          -case_num,
+          -dow.x,
+          -dow.y,
+          -match_day.x,
+          -match_day.y,
+          -window_num.x,
+          -window_num.y
+        )
+      ),
+      final_cases = subset(cases, select = c(-dow, -match_day, -window_num))
     )
-    findc <- sum(
-      as.numeric(names(cases) == matchconf) * (seq_along(names(cases)))
-    )
-    final.cases <- subset(
-      cases,
-      select = c(-dow, -matchday, -windownum, -findc)
-    )
+  } else {
+    trimmed <- filter_by_confounder(controls, cases, matchconf, confrange)
   }
-  if (startsWith(matchconf, "")) {
-    controls <- subset(
-      controls,
-      select = c(
-        -casenum,
-        -dow.x,
-        -dow.y,
-        -matchday.x,
-        -matchday.y,
-        -windownum.x,
-        -windownum.y
-      )
-    )
-    final.cases <- subset(cases, select = c(-dow, -matchday, -windownum))
-  }
-  finished <- rbind(final.cases, controls)
+  controls <- trimmed$controls
+  final_cases <- trimmed$final_cases
+
+  finished <- rbind(final_cases, controls)
   ## Remove empty controls
   finished <- finished[finished$outcome > 0, ]
   ## Count the number of control days without a case day, and the total number
   ## of cases
-  onlycntl <- finished[finished$case == 0, ]
-  ncases <- nrow(table(onlycntl$time))
-  which.times <- unique(onlycntl$time)
-  extra.only <- final.cases[final.cases$time %in% which.times, ]
-  ncontrols <- round(mean(as.numeric(table(onlycntl$time))), 1)
+  only_control <- finished[finished$case == 0, ]
+  n_cases <- nrow(table(only_control$time))
+  which_times <- unique(only_control$time)
+  extra_only <- final_cases[final_cases$time %in% which_times, ]
+  n_controls <- round(mean(as.numeric(table(only_control$time))), 1)
   ## Run the conditional logistic regression
-  finalformula <- stats::as.formula(paste(
+
+  indep <- parse_indep(formula)
+
+  form_final <- stats::as.formula(paste(
     'Surv(timex,case)~',
     indep,
     '+strata(time)'
   ))
-  c.model <- survival::coxph(
-    finalformula,
+
+  cox_model <- survival::coxph(
+    form_final,
     weights = outcome,
     data = finished,
     method = "breslow"
   )
-  toret <- list()
-  toret$call <- call
-  toret$c.model <- c.model
-  class(toret$c.model) <- "coxph"
-  toret$ncases <- sum(extra.only$outcome)
-  toret$ncasedays <- ncases
-  toret$ncontroldays <- ncontrols
-  class(toret) <- 'casecross'
-  return(toret)
+
+  result <- list(
+    call = call,
+    cox_model = cox_model,
+    n_cases = sum(extra_only$outcome),
+    n_case_days = n_cases,
+    n_control_days = n_controls
+  )
+
+  class(result$cox_model) <- c("coxph", class(cox_model))
+  class(result) <- c("casecross", class(result))
+
+  result
 }

@@ -1,5 +1,3 @@
-# April 2009
-
 #' Seasonal Residual Checks
 #'
 #' Tests the residuals for any remaining seasonality.
@@ -28,7 +26,7 @@
 #' seasrescheck(resid(model))
 #' }
 #'
-#' @export seasrescheck
+#' @export
 seasrescheck <- function(res) {
   op <- par(no.readonly = TRUE) # the whole list of settable par's.
   par(mfrow = c(2, 2), lwd = 1)

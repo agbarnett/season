@@ -15,8 +15,9 @@
 connected line plot of fitted sinusoid object produced by \link{cosinor}.
 }
 \description{
-Plots the fitted sinusoid from a \code{Cosinor} object produced by
-\code{\link[=cosinor]{cosinor()}}.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=autoplot.Cosinor]{autoplot.Cosinor()}}, which returns a ggplot object you can extend with
+\code{+}. The base R plot below still works.
 }
 \details{
 The code produces the fitted sinusoid based on the intercept and sinusoid.
@@ -36,10 +37,14 @@ res <- cosinor(
   family = poisson(),
   offsetmonth = TRUE
   )
+# Recommended:
+autoplot(res)
+# Still works, but deprecated:
 plot(res)
 }
 \seealso{
-\code{\link[=cosinor]{cosinor()}}, \code{\link[=summary.Cosinor]{summary.Cosinor()}}, \code{\link[=seasrescheck]{seasrescheck()}}
+\code{\link[=autoplot.Cosinor]{autoplot.Cosinor()}}, \code{\link[=cosinor]{cosinor()}}, \code{\link[=summary.Cosinor]{summary.Cosinor()}},
+\code{\link[=seasrescheck]{seasrescheck()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

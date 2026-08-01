@@ -158,7 +158,7 @@ The display above does not give confidence intervals for the log odds ratios, bu
 
 ```{r}
 #| label: confint
-confint(model$c.model)
+confint(model$cox_model)
 ```
 
 ### Plot of the non-linear association between temperature and death
@@ -170,10 +170,10 @@ We use the coefficients and their variance--covariance matrix to reconstruct a t
 #| fig-height: 5
 #| fig-width: 5
 # extract the coefficients and variance--covariance matrix for the spline terms
-coef <- coefficients(model$c.model)
+coef <- coefficients(model$cox_model)
 index <- names(coef) %in% spline.names
 coef <- coef[index]
-vcov <- vcov(model$c.model)[index, index]
+vcov <- vcov(model$cox_model)[index, index]
 for.plot <- crosspred(
   basis = tmpd.basis,
   coef = coef,

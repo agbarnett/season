@@ -27,7 +27,7 @@ Creates an adjacency matrix in a form suitable for use with
 }
 \details{
 Adjacency matrices are used by conditional autoregressive (CAR) models to
-smooth estimates according to some neighbourhood map.  The basic idea is
+smooth estimates according to some neighbourhood map. The basic idea is
 that neighbouring areas have more in common than non-neighbouring areas and
 so will be positively correlated.
 
@@ -40,8 +40,9 @@ to be correlated.
 \examples{
 \donttest{
 # Nearest neighbour matrix for 5 time points
-x = c(NA,1,NA,NA,NA)
-(V = toeplitz(x))
+x <- c(NA,1,NA,NA,NA)
+V <- toeplitz(x)
+V
 createAdj(V)
 }
 

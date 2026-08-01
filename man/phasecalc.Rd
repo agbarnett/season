@@ -16,15 +16,14 @@ the estimated phase in radians.
 }
 \description{
 Calculate the phase given the estimated sine and cosine values from a
-cosinor model.
-}
-\details{
-Returns the phase in radians, in the range \eqn{[0,2\pi)}. The phase is the
-peak in the sinusoid.
+cosinor model. Returns the phase in radians, in the range \eqn{[0,2\pi)}.
+The phase is the peak in the sinusoid. Applies \code{\link[=atan2]{atan2()}} over a branching
+workflow for each coordinate. See \url{https://en.wikipedia.org/wiki/Atan2}
+for more information.
 }
 \examples{
-
-phasecalc(cosine=0, sine=1) # pi/2
+# pi/2
+phasecalc(cosine=0, sine=1)
 
 }
 \references{

@@ -14,7 +14,8 @@
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 0)
     Condition
       Error in `monthglm()`:
-      ! Reference month must be between 1 and 12
+      ! `refmonth` must be within 1 and 12.
+      i We see a range of 0 to 0.
 
 ---
 
@@ -22,7 +23,8 @@
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 13)
     Condition
       Error in `monthglm()`:
-      ! Reference month must be between 1 and 12
+      ! `refmonth` must be within 1 and 12.
+      i We see a range of 13 to 13.
 
 # monthglm fails when invalid family used
 
@@ -47,7 +49,7 @@
         pop))
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = off)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = model_offset)
       
       Coefficients:
       (Intercept)    monthsFeb    monthsMar    monthsApr    monthsMay    monthsJun  
@@ -74,5 +76,6 @@
       monthglm(cvd ~ 1, data = CVD, family = poisson(), refmonth = 1, offsetmonth = "January")
     Condition
       Error in `monthglm()`:
-      ! `offsetmonth` must be logical, we see type: character
+      ! `offsetmonth` must be <logical>.
+      i We see class <character>.
 

@@ -10,7 +10,7 @@
 #' @aliases summary.monthglm
 #' @param object a `monthglm` object produced by [nscosinor()].
 #' @param \dots further arguments passed to or from other methods.
-#' @return a list with the following elements:
+#' @returns a list with the following elements:
 #'   * n: sample size.
 #'   * month.ests: parameter estimates for the intercept and months.
 #'   * month.effect: scale of the monthly effects. `RR` for rate ratios,
@@ -28,9 +28,7 @@
 #' summary(mmodel)
 #' @export
 summary.monthglm <- function(object, ...) {
-  if (!inherits(object, "monthglm")) {
-    stop("Object must be of class 'monthglm'")
-  }
+  check_if_monthglm(object)
   ## Tabulate the monthly data ##
   z <- stats::qnorm(0.975)
   s <- summary(object$glm)
@@ -59,10 +57,13 @@ summary.monthglm <- function(object, ...) {
     ""
   )
 
-  ret <- list()
-  ret$n <- length(object$residuals)
-  ret$month.ests <- totable
-  ret$month.effect <- effect
-  class(ret) <- "summary.monthglm"
-  ret # uses print.summary.monthglm
+  result <- list(
+    n = length(object$residuals),
+    month.ests = totable,
+    month.effect = effect
+  )
+
+  class(result) <- c("summary.monthglm", class(result))
+  # uses print.summary.monthglm
+  result
 }

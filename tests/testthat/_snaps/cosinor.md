@@ -12,7 +12,7 @@
       res_monthly$glm
     Output
       
-      Call:  stats::glm(formula = f, family = family, data = data, offset = offset)
+      Call:  stats::glm(formula = form, family = family, data = data, offset = offset)
       
       Coefficients:
       (Intercept)         cosw         sinw  
@@ -55,7 +55,8 @@
       offsetmonth = "yes")
     Condition
       Error in `cosinor()`:
-      ! Error: 'offsetmonth' must be of type logical
+      ! `offsetmonth` must be <logical>.
+      i We see class <character>.
 
 # cosinor errors when type is not daily/weekly/monthly/hourly
 
@@ -72,7 +73,7 @@
       cosinor(y ~ 1, date = "date", data = bad, type = "hourly")
     Condition
       Error in `cosinor()`:
-      ! date variable must be of class POSIXct when type='hourly'
+      ! `data[[date]]` must be of class <POSIXct> when `type = "hourly"`.
 
 # cosinor requires Date when type='daily'
 
@@ -80,7 +81,7 @@
       cosinor(y ~ 1, date = "date", data = bad, type = "daily")
     Condition
       Error in `cosinor()`:
-      ! date variable must be of class Date when type='daily'
+      ! `data[[date]]` must be of class <Date> when `type = "daily"`.
 
 # cosinor errors when alpha is outside (0, 1)
 
@@ -89,7 +90,8 @@
       alpha = 0)
     Condition
       Error in `cosinor()`:
-      ! alpha must be between 0 and 1
+      ! `alpha` must be between 0 and 1.
+      i We see a range of 0 to 0.
 
 ---
 
@@ -98,7 +100,8 @@
       alpha = 1.5)
     Condition
       Error in `cosinor()`:
-      ! alpha must be between 0 and 1
+      ! `alpha` must be between 0 and 1.
+      i We see a range of 1.5 to 1.5.
 
 # cosinor refuses offsetmonth=TRUE for hourly data
 
@@ -107,5 +110,5 @@
       offsetmonth = TRUE)
     Condition
       Error in `cosinor()`:
-      ! do not use monthly offset for hourly data
+      ! Cannot use `offsetmonth = TRUE` with `type = "hourly"`.
 

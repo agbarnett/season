@@ -15,22 +15,27 @@
 Connected dot plot of estimated monthly means.
 }
 \description{
-Plots estimated monthly means.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Soft-deprecated in favour of
+\code{\link[=autoplot.Monthmean]{autoplot.Monthmean()}}, which returns a ggplot object you can extend
+with \code{+}. The base R plot below still works.
 }
 \examples{
 \donttest{
 mmean <- monthmean(
-  data=CVD,
-  resp='cvd',
-  offsetpop = expression(pop/100000),
+  data = CVD,
+  resp = 'cvd',
+  offsetpop = expression(pop / 100000),
   adjmonth = 'average'
-  )
-  mmean
-  plot(mmean)
+)
+mmean
+# Recommended:
+autoplot(mmean)
+# Still works, but deprecated:
+plot(mmean)
 }
 }
 \seealso{
-\code{monthmean}
+\code{\link[=autoplot.Monthmean]{autoplot.Monthmean()}}, \code{\link[=monthmean]{monthmean()}}
 }
 \author{
 Adrian Barnett \email{a.barnett@qut.edu.au}

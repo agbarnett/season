@@ -5,6 +5,10 @@
 ## mockable bindings: end
 NULL
 
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot
+
 #' season: Tools for Uncovering and Estimating Seasonal Patterns.
 #'
 #' The package contains graphical methods for displaying seasonal data and
@@ -33,13 +37,27 @@ NULL
 #'
 #' Maintainer: Adrian Barnett <a.barnett@qut.edu.au>
 #' @references Barnett, A.G., Dobson, A.J. (2010) *Analysing Seasonal
-#' Health Data*. Springer.
+#' Health Data*. Springer. \doi{doi:10.1007/978-3-642-10748-1}
 #' @keywords internal package ts models
 "_PACKAGE"
 
 
 utils::globalVariables(
   c(
-    "time"
+    "time",
+    "terms",
+    "case_num",
+    "dow",
+    "dow.x",
+    "dow.y",
+    "group",
+    "id",
+    "match_day",
+    "match_day.x",
+    "match_day.y",
+    "window_num",
+    "window_num.x",
+    "window_num.y",
+    "value"
   )
 )
